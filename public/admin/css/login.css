@@ -1,0 +1,123 @@
+ @import url("../css/button.css");
+ 
+#login {
+	width:400px;
+	height:254px;
+	margin:20px auto;
+	
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-left:-200px;
+	margin-top:-148px;
+	
+	border: 5px #f4f4f4 solid;
+	min-width:200px;
+	border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+
+#login .ribbon {
+	background-image: url(../../admin/images/login/logform.png);
+	position: absolute;
+	width: 111px;
+	height: 110px;
+	z-index: 0;
+	margin-top: 0px;
+	margin-left: 0px;
+
+}
+
+#login .shadow {
+	position: absolute;	
+	width: 434px;
+	z-index: -1;
+	margin-top: 5px;
+	background-image: url(../../admin/images/login/shadowForm.png);
+	height: 33px;
+	margin-left: -10px;
+}
+
+/*#login .shadow {
+	position: absolute;
+	display:none;
+	width: 434px;
+	z-index: -1;
+	margin-top: 5px;
+	background-image: url(../admin/images/login/shadowForm.png);
+	height: 33px;
+	margin-left: -10px;
+}*/
+
+#login .inner {
+	border: 1px #cccccc solid;
+	min-height: 255px;/*230px;*/
+	overflow: hidden;
+	width:400px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+#login .logo {
+	width:191px;
+	height:41px;
+	margin:20px auto;
+/*	text-align:center;
+	position: relative;
+	opacity:0;
+	filter:alpha(opacity=0);
+	top: 5%;
+	left: 50%;
+	margin-left: -95px;*/
+	z-index: 11;
+	background-color: #FFF;
+}
+#login .formLogin {
+	width:100%;
+	text-align:center;
+	margin:auto;
+	position: relative;
+/*	border: 1px #f4f4f4 solid;
+	height: 160px;
+	opacity:0;
+	filter:alpha(opacity=0);
+	padding:0px;
+	padding: 100px 20px 20px 20px;
+	*/
+	border-radius: 15px;
+	-webkit-border-radius: 15px;
+
+}
+#login #username_id, #login #password {
+	font-size: 25px;
+	background-repeat:no-repeat;
+/*	padding-left: 35px;*/
+text-align:center;
+	margin:auto;	
+	height: 35px;
+	background-position: 2px 3px;
+/*	background-position:right center; */
+	line-height: 35px;
+	color: #999;
+	width: 80%;
+	margin-bottom: 10px;
+	font-family:"Myriad Pro", Arial, Helvetica, sans-serif;
+}
+#login #username_id:focus, #login #password:focus {
+	color:#000;
+}
+#login #username_id {
+	background-image: url(../../admin/images/login/user_.png);
+}
+#login #password {
+	background-image: url(../../admin/images/login/pass_.png);
+}
+#login .loginButton{
+	width:80%;
+	padding:0px 5px;
+	margin: 5px auto 20px auto;
+}
+
+
+
+
