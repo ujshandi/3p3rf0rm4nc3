@@ -1,0 +1,738 @@
+/*
+Original design: Daleri Mega (v1.0 - July 10, 2008) - A free xhtml/css website template by Andreas Viklund.
+For more information, see http://andreasviklund.com/templates/daleri-mega/
+*/
+
+/* Body */
+* {margin:0; padding:0}
+body {font:70% Myriad web pro condensed,Verdana,Arial,Tahoma; line-height:1.4em; text-align:left; padding:0; margin:0; background-color:#f6f6f6; background-image: url(../images/sfondo.png); background-repeat: repeat-y; background-position: 50% 0pt;
+}
+
+.login {
+	background-image: url(../images/login.png);
+	background-position:top right;
+	border:1px solid blue;
+}
+
+.headBG {
+	text-align:left;
+	padding:10px;
+	width:950px;
+	height:120px;
+	background-image: url(../images/banner_1A.jpg);
+	background-repeat: no repeat;
+	background-position: top right;
+	/* 
+	background: -webkit-gradient(linear, left right, left right, from(#7fbfff), to(#eff7fe));
+	background: -moz-linear-gradient(right,  #7fbfff,  #eff7fe) !important;
+	filter:  progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#7fbfff', endColorstr='#eff7fe'); /* IE 
+	 */
+}
+
+.globeAll {
+	text-align:right;
+	padding:10px;
+	width:25%;
+	height:75%;
+	/* 
+	size:50%;
+	 */
+	background-image: url(../images/globe_animated2.gif);
+	background-repeat: no repeat;
+	background-position: top right;
+	float:right;
+}
+
+#wrapper {width:960px; margin:0px auto 0 auto; text-align:left; }
+div.loghi1 {width:960px; height:350ppx; margin:0 auto; clear:both; margin-bottom:10px}
+div.loghi2 {width:960px; height:350ppx; margin:0 auto; clear:both; margin-bottom:2px}
+div#immagini {width:960px; height:350ppx; margin:0 auto; clear:both; margin-bottom:10px}
+div#all {width:990px; margin:0 auto; }
+div#spessore {width:990px; margin:0 auto; height:6px}
+
+.es { display:none}
+
+/*#block-block-5{width:68%; text-align:left;border-top:1px solid #e01250}
+#block-block-5 a{color:#555555}
+#block-block-5 a:hover{color:#e01250}*/
+
+.teaser-checkbox {
+display:none;
+}
+
+#block-locale-0 {font-size:0.8em}
+#block-locale-0 a{color:#cccccc}
+#block-locale-0 a:hover{color:#e01250}
+
+/*partner images*/
+
+
+
+.foto {
+    width:150px;
+    height:87px;
+	float:left;
+	margin: 5px
+}
+
+#brand1 {
+    width:26px;
+    height:50px;
+	float:left;
+	margin: 0px 30px 0px 205px
+}
+#brand2 {
+    width:132px;
+    height:50px;
+	float:left;
+    margin: 0px 30px
+}
+#brand3 {
+    width:54px;
+    height:50px;
+	float:left;
+    margin: 0px 30px
+}
+#brand4 {
+    width:40px;
+    height:50px;
+	float:left;
+    margin: 0px 30px
+}
+#brand10 {
+    width:51px;
+    height:40px;
+	float:left;
+	margin: 0px 24px
+}
+
+
+
+#brand5 {
+    width:50px;
+    height:40px;
+	float:left;
+	margin: 10px 23px 0px 230px
+}
+#brand6 {
+    width:45px;
+    height:40px;
+	float:left;
+	margin: 10px 15px
+}
+#brand7 {
+    width:57px;
+    height:40px;
+	float:left;
+	margin: 10px 15px
+}
+#brand8 {
+    width:38px;
+    height:40px;
+	float:left;
+	margin: 10px 15px
+}
+#brand9 {
+    width:40px;
+    height:40px;
+	float:left;
+	margin: 10px 15px
+}
+#brand11 {
+    width:100px;
+    height:40px;
+	float:left;
+	margin: 10px 140px 10px 15px
+}
+
+/* I due loghi vicini */
+
+#brand12 {
+    width:66px;
+    height:40px;
+	float:left;
+	margin: 10px 2px 10px 190px
+}
+#brand13 {
+    width:66px;
+    height:40px;
+	float:left;
+	margin: 10px 15px 10px 2px
+}
+
+/* fine I due loghi vicini */
+
+#brand14 {
+    width:44px;
+    height:40px;
+	float:left;
+	margin: 10px 15px
+}
+#brand15 {
+    width:100px;
+    height:40px;
+	float:left;
+	margin: 10px 15px
+}
+
+#brand16 {
+    width:64px;
+    height:40px;
+	float:left;
+	margin: 10px 15px
+}
+
+#brand17 {
+    width:87px;
+    height:40px;
+	float:left;
+	margin: 10px 15px
+}
+
+
+/* Header and title */
+#top {width:970px; margin: 0 auto; height:172px; padding:0}
+#skiplinks {width:40%; float:right;text-align:right; margin:0; padding:0}
+#skiplinks a {color:#bacac8; border-bottom: 1px dotted #aaa}
+#skiplinks a:hover {color:#fff; text-decoration:none; border-bottom:1px dotted #fff}
+#top #logo{margin-top:1em;margin-right:2em; margin-left:5em; float:left}
+#top #topyellow {background: url("yellow.jpg"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/yellow.jpg*/) no-repeat;width:115px;height:180px;margin:0; padding-right:2px}
+#top #topblue {background: url("blue.jpg"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/blue.jpg*/) no-repeat;width:115px;height:180px;margin:0; padding-right:2px}
+#top #topgreen {background: url("green.jpg"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/green.jpg*/) no-repeat;width:115px;height:180px;margin:0; padding-right:2px}
+#top #topfusia {background: url("fusia.jpg"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/fusia.jpg*/) no-repeat;width:115px;height:180px;margin:0; padding-right:2px}
+#top #topgreenblue {background: url("green-blue.jpg"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/green-blue.jpg*/) no-repeat;width:115px;height:180px;margin:0; padding-right:2px}
+#top #toporange {background: url("orange.jpg"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/orange.jpg*/) no-repeat;width:115px;height:180px;margin:0; padding-right:2px}
+
+/* Header and title */
+#sitetitle {text-align:left;}
+#sitetitle h1 { font-size:2.4em; color:#ddd; letter-spacing:-1px; line-height:1.3em; margin:0; padding:0}
+#sitetitle h1 a { letter-spacing:-1px; color:#bacac8;text-decoration:none}
+#sitetitle h1 a:hover {color:#fff}
+#sitetitle p {margin:0 0 0 0; padding:0; letter-spacing:-1px; font-size:1.3em; color:#ccc}
+
+/* Menu top */
+#menutop{margin:0 auto; width:970px; text-align:center;  padding:0;  background-image: url(../images/menu_2.jpg);}
+#menutop ul {height:25px}
+#menutop a{color:#366285; font-weight:bold}
+#menutop a:hover{color:#133e5a; font-weight:bold}
+
+/* Main menu */
+#menubar{margin:0 auto; width:970px; text-align:center; }
+#menubar a{color:#555555}
+#menubar a:hover{color:#e01250}
+
+/* Sidebar */
+#sidebar {text-align:left; float:left; margin:0; width:170px; height:95%; /* border:1px solid red; margin:30px 0 0 0; */}
+#sidebar h2, #sidebar h3 {font-size:1.4em; padding:0 0 2px 0; margin:0 0 5px 0; border-bottom:2px solid #ccc}
+#sidebar p, #sidebar ul, #sidebar ol {margin:0 0 5px 0; padding:0}
+#sidebar ul li {list-style:none; margin:0 0 7px}
+#sidebar ul li a { font-size:1.1em; color: #555}
+#sidebar ul li a:hover {color: #000}
+#sidebar ul ul {margin:3px 0 3px 0; font-size:1em}
+#sidebar ul ul li {margin:0;margin-bottom:1px;border: 1px solid #ccc}
+#sidebar ul ul li a {}
+#sidebar #block-menu-primary-links ul li { list-style-image: none;list-style: none; padding:0; margin:0 0 2px 0}
+#sidebar #block-menu-primary-links ul li a {display: block; overflow: visible; padding:2px 0 2px 5px; background-color:#f4f4f4; border:1px solid #e0e0e0; font-size:1.1em}
+#sidebar #block-menu-primary-links ul li a:hover, #sidebar ul li.current a {border:1px solid #ddd; color:#e01250; background-color:#fff}
+#sidebar #block-menu-primary-links ul li.current li a {background-color:#f8f8f8; color:#ffffff; border:1px solid #eee; border-bottom:1px solid #ddd}
+#sidebar #block-menu-primary-links ul ul {margin:0; padding:2px 0 0 15px}
+#sidebar #block-menu-primary-links ul ul li {letter-spacing:0}
+#sidebar #block-menu-primary-links ul ul li a {font-size:0.9em; padding:1px 0 1px 5px}
+#sidebar-left {float:left; width:140px; text-align:left;margin-top:0px; margin-left: 10px; margin-bottom: 50px; background-color:#f8fafb; padding: 5px}
+#sidebar-right {float:right; width:180px; text-align:left; margin-top:15px; margin-left:12px; margin-bottom: 20px; color:#315e94}
+
+/* Headers */
+h2, h3, h4 {margin:0 0 12px; padding-bottom:5px; color:#555}
+
+/* Content */
+#content {text-align:justify; width:725px; float:left; margin-top:45px; margin-bottom: 10px; font-size: 12px; line-height:18px; margin:0 20px; /* border:1px solid red; */}
+#content h2 {margin:0; font-size:14px; color:#426d83; clear:left; border-bottom:1px solid #ccc}
+#content h3 {font-size:0.9em; letter-spacing:-1px; margin-bottom:7px}
+#content h2 a, #content h3 a { border:0;text-decoration:none}
+#content p {margin:0 0 15px; color:#315e94}
+#content a {color:#e01250;}
+#content a:hover {color: #426d83;}
+#content ul, #content ol {margin:0 0 15px 10px; padding:0 0 0 5px; color:#315e94}
+#content ul li, #content ol li {margin:0 0 4px 5px; color:#315e94}
+#content ul ul, #content ol ol {margin:5px 0 5px 10px; color:#315e94}
+.h2_wrap {margin:30px 0 20px 0px;}
+
+/* ContentB */
+#contentB {text-align:justify; width:920px; float:left; margin-top:45px; margin-bottom: 10px; font-size: 12px; line-height:18px; margin:0 20px; /* border:1px solid red; */}
+#contentB h2 {margin:0; font-size:14px; color:#426d83; clear:left; border-bottom:1px solid #ccc}
+#contentB h3 {font-size:0.9em; letter-spacing:-1px; margin-bottom:7px}
+#contentB h2 a, #contentB h3 a { border:0;text-decoration:none}
+#contentB p {margin:0 0 15px; color:#315e94}
+#contentB a {color:#e01250;}
+#contentB a:hover {color: #426d83;}
+#contentB ul, #contentB ol {margin:0 0 15px 10px; padding:0 0 0 5px; color:#315e94}
+#contentB ul li, #contentB ol li {margin:0 0 4px 5px; color:#315e94}
+#contentB ul ul, #contentB ol ol {margin:5px 0 5px 10px; color:#315e94}
+
+/* Content 2 */
+#content2 {text-align:justify; width:750px; float:left; margin-bottom: 10px; font-size: 12px; line-height:18px; /* border:1px solid red; height:350px; */}
+#content2 h2 {margin:0;font-size:14px; color:#426d83; clear:left; border-bottom:2px solid #ccc}
+#content2 h3 {font-size:0.9em; letter-spacing:-1px; margin-bottom:7px}
+#content2 h2 a, #content2 h3 a { border:0;text-decoration:none}
+#content2 p {margin:0 0 15px}
+#content2 a {color:#de104e;}
+#content2 a:hover {color: #426d83;}
+#content2 ul, #content2 ol {margin:0 0 15px 10px; padding:0 0 0 5px}
+#content2 ul li, #content2 ol li {margin:0 0 4px 5px}
+#content2 ul ul, #content2 ol ol {margin:5px 0 5px 10px}
+
+
+/* Footer */
+#footer {font-size:0.90em;clear:both; width:940px;  margin: 0 auto; padding:10px 0}
+#footer p {margin:0; padding:0}
+#footer a {text-decoration:none;}
+#footer a:hover {text-decoration:underline;}
+#footer .left {float:left; width:43%; text-align:left}
+#footer .right{float:right; width:53%; text-align:right}
+
+/* Links and tags */
+a {color:#a92836; text-decoration:none}
+a:hover {color:#444; text-decoration:none}
+img, a img {border:0}
+
+/*meta formatting*/
+.meta {text-transform: capitalize; font-size: .90em; font-weight: bold; margin: 0 5px 0 0; color: #4d788d; font-style: normal}
+#content .meta a {color: #4d788d}
+#content .meta a:before {content: "\00BB"}
+#contentB .meta a {color: #4d788d}
+#contentB .meta a:before {content: "\00BB"}
+#content2 .meta a {color: #4d788d}
+#content2 .meta a:before {content: "\00BB"}
+.meta {border-bottom: 0px }
+.meta div.links {float: left; display: none;}
+.meta div.terms {float: right}
+.meta div.links ul.links li {float: left}
+.meta div.terms ul.links li {float: left}
+
+/*node formatting*/
+#content div.node  div.content p:first-child:first-line{font-weight: normal; font-style: normal; margin: 7px 0 0 0; padding:0}
+#content div.node  div.content p{padding:0}
+#contentB div.node  div.content p:first-child:first-line{font-weight: normal; font-style: normal; margin: 7px 0 0 0; padding:0}
+#contentB div.node  div.content p{padding:0}
+#content2 div.node  div.content p:first-child:first-line{font-weight: normal; font-style: normal; margin: 7px 0 0 0; padding:0}
+#content2 div.node  div.content p{padding:0}
+
+/* admin tab links */
+ul.primary, ul.primary li, ul.secondary, ul.secondary li { background: none; border: 0; margin: 0; padding: 0}
+ul.secondary { border-bottom: 1px solid #b4d7f0; margin: 0 0 1em; padding: .5em 0; text-align: left}
+ul.primary li a, ul.primary li.active a, ul.primary li a:hover, ul.primary li a:visited, ul.secondary li a, ul.secondary li.active a, ul.secondary li a:hover, ul.secondary li a:visited { background: none; border: 0; margin: 0; padding: 0 1em 0 0; text-decoration: none}
+ul.primary li.active a, ul.secondary li.active a { }
+
+/* position admin tab links and style admin h2 */
+#tabs-wrapper { margin: 0; padding: 0;display:inline-block}
+h2.with-tabs { margin-bottom: 0}
+#tabs-wrapper ul.tabs { margin: 0 0 .5em; padding: 0}
+
+div.admin-panel, div.admin-panel .description, div.admin-panel .body, div.admin, div.admin .left, div.admin .right, div.admin .expert-link, div.item-list, .menu { margin: 0; padding: 0}
+div.admin h3 { margin-bottom: 0}
+div.admin .left { float: left; width: 48%}
+div.admin .right { float: right; width: 68%}
+div.admin-panel { background:none; padding: 1em 1em 1.5em; text-align:left}
+div.admin-panel .description { margin-bottom: 1.5em}
+div.admin-panel dl { margin: 0}
+div.admin-panel dd { color: #898989; font-size: 0.9em; line-height: 1.3em; margin-bottom: .65em; margin-top: -.2em}
+
+/* Various classes */
+.trio1 {float:left; width:31%; padding:0 2% 0 0}
+.trio2 {float:left; width:31%; padding:0 2% 0 0}
+.trio3 {float:left; width:33%; padding:0}
+.textleft {text-align:left}
+.textright {text-align:right}
+.textcenter {text-align:center}
+.introtext, .introtext a {}
+.block {margin: 0 0 10px}
+.clear{clear:both}
+.clear2{width:980px; height:1px; background-color:#ffffff; margin: 0 auto; clear:both}
+
+div.submitted{text-align:right;font-size:0.75em;margin:0;width:100%}
+.border{border:1px solid #333}
+.left {float:left}
+.right {float:right}
+div#distance { width:950px; margin: 10px auto; height:8px; border-bottom:1px solid #ffffff; clear:both}
+
+div.trust { 
+font-size:11px;
+  margin:0px;
+  margin-right: 0px;
+  padding:  2px;
+  padding-left:  10px;
+  padding-right:  10px;
+  /*background: none;*/
+  list-style:none;
+  display:inline;
+  height: 24px;
+  float: right;
+  /*width:140px; height:39px; text-align:center; color:#ffffff; */
+  /*background-image:url(images/trusted_area.png); */
+  /*font-weight:bold; */
+  vertical-align:middle
+  
+  }
+  
+
+
+.fake-leaf {display:none}
+
+
+.translation-link {display:none;}
+
+
+.meta li.node_read_more {display:none;}
+.stile_home{font-size:12px;}
+
+.block-locale .content ul{
+width:60px; float:left;}
+.block-locale .content ul li{
+list-style: none;
+width: 60px;
+float: left;
+padding-left: 10px;
+font-size:12px;
+}
+
+.block-taxonomy_treemenu{
+float: left;
+}
+.block-taxonomy_treemenu div.content{
+float: left;
+}
+#block-taxonomy_treemenu-menu-general-en{
+width: 790px;
+}
+
+div.views-row{
+border-bottom: 1px solid #dae8ef;
+padding: 10px 0 10px 0;
+margin:0
+}
+
+div.views-row p{
+padding: 0
+}
+
+#gmap-nodemap-gmap0 h2 { font-size:12px;}
+div .gmapnodelabel {width: 200px; text-align:left; text-decoration:none; }
+div .field { font-size:9px;}
+.block-locale div.content {position: relative; margin-bottom:10px; z-index:1000}
+
+/*.views-row-even {background-color: #f3f7f9;}*/
+
+.views-field-title { padding: 10px 0 0 0;}
+.views-field-field-name-value {padding: 0}
+.views-field-field-position-value { padding: 0 10px; font-size:11px}
+.views-field-tid { padding: 0; font-size:11px}
+.field-content { padding: 0 10px; font-size:12px}
+.views-field-field-project-time-value { padding: 0 10px; font-size:11px}
+.views-field-country { padding: 0 10px; font-size:11px}
+.field-label {font-size:11px; color:#426d83; font-weight:bold; padding-top:0px}
+
+div.view view-taxonomy-term views-row-even {background-color: #ffffff;}
+.terms { line-height: 10px; font-size:10px; margin: 0; padding: 0; text-align:left}
+.leaf first dhtml-menu even {color:#000033}
+.leaf first dhtml-menu even a{color:#000033}
+.leaf first dhtml-menu even a:hover{color:#000033}
+
+/*home*/
+
+.home_second { background-image: url("second_line.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/home/second_line.png*/); width: 780px; height: 88px; margin: 25px 0 2px 0; font-size:10px; color:#ffffff;}
+.home_content { background-image: url("second_line.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/home/second_line.png*/); width: 700px; height: 64px; line-height: 11px; font-size:10px; color:#ffffff; text-align:justify; padding: 16px 30px 10px 40px}
+.quad { background-image: url("quad.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/home/quad.png*/); width: 780px; height: 400px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff;}
+.quadfr { background-image: url("quadfr.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/home/quadfr.png*/); width: 780px; height: 480px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff;}
+.quad_content { float:left; clear:both;  width: 500px; height: 110px; line-height: 14px; font-size:12px; color:#315e94; text-align:justify; padding: 13px 40px 0 40px}
+.quad_contentfr { float:left; clear:both;  width: 370px; height: 124px; line-height: 14px; font-size:12px; color:#315e94; text-align:justify; padding: 10px 40px 0 40px}
+.quad_content2 { float:left; width: 692px; height: 70px; line-height: 14px; font-size:12px; color:#315e94; text-align:justify; padding: 222px 0 10px 40px}
+.quad_content li{ padding: 4px 0}
+
+.quad2705 { background-image: url("quad1_2705.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad1_2705.png*/); width: 590px; height: 316px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad2705_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 18px; font-size:12px; color:#315e94; text-align:justify; padding: 50px 40px 0 40px}
+
+
+.quad2_2705 { background-image: url("quad2_2705.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad2_2705.png*/); width: 590px; height: 545px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad2_2705_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 18px; font-size:12px; color:#315e94; text-align:justify; padding: 60px 40px 0 40px}
+
+.quad3_2705 { background-image: url("quad3_2705.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad3_2705.png*/); width: 590px; height: 480px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad3_2705_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 18px; font-size:12px; color:#315e94; text-align:justify; padding: 88px 40px 0 40px}
+
+.quad2705fr { background-image: url("quad1_2705fr.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad1_2705fr.png*/); width: 590px; height: 390px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad2705fr_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 18px; font-size:12px; color:#315e94; text-align:justify; padding: 60px 40px 0 40px}
+
+
+.quad2_2705fr { background-image: url("quad2_2705fr.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad2_2705fr.png*/); width: 590px; height: 580px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad2_2705fr_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 18px; font-size:12px; color:#315e94; text-align:justify; padding: 50px 40px 0 40px}
+
+.quad3_2705fr { background-image: url("quad3_2705fr.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad3_2705fr.png*/); width: 590px; height: 600px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad3_2705fr_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 18px; font-size:12px; color:#315e94; text-align:justify; padding: 70px 40px 0 40px}
+
+.quad1_1057 { background-image: url("quad1_1057.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad1_1057.png*/); width: 710px; height: 225px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad1_1057_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 24px; font-size:12px; color:#315e94; text-align:justify; padding: 70px 40px 0 25px}
+.quad2_1057 { background-image: url("quad2_1057.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad2_1057.png*/); width: 560px; height: 316px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad2_1057_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 25px; font-size:12px; color:#315e94; text-align:justify; padding: 55px 40px 0 25px}
+.quad3_1057 { background-image: url("quad3_1057.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad3_1057.png*/); width: 560px; height: 225px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad3_1057_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 25px; font-size:12px; color:#315e94; text-align:justify; padding: 50px 40px 0 25px}
+
+.quad1_1072 { background-image: url("quad1_1072.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad1_1072.png*/); width: 560px; height: 225px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad1_1072_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 19px; font-size:12px; color:#315e94; text-align:justify; padding: 65px 40px 0 25px}
+.quad2_1072 { background-image: url("quad2_1072.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/images/quad2_1072.png*/); width: 560px; height: 316px; margin: 15px 0 2px 0; font-size:10px; color:#ffffff; font-size:12px;}
+.quad2_1072_content { float:left; clear:both;  width: 510px; height: 110px; line-height: 20px; font-size:12px; color:#315e94; text-align:justify; padding: 50px 40px 0 25px}
+
+
+.first_write {margin-right:30px;float:right; width: 415px; line-height: 18px; font-size:12px; color:#315e94; text-align:justify; padding: 0px 0px 10px 0px}
+.first_write2 {margin-left:30px;float:left; width: 370px; line-height: 18px; font-size:12px; color:#315e94; text-align:justify; padding: 0px 0px 10px 0px}
+.video {float:right; width: 450px; height: 270px; margin: 0px 12px}
+.video2home {float:right; width: 512px; height: 288px; margin-right:10px}
+.video2 { width: 350px; height: 290px; margin: 0px auto}
+.stripes { background-image: url("stripes.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/home/stripes.png*/); width: 542px; height: 308px; margin: 15px 119px 2px 119px;}
+.stripes_content1 { width: 380px; height: 60px; line-height: 15px; font-size:14px; color:#ffffff; text-align:left; padding: 34px 7px 7px 140px; clear:both}
+.stripes_content2 { width: 380px; height: 61px; line-height: 15px; font-size:12px; color:#ffffff; text-align:left; padding: 0px 7px 7px 140px; clear:both}
+.stripes_content3 { width: 380px; height: 63px; line-height: 15px; font-size:12px; color:#ffffff; text-align:left; padding: 0px 7px 7px 140px; clear:both}
+.stripes_content4 { width: 380px; height: 63px; line-height: 15px; font-size:12px; color:#ffffff; text-align:left; padding: 7px 7px 7px 140px; clear:both}
+.stripes_content1fr { width: 380px; height: 51px; line-height: 15px; font-size:14px; color:#ffffff; text-align:left; padding: 34px 7px 7px 140px; clear:both}
+.stripes_content2fr { width: 380px; height: 79px; line-height: 15px; font-size:12px; color:#ffffff; text-align:left; padding: 0px 7px 7px 140px; clear:both}
+.stripes_content3fr { width: 380px; height: 63px; line-height: 15px; font-size:12px; color:#ffffff; text-align:left; padding: 0px 7px 7px 140px; clear:both}
+.stripes_content4fr { width: 380px; height: 63px; line-height: 15px; font-size:12px; color:#ffffff; text-align:left; padding: 7px 7px 7px 140px; clear:both}
+.cell { background-image: url("cell.png"/*tpa=http://www.agora-parl.org/sites/all/themes/daleri-structure/daleri-mega/home/cell.png*/); width: 588px; height: 594px; margin: 15px 96px 2px 96px;}
+.cell1 { float:left; width:180px; height:220px; font-size:12px; line-height:16px; color:#ffffff; text-align:left; margin: 30px 0 0 20px}
+.cell2 { float:left; width:350px; height:207px; font-size:11px; line-height:23px; color:#315e94; text-align:left; margin: 56px 0 0 20px}
+.cell3 { float:left; width:180px; height:100px; font-size:12px; color:#ffffff; text-align:center; margin: 148px 0 0 20px}
+.cell4 { float:left; width:340px; height:270px; font-size:11px; line-height:13px; color:#315e94; text-align:justify; margin: 48px 0 0 20px}
+.cell1fr { float:left; width:180px; height:220px; font-size:12px; line-height:16px; color:#ffffff; text-align:left; margin: 26px 0 0 20px}
+.cell2fr { float:left; width:350px; height:207px; font-size:11px; line-height:23px; color:#315e94; text-align:left; margin: 56px 0 0 20px}
+.cell3fr { float:left; width:180px; height:100px; font-size:12px; color:#ffffff; text-align:center; margin: 120px 0 0 20px}
+.cell4fr { float:left; width:340px; height:270px; font-size:11px; line-height:13px; color:#315e94; text-align:justify; margin: 45px 0 0 20px}
+
+.browser {float:left; font-size: 9px; color:#73a0b7; text-align:center; margin: 0 auto; width: 980px; margin-top:7px}
+.distance {font-size: 9px; color: #ffffff; text-align:center;}
+
+/*#interested {font-size: 10px; color:#426d83; font-weight:bold; padding: 5px; background-color:#d8f9de; height: 20px; text-align:center; margin: 15px 0 0 0}*/
+
+#block-google_cse-0{margin-top:0px;float: right;padding: auto 0;margin-left:5px;font-size:10px;}
+#google-cse-searchbox-form input.form-submit{width:45px;line-height:18px;margin:auto; margin-right:15px;font-size:10px;text-align:center;}
+#google-cse-searchbox-form input.form-text{width:150px;font-size:10px;}
+#block-google_cse-0  h3 { font-size:12px; color:#4e78ae}
+
+#quickfacts_cont { float:right; width:180px; margin:17px 10px 0 0;}
+#quickfacts_title { float:right; width:180px; /* background-color:#a5afb8; */ background-color:#7fbfff;  margin:0 0 2px 0; height:30px}
+#quickfacts_title_cont { float:left; width:140px; color:#ffffff; padding:7px 0 7px 18px; font-size:13px}
+#quickfacts-wrapper{float:right;text-align:center; /* background-color:#e1e6e9; */ background-color:#e0f0ff; width:180px; color:#000000; font-size:10px; height:248px}
+#quickfacts-wrapper2{float:right;text-align:center; /* background-color:#e1e6e9; */ background-color:#e0f0ff; width:180px; color:#000000; font-size:10px; height:630px}
+#quickfacts{text-align:left;float:left; padding: 10px 0 0 0; width:160px; margin-top:10px}
+#quickfacts2{text-align:left;float:left; padding: 10px 0 0 0; width:160px; margin-top:10px;height:600px;/* border:1px solid blue; */}
+#quickfacts ul{margin: 0;padding:0;}
+#quickfacts ul p{margin-bottom: 30px;}
+#quickfacts li{margin-left: 10px;list-style:none; height:107px}
+.block-aggregator .more-link {
+display: none;
+}
+
+.news_title { float:left; width:77px;/*  background-color:#a5afb8; */ background-color:#7fbfff; margin:0 0 5px 5px; color:#ffffff; padding:6px 0; font-size:14px; text-align:center}
+#aggregator-feed{float:right;margin-right:5px;padding:0 0px;height:27px;width:870px;text-align:center;background-color:#e0f0ff;}
+#aggregator-feed li{margin-left: 5px; height: 27px;line-height: 27px;width:98%;}
+#aggregator-feed div.item-list{padding-left:10px;width:100%;height: 27px;}
+
+.menu_minor{float: right; font-size: 10px; color:#14394b}
+.menu_minor a{font-size: 10px; color:#14394b; text-decoration:none}
+.menu_minor a:hover{font-size: 10px; color:#14394b; text-decoration: underline}
+
+.block-locale .active { 
+  display: none; 
+}
+
+
+#block-views-showcase-block_1{width:530px}
+#block-views-showcase-block_1 div.view-content{width:530px}
+
+#block-views-showcase_ru-block_1{width:530px}
+#block-views-showcase_ru-block_1 div.view-content{width:530px}
+
+
+#menutopright {
+  float: right;
+  border: 0;
+  margin-top: -26px;
+  width: 380px;/*380*/
+  padding: 0px;
+}
+
+#menutopright ul li {
+ 
+  /*  background: #8c9ea8;*/
+    font-size:11px;
+	/*padding:5px 7px;*/
+	padding: 2px;
+	padding-left:  10px;
+  padding-right:  10px;
+	margin-left:2px;
+	color:#ffffff;
+	margin: 0 2px 0 0;
+	list-style:none;
+	float:left;
+	height: 24px;
+	
+	
+}
+
+#menutopright a {
+ 
+    /*background: #8c9ea8;*/
+    font-size:11px;
+	/*padding:5px 7px;*/
+	color:#ffffff;
+	height: 25px;
+	line-height: 22px;
+	}
+
+#menutopright ul li li {
+  border-top: 0;
+
+}
+
+#menutopright ul ul {
+  left: 0;
+  margin:10px 0 0 0;
+}
+
+#menutopright ul ul li {
+  clear: both;
+}
+#block-menu-menu-menubig{
+float: right;
+
+padding: 0;
+margin: 0;
+
+}
+
+#block-menu-menu-menubig ul {
+margin: 0;
+padding: 0;
+}
+
+
+#block-menu-menu-menubigfr{
+float: right;
+
+padding: 0;
+margin: 0;
+
+}
+
+#block-menu-menu-menubigfr ul {
+margin: 0;
+padding: 0;
+}
+
+#block-menu-menu-menubigru{
+float: right;
+
+padding: 0;
+margin: 0;
+
+}
+
+#block-menu-menu-menubigru ul {
+margin: 0;
+padding: 0;
+}
+
+
+#myslidemenu{
+margin: 0 auto;
+width: 732px;
+}
+
+
+.en { height:24px; margin: -10px 0 0 0}
+.fr { height:24px; margin: -10px 0 0 0}
+.ru { height:24px; margin: -10px 0 0 0}
+
+div.view-content-atlas{
+width:920px;
+}
+div.item-list-atlas{
+margin:0;
+width:230px;
+float:left;
+}
+div.field-content-atlas{
+text-align: left;
+}
+div.item-list-atlas ul
+{margin: 0!important;
+padding-left: 12px!important;
+padding-right: 0!important;
+padding-top: 0!important;
+padding-bottom: 0!important;
+
+}
+.views-field-title-atlas{
+padding: 0!important;
+}
+
+.matrix-last-row { font-weight:bold}
+
+.field-label { float:left; width: 320px; margin: 7px 0; text-align:right}
+.field-item { float:left; width:560px; margin: 7px 0; font-size:12px}
+.fieldgroup group-mps { float:left;}
+.fieldgroup group-committees { float:left;}
+.matrix-second-col { padding:3px 7px}
+
+div.field-field-country div.field-label{ visibility:hidden; width:0;}
+div.field-field-country div.field-item{ font-size:18px; font-weight:bold; color:#426d83; font-style:italic;}
+div.field-field-photo div.field-label{ visibility:hidden; width:0;}
+div.field-field-photo div.field-item{ width:450px; height:250px }
+div.field-field-photo div.field-item img{ border:4px solid #426d83 }
+div.field-field-logo div.field-label{ visibility:hidden; width:0;}
+div.field-field-logo div.field-item{ width:450px; height:250px;}
+div.field-field-logo div.field-item img{ border:4px solid #426d83 }
+
+div.field-field-parliament-type div.field-label{ width:310px;}
+div.field-field-parliament-type div.field-item{ width:600px}
+div.field-field-rules div.field-label{ width:310px;}
+div.field-field-rules div.field-item{ width:600px}
+div.field-field-constitution div.field-label{ width:310px;}
+div.field-field-constitution div.field-item{ width:600px}
+div.field-field-website div.field-label{ width:310px;}
+div.field-field-website div.field-item{ width:600px}
+div.field-field-framework div.field-label{ width:310px;}
+div.field-field-framework div.field-item{ width:600px}
+div.field-field-president div.field-label{ width:310px;}
+div.field-field-president div.field-item{ width:600px}
+div.field-field-secretary div.field-label{ width:310px;}
+div.field-field-secretary div.field-item{ width:600px}
+div.field-field-system-type div.field-label{ width:310px;}
+div.field-field-system-type div.field-item{ width:600px}
+div.field-field-last-election-date div.field-label{ width:310px;}
+div.field-field-last-election-date div.field-item{ width:600px}
+
+div.field-field-number-mps div.field-label{ width:290px;}
+div.field-field-number-mps div.field-item{ width:600px}
+div.field-field-women-mps div.field-label{ width:290px;}
+div.field-field-women-mps div.field-item{ width:600px}
+div.field-field-minorities-mps div.field-label{ width:290px;}
+div.field-field-minorities-mps div.field-item{ width:600px}
+div.field-field-first-time-mps div.field-label{ width:290px;}
+div.field-field-first-time-mps div.field-item{ width:600px}
+
+div.field-field-electoral-system div.field-label{ width:310px;}
+div.field-field-electoral-system div.field-item{ width:600px}
+div.field-field-next-election-date div.field-label{ width:310px;}
+div.field-field-next-election-date div.field-item{ width:600px}
+
+div.field-field-committees-url div.field-label{ width:290px;}
+div.field-field-committees-url div.field-item{ width:600px}
+div.field-field-committees-textarea div.field-label{ width:290px;}
+div.field-field-committees-textarea div.field-item{ width:600px}
+
+div.field-field-plans div.field-label{ width:310px;}
+div.field-field-plans div.field-item{ width:600px}
+div.field-field-assessment div.field-label{ width:310px;}
+div.field-field-assessment div.field-item{ width:600px}
+div.field-field-projects div.field-label{ width:310px;}
+div.field-field-projects div.field-item{ width:600px}
+div.field-field-notes div.field-label{ width:920px; text-align:center; background-color:#a9b4ba}
+div.field-field-notes div.field-item{ width:920px; text-align:left;}

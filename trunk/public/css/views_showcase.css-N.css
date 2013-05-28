@@ -1,0 +1,147 @@
+/* $Id: views_showcase.css,v 1.1 2010/04/29 16:40:36 khaledzaidan Exp $ */ 
+
+div.views-showcase-content-container{
+	width: 740px;
+	height: 240px;
+	float: left;
+  }
+
+
+.views-showcase {
+   border-bottom: 1px solid #e4e5e9;
+  /*background-color: transparent;*/
+  width: 740px;
+  height: 251px;
+  display: none;
+  padding: 10px 0px!important;
+}
+
+.views-showcase div.views-showcase-big-panel {
+  list-style: none;
+  list-style-image: none;
+  margin:0;
+  padding:0;
+  height: 355px;
+  width: 740px;
+}
+
+.views-showcase .views-showcase-big-panel li, .views-showcase .views-showcase-big-panel div {
+  list-style: none;
+  /*margin:0;*/
+  padding:0 0;
+  background-color: transparent;
+
+}
+div.views-showcase-big-box-body {
+padding: 0;
+margin-top: 5px;
+margin-left: 0px;
+background-color: transparent;
+color:#315e94;
+
+}
+
+ div.views-showcase-big-box-body  span.field-content{
+ padding: 0;
+ margin: 0;
+ background-color: transparent;
+
+
+ }
+
+div.views-showcase-big-box-body {float:left; width:350px}
+
+
+div.views-showcase-big-box-field_image_showcase_fid {float:left; padding:0;margin: 0;}
+
+
+.views-showcase-mini-list {
+	width: 130px;
+	margin-right: 150px;
+	height: 15px;
+	z-index: 200;
+	
+}
+
+.views-showcase-big-panel {
+  
+  background-color: transparent;
+}
+
+
+.views-showcase-mini-list .activeItem, .views-showcase-pager-item:hover {
+  background-position: right top;
+  
+}
+
+.views-showcase-field-label, .views-showcase-field-content {
+  display: inline;
+}
+
+ul.views-showcase-pager-item-sublist, ul.views-showcase-mini-list {
+  list-style: none;
+}
+
+
+.views-showcase-subitem label, .views-showcase-content-title, .views-showcase-navigation-title {
+  display:none;
+}
+
+/*'right' skin*/
+
+.skin-right .views-showcase-navigation-container {
+  float: right;
+  }
+
+.skin-right .views-showcase-content-container {
+  float: left;
+}
+
+/*'left' skin*/
+
+.skin-left .views-showcase-navigation-container {
+  float: left;
+}
+
+.skin-left .views-showcase-content-container {
+  float: right;
+}
+
+
+.views-showcase-mini-list li{
+list-style:none;
+text-decoration: none;
+	margin-right: 5px;
+	background-image: url(../images/bullet.png);
+	text-indent: -9000px;
+	display: block;
+	height: 8px;
+	width: 8px;
+	float: left;
+	outline: none;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	
+}
+.views-showcase-mini-list .pauseButton{
+	display: block;
+	height: 8px;
+	width: 8px;
+	background-image: url(../images/play-pause-button.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+	padding: 0px;
+	float: right;
+	outline: none;
+	cursor: pointer;
+}
+
+
+
+/*AGGIUNTI MASSIMO*/
+
+
+
+/* -------------- */
+
+
