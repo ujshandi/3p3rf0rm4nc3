@@ -20,6 +20,7 @@ class Penetapaneselon1_model extends CI_Model
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
 		$count = $this->GetRecordCount($filtahun,$file1);
+		//var_dump($count);die;	
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
@@ -40,8 +41,8 @@ class Penetapaneselon1_model extends CI_Model
 			//$this->db->select("*, tbl_pk_eselon1.kode_e1 as pk_kode_e1",false);
 			$this->db->select("tbl_pk_eselon1.*, tbl_iku_eselon1.deskripsi as deskripsi_iku_e1,tbl_iku_eselon1.satuan, tbl_sasaran_eselon1.deskripsi as deskripsi_sasaran_e1, tbl_eselon1.nama_e1",false);
 			$this->db->from('tbl_pk_eselon1');
-			$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_pk_eselon1.tahun');
-			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_pk_eselon1.kode_sasaran_e1 ');
+			$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_pk_eselon1.tahun','left');
+			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_pk_eselon1.kode_sasaran_e1 ','left');
 			$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_pk_eselon1.kode_e1 ');
 			$this->db->order_by("tbl_pk_eselon1.tahun DESC, kode_sasaran_e1 ASC, tbl_pk_eselon1.kode_iku_e1 ASC");
 			$query = $this->db->get();
@@ -106,11 +107,11 @@ class Penetapaneselon1_model extends CI_Model
 		if($file1 != '' && $file1 != '-1' && $file1 != null) {
 			$this->db->where("tbl_pk_eselon1.kode_e1",$file1);
 		}		
-		$this->db->select('*, tbl_rkt_eselon1.kode_e1 as pk_kode_e1');
+		$this->db->select('distinct tbl_pk_eselon1.*, tbl_iku_eselon1.kode_e1 as pk_kode_e1');
 		$this->db->from('tbl_pk_eselon1');
-		$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_pk_eselon1.tahun');
-		$this->db->order_by("tbl_pk_eselon1.tahun DESC, kode_sasaran_e1 ASC, tbl_pk_eselon1.kode_iku_e1 ASC");
-			
+		$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_pk_eselon1.tahun','left');
+		//$this->db->order_by("tbl_pk_eselon1.tahun DESC, kode_sasaran_e1 ASC, tbl_pk_eselon1.kode_iku_e1 ASC");
+		
 		return $this->db->count_all_results();
 		$this->db->free_result();
 	}

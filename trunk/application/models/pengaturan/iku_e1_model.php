@@ -38,10 +38,10 @@ class Iku_e1_model extends CI_Model
 			if($filkey != '' && $filkey != '-1' && $filkey != null) {
 				$this->db->like("a.deskripsi",$filkey);
 			}
-			$this->db->select("a.tahun,a.kode_e1, a.kode_iku_e1, a.deskripsi, a.satuan, a.kode_iku_kl, a.kode_e2,b.deskripsi as deskripsi_ikukl, c.nama_e1, d.deskripsi AS kl_deskripsi",false);
+			$this->db->select("a.tahun,a.kode_e1, a.kode_iku_e1, a.deskripsi, a.satuan, a.kode_iku_kl, a.kode_e2,b.deskripsi as deskripsi_ikukl, c.nama_e1, b.deskripsi AS kl_deskripsi",false);
 			$this->db->from('tbl_iku_eselon1 a left join tbl_iku_kl b on a.tahun=b.tahun and a.kode_iku_kl=b.kode_iku_kl',false);
 			$this->db->join('tbl_eselon1 c', 'c.kode_e1 = a.kode_e1');
-			$this->db->join('tbl_iku_kl d', 'd.kode_iku_kl = a.kode_iku_kl','left' );			
+	//bug		$this->db->join('tbl_iku_kl d', 'd.kode_iku_kl = a.kode_iku_kl','left' );			
 			$this->db->order_by("a.kode_e1 ASC, a.kode_iku_e1 ASC");
 			$query = $this->db->get();
 			
@@ -125,7 +125,7 @@ class Iku_e1_model extends CI_Model
 		//$this->db->select("a.tahun,a.kode_e1, a.kode_iku_e1, a.deskripsi, a.satuan, a.kode_iku_kl, a.kode_e2,b.deskripsi as deskripsi_ikukl, b.nama_e1, c.deskripsi AS kl_deskripsi",false);
 		$this->db->from('tbl_iku_eselon1 a left join tbl_iku_kl b on a.tahun=b.tahun and a.kode_iku_kl=b.kode_iku_kl',false);
 		$this->db->join('tbl_eselon1 c', 'c.kode_e1 = a.kode_e1');
-		$this->db->join('tbl_iku_kl d', 'd.kode_iku_kl = a.kode_iku_kl','left' );			
+		//bug $this->db->join('tbl_iku_kl d', 'd.kode_iku_kl = a.kode_iku_kl','left' );			
 		return $this->db->count_all_results();
 		$this->db->free_result();
 	}
