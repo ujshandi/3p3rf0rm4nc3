@@ -38,10 +38,11 @@ class Rpt_rktkl_model extends CI_Model
 					$this->db->where("rkt.kode_iku",$filiku);
 			}
 			
-			$this->db->order_by($sort." ".$order );
+			//$this->db->order_by($sort." ".$order );
+			$this->db->order_by("sasaran.kode_sasaran_kl,iku.kode_iku_kl");
 			if ($purpose==1) $this->db->limit($limit,$offset);
 			//$this->db->select("*",false);
-			$this->db->select("sasaran.deskripsi as sasaran_strategis, iku.deskripsi as indikator_kinerja, rkt.target 
+			$this->db->select("distinct sasaran.deskripsi as sasaran_strategis, iku.deskripsi as indikator_kinerja,iku.satuan, rkt.target 
 ",false);
 			//$this->db->from('tbl_rkt_kl');
 			$this->db->from('tbl_rkt_kl rkt inner join tbl_iku_kl iku on iku.kode_iku_kl = rkt.kode_iku_kl
@@ -81,12 +82,12 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 				//$response->rows[$i]['kode_sasaran_kl']=$row->kode_sasaran_kl;
 				//$response->rows[$i]['kode_iku']=$row->kode_iku;
 				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
-				//$response->rows[$i]['satuan']=$row->satuan;
+				$response->rows[$i]['satuan']=$row->satuan;
 //utk kepentingan export excel ==========================
 				//$row->program = $program[0].", ".$program[1];
 			//============================================================
 			//utk kepentingan export pdf===================
-				$pdfdata[] = array($no,$response->rows[$i]['sasaran_strategis'],$response->rows[$i]['no_indikator'],$response->rows[$i]['indikator_kinerja'],$response->rows[$i]['target']);
+				$pdfdata[] = array($no,$response->rows[$i]['sasaran_strategis'],$response->rows[$i]['no_indikator'],$response->rows[$i]['indikator_kinerja'],$response->rows[$i]['target'],$response->rows[$i]['satuan']);
 			//============================================================
 				$i++;
 			} 
@@ -101,7 +102,7 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 				//$response->rows[$count]['kode_sasaran_kl']='';
 				//$response->rows[$count]['kode_iku']='';
 				$response->rows[$count]['target']='';
-				//$response->rows[$count]['satuan']='';
+				$response->rows[$count]['satuan']='';
 				$response->lastNo = 0;
 				
 		}
@@ -113,7 +114,7 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 		}
 		else if($purpose==3){//to excel
 			//tambahkan header kolom
-			$colHeaders = array("Sasaran Strategis","Deskripsi Indikator","Target ");		
+			$colHeaders = array("Sasaran Strategis","Deskripsi Indikator","Satuan","Target ");		
 			to_excel($query,"RencanaKinerjaKl",$colHeaders);
 		}
 		

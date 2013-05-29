@@ -56,7 +56,7 @@ class Penetapankl extends CI_Controller {
 	
 	private function get_form_values() {
 		$dt['tahun'] = $this->input->post("tahun".$this->objectId, TRUE); 
-		$dt['kode_kl'] = $this->input->post("kode_kl".$this->objectId, TRUE); 
+		$dt['kode_kl'] = $this->input->post("kode_kl", TRUE); 
 		$dt['kode_sasaran_kl'] = $this->input->post("kode_sasaran_kl", TRUE); 
 		$dt['detail'] = $this->input->post("detail", TRUE); 
 		
@@ -74,7 +74,7 @@ class Penetapankl extends CI_Controller {
 		// validation
 		# rules
 		$this->form_validation->set_rules("tahun".$this->objectId, 'Tahun', 'trim|required|numeric|exact_length[4]|xss_clean');
-		$this->form_validation->set_rules("kode_kl".$this->objectId, 'Kementerian', 'trim|required|xss_clean');
+		$this->form_validation->set_rules("kode_kl", 'Kementerian', 'trim|required|xss_clean');
 		$this->form_validation->set_rules("kode_sasaran_kl", 'Sasaran Kementerian', 'trim|required|xss_clean');
 		
 		# message rules
@@ -84,7 +84,7 @@ class Penetapankl extends CI_Controller {
 		
 		if ($this->form_validation->run() == FALSE){ // jika tidak valid
 			$data['pesan_error'].=(trim(form_error('tahun'.$this->objectId,' ',' '))==''?'':form_error('tahun'.$this->objectId,' ','<br>'));
-			$data['pesan_error'].=(trim(form_error('kode_kl'.$this->objectId,' ',' '))==''?'':form_error('kode_kl'.$this->objectId,' ','<br>'));
+			$data['pesan_error'].=(trim(form_error('kode_kl',' ',' '))==''?'':form_error('kode_kl',' ','<br>'));
 			$data['pesan_error'].=(trim(form_error('kode_sasaran_kl',' ',' '))==''?'':form_error('kode_sasaran_kl',' ','<br>'));
 			
 		}else{
