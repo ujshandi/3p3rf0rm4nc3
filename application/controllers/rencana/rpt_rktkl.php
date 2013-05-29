@@ -185,11 +185,15 @@ class Rpt_rktkl extends CI_Controller {
 				$y=$this->our_pdf->GetY();
 				$this->our_pdf->Wrap(102, ($numpuk?$newHeight:5), trim($pdfdata[$i][3]), 1, 0, 'LM', false, '', 102, $newHeight2);
 				$this->our_pdf->SetXY($x+102,$y); 
+/*
 				$x=$this->our_pdf->GetX();
 				$y=$this->our_pdf->GetY();
-			//$this->our_pdf->cell(30,$newHeight,$pdfdata[$i][5],1,0,'C',1);
+*/
+			$this->our_pdf->cell(30,$newHeight,$pdfdata[$i][5],1,0,'C',1);
+/*
 			$this->our_pdf->Wrap(30, ($numpuk?$newHeight:5), trim($pdfdata[$i][5]), 1, 0, 'CM', false, '', 30, $newHeight2);
 			$this->our_pdf->SetXY($x+30,$y); 
+*/
 			$this->our_pdf->cell(25,$newHeight,$pdfdata[$i][4],1,0,'R',1);
 		
 			$this->our_pdf->Ln($newHeight);
