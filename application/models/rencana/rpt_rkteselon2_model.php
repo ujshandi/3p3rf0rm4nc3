@@ -46,11 +46,12 @@ class Rpt_rkteselon2_model extends CI_Model
 			if($filikk != '' && $filikk != '-1' && $filikk != null) {
 					$this->db->where("rkt.kode_ikk",$filikk);
 			}
-			$this->db->order_by($sort." ".$order );
+			//$this->db->order_by($sort." ".$order );
+			$this->db->order_by("sasaran.kode_sasaran_e2,ikk.kode_ikk" );
 			if ($purpose==1) $this->db->limit($limit,$offset);
 			//$this->db->select("*",false);
 			//$this->db->from('tbl_rkt_eselon2');
-			$this->db->select("sasaran.deskripsi as sasaran_strategis, ikk.deskripsi as indikator_kinerja, rkt.target ",false);
+			$this->db->select("distinct sasaran.deskripsi as sasaran_strategis, ikk.deskripsi as indikator_kinerja, ikk.satuan,rkt.target ",false);
 			$this->db->from('tbl_rkt_eselon2 rkt inner join tbl_ikk ikk on ikk.kode_ikk = rkt.kode_ikk
 inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sasaran_e2',false);
 			$query = $this->db->get();
@@ -86,12 +87,12 @@ inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sas
 				}
 				
 				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
-				//$response->rows[$i]['satuan']=$row->satuan;
+				$response->rows[$i]['satuan']=$row->satuan;
 //utk kepentingan export excel ==========================
 				//$row->program = $program[0].", ".$program[1];
 			//============================================================
 			//utk kepentingan export pdf===================
-				$pdfdata[] = array($no,$response->rows[$i]['sasaran_strategis'],$response->rows[$i]['no_indikator'],$response->rows[$i]['indikator_kinerja'],$response->rows[$i]['target']);
+				$pdfdata[] = array($no,$response->rows[$i]['sasaran_strategis'],$response->rows[$i]['no_indikator'],$response->rows[$i]['indikator_kinerja'],$response->rows[$i]['target'],$response->rows[$i]['satuan']);
 			//============================================================
 				$i++;
 			} 
@@ -103,6 +104,7 @@ inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sas
 				$response->rows[$count]['no_indikator']= "";
 				$response->rows[$count]['indikator_kinerja']='';
 				$response->rows[$count]['sasaran_strategis']='';
+				$response->rows[$count]['satuan']='';
 				
 				$response->rows[$count]['target']='';
 				$response->lastNo = 0;
@@ -116,7 +118,7 @@ inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sas
 		}
 		else if($purpose==3){//to excel
 			//tambahkan header kolom
-			$colHeaders = array("Sasaran Strategis","Deskripsi Indikator","Target " );		
+			$colHeaders = array("Sasaran Strategis","Deskripsi Indikator","Satuan","Target " );		
 			to_excel($query,"RencanaKinerjaE2",$colHeaders);
 		}
 		

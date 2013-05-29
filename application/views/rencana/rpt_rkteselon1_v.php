@@ -280,20 +280,21 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Laporan Rencana Kinerja Tahunan Eselon 1" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="false" pagination="true"  nowrap="false">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Laporan Rencana Kinerja Tahunan Eselon 1" toolbar="#tb<?=$objectId;?>" fitColumns="false" singleSelect="true" rownumbers="false" pagination="true"  nowrap="false">
 	  <thead>
 	  <tr>
 		
-		<th field="no" rowspan="2" sortable="false" width="15px">No.</th>
+		<th field="no" rowspan="2" sortable="false" width="25px">No.</th>
 		<th field="sasaran_strategis"  rowspan="2"  sortable="false" width="150px">Sasaran Strategis</th>
 		
 		<th  sortable="false" colspan="2" width="150px">Indikator Kinerja</th>
+		<th field="satuan"  rowspan="2" sortable="false" align="center" width="150px">Satuan</th>
 		<th field="target"  rowspan="2" sortable="false" align="right" width="150px">Target</th>
 	  </tr>
 	  <tr>
 		
-		<th field="no_indikator" sortable="false" width="15px">No.</th>
-		<th field="indikator_kinerja" sortable="false" width="350px">Deskripsi</th>
+		<th field="no_indikator" sortable="false" width="25px">No.</th>
+		<th field="indikator_kinerja" sortable="false" width="300px">Deskripsi</th>
 		
 	  </tr>
 	  </thead>  
