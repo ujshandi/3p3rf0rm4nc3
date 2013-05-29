@@ -73,7 +73,8 @@ class Rpt_rkteselon1 extends CI_Controller {
 		$this->our_pdf->CELL(8,12,'No',1,0,'C',1);
 		$this->our_pdf->CELL(100,12,'Sasaran Strategis',1,0,'C',1);
 
-		$this->our_pdf->CELL(140,6,'Indikator Kinerja',1,0,'C',1);
+		$this->our_pdf->CELL(110,6,'Indikator Kinerja',1,0,'C',1);
+		$this->our_pdf->CELL(30,12,'Satuan',1,0,'C',1);
 		$this->our_pdf->CELL(25,12,'Target',1,0,'C',1);
 		
 		
@@ -85,7 +86,7 @@ class Rpt_rkteselon1 extends CI_Controller {
 		$this->our_pdf->CELL(8,6,'No',1,0,'C',1);
 		$posX += 8;
 		$this->our_pdf->setXY($posX,$posY);
-		$this->our_pdf->CELL(132,6,'Deskripsi',1,0,'C',1);
+		$this->our_pdf->CELL(102,6,'Deskripsi',1,0,'C',1);
 		
 	
 		
@@ -125,7 +126,7 @@ class Rpt_rkteselon1 extends CI_Controller {
 			$this->our_pdf->setFillColor(255,255,255);
 			$this->our_pdf->setFont('arial','',8);	
 			//$this->our_pdf->setXY($posX,$posY);
-			$newHeight = $this->our_pdf->getWrapRowHeight(132,$pdfdata[$i][3]);
+			$newHeight = $this->our_pdf->getWrapRowHeight(102,$pdfdata[$i][3]);
 			$this->our_pdf->CheckPageBreakChan($newHeight,108);
 			$isNewPage = $pageNo != $this->our_pdf->PageNo();
 			if ($isNewPage) $pageNo = $this->our_pdf->PageNo();
@@ -147,6 +148,8 @@ class Rpt_rkteselon1 extends CI_Controller {
 				else if (($i==count($pdfdata)-1)||($isNewPage))
 					$border = "LTR";					
 				else $border = 'LTR';
+				$xLeftNumber = $this->our_pdf->GetX();
+				$yLeftNumber = $this->our_pdf->GetY();
 				$this->our_pdf->cell(8,$newHeight,$pdfdata[$i][0] ,$border,0,'C',1);
 					
 				$h= 5*$rowMerge;
@@ -154,7 +157,18 @@ class Rpt_rkteselon1 extends CI_Controller {
 				$y=$this->our_pdf->GetY();
 				
 			//((($i==count($pdfdata)-1)||($isNewPage))?1:"LTR")
-				$this->our_pdf->Wrap(100, 5, trim($txt),$border , 0, 'LT', false, '', 100,  $newHeight2);
+				$this->our_pdf->Wrap(100, 5, trim($txt),$border , 0, 'LT', false, '', 100,  $newHeightSasaran);
+				
+				$numpuk = (($newHeight*$rowMerge)<($y-$newHeightSasaran));
+				if ($numpuk){
+					
+					$newHeight2 =ceil(($y-$newHeightSasaran)/$rowMerge);
+					//var_dump($newHeight2.'='.($newHeight*$rowMerge));
+					$newHeight=$newHeight2+(($newHeight2%($newHeight*$rowMerge))==0?0:5);
+					//$this->our_pdf->Line($xLeftNumber,$yLeftNumber,$xLeftNumber,$yLeftNumber+$newHeight);
+					$this->our_pdf->SetXY($xLeftNumber,$yLeftNumber);
+					$this->our_pdf->cell(8,$newHeight,$pdfdata[$i][0] ,$border,0,'C',1);
+				}
 				
 				if ($i==count($pdfdata)-1)
 					$this->our_pdf->SetXY($x+100,$y);
@@ -186,11 +200,11 @@ class Rpt_rkteselon1 extends CI_Controller {
 			  	$h= $newHeight;
 				$x=$this->our_pdf->GetX();
 				$y=$this->our_pdf->GetY();
-				$this->our_pdf->Wrap(132, 5, trim($pdfdata[$i][3]), 1, 0, 'LM', false, '', 132,  $newHeight2);
-				$this->our_pdf->SetXY($x+132,$y); 
-				
+				$this->our_pdf->Wrap(102, ($numpuk?$newHeight:5), trim($pdfdata[$i][3]), 1, 0, 'LM', false, '', 102,  $newHeight2);
+				$this->our_pdf->SetXY($x+102,$y); 
+			$this->our_pdf->cell(30,$newHeight,$pdfdata[$i][5],1,0,'L',1);	
 			$this->our_pdf->cell(25,$newHeight,$pdfdata[$i][4],1,0,'R',1);
-			//$this->our_pdf->cell(35,$newHeight,$pdfdata[$i][5],1,0,'L',1);
+			
 			$this->our_pdf->Ln($newHeight);
 			$posY = $posY+$newHeight;
 		}  

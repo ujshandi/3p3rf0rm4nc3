@@ -65,22 +65,22 @@ class Rpt_rktkl extends CI_Controller {
 		$this->our_pdf->setXY($posX,$posY);
 		$this->our_pdf->setFillColor(255,255,255);
 		$this->our_pdf->CELL(8,12,'No',1,0,'C',1);
-		$this->our_pdf->CELL(85,12,'Sasaran Strategis',1,0,'C',1);
+		$this->our_pdf->CELL(100,12,'Sasaran Strategis',1,0,'C',1);
 
-		$this->our_pdf->CELL(120,6,'Indikator Kinerja',1,0,'C',1);
-		$this->our_pdf->CELL(35,12,'Satuan',1,0,'C',1);
+		$this->our_pdf->CELL(110,6,'Indikator Kinerja',1,0,'C',1);
+		$this->our_pdf->CELL(30,12,'Satuan',1,0,'C',1);
 		$this->our_pdf->CELL(25,12,'Target',1,0,'C',1);
 		
 		//$this->our_pdf->CELL(30,12,'Program & Anggaran',1,0,'C',1);
 		
 		
 		$posY += 6;
-		$posX += 93;
+		$posX += 108;
 		$this->our_pdf->setXY($posX,$posY);
 		$this->our_pdf->CELL(8,6,'No',1,0,'C',1);
 		$posX += 8;
 		$this->our_pdf->setXY($posX,$posY);
-		$this->our_pdf->CELL(112,6,'Deskripsi',1,0,'C',1);
+		$this->our_pdf->CELL(102,6,'Deskripsi',1,0,'C',1);
 		
 	
 		
@@ -117,20 +117,14 @@ class Rpt_rktkl extends CI_Controller {
 			$this->our_pdf->setFillColor(255,255,255);
 			$this->our_pdf->setFont('arial','',8);	
 			//$this->our_pdf->setXY($posX,$posY);
-			$newHeightIndikator = $this->our_pdf->getWrapRowHeight(112,$pdfdata[$i][3]);
-			$newHeightSasaran = $this->our_pdf->getWrapRowHeight(85,$pdfdata[$i][1]);
-			if ($newHeightSasaran>$newHeightIndikator)				
-				$newHeight=$newHeightSasaran;
-			else
-				$newHeight=$newHeightIndikator;
-				
-			$this->our_pdf->CheckPageBreakChan($newHeight,93);
+			$newHeight = $this->our_pdf->getWrapRowHeight(102,$pdfdata[$i][3]);
+			$this->our_pdf->CheckPageBreakChan($newHeight,108);
 			$isNewPage = $pageNo != $this->our_pdf->PageNo();
 			if ($isNewPage) $pageNo = $this->our_pdf->PageNo();
 			if ($sasaran_strategis!=$pdfdata[$i][1]){
 				$txt= $pdfdata[$i][1];
 					$no++;
-				$sisa = substr($txt,80,80); 
+				$sisa = substr($txt,90,90); 
 				//$txt = substr($txt,0,90);
 				$rowMerge = $this->rowMerge($pdfdata[$i][1],$pdfdata)-1;
 					$sasaran_strategis=$pdfdata[$i][1];
@@ -144,47 +138,61 @@ class Rpt_rktkl extends CI_Controller {
 				else if (($i==count($pdfdata)-1)||($isNewPage))
 					$border = "LTR";					
 				else $border = 'LTR';
+				$xLeftNumber = $this->our_pdf->GetX();
+				$yLeftNumber = $this->our_pdf->GetY();
 				$this->our_pdf->cell(8,$newHeight,$pdfdata[$i][0] ,$border,0,'C',1);
 				
 				$h= 5*$rowMerge;
 				$x=$this->our_pdf->GetX();
 				$y=$this->our_pdf->GetY();
-				$this->our_pdf->Wrap(85, 5, trim($txt), ((($i==count($pdfdata))||($isNewPage))?1:"LTR"), 0, 'LM', false, '', 85,  $newHeight2);
-				$this->our_pdf->SetXY($x+85,$y);
+				$this->our_pdf->Wrap(100, 5, trim($txt), ((($i==count($pdfdata))||($isNewPage))?1:"LTR"), 0, 'LM', false, '', 100,  $newHeightSasaran);
+				$numpuk = (($newHeight*$rowMerge)<($y-$newHeightSasaran));
+				if ($numpuk){
+					
+					$newHeight2 =ceil(($y-$newHeightSasaran)/$rowMerge);
+					//var_dump($newHeight2.'='.($newHeight*$rowMerge));
+					$newHeight=$newHeight2+(($newHeight2%($newHeight*$rowMerge))==0?0:5);
+					//$this->our_pdf->Line($xLeftNumber,$yLeftNumber,$xLeftNumber,$yLeftNumber+$newHeight);
+					$this->our_pdf->SetXY($xLeftNumber,$yLeftNumber);
+					$this->our_pdf->cell(8,$newHeight,$pdfdata[$i][0] ,$border,0,'C',1);
+				}
+				
+				
+				$this->our_pdf->SetXY($x+100,$y);
 				}
 				else{
 					$sisa="tes";
 					$x=$this->our_pdf->GetX();
 					$y=$this->our_pdf->GetY();
-					$txt = substr($txt,0,80);
+					$txt = substr($txt,0,90);
 					$border = 'LR';
 					if ($i==count($pdfdata)-1){
 						$border = "LBR";
-						$this->our_pdf->Line($x,$y+$newHeight,$x+93,$y+$newHeight);
+						$this->our_pdf->Line($x,$y+$newHeight,$x+108,$y+$newHeight);
 					}
 					
 					if ($isNewPage) 
-						$this->our_pdf->Line($x,$y,$y+93,$y);
-					$this->our_pdf->cell(8,$newHeightIndikator,"","LR",0,'C',1);
+						$this->our_pdf->Line($x,$y,$y+108,$y);
+					$this->our_pdf->cell(8,$newHeight,"","LR",0,'C',1);
 					//$this->our_pdf->cell(90,$newHeight,$sisa,'LR',0,'L',1);
-					$this->our_pdf->SetXY($x+93,$y);
-					$sisa = substr($sisa,80,80); 
+					$this->our_pdf->SetXY($x+108,$y);
+					$sisa = substr($sisa,90,90); 
 				}
 		
-			$this->our_pdf->cell(8,$newHeightIndikator,$pdfdata[$i][2],1,0,'L',1);
+			$this->our_pdf->cell(8,$newHeight,$pdfdata[$i][2],1,0,'L',1);
 			  	$h= $newHeight;
 				$x=$this->our_pdf->GetX();
 				$y=$this->our_pdf->GetY();
-				$this->our_pdf->Wrap(112, 5, trim($pdfdata[$i][3]), 1, 0, 'LM', false, '', 112, $newHeight2);
-				$this->our_pdf->SetXY($x+112,$y); 
-				
-			$this->our_pdf->cell(35,$newHeightIndikator,$pdfdata[$i][5],1,0,'C',1);
-			$this->our_pdf->cell(25,$newHeightIndikator,$pdfdata[$i][4],1,0,'R',1);
-			
-			if ($newHeightIndikator<$newHeightSasaran)
-				$this->our_pdf->Ln($newHeightSasaran);
-			else 
-				$this->our_pdf->Ln($newHeightIndikator);
+				$this->our_pdf->Wrap(102, ($numpuk?$newHeight:5), trim($pdfdata[$i][3]), 1, 0, 'LM', false, '', 102, $newHeight2);
+				$this->our_pdf->SetXY($x+102,$y); 
+				$x=$this->our_pdf->GetX();
+				$y=$this->our_pdf->GetY();
+			//$this->our_pdf->cell(30,$newHeight,$pdfdata[$i][5],1,0,'C',1);
+			$this->our_pdf->Wrap(30, ($numpuk?$newHeight:5), trim($pdfdata[$i][5]), 1, 0, 'CM', false, '', 30, $newHeight2);
+			$this->our_pdf->SetXY($x+30,$y); 
+			$this->our_pdf->cell(25,$newHeight,$pdfdata[$i][4],1,0,'R',1);
+		
+			$this->our_pdf->Ln($newHeight);
 			$posY = $posY+$newHeight;
 		}  
 	
