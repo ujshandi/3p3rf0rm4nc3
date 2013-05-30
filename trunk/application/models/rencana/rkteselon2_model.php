@@ -68,6 +68,7 @@ class Rkteselon2_model extends CI_Model
 				$response->rows[$i]['kode_ikk']=$row->kode_ikk;
 				$response->rows[$i]['deskripsi_ikk']=$row->deskripsi_ikk;
 				$response->rows[$i]['deskripsi']=$row->deskripsi;
+/*
 				if(is_numeric($row->target)){
 					if(strpos($row->target, '.') || strpos($row->target, ',')){
 						$response->rows[$i]['target'] = number_format($row->target, 4, ',', '.');
@@ -77,6 +78,8 @@ class Rkteselon2_model extends CI_Model
 				}else{
 					$response->rows[$i]['target'] = $row->target;
 				}
+*/
+				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
 				$response->rows[$i]['satuan']=$row->satuan;
 				$response->rows[$i]['status']= $row->status;
 				//utk kepentingan export excel ==========================

@@ -305,7 +305,7 @@
 		<th field="realisasi" sortable="true" width="50px" align="right" formatter="formatPrice">Realisasi</th>
 		<th field="satuan" sortable="true" width="50px">Satuan</th>
 		<th field="persen" sortable="true" width="50px">Persen</th>
-		<th field="opini" sortable="true" width="50px" align="right" formatter="formatPrice">Opini</th>
+		<th field="opini" sortable="true" width="50px" align="right" formatter="formatPrice">Analisis</th>
 		<th field="persetujuan" sortable="true" width="50px">Persetujuan</th>
 	  </tr>
 	  </thead>

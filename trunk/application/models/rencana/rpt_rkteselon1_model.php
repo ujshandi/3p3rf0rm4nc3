@@ -45,8 +45,8 @@ class Rpt_rkteselon1_model extends CI_Model
 			$this->db->order_by("sasaran.kode_sasaran_e1,iku.kode_iku_e1");
 			if ($purpose==1) $this->db->limit($limit,$offset);
 			$this->db->select("sasaran.deskripsi as sasaran_strategis, iku.deskripsi as indikator_kinerja,iku.satuan, rkt.target",false);
-			$this->db->from('tbl_rkt_eselon1 rkt inner join tbl_iku_eselon1 iku on iku.kode_iku_e1 = rkt.kode_iku_e1
-inner join tbl_sasaran_eselon1 sasaran on sasaran.kode_sasaran_e1 = rkt.kode_sasaran_e1', false);
+			$this->db->from('tbl_rkt_eselon1 rkt inner join tbl_iku_eselon1 iku on iku.kode_iku_e1 = rkt.kode_iku_e1 and rkt.tahun = iku.tahun
+inner join tbl_sasaran_eselon1 sasaran on sasaran.kode_sasaran_e1 = rkt.kode_sasaran_e1 and sasaran.tahun=rkt.tahun', false);
 			$query = $this->db->get();
 			
 			$i=0;

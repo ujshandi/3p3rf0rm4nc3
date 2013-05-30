@@ -31,7 +31,7 @@ class Iku_kl_model extends CI_Model
 				$this->db->where("tbl_eselon1.kode_e1",$file1);
 			}
 			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
-				$this->db->where(".tbl_iku_kl.tahun",$filtahun);
+				$this->db->where("tbl_iku_kl.tahun",$filtahun);
 			}
 			if($filkey != '' && $filkey != '-1' && $filkey != null) {
 				$this->db->like("deskripsi",$filkey);

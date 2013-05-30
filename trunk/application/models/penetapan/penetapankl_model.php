@@ -54,6 +54,7 @@ class Penetapankl_model extends CI_Model
 				$response->rows[$i]['kode_iku_kl']=$row->kode_iku_kl;
 				$response->rows[$i]['deskripsi_iku_kl']=$row->deskripsi_iku_kl;
 				$response->rows[$i]['deskripsi_sasaran_kl']=$row->deskripsi_sasaran_kl;
+/*
 				if(is_numeric($row->target)){
 					if(strpos($row->target, '.') || strpos($row->target, ',')){
 						$response->rows[$i]['target'] = number_format($row->target, 4, ',', '.');
@@ -63,6 +64,9 @@ class Penetapankl_model extends CI_Model
 				}else{
 					$response->rows[$i]['target'] = $row->target;
 				}
+*/
+				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
+/*
 				if(is_numeric($row->penetapan)){
 					if(strpos($row->penetapan, '.') || strpos($row->penetapan, ',')){
 						$response->rows[$i]['penetapan'] = number_format($row->penetapan, 4, ',', '.');
@@ -72,6 +76,8 @@ class Penetapankl_model extends CI_Model
 				}else{
 					$response->rows[$i]['penetapan'] = $row->penetapan;
 				}
+*/
+				$response->rows[$i]['penetapan']=$this->utility->cekNumericFmt($row->penetapan);
 				$response->rows[$i]['satuan']=$row->satuan;
 				$i++;
 			} 

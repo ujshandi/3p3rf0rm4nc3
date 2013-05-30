@@ -579,10 +579,11 @@
 				<label style="width:120px;vertical-align:top">Satuan :</label>
 				<input name="satuan" size="60" class="easyui-validatebox">
 			</div>
+			<!--request bos toto 2013.05.30
 			<div class="fitem">							
 				<label style="width:120px;vertical-align:top">Bidang :</label>
-				<span id="divEselon2<?=$objectId?>"></span>
-			</div>
+				<span id="divEselon2<=$objectId?>"></span>
+			</div> -->
 		</form>
 		<div id="dlg-buttons">
 			<!----------------Edit title-->

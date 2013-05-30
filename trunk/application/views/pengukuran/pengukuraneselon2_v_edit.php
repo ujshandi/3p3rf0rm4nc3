@@ -122,7 +122,7 @@
 							<?=$result->satuan?>
 						</div>
 						<div class="fitem">
-							<label style="width:150px">Opini :</label>
+							<label style="width:150px">Analisis :</label>
 							<textarea name="opini" cols="85" class="easyui-validatebox"><?=$result->opini?></textarea>
 						</div>
 						<div class="fitem">
