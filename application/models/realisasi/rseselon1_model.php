@@ -37,9 +37,9 @@ class rseselon1_model extends CI_Model
 			$this->db->limit($limit,$offset);
 			$this->db->select("tbl_kinerja_eselon1.id_kinerja_e1, tbl_kinerja_eselon1.tahun, tbl_kinerja_eselon1.triwulan, tbl_kinerja_eselon1.kode_e1,tbl_kinerja_eselon1.kode_sasaran_e1,tbl_kinerja_eselon1.kode_iku_e1,tbl_iku_eselon1.satuan,tbl_pk_eselon1.penetapan,tbl_kinerja_eselon1.realisasi, tbl_eselon1.nama_e1, tbl_sasaran_eselon1.deskripsi AS deskripsi_sasaran_e1, tbl_iku_eselon1.deskripsi AS deskripsi_iku_e1");
 			$this->db->from('tbl_pk_eselon1');
-			$this->db->join('tbl_kinerja_eselon1', 'tbl_kinerja_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1');
+			$this->db->join('tbl_kinerja_eselon1', 'tbl_kinerja_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_kinerja_eselon1.tahun = tbl_pk_eselon1.tahun');
 			$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_kinerja_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_kinerja_eselon1.tahun');
-			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_kinerja_eselon1.kode_sasaran_e1 ');
+			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_kinerja_eselon1.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_kinerja_eselon1.tahun');
 			$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_kinerja_eselon1.kode_e1 ');
 			$this->db->order_by("tbl_kinerja_eselon1.tahun DESC, triwulan ASC, kode_sasaran_e1 ASC, tbl_kinerja_eselon1.kode_iku_e1 ASC");
 			$query = $this->db->get();
@@ -57,6 +57,7 @@ class rseselon1_model extends CI_Model
 				$response->rows[$i]['kode_iku_e1']=$row->kode_iku_e1;
 				$response->rows[$i]['deskripsi_iku_e1']=$row->deskripsi_iku_e1;
 				
+/*
 				if(is_numeric($row->penetapan)){
 					if(strpos($row->penetapan, '.') || strpos($row->penetapan, ',')){
 						$response->rows[$i]['target'] = number_format($row->penetapan, 4, ',', '.');
@@ -66,7 +67,10 @@ class rseselon1_model extends CI_Model
 				}else{
 					$response->rows[$i]['target'] = $row->penetapan;
 				}				
+*/
+				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->penetapan);
 				$response->rows[$i]['satuan']=$row->satuan;
+/*
 				if(is_numeric($row->realisasi)){
 					if(strpos($row->realisasi, '.') || strpos($row->realisasi, ',')){
 						$response->rows[$i]['realisasi'] = number_format($row->realisasi, 4, ',', '.');
@@ -76,6 +80,8 @@ class rseselon1_model extends CI_Model
 				}else{
 					$response->rows[$i]['realisasi'] = $row->realisasi;
 				}						
+*/
+				$response->rows[$i]['realisasi']=$this->utility->cekNumericFmt($row->realisasi);
 				$i++;
 			} 
 			
@@ -145,7 +151,7 @@ class rseselon1_model extends CI_Model
 		
 		$this->db->flush_cache();
 		$this->db->select('distinct tahun',false);
-		$this->db->from('tbl_pk_eselon1');
+		$this->db->from('tbl_kinerja_eselon1');
 		$e1 = $this->session->userdata('unit_kerja_e1');
 		if (($e1!="-1")&&($e1!=null)){
 			$this->db->where('kode_e1',$e1);
@@ -337,9 +343,9 @@ class rseselon1_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->select('*');
 		$this->db->from('tbl_kinerja_eselon2 a');
-		$this->db->join('tbl_sasaran_eselon2 b', 'b.kode_sasaran_e2 = a.kode_sasaran_e2');
+		$this->db->join('tbl_sasaran_eselon2 b', 'b.kode_sasaran_e2 = a.kode_sasaran_e2 and b.tahun = a.tahun');
 		$this->db->join('tbl_ikk c', 'c.kode_ikk = a.kode_ikk and c.tahun = a.tahun');
-		$this->db->join('tbl_pk_eselon2 d', 'd.kode_ikk = a.kode_ikk');
+		$this->db->join('tbl_pk_eselon2 d', 'd.kode_ikk = a.kode_ikk and d.tahun = a.tahun');
 		$this->db->join('tbl_eselon2 e', 'e.kode_e2 = a.kode_e2');
 		$this->db->where('b.kode_sasaran_e1', $kode_sasaran_e1);
 		$this->db->where('c.kode_iku_e1', $kode_iku_e1);

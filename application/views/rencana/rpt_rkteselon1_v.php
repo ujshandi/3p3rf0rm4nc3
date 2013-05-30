@@ -285,9 +285,9 @@
 	  <tr>
 		
 		<th field="no" rowspan="2" sortable="false" width="25px">No.</th>
-		<th field="sasaran_strategis"  rowspan="2"  sortable="false" width="150px">Sasaran Strategis</th>
+		<th field="sasaran_strategis"  rowspan="2"  sortable="false" width="350px">Sasaran Strategis</th>
 		
-		<th  sortable="false" colspan="2" width="150px">Indikator Kinerja</th>
+		<th  sortable="false" colspan="2" width="250px">Indikator Kinerja</th>
 		<th field="satuan"  rowspan="2" sortable="false" align="center" width="150px">Satuan</th>
 		<th field="target"  rowspan="2" sortable="false" align="right" width="150px">Target</th>
 	  </tr>

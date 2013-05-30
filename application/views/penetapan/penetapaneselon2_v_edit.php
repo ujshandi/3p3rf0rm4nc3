@@ -122,7 +122,9 @@
 						</div>
 						<div class="fitem">
 							<label style="width:150px">Penetapan :</label>
+							<? if ($result->status=='0'){?>
 							<input name="penetapan" class="easyui-validatebox" required="true" size="10" maxlength="10" value="<?=$result->penetapan?>">
+							<? } else {echo $result->penetapan;}?>
 							&nbsp;&nbsp;
 							<?=$result->satuan?>
 						</div>
@@ -130,7 +132,14 @@
 						<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Keluar</a>
 						&nbsp;&nbsp;&nbsp;
 						<?php if($editmode==TRUE){?>
+							if ($result->status=='0'){
+							?>
+							
 							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Simpan</a>
+							<?}
+							else {
+								echo 'Sudah disahkan';
+								}?>
 						<?php }?>
 					</form>
 				</div>

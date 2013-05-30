@@ -63,6 +63,7 @@ class Penetapaneselon2_model extends CI_Model
 				$response->rows[$i]['deskripsi_iku_e2']=$row->deskripsi_iku_e2;
 				$response->rows[$i]['deskripsi_sasaran_e2']=$row->deskripsi_sasaran_e2;
 				$response->rows[$i]['nama_e2']=$row->nama_e2;
+/*
 				if(is_numeric($row->target)){
 					if(strpos($row->target, '.') || strpos($row->target, ',')){
 						$response->rows[$i]['target'] = number_format($row->target, 4, ',', '.');
@@ -72,6 +73,9 @@ class Penetapaneselon2_model extends CI_Model
 				}else{
 					$response->rows[$i]['target'] = $row->target;
 				}
+*/
+				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
+/*
 				if(is_numeric($row->penetapan)){
 					if(strpos($row->penetapan, '.') || strpos($row->penetapan, ',')){
 						$response->rows[$i]['penetapan'] = number_format($row->penetapan, 4, ',', '.');
@@ -81,6 +85,8 @@ class Penetapaneselon2_model extends CI_Model
 				}else{
 					$response->rows[$i]['penetapan'] = $row->penetapan;
 				}
+*/
+				$response->rows[$i]['penetapan']=$this->utility->cekNumericFmt($row->penetapan);
 				$response->rows[$i]['satuan']=$row->satuan;
 				$i++;
 			} 

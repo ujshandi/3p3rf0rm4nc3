@@ -98,7 +98,7 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
 				$response->rows[$i]['satuan']=$row->satuan;
 				//$response->rows[$i]['satuan']=$row->satuan;
-				$program = $this->getProgram();
+				$program = $this->getProgram(false,$filtahun);
 				$response->rows[$i]['program']=$program[0];
 				$response->rows[$i]['anggaran']=$program[1];
 
@@ -112,7 +112,7 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 				$i++;
 			} 
 			$response->lastNo = $no;
-			$totalProgram =$this->getTotalProgram();
+			$totalProgram =$this->getTotalProgram($filtahun);
 			//$query->free_result();
 		}else {
 				//$response->rows[$count]['id_rkt_kl']=$row->id_rkt_kl;
@@ -138,7 +138,7 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 		$response->footer[0]['no_indikator']='';
 		$response->footer[0]['target']='';
 		//utk footer pdf ================
-		$pdfdata[] = array("",'Jumlah Anggaran','',$this->utility->cekNumericFmt($this->getTotalProgram()),'','','',1);
+		$pdfdata[] = array("",'Jumlah Anggaran','',$this->utility->cekNumericFmt($this->getTotalProgram($filtahun),'','','',1);
 	//-----------------------------------
 	if ($purpose==1) //grid normal
 			return json_encode($response);
@@ -204,22 +204,22 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 	}
 	
 	
-	public function getTotalProgram(){
+	public function getTotalProgram($filtahun){
 		$this->db->flush_cache();
 		$this->db->select('sum(total) as jumlah',false);
 		$this->db->from('tbl_program_kl');
-		//$this->db->where('kode_e1', $e1);
+		$this->db->where('tahun', $filtahun);
 		$query = $this->db->get();
 		
 		return $query->row()->jumlah;
 		
 	}
 	
-	public function getProgram($forPdf=false){
+	public function getProgram($forPdf=false,$tahun){
 		$this->db->flush_cache();
 		$this->db->select('nama_program,total',false);
 		$this->db->from('tbl_program_kl');
-		//$this->db->where('kode_e1', $e1);
+		$this->db->where('tahun', $tahun);
 		$query = $this->db->get();
 		$out = array();
 		$out[0] = "";

@@ -61,6 +61,7 @@ class rseselon2_model extends CI_Model
 				$response->rows[$i]['deskripsi_sasaran_e2']=$row->deskripsi_sasaran_e2;
 				$response->rows[$i]['kode_ikk']=$row->kode_ikk;
 				$response->rows[$i]['deskripsi_ikk']=$row->deskripsi_ikk;
+/*
 				if(is_numeric($row->penetapan)){
 					if(strpos($row->penetapan, '.') || strpos($row->penetapan, ',')){
 						$response->rows[$i]['target'] = number_format($row->penetapan, 4, ',', '.');
@@ -70,7 +71,10 @@ class rseselon2_model extends CI_Model
 				}else{
 					$response->rows[$i]['target'] = $row->penetapan;
 				}
+*/
+				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->penetapan);
 				$response->rows[$i]['satuan']=$row->satuan;
+/*
 				if(is_numeric($row->realisasi)){
 					if(strpos($row->realisasi, '.') || strpos($row->realisasi, ',')){
 						$response->rows[$i]['realisasi'] = number_format($row->realisasi, 4, ',', '.');
@@ -80,6 +84,8 @@ class rseselon2_model extends CI_Model
 				}else{
 					$response->rows[$i]['realisasi'] = $row->realisasi;
 				}						
+*/
+				$response->rows[$i]['realisasi']=$this->utility->cekNumericFmt($row->realisasi);
 				$i++;
 			} 
 			

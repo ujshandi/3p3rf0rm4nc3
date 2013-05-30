@@ -61,6 +61,7 @@ class Rkteselon1_model extends CI_Model
 				$response->rows[$i]['deskripsi']=$row->deskripsi;
 				$response->rows[$i]['kode_iku']=$row->kode_iku_e1;
 				$response->rows[$i]['deskripsi_iku_e1']=$row->deskripsi_iku_e1;
+/*
 				if(is_numeric($row->target)){
 					if(strpos($row->target, '.') || strpos($row->target, ',')){
 						$response->rows[$i]['target'] = number_format($row->target, 4, ',', '.');
@@ -70,6 +71,8 @@ class Rkteselon1_model extends CI_Model
 				}else{
 					$response->rows[$i]['target'] = $row->target;
 				}
+*/
+				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
 				$response->rows[$i]['satuan']=$row->satuan;
 				$response->rows[$i]['status']= $row->status;
 				

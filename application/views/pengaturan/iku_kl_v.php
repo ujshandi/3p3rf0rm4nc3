@@ -360,12 +360,13 @@
 						<td>Tahun :</td>
 						<td><span id="divTahun<?=$objectId?>"></span></td>
 				</tr>
-				<tr <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'style="display:none"')?>>
+				<!--request bos toto 2013.05.30
+				<tr <=($this->session->userdata('unit_kerja_e1')=='-1'?'':'style="display:none"')?>>
 					<td>Subsektor &nbsp</td>
 					<td>
-						<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
+						<=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
 					</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<td>Kata Kunci :</td>
 					<td><input id="key<?=$objectId;?>" name="key<?=$objectId;?>" type="text" onkeypress="submitEnter<?=$objectId;?>(event)"/></td>
@@ -418,7 +419,7 @@
 			<th field="kode_iku_kl" sortable="true" width="30">Kode</th>
 			<th field="deskripsi" sortable="true" width="140">Deskripsi IKU</th>
 			<th field="satuan" sortable="true" width="35">Satuan</th>
-			<th field="kode_e1" sortable="true" width="20" <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'hidden="true"')?>>Subsektor</th>
+			<th field="kode_e1" sortable="true" width="20" <?=($this->session->userdata('unit_kerja_e1')=='-1'?'hidden="true"':'hidden="true"')?>>Subsektor</th>
 			<th field="nama_e1" sortable="true" hidden="true" >nama</th>
 	  	</tr>
 		</thead>  
@@ -455,14 +456,15 @@
 				<label style="width:120px;vertical-align:top">Satuan :</label>
 				<input name="satuan" size="60" class="easyui-validatebox">
 			</div>
+			<!-- request bos toto 2013.05.30
 			<div class="fitem">
 				<label style="width:120px;vertical-align:top">Subsektor :</label>
 				
-				<?php
+				<php
 				$this->eselon1_model->getListEselon1($objectId,'','false');
 				?>
 				
-			</div>
+			</div> -->
 		</form>
 		<div id="dlg-buttons">
 			<!----------------Edit title-->
