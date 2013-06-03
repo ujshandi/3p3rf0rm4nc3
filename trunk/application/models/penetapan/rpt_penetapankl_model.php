@@ -138,7 +138,7 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 		$response->footer[0]['no_indikator']='';
 		$response->footer[0]['target']='';
 		//utk footer pdf ================
-		$pdfdata[] = array("",'Jumlah Anggaran','',$this->utility->cekNumericFmt($this->getTotalProgram($filtahun),'','','',1);
+		$pdfdata[] = array("",'Jumlah Anggaran','',$this->utility->cekNumericFmt($this->getTotalProgram($filtahun)),'','','',1);
 	//-----------------------------------
 	if ($purpose==1) //grid normal
 			return json_encode($response);
