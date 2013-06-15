@@ -264,7 +264,7 @@
 	<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>
 	 <!-- AREA untuk Form Add/EDIT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:750px;height:370px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:750px;height:400px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<div class="ftitle">Tambah/Edit Data Unit Kerja Eselon II</div>
 		<form id="fm<?=$objectId;?>" method="post">
 		

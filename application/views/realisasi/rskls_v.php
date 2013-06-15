@@ -339,6 +339,7 @@
 		<th field="target" sortable="true" width="40px" align="right" formatter="formatPrice">Target</th>
 		<th field="satuan" sortable="true" width="60px">Satuan</th>
 		<th field="realisasi" sortable="true" width="50px" align="right" formatter="formatPrice">Realisasi</th>
+		<th field="realisasi_persen" sortable="true" width="30px" align="right" formatter="formatPrice">Realisasi (%)</th>
 	  </tr>
 	  </thead>
 	</table>

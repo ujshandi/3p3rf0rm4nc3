@@ -601,7 +601,7 @@
 			</div>
 			<div class="fitem">
 				<label style="width:120px;vertical-align:top">Deskripsi IKK :</label>
-				<textarea name="deskripsi" cols="85" class="easyui-validatebox" ></textarea>
+				<textarea name="deskripsi" cols="70" class="easyui-validatebox" ></textarea>
 			</div>
 			<div class="fitem">
 				<label style="width:120px;vertical-align:top">Satuan :</label>

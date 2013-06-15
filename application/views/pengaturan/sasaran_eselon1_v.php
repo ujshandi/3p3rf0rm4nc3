@@ -498,15 +498,15 @@
 				 //} ?>
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Kode Sasaran</label>
+				<label style="width:150px;vertical-align:top">Kode Sasaran :</label>
 				<input name="kode_sasaran_e1" class="easyui-validatebox" size="10" required="true" id="kode_sasaran_e1<?=$objectId;?>">
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Deskripsi</label>
-				<textarea name="deskripsi" cols="85" class="easyui-validatebox" ></textarea>
+				<label style="width:150px;vertical-align:top">Deskripsi :</label>
+				<textarea name="deskripsi" cols="70" class="easyui-validatebox" ></textarea>
 			</div>
 			<div class="fitem" >
-				<label style="width:150px;vertical-align:top">Sasaran Kementerian</label>
+				<label style="width:150px;vertical-align:top">Sasaran Kementerian :</label>
 				<?//chan =$this->sasaran_kl_model->getListSasaranKL($objectId,"",false)?>
 				<span id="divSasaranKL<?=$objectId?>">
 				</span>

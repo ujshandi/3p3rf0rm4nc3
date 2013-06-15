@@ -106,7 +106,7 @@
 						</div>
 						<div class="fitem">
 							<label style="width:150px">Target :</label>
-							<?=$result->target?>
+							<?=$this->utility->cekNumericFmt($result->target)?>
 							&nbsp;&nbsp;
 							<?=$result->satuan?>
 						</div>
@@ -114,7 +114,7 @@
 							<label style="width:150px">Penetapan :</label>
 							<? if ($result->status=='0'){?>
 							<input name="penetapan" class="easyui-validatebox" required="true" size="10" maxlength="10" value="<?=$result->penetapan?>">
-							<? } else {echo $result->penetapan;}?>
+							<? } else {echo $this->utility->cekNumericFmt($result->penetapan);}?>
 							&nbsp;&nbsp;
 							<?=$result->satuan?>
 						</div>

@@ -80,8 +80,8 @@ class Pengesahan_penetapaneselon1_model extends CI_Model
 									<input name="detail['.$i.'][id_pk_e1]" value="'.$row->id_pk_e1.'" type="hidden" />
 								</td>';
 					$out .= '	<td>'.$row->deskripsi.'</td>';
-					$out .= '	<td><input name="detail['.$i.'][target]" value="'.$row->target.'" size="15" readonly="true" /></td>';
-					$out .= '	<td><input name="detail['.$i.'][penetapan]" value="'.$row->penetapan.'" size="15" '.($isApproved == TRUE?'readonly="true"':'').'/></td>';
+					$out .= '	<td><input name="detail['.$i.'][target]" value="'.$this->utility->cekNumericFmt($row->target).'" size="15" readonly="true"  style="text-align:right"/></td>';
+					$out .= '	<td><input name="detail['.$i.'][penetapan]" value="'.$this->utility->cekNumericFmt($row->penetapan).'"  style="text-align:right" size="15" '.($isApproved == TRUE?'readonly="true"':'').'/></td>';
 					$out .= '	<td><input name="detail['.$i.'][satuan]" value="'.$row->satuan.'" size="20" readonly="true" /></td>';
 					$out .= '	<td align="center" valign="middle">';
 					$out .= '		    <input name="detail['.$i.'][approve]" type="checkbox" '.($row->status=='1'?'checked="checked"':'').' '.($isApproved == TRUE?'disabled="disabled"':'').'/>';
