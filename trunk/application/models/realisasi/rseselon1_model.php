@@ -284,16 +284,16 @@ class rseselon1_model extends CI_Model
 								</div>
 								<div class="fitem">
 								  <label style="width:150px">Target :</label>
-								  '.$row[$i]->penetapan.'
+								  '.$this->utility->cekNumericFmt($row[$i]->penetapan).'
 								</div>
 								<div class="fitem">
 								  <label style="width:150px">Capaian s.d. Bulan Lalu :</label>
 								  <input type="hidden" name=detail['.$i.'][capaian] value="'.$capaian[0].'">
-								  <label style="min-width:25px">'.$capaian[0].'</label>&nbsp;&nbsp;&nbsp;&nbsp;
-								  <label style="text-align:right; width:10px">('.round($capaian[1], 2).'%)</label>
+								  <label style="min-width:25px">'.$this->utility->cekNumericFmt($capaian[0]).'</label>&nbsp;&nbsp;&nbsp;&nbsp;
+								  <label style="text-align:right; width:10px">('.$this->utility->cekNumericFmt(round($capaian[1], 2)).'%)</label>
 								</div>
 								<div class="fitem">
-								  <label style="width:150px">Realisasi Bulan Ini :</label>
+								  <label style="width:150px">Capaian Bulan Ini :</label>
 								  <input name=detail['.$i.'][realisasi] value="" size="15">
 								</div>';
 			//if($i == $akhir){

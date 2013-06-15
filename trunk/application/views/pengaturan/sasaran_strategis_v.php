@@ -346,25 +346,25 @@
 	</table>
 
 	 <!-- AREA untuk Form Add/Edit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:280px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:350px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
 		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Sasaran Strategis</div>
 		<form id="fm<?=$objectId;?>" method="post">		
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Tahun</label>
+				<label style="width:150px;vertical-align:top">Tahun :</label>
 				<input name="tahun" id="tahun<?=$objectId?>" class="easyui-validatebox" size="4" required="true">
 			</div>		
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Nama Kementerian</label>
+				<label style="width:150px;vertical-align:top">Nama Kementerian :</label>
 				<?=$this->kl_model->getListKL($objectId)?>
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Kode Sasaran</label>
+				<label style="width:150px;vertical-align:top">Kode Sasaran :</label>
 				<input name="kode_sasaran_kl" class="easyui-validatebox" size="10" required="true" id="kode_sasaran_kl<?=$objectId;?>">
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Deskripsi</label>
-				<textarea name="deskripsi" cols="80" class="easyui-validatebox" ></textarea>
+				<label style="width:150px;vertical-align:top">Deskripsi :</label>
+				<textarea name="deskripsi" cols="70" class="easyui-validatebox" ></textarea>
 			</div>
 		</form>
     	<div id="dlg-buttons">

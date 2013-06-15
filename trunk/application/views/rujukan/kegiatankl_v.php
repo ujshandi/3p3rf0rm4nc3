@@ -174,7 +174,8 @@
 										<input name="detail[1][kode_kegiatan]" size="18">
 									</td>
 									<td>
-										<input name="detail[1][nama_kegiatan]" size="120">
+										<!--<input name="detail[1][nama_kegiatan]" size="120">-->
+										<textarea name="detail[1][nama_kegiatan]" cols="80" rows="0"></textarea>
 									</td>
 									<td>
 										<input name="detail[1][total]" size="20">

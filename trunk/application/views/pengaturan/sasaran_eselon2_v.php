@@ -580,7 +580,7 @@
 			</div>
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Deskripsi Sasaran :</label>
-				<textarea name="deskripsi" cols="85" class="easyui-validatebox" ></textarea>
+				<textarea name="deskripsi" cols="70" class="easyui-validatebox" ></textarea>
 			</div>
 		</form>
     	<div id="dlg-buttons">

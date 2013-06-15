@@ -200,7 +200,7 @@
 
 	 <!-- AREA untuk Form Add/EDIT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:450px;height:320px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:500px;height:320px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 	  <div class="ftitle">Tambah/Edit Data Kementerian</div>
 	  <form id="fm<?=$objectId;?>" method="post">
 		<div class="fitem">

@@ -16,7 +16,8 @@
 		
 		editData<?=$objectId;?> = function (){
 			var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-			if (row){
+			
+			if (row&&(row.id_kegiatan_kl!="")){
 				addTab("Edit Kegiatan", "rujukan/kegiatankl/edit/"+row.id_kegiatan_kl);
 			}
 		}

@@ -298,7 +298,7 @@ class Sasaran_eselon1_model extends CI_Model
 			$out .= '<li onclick="setSasaran'.$objectId.'(\''.$r->kode_sasaran_e1.'\')">'.$r->deskripsi.'</li>';
 		}
 		$out .= '</ul></div>';
-		
+		//var_dump($que->num_rows());
 		//chan
 		if ($que->num_rows()==0){
 			$out = "Data Sasaran Eselon 1 untuk tingkat Eselon ini belum tersedia.";

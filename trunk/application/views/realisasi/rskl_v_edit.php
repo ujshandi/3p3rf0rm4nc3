@@ -108,7 +108,7 @@
 						</div>
 						<div class="fitem">
 							<label style="width:140px">Target :</label>
-							<?=$result->penetapan?>
+							<?=$this->utility->cekNumericFmt($result->penetapan)?>
 							&nbsp;&nbsp;
 							<?=$result->satuan?>
 						</div>
