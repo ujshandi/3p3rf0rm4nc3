@@ -35,7 +35,7 @@ class rseselon1_model extends CI_Model
 			}
 			$this->db->order_by($sort." ".$order );
 			$this->db->limit($limit,$offset);
-			$this->db->select("tbl_kinerja_eselon1.id_kinerja_e1, tbl_kinerja_eselon1.tahun, tbl_kinerja_eselon1.triwulan, tbl_kinerja_eselon1.kode_e1,tbl_kinerja_eselon1.kode_sasaran_e1,tbl_kinerja_eselon1.kode_iku_e1,tbl_iku_eselon1.satuan,tbl_pk_eselon1.penetapan,tbl_kinerja_eselon1.realisasi, tbl_eselon1.nama_e1, tbl_sasaran_eselon1.deskripsi AS deskripsi_sasaran_e1, tbl_iku_eselon1.deskripsi AS deskripsi_iku_e1");
+			$this->db->select("tbl_kinerja_eselon1.id_kinerja_e1, tbl_kinerja_eselon1.tahun, tbl_kinerja_eselon1.triwulan, tbl_kinerja_eselon1.kode_e1,tbl_kinerja_eselon1.kode_sasaran_e1,tbl_kinerja_eselon1.kode_iku_e1,tbl_iku_eselon1.satuan,tbl_pk_eselon1.penetapan,tbl_kinerja_eselon1.realisasi,tbl_kinerja_eselon1.realisasi_persen, tbl_eselon1.nama_e1, tbl_sasaran_eselon1.deskripsi AS deskripsi_sasaran_e1, tbl_iku_eselon1.deskripsi AS deskripsi_iku_e1");
 			$this->db->from('tbl_pk_eselon1');
 			$this->db->join('tbl_kinerja_eselon1', 'tbl_kinerja_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_kinerja_eselon1.tahun = tbl_pk_eselon1.tahun');
 			$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_kinerja_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_kinerja_eselon1.tahun');
@@ -82,6 +82,7 @@ class rseselon1_model extends CI_Model
 				}						
 */
 				$response->rows[$i]['realisasi']=$this->utility->cekNumericFmt($row->realisasi);
+				$response->rows[$i]['realisasi_persen']=$this->utility->cekNumericFmt($row->realisasi_persen);
 				$i++;
 			} 
 			
@@ -99,6 +100,7 @@ class rseselon1_model extends CI_Model
 				$response->rows[$count]['target']='';
 				$response->rows[$count]['satuan']='';
 				$response->rows[$count]['realisasi']='';
+				$response->rows[$count]['realisasi_persen']='';
 				
 		}
 		
@@ -295,6 +297,10 @@ class rseselon1_model extends CI_Model
 								<div class="fitem">
 								  <label style="width:150px">Capaian Bulan Ini :</label>
 								  <input name=detail['.$i.'][realisasi] value="" size="15">
+								</div>
+								<div class="fitem">
+								  <label style="width:150px">Persentase Capaian :</label>
+								  <input name=detail['.$i.'][realisasi_persen] value="" size="15">
 								</div>';
 			//if($i == $akhir){
 				$out .='<br><div class="fitem">';
@@ -312,7 +318,7 @@ class rseselon1_model extends CI_Model
 	
 	private function getCapaian($tahun, $triwulan, $kode_sasaran_e1, $kode_iku_e1){
 		$q = '';
-		$q .= ' SELECT tbl_kinerja_eselon1.id_kinerja_e1, tbl_kinerja_eselon1.tahun, tbl_kinerja_eselon1.triwulan, tbl_kinerja_eselon1.kode_e1, tbl_kinerja_eselon1.kode_sasaran_e1, tbl_kinerja_eselon1.kode_iku_e1, tbl_kinerja_eselon1.realisasi, tbl_pk_eselon1.penetapan';
+		$q .= ' SELECT tbl_kinerja_eselon1.id_kinerja_e1, tbl_kinerja_eselon1.tahun, tbl_kinerja_eselon1.triwulan, tbl_kinerja_eselon1.kode_e1, tbl_kinerja_eselon1.kode_sasaran_e1, tbl_kinerja_eselon1.kode_iku_e1, tbl_kinerja_eselon1.realisasi,tbl_kinerja_eselon1.realisasi_persen, tbl_pk_eselon1.penetapan';
 		$q .= ' FROM `tbl_kinerja_eselon1` ';
 		$q .= ' left join tbl_pk_eselon1 on tbl_kinerja_eselon1.kode_sasaran_e1 = tbl_pk_eselon1.kode_sasaran_e1 and tbl_kinerja_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_kinerja_eselon1.tahun = tbl_pk_eselon1.tahun';
 		$q .= " WHERE tbl_kinerja_eselon1.tahun = '$tahun' AND";
@@ -362,6 +368,7 @@ class rseselon1_model extends CI_Model
 							<td width="13%" bgcolor="#F5F5F5" >Satuan</td>
 							<td width="12%" bgcolor="#F5F5F5" >Target</td>
 							<td width="10%" bgcolor="#F5F5F5" >Realisasi</td>
+							<td width="10%" bgcolor="#F5F5F5" >Realisasi(%)</td>
 							<td width="19%" bgcolor="#F5F5F5" >Nama Eselon I</td>
 						  </tr>';
 		
@@ -370,8 +377,9 @@ class rseselon1_model extends CI_Model
 							<td>'.$i.'</td>
 							<td>'.$r->deskripsi.'</td>
 							<td>'.$r->satuan.'</td>
-							<td>'.$r->penetapan.'</td>
-							<td>'.$r->realisasi.'</td>
+							<td>'.$this->utility->cekNumericFmt($r->penetapan).'</td>
+							<td>'.$this->utility->cekNumericFmt($r->realisasi).'</td>
+							<td>'.$this->utility->cekNumericFmt($r->realisasi_persen).'</td>
 							<td>'.$r->nama_e2.'</td>
 						  </tr>';
 			$i++;
@@ -379,7 +387,7 @@ class rseselon1_model extends CI_Model
 		//chan
 		if ($i==1){
 			$out2 .= '	  <tr>
-							<td colspan="6">Data IKK Eselon II Tertaut ke IKU s.d. Bulan ini Tidak Ada. </td>
+							<td colspan="7">Data IKK Eselon II Tertaut ke IKU s.d. Bulan ini Tidak Ada. </td>
 							</tr>';
 		}
 			$out2 .= '</table>';
@@ -414,6 +422,7 @@ class rseselon1_model extends CI_Model
 			// $this->db->set('target',$data['target']);
 			// $this->db->set('satuan',$data['satuan']);
 			$this->db->set('realisasi',$dt['realisasi']);
+			$this->db->set('realisasi_persen',$dt['realisasi_persen']);
 			$this->db->set('log_insert', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			
 			$result = $this->db->insert('tbl_kinerja_eselon1');
@@ -426,6 +435,7 @@ class rseselon1_model extends CI_Model
 			$this->db->set('kode_sasaran_e1',$data['kode_sasaran_e1']);
 			$this->db->set('kode_iku_e1',$dt['kode_iku_e1']);
 			$this->db->set('realisasi',$dt['realisasi']);
+			$this->db->set('realisasi_persen',$dt['realisasi_persen']);
 			$this->db->set('log',				'INSERT;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_kinerja_eselon1_log');
 			
@@ -446,6 +456,7 @@ class rseselon1_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->where('id_kinerja_e1', $data['id_kinerja_e1']);
 		$this->db->set('realisasi', $data['realisasi']);
+		$this->db->set('realisasi_persen', $data['realisasi_persen']);
 		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->update('tbl_kinerja_eselon1', $data);
 		
@@ -463,6 +474,7 @@ class rseselon1_model extends CI_Model
 			$this->db->set('kode_sasaran_e1',	$qt->row()->kode_sasaran_e1);
 			$this->db->set('kode_iku_e1',		$qt->row()->kode_iku_e1);
 			$this->db->set('realisasi',			$qt->row()->realisasi);
+			$this->db->set('realisasi_persen',			$qt->row()->realisasi_persen);
 			$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_kinerja_eselon1_log');
 		
@@ -497,6 +509,7 @@ class rseselon1_model extends CI_Model
 			$this->db->set('kode_sasaran_e1',	$qt->row()->kode_sasaran_e1);
 			$this->db->set('kode_iku_e1',		$qt->row()->kode_iku_e1);
 			$this->db->set('realisasi',			$qt->row()->realisasi);
+			$this->db->set('realisasi_persen',			$qt->row()->realisasi_persen);
 			$this->db->set('log',				'DELETE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_kinerja_eselon1_log');
 		
