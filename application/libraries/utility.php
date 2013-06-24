@@ -333,6 +333,21 @@ function getListBulan($value,$name=null){
 }
 
 
+function getListCheckpoint($value,$name=null){
+	if ($name == null)
+		$tmp = "<select name='cmbPeriode' id='cmbPeriode'>";
+	else
+		$tmp = "<select name='$name' id='$name'>";
+	
+	$tmp.= "<option value='3' ".(($value=='3')?'selected':'').">B.03</option>";
+	$tmp.= "<option value='6' ".(($value=='6')?'selected':'').">B.06</option>";
+	$tmp.= "<option value='9' ".(($value=='9')?'selected':'').">B.09</option>";
+	$tmp.= "<option value='12' ".(($value=='12')?'selected':'').">B.12</option>";
+	
+	$tmp.= "</select>";
+	return $tmp;
+}
+
 
 function getTahun($value="",$Compname="",$forFilter=false){
   if (empty($Compname))
