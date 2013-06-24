@@ -360,7 +360,7 @@
 					//iconCls:'icon-save',
 					href :base_url+aHref,
 						onLoad : function(){
-							alert('here');
+						//	alert('on Load');
 						},
 						onBeforeClose : function(){
 							//alert('ga bisa ditutup');
@@ -543,6 +543,11 @@
 			<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dglChangePasswd').dialog('close')">Cancel</a>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+		setTimeout(function(){
+							addTab('Dashboard','dashboard');},100);
+	</script>
 </body>
 
 </html>
