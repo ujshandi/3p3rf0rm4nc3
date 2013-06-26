@@ -513,7 +513,7 @@
 	<div region="south" border="false" style="height:30px;background:#000000;padding:5px;"></div>
 
 	<div id="versionBar">
-		<div class="copyright"> Copyright 2012  All Rights Reserved <span class="tip"><a href="#" title="Kemenhub">Biro Perencanaan Kementerian Perhubungan</a></span></div>
+		<div class="copyright"> Copyright 2012  All Rights Reserved <span class="tip"><a href="#" title="Kemenhub">Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan</a></span></div>
 	</div>
 
 	<!-- AREA untuk Form Add/EDIT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->

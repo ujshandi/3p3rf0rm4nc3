@@ -27,16 +27,25 @@ class Login extends CI_Controller {
 		$this->load->view('security/login_v',$data);
 	}
 	
-	public function login_usr() {
+	public function login_usr($form='') {
 		//var_dump($this->input->post('txtUser'));die;
 		$response = $this->login->cek_login($this->input->post('username'),$this->input->post('password'));
 		//var_dump($response);die;
 		if(is_string($response) && $response == 'REQUIRED') {
 			$this->index('Username and Password required',$this->input->post('username'));
 		}else if($response == true) {
-			redirect(base_url().'home');
+			if($form=='portal'){
+				redirect(base_url().'portal');
+			}
+			else
+				redirect(base_url().'home');
 		}else {
-			$this->index('Invalid Username and Password');
+			if($form=='portal'){
+				$this->session->set_flashdata('err_login','Invalid Username and Password');
+				redirect(base_url().'portal');
+			}
+			else
+				$this->index('Invalid Username and Password');
 			//$this->session->flash_data();
 		}
 	}
