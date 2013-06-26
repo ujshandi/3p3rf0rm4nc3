@@ -7,7 +7,8 @@ class Portal extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();	
-		if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
+		//if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');		
+		$this->load->helper('ckeditor');			
 		$this->load->model('/security/sys_menu_model');		
 		$this->load->model('portal_model');		
 		
@@ -27,17 +28,43 @@ class Portal extends CI_Controller {
 		$this->loadView('portal/home_vw',$this->data);
 	}
 
+	function initCKEditor($id){
+		return array(
+		
+			//ID of the textarea that will be replaced
+			'id' 	=> 	$id,
+			'path'	=>	'js/ckeditor',
+		
+			//Optionnal values
+			'config' => array(
+				'toolbar' 	=> 	"Full", 	//Using the Full toolbar
+				'width' 	=> 	"100%",	//Setting a custom width
+				'height' 	=> 	'100px',	//Setting a custom height
+			),
+		
+		);
+	}
+
 	function content($menu){
 		switch ($menu) {
 			case 1:
+				$this->data['title'] = 'Berita Portal';
+				$this->data['objectId'] = 'portalhome';
+				$this->data['ckeditor'] = $this->initCKEditor('content'.$this->data['objectId']);
 				$this->load->view('portal/backend/home_v',$this->data);
 				break;
 			case 2:
 				$data['title'] = 'Berita Portal';
 				$data['objectId'] = 'portalnews';
+				$data['ckeditor1'] = $this->initCKEditor('content'.$data['objectId']);
+				$data['ckeditor2'] = $this->initCKEditor('summary'.$data['objectId']);
 				$this->load->view('portal/backend/news_v', $data);
 				break;
 			case 3:
+				$data['title'] = 'Berita Portal';
+				$data['objectId'] = 'portalabout';
+				$data['ckeditor'] = $this->initCKEditor('content'.$data['objectId']);
+				$data['about'] = $this->portal_model->getSingleContent(2);
 				$this->load->view('portal/backend/about_v', $data);
 				break;
 			case 4:
@@ -84,6 +111,8 @@ class Portal extends CI_Controller {
 		$data['content'] = $this->input->post("content", TRUE); 
 		$data['summary'] = $this->input->post("summary", TRUE);		
 		$data['url'] = $this->input->post("url", TRUE);
+		$data['date_post'] = null;
+		$data['published'] = $this->input->post("published", TRUE);
 		
 		//$data["insert_log"] = $this->session->userdata("userLogin").",".$this->utility->getFullSystemDate();
 		//$data["update_log"] = $this->session->userdata("userLogin").",".$this->utility->getFullSystemDate();
