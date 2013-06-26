@@ -47,6 +47,9 @@ class Portal_model extends CI_Model
 				$response->rows[$i]['content']=$row->content;
 				$response->rows[$i]['summary']=$row->summary;
 				$response->rows[$i]['url']=$row->url;	
+				$response->rows[$i]['date_post']=$row->date_post;
+				$response->rows[$i]['published']=$row->published;	
+				$response->rows[$i]['published_label']=($row->published==0)?'Tidak':'Ya';	
 				
 				$i++;
 			} 
@@ -61,6 +64,9 @@ class Portal_model extends CI_Model
 				$response->rows[$count]['content']='';
 				$response->rows[$count]['summary']='';
 				$response->rows[$count]['url']='';
+				$response->rows[$count]['date_post']='';
+				$response->rows[$count]['published']='';	
+				$response->rows[$count]['published_label']='';	
 				$response->lastNo = 0;
 		}
 	
@@ -86,6 +92,7 @@ class Portal_model extends CI_Model
 		$this->db->set('content',$data['content']);
 		$this->db->set('summary',$data['summary']);
 		$this->db->set('url',$data['url']);
+		$this->db->set('published',$data['published']);
 		//$this->db->set('log_insert', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		try {
 			$result = $this->db->insert('portal_content');
@@ -113,11 +120,18 @@ class Portal_model extends CI_Model
 	public function UpdateOnDb($data, $kode) {
 		
 		$this->db->where('content_id',$kode);
-		$this->db->set('category_id',$data['category_id']);
-		$this->db->set('content_title',$data['content_title']);
-		$this->db->set('content',$data['content']);
-		$this->db->set('summary',$data['summary']);
-		$this->db->set('url',$data['url']);
+		if($data['category_id']!=null)
+			$this->db->set('category_id',$data['category_id']);
+		if($data['category_id']!=null)
+			$this->db->set('content_title',$data['content_title']);
+		if($data['content']!=null)
+			$this->db->set('content',$data['content']);
+		if($data['summary']!=null)
+			$this->db->set('summary',$data['summary']);
+		if($data['url']!=null)
+			$this->db->set('url',$data['url']);
+		if($data['published']!=null)
+			$this->db->set('published',$data['published']);
 		
 		$result=$this->db->update('portal_content');
 		
@@ -169,127 +183,14 @@ class Portal_model extends CI_Model
 			return FALSE;
 		}
 	}
-	
-	public function getListSasaranE1($objectId="",$e1="-1", $data=""){
-		
-		$this->db->flush_cache();
-		$this->db->select('kode_sasaran_e1,deskripsi');
-		$this->db->from('tbl_sasaran_eselon1');
-		$this->db->order_by('kode_sasaran_e1');
-		$this->db->where('kode_e1',$e1);
-		$tahun = "-1";
-		if ($data!=""){
-			$tahun = isset($data['tahun'])?$data['tahun']:'-1';
-		}
-			$this->db->where('tahun',$tahun);
-		$que = $this->db->get();
-		
-		//chan 
-		if ($data!=""){
-			$kode = (isset($data['kode']))||($data['kode']=='')?$data['kode']:'0';
-			$deskripsi = (isset($data['deskripsi'])||($data['deskripsi']==''))?$data['deskripsi']:'-- Pilih --';
-		}
-		else {
-			$kode = '0';
-			$deskripsi = '-- Pilih --';
-		}
-		$out = '<div id="tcContainer"><input id="kode_sasaran_e1'.$objectId.'" name="kode_sasaran_e1" type="hidden" class="h_code" value="'.$kode.'">';
-		$out .= '<textarea name="txtkode_sasaran_e1'.$objectId.'" id="txtkode_sasaran_e1'.$objectId.'" class="easyui-validatebox textdown" required="true" readonly>'.$deskripsi.'</textarea>';
-		$out .= '<ul id="drop'.$objectId.'" class="dropdown">';
-		$out .= '<li value="0"  onclick="setSasaran'.$objectId.'(\'\')">-- Pilih --</li>';
-		
-		foreach($que->result() as $r){
-			$out .= '<li onclick="setSasaran'.$objectId.'(\''.$r->kode_sasaran_e1.'\')">'.$r->deskripsi.'</li>';
-		}
-		$out .= '</ul></div>';
-		//var_dump($que->num_rows());
-		//chan
-		if ($que->num_rows()==0){
-			$out = "Data Sasaran Eselon 1 untuk tingkat Eselon ini belum tersedia.";
-		}
-		
-		echo $out;
-	}
-	
-	public function getDeskripsiSasaran($kode_sasaran_e1){
-		$this->db->flush_cache();
-		$this->db->select('b.deskripsi');
-		$this->db->from('tbl_sasaran_eselon1 a');
-		$this->db->join('tbl_sasaran_kl b', 'b.kode_sasaran_kl = a.kode_sasaran_kl');
-		$this->db->where('kode_sasaran_e1', $kode_sasaran_e1);
-		$result = $this->db->get();
-		
-		if(isset($result->row()->deskripsi)){
-			return $result->row()->deskripsi;
-		}else{
-			return '';
-		}
-	}
-	
-	public function getDeskripsiSasaranE1($kode_sasaran_e1, $tahun){
-		$this->db->flush_cache();
-		$this->db->select('deskripsi');
-		$this->db->from('tbl_sasaran_eselon1');
-		$this->db->where('kode_sasaran_e1', $kode_sasaran_e1);
-		$this->db->where('tahun',$tahun);
-		
-		$result = $this->db->get();
-		
-		if(isset($result->row()->deskripsi)){
-			return $result->row()->deskripsi;
-		}else{
-			return '';
-		}
-	}
-	
-	public function importData($data){
-		//query insert data
-		$this->db->flush_cache();
-		
-		$this->db->set('tahun',				$data['tahun']);
-		$this->db->set('kode_e1',			$data['kode_e1']);
-		$this->db->set('kode_sasaran_e1',	$data['kode_sasaran_e1']);
-		$this->db->set('deskripsi',			$data['deskripsi']);		
-//chan		$this->db->set('kode_sasaran_kl',	$data['kode_sasaran_kl']);		
-		
-		$result = $this->db->insert('tbl_sasaran_eselon1');
-		
-		$errNo   = $this->db->_error_number();
-	    $errMess = $this->db->_error_message();
-		$error = $errMess;
-		//var_dump($errMess);die;
-	    log_message("error", "Problem import Inserting to : ".$errMess." (".$errNo.")"); 
-		//return
-		if($result) {
-			return TRUE;
-		}else {
-			return FALSE;
-		}
-	}
-	
-	public function getListFilterTahun($objectId){
-		
-		$this->db->flush_cache();
-		$this->db->select('distinct tahun',false);
-		$this->db->from('tbl_sasaran_eselon1');
-		$e1 = $this->session->userdata('unit_kerja_e1');
-		if (($e1!="-1")&&($e1!=null)){
-			$this->db->where('kode_e1',$e1);
-			//$value = $e1;
-		}
-		$this->db->order_by('tahun');
-		
-		$que = $this->db->get();
-		
-		$out = '<select name="filter_tahun'.$objectId.'" id="filter_tahun'.$objectId.'">';
-		$out .= '<option value="-1">Semua</option>';
-		foreach($que->result() as $r){
-			$out .= '<option value="'.$r->tahun.'">'.$r->tahun.'</option>';
-		}
-		
-		$out .= '</select>';
-		
-		echo $out;
+
+	public function getSingleContent($id){
+		$this->db->select("*", false);
+		$this->db->from('portal_content a');
+		$this->db->where('content_id',$id);
+
+		$query = $this->db->get();
+		return $query->row();
 	}
 	
 }

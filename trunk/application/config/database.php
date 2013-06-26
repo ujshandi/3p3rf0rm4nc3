@@ -50,8 +50,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'admin';
-$db['default']['database'] = 'db_kinerja';
+$db['default']['password'] = '';
+$db['default']['database'] = 'db_kinerja_2013';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = false;//chan TRUE;
