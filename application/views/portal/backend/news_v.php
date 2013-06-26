@@ -190,6 +190,10 @@
 					$("#drop<?=$objectId;?>").slideUp("slow");
 				});
 			*/
+			var wWidth = $(window).width();
+			var wHeight = $(window).height();
+			$("#dlg<?=$objectId;?>").css('width',wWidth);
+			$("#dlg<?=$objectId;?>").css('height',wHeight);
 		});
 		
 		function setSasaran<?=$objectId;?>(valu){
@@ -298,7 +302,7 @@
 
 	<!-- Area untuk Form Add/Edit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:600px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
 		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Berita Portal</div>
 		<form id="fm<?=$objectId;?>" method="post">

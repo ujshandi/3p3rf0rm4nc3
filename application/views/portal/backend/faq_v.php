@@ -53,8 +53,12 @@
 				$('#fm<?=$objectId;?>').form('clear');  
 				//initCombo();
 				if (row){
+					CKEDITOR.instances.summary<?=$objectId;?>.destroy();
+					CKEDITOR.instances.content<?=$objectId;?>.destroy();
 					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Sasaran Eselon I');
 					$('#fm<?=$objectId;?>').form('load',row);
+					CKEDITOR.replace('content<?=$objectId;?>',{height:'100px'});
+					CKEDITOR.replace('summary<?=$objectId;?>',{height:'100px'});
 										
 					url = base_url+'portal/save/6/edit/'+row.content_id;
 				}
@@ -185,6 +189,10 @@
 					$("#drop<?=$objectId;?>").slideUp("slow");
 				});
 			*/
+			var wWidth = $(window).width();
+			var wHeight = $(window).height();
+			$("#dlg<?=$objectId;?>").css('width',wWidth);
+			$("#dlg<?=$objectId;?>").css('height',wHeight);
 		});
 		
 		function setSasaran<?=$objectId;?>(valu){
@@ -290,7 +298,7 @@
 
 	<!-- Area untuk Form Add/Edit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:350px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
 		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Berita Portal</div>
 		<form id="fm<?=$objectId;?>" method="post">
@@ -299,12 +307,16 @@
 				<input name="content_title" class="easyui-validatebox" size="50" required="true" id="content_title<?=$objectId;?>">
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Pertanyaan :</label>
-				<textarea name="content" cols="70" class="easyui-validatebox" style="resize:none"></textarea>
+				<label style="width:150px;vertical-align:top">Pertanyaan :</label><br/>
+				<div style="width:100%;  margin:10px 0">
+				<textarea name="content" cols="70" class="easyui-validatebox" style="resize:none" id="content<?=$objectId;?>"></textarea></div>
+				<?php echo display_ckeditor($ckeditor1); ?>
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Jawaban :</label>
-				<textarea name="summary" cols="70" class="easyui-validatebox" style="resize:none"></textarea>
+				<label style="width:150px;vertical-align:top">Jawaban :</label><br/>
+				<div style="width:100%;  margin:10px 0">
+				<textarea name="summary" cols="70" class="easyui-validatebox" style="resize:none" id="summary<?=$objectId;?>"></textarea></div>
+				<?php echo display_ckeditor($ckeditor2); ?>
 			</div>
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Tautan :</label>

@@ -24,11 +24,11 @@
     <div class="center_content">
     	<div class="page_title"><h1>Latest News</h1></div>
         <div class="article_wrapper color">
-            <h2><a href="#">Lorem Ipsum Dolor Met Petulum</a></h2>
-            <h6 class="meta">06 Maret 2013 | 14:31 WIB</h6>
+            <h2><a href="<?=base_url()?>portal/page/news/<?=$latest_news->row()->content_id?>"><?=$latest_news->row()->content_title?></a></h2>
+            <h6 class="meta"><?= date("d M Y", strtotime($latest_news->row()->date_post)); ?></h6>
             <img src="<?php echo base_url(); ?>/public/images/portal/main-news-foto.JPG" />
-            <p>Lorem ipsum dolor sit amet, consectetuer adipis cing elit, sed diam nonummy nibh euismod tinci dunt ut laorenim ad minim veniam, quis nostrud exerci tation ullam corper suscipit lobortis nisl ut aliq eet dolore magna aliquam erat volut pat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-            <a href="#" class="inlink">selengkapnya</a>
+            <p><?=$latest_news->row()->summary?></p>
+            <a href="<?=base_url()?>portal/page/news/<?=$latest_news->row()->content_id?>" class="inlink">selengkapnya</a>
             <div class="clear"></div>
         </div>
         
@@ -36,21 +36,23 @@
         	<div class="section">
             	<h2>Berita Lain</h2>
                 <hr/>
+                <?
+                    $i=0;
+                    foreach ($latest_news->result() as $news) {
+                        if($i>0){
+                ?>
                 <div class="features">
                     <img src="<?php echo base_url(); ?>/public/images/portal/pic-small.jpg" alt="" title="" border="0" class="feat_thumb" />
                     <div class="feat_details">
-                    <p class="feat_text"><span class="meta">Jum'at,31 September 2013</span>Excepteur sint occaecat non proident,sunt in culpa qui officia deserunt mollit anim id est laboru</p>
-                    <a href="#" class="read_more clear">Detail</a>
+                    <p class="feat_text"><span class="meta"><?= date("d M Y", strtotime($news->date_post)); ?></span><?=$news->summary?></p>
+                    <a href="<?=base_url()?>portal/page/news/<?=$news->content_id?>" class="read_more clear">Detail</a>
                     </div>
                 </div>
-                
-                <div class="features">
-                    <img src="<?php echo base_url(); ?>/public/images/portal/pic-small.jpg" alt="" title="" border="0" class="feat_thumb" />
-                    <div class="feat_details">
-                    <p class="feat_text"><span class="meta">Jum'at,31 September 2013</span>Excepteur sint occaecat non proident,sunt in culpa qui officia deserunt mollit anim id est laboru</p>
-                    <a href="#" class="read_more clear">Detail</a>
-                    </div>
-                </div>
+                <?
+                        }
+                        $i++;
+                    }
+                ?>
                 <div class="clear">&nbsp;</div>
                 <a href="#" class="inlink">list berita</a>
             </div>
@@ -59,10 +61,9 @@
             	<h2>List Berita</h2>
                 <hr/>
                 <ul>
-                 <li><a href="" title="">Lorem ipsum dolor met reprehenderit in voluptate esse cillum dolore eu fugiat nulla</a></li>
-                 <li><a href="" title="">reprehenderit in voluptate esse cillum dolore eu fugiat nulla</a></li>
-                 <li><a href="" title="">reprehenderit in voluptate esse cillum dolore eu fugiat nulla</a></li>
-                 <li><a href="" title="">Lorem ipsum dolor met reprehenderit in voluptate esse cillum dolore eu fugiat nulla</a></li>
+                <? foreach ($latest_news->result() as $news) {?>
+                 <li><a href="<?=base_url()?>portal/page/news/<?=$news->content_id?>" title=""><?=$news->content_title?></a></li>
+                <?}?>
                 </ul>
             </div>
         </div><!-- end section full -->

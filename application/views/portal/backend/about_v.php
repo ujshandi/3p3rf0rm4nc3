@@ -1,10 +1,9 @@
 	<script  type="text/javascript" >		
 		$(function(){
-		
-		 	saveDataEdit<?=$objectId;?>=function(){
-			
+			var url = base_url+'portal/save/3/edit/2';
+		 	saveData<?=$objectId;?>=function(){
 				$('#fmedit<?=$objectId;?>').form('submit',{
-					url: base_url + 'portal/save/3/edit/2',
+					url: url,
 					onSubmit: function(){
 						return $(this).form('validate');
 					},
@@ -14,21 +13,19 @@
 						if (result.success){
 							$.messager.show({
 								title: 'Success',
-								msg: 'Data Berhasil Disimpan'
+								msg: 'Data berhasil disimpan'
 							});
 						} else {
 							$.messager.show({
 								title: 'Error',
-								msg: base_url
+								msg: result.msg
 							});
 						}
 					}
 				});
 			}
-			//end saveData 
-			
-		});	
-
+			});
+			//end saveData
 	</script>
 
 	<style type="text/css">
@@ -76,11 +73,11 @@
 				<div region="center" border="true" title=" Tentang e-Performance">
 					<form id="fmedit<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 						
-						<input type="hidden" name="id_pengukuran_e2" value="">
+						<input type="hidden" name="content_id" value="<?=$about->content_id;?>">
 						
 						<div class="fitem">							
-						    <label style="width:150px">Judul Halaman Tentang :</label><br/>
-						    <input style="margin:10px 0" id="content_title<?=$objectId?>" name="tahun" class="easyui-validatebox" required="true" size="40" value="<?=$about->content_title;?>">
+						    <label style="width:150px">Judul Halaman Profil :</label><br/>
+						    <input style="margin:10px 0" id="content_title<?=$objectId?>" name="content_title" class="easyui-validatebox" required="true" size="40" value="<?=$about->content_title;?>">
 						</div>
 						<div class="fitem">							
 						    <label style="width:150px">Isi Halaman Tentang :</label><br/>
@@ -89,7 +86,7 @@
 						</div>
 						<br>
 						<!------------Edit View-->
-						<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Simpan</a>
+						<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData<?=$objectId;?>()">Simpan</a>
 					</form>
 				</div>
 			</div>	

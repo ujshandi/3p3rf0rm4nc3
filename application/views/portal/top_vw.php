@@ -22,13 +22,13 @@
 <div id="header">
     <div class="header_content">
   
-    <div class="logo"><a href="index.html">home</a></div>
+    <div class="logo"><a href="<?=base_url();?>portal">home</a></div>
     <div class="title"><h1>e-Perfomance</h1><h2>Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan</h2></div>
     
     <div class="menu">
         <ul>
-            <li><a href="index.html">home</a></li>
-            <li><a href="#">dashboard</a></li>
+            <li><a href="<?=base_url();?>portal">home</a></li>
+            <li><a href="<?=base_url();?>home">dashboard</a></li>
         </ul>
     </div><!--end top menu-->
     <div class="clear"></div> 
@@ -40,11 +40,11 @@
 	<h3 class="lefthead">Informasi</h3>
     <div class="leftbox grd">
         <ul class="borderedlist">
-            <li><a href="#" title="">Tentang e-Perfomance</a></li>
+            <li><a href="<?=base_url()?>portal/page/about" title="">Tentang e-Perfomance</a></li>
             <li><a href="#" title="">Sistem AKIP</a></li>
             <li><a href="#" title="">Regulasi Terkait</a></li>
             <li><a href="#" title="">FAQ</a></li>
-            <li class="last"><a href="#" title="">Kontak</a></li>
+            <li class="last"><a href="<?=base_url()?>portal/page/contact" title="">Kontak</a></li>
         </ul>
     </div>
     
@@ -71,11 +71,13 @@
     <h3 class="lefthead">Link Terkait</h3>
     <div class="leftbox grd">
         <ul class="borderedlist">
-            <li><a href="#" title="">Link 1</a></li>
-            <li><a href="#" title="">Link 2</a></li>
-            <li><a href="#" title="">Link 3</a></li>
-            <li><a href="#" title="">Link 4</a></li>
-            <li class="last"><a href="#" title="">Link 5</a></li>
+            <?
+                $numItems = count($links);
+                $i = 0;
+                foreach ($links->result() as $link){
+            ?>
+                <li class="<?=(++$i === $numItems)?'last':'';?>"><a href="<?=$link->url?>" title=""><?=$link->content_title?></a></li>
+            <? }?>
         </ul>
     </div>
 </div><!--end block left-->

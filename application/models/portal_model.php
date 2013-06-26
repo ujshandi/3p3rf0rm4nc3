@@ -96,7 +96,6 @@ class Portal_model extends CI_Model
 		//$this->db->set('log_insert', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		try {
 			$result = $this->db->insert('portal_content');
-			
 		}
 		catch(Exception $e){
 			$errNo   = $this->db->_error_number();
@@ -120,9 +119,7 @@ class Portal_model extends CI_Model
 	public function UpdateOnDb($data, $kode) {
 		
 		$this->db->where('content_id',$kode);
-		if($data['category_id']!=null)
-			$this->db->set('category_id',$data['category_id']);
-		if($data['category_id']!=null)
+		if($data['content_title']!=null)
 			$this->db->set('content_title',$data['content_title']);
 		if($data['content']!=null)
 			$this->db->set('content',$data['content']);
@@ -191,6 +188,26 @@ class Portal_model extends CI_Model
 
 		$query = $this->db->get();
 		return $query->row();
+	}
+
+	public function getMuchContent($category_id){
+		$this->db->select("*", false);
+		$this->db->from('portal_content a');
+		$this->db->where('category_id',$category_id);
+
+		$query = $this->db->get();
+		return $query;
+	}
+
+	public function getLastNews($much){
+		$this->db->select("*", false);
+		$this->db->from('portal_content a');
+		$this->db->where('a.category_id',2);
+		$this->db->limit($much, 0);
+		$this->db->order_by('a.date_post DESC');
+
+		$query = $this->db->get();
+		return $query;
 	}
 	
 }
