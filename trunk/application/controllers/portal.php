@@ -18,14 +18,37 @@ class Portal extends CI_Controller {
 			'sess_fullname'=>$this->session->userdata('full_name'),
 			'sess_apptype'=>$this->session->userdata('app_type'),
 			'js'=>array('js/easyui/jquery-1.6.min.js','js/jquery-easyui-1.3.3/jquery.easyui.min.js','js/easyui/plugins/datagrid-detailview.js','js/uri_encode_decode.js','js/json2.js','js/jquery.autogrow.js','js/jquery.formatCurrency-1.4.0.min.js','js/formwizard.js','js/jquery.jqURL.js','js/ckeditor/ckeditor.js'),
-			'css'=>array('css/portal/style.css')
+			'css'=>array('css/portal/style.css'),
+			'links'=>$this->portal_model->getMuchContent(8)
 		);
 	}
 	
 	function index()
 	{
-
+		$this->data['latest_news']=$this->portal_model->getLastNews(3);
 		$this->loadView('portal/home_vw',$this->data);
+	}
+
+	function page($page){
+		switch ($page) {
+			case 'about':
+				$this->data['about']=$this->portal_model->getSingleContent(2);
+				$this->loadView('portal/about_vw',$this->data);
+				break;
+			case 'contact':
+				$this->data['contact']=$this->portal_model->getSingleContent(3);
+				$this->loadView('portal/contact_vw',$this->data);
+				break;
+			case 'news':
+				$content_id = $this->uri->segment(4);
+				echo $content_id;
+				$this->data['news']=$this->portal_model->getSingleContent($content_id);
+				$this->loadView('portal/news_vw',$this->data);
+				break;
+			default:
+				# code...
+				break;
+		}
 	}
 
 	function initCKEditor($id){
@@ -33,7 +56,7 @@ class Portal extends CI_Controller {
 		
 			//ID of the textarea that will be replaced
 			'id' 	=> 	$id,
-			'path'	=>	'js/ckeditor',
+			'path'	=>	'public/js/ckeditor',
 		
 			//Optionnal values
 			'config' => array(
@@ -61,7 +84,7 @@ class Portal extends CI_Controller {
 				$this->load->view('portal/backend/news_v', $data);
 				break;
 			case 3:
-				$data['title'] = 'Berita Portal';
+				$data['title'] = 'Profil Portal';
 				$data['objectId'] = 'portalabout';
 				$data['ckeditor'] = $this->initCKEditor('content'.$data['objectId']);
 				$data['about'] = $this->portal_model->getSingleContent(2);
@@ -80,11 +103,15 @@ class Portal extends CI_Controller {
 			case 6:
 				$data['title'] = 'FAQ Portal';
 				$data['objectId'] = 'portalfaq';
+				$data['ckeditor1'] = $this->initCKEditor('content'.$data['objectId']);
+				$data['ckeditor2'] = $this->initCKEditor('summary'.$data['objectId']);
 				$this->load->view('portal/backend/faq_v', $data);
 				break;
 			case 7:
 				$data['title'] = 'Kontak Portal';
 				$data['objectId'] = 'portalfaq';
+				$data['ckeditor'] = $this->initCKEditor('content'.$data['objectId']);
+				$data['about'] = $this->portal_model->getSingleContent(3);
 				$this->load->view('portal/backend/kontak_v', $data);
 				break;
 			case 8:
@@ -129,14 +156,21 @@ class Portal extends CI_Controller {
 				$this->form_validation->set_rules("summary", 'Ringkas Berita', 'trim|required|xss_clean');
 				break;
 			case 3:
+				$this->form_validation->set_rules("content_title", 'Judul Profil', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("content", 'Isi Profil', 'trim|required|xss_clean');
 				break;
 			case 4:
 				break;
 			case 5:
 				break;
 			case 6:
+				$this->form_validation->set_rules("content_title", 'Judul FAQ', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("content", 'Pertanyaan', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("summary", 'Jawaban', 'trim|required|xss_clean');
 				break;
 			case 7:
+				$this->form_validation->set_rules("content_title", 'Judul Halaman', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("content", 'Isi Halaman', 'trim|required|xss_clean');
 				break;
 			case 8:
 				$this->form_validation->set_rules("content_title", 'Judul Tautan', 'trim|required|xss_clean');
@@ -173,15 +207,9 @@ class Portal extends CI_Controller {
 			
 		}else {
 			if($aksi=="add"){ // add
-				// $result = !$this->sasaran_eselon1_model->isExistKode($data['kode_sasaran_e1']);
-				// if ($result)
-					$result = $this->portal_model->InsertOnDb($data,$status);
-				// else
-				//    $data['pesan_error'] = 'Kode sudah ada.';
-					
+				$result = $this->portal_model->InsertOnDb($data,$status);
 			}else { // edit
-				$result=$this->portal_model->UpdateOnDb($data,$kode);
-				
+				$result = $this->portal_model->UpdateOnDb($data,$kode);
 			}
 			//$data['pesan_error'] .= $status;	
 		}
