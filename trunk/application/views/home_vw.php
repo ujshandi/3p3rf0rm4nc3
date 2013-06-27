@@ -546,7 +546,8 @@
 	
 	<script type="text/javascript">
 		setTimeout(function(){
-							addTab('Dashboard','dashboard');},100);
+						//	addTab('Dashboard','dashboard');
+						},100);
 	</script>
 </body>
 

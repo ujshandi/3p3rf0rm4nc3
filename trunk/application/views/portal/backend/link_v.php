@@ -33,7 +33,7 @@
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
-				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Sasaran Eselon I');
+				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Link Portal');
 				$('#fm<?=$objectId;?>').form('clear');  
 				//initCombo<?=$objectId?>();
 				url = base_url+'portal/save/8/add'; 
@@ -53,7 +53,7 @@
 				$('#fm<?=$objectId;?>').form('clear');  
 				//initCombo();
 				if (row){
-					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Sasaran Eselon I');
+					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Link Portal');
 					$('#fm<?=$objectId;?>').form('load',row);
 										
 					url = base_url+'portal/save/8/edit/'+row.content_id;
@@ -280,7 +280,7 @@
 		<thead>
 		<tr>
 			<th field="content_id" sortable="true" hidden="true">Kode Konten</th>
-			<th field="content_title" sortable="true" width="15">Judul Tautan</th>
+			<th field="content_title" sortable="true" width="105">Judul Tautan</th>
 			<!-- <th field="content" sortable="true" width="25">Isi Berita</th> -->
 			<th field="url" sortable="true" width="25">Tautan</th>		
 			<th field="summary" sortable="true" width="125">Keterangan</th> 

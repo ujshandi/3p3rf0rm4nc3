@@ -290,7 +290,7 @@
 		<tr>
 			<th field="content_id" sortable="true" hidden="true">Kode Konten</th>
 			<th field="content_title" sortable="true" width="50">Judul Berita</th>
-			<th field="content" sortable="true" width="100">Isi Berita</th>
+			<th field="content" sortable="true" width="100" hidden="true">Isi Berita</th>
 			<th field="summary" sortable="true" width="100">Ringkas Berita</th>
 			<th field="url" sortable="true" width="50">Tautan</th>		
 			<th field="date_post" sortable="true" width="30">Tanggal Posting</th>		

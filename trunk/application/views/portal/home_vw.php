@@ -1,20 +1,22 @@
 
 
+
+
 <div id="rt">
 	<div class="slider">
 		<div class="flexslider">
             <ul class="slides">
                 <li>
                     <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image1.jpg" alt="" title="" border="0"/></a>
-                    <p class="flex-caption">Selamat datang di Sistem Informasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
+                    <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
                 </li>
                 <li>
                     <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image2.jpg" alt="" title="" border="0"/></a>
-                    <p class="flex-caption">This is 2nd image caption is wrapped in a <a href="#">link!</a></p>
+                    <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
                 </li>
                 <li>
                     <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image3.jpg" alt="" title="" border="0"/></a>
-                    <p class="flex-caption">This is 3rd image caption is wrapped in a <a href="#">link!</a></p>
+                    <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
                 </li>
             </ul>
 	  	</div>
@@ -28,7 +30,8 @@
             <h6 class="meta"><?= date("d M Y", strtotime($latest_news->row()->date_post)); ?></h6>
             <img src="<?php echo base_url(); ?>/public/images/portal/main-news-foto.JPG" />
             <p><?=$latest_news->row()->summary?></p>
-            <a href="<?=base_url()?>portal/page/news/<?=$latest_news->row()->content_id?>" class="inlink">selengkapnya</a>
+            <!-- <=base_url()?>portal/page/news/<=$latest_news->row()->content_id?> !-->
+            <a href="#" class="inlink">selengkapnya</a>
             <div class="clear"></div>
         </div>
         
@@ -69,3 +72,9 @@
         </div><!-- end section full -->
     </div><!-- end center content -->
 </div><!--end block right-->
+<script  type="text/javascript" >
+$('.flexslider').flexslider({
+	  animation: "slide",
+});
+
+</script>
