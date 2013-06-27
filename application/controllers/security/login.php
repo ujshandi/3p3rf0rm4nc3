@@ -35,7 +35,8 @@ class Login extends CI_Controller {
 			$this->index('Username and Password required',$this->input->post('username'));
 		}else if($response == true) {
 			if($form=='portal'){
-				redirect(base_url().'portal');
+				//chan redirect(base_url().'portal');
+				redirect(base_url().'home');
 			}
 			else
 				redirect(base_url().'home');
@@ -52,7 +53,9 @@ class Login extends CI_Controller {
 	
 	public function logout_user() {
 		$response = $this->login->logout();
-		if($response) redirect(base_url().'security/login');
+		if($response) 
+			//redirect(base_url().'security/login');
+			redirect(base_url());
 	}
 	
 	private function chan63_pa55() {

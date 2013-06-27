@@ -26,10 +26,10 @@
     <div class="title"><h1>e-Perfomance</h1><h2>Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan</h2></div>
     
     <div class="menu">
-        <ul>
+       <ul>
             <li><a href="<?=base_url();?>portal">home</a></li>
-            <li><a href="<?=base_url();?>home">dashboard</a></li>
-        </ul>
+          <!--   <li><a href="<?=base_url();?>home">dashboard</a></li>-->
+        </ul> 
     </div><!--end top menu-->
     <div class="clear"></div> 
     </div><!--end header content--> 
@@ -44,16 +44,16 @@
             <li><a href="#" title="">Sistem AKIP</a></li>
             <li><a href="#" title="">Regulasi Terkait</a></li>
             <li><a href="#" title="">FAQ</a></li>
-            <li class="last"><a href="<?=base_url()?>portal/page/contact" title="">Kontak</a></li>
+            <li class="last"><a href="#" title="">Kontak</a></li>
         </ul>
     </div>
     
     <div class="apl_box">
     <? if($sess_fullname!=''){?>
-        <h3 class="typo">Selamat Datang, <?=$sess_fullname;?></h3>
+      <!--  <h3 class="typo">Selamat Datang, <?=$sess_fullname;?></h3>
         <p>Silahkan klik tombol dibawah ini untuk menuju ke dashboard aplikasi e-Perfomance</p>
         <hr/>
-        <a href="<?=base_url();?>home" class="more_bgcolor more_rounded centered">DASHBOARD</a>
+        <a href="<?=base_url();?>home" class="more_bgcolor more_rounded centered">DASHBOARD</a> -->
     <? }else{?>
         <h3 class="typo">LOGIN Aplikasi</h3>
         <hr/>
@@ -76,7 +76,7 @@
                 $i = 0;
                 foreach ($links->result() as $link){
             ?>
-                <li class="<?=(++$i === $numItems)?'last':'';?>"><a href="<?=$link->url?>" title=""><?=$link->content_title?></a></li>
+                <li class="<?=(++$i === $numItems)?'last':'';?>"><a href="http://<?=$link->url?>" title=""><?=$link->content_title?></a></li>
             <? }?>
         </ul>
     </div>
