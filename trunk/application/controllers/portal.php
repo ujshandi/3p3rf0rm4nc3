@@ -71,9 +71,10 @@ class Portal extends CI_Controller {
 	function content($menu){
 		switch ($menu) {
 			case 1:
-				$this->data['title'] = 'Berita Portal';
+				$this->data['title'] = 'Beranda Portal';
 				$this->data['objectId'] = 'portalhome';
 				$this->data['ckeditor'] = $this->initCKEditor('content'.$this->data['objectId']);
+				$this->data['home'] = $this->portal_model->getSingleContent($this->portal_model->getContentID(1));
 				$this->load->view('portal/backend/home_v',$this->data);
 				break;
 			case 2:
@@ -159,6 +160,8 @@ class Portal extends CI_Controller {
     private function validateRules($category_id=1){
     	switch ($category_id) {	
 			case 1:
+				$this->form_validation->set_rules("content_title", 'Judul Halaman', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("content", 'Isi Halaman', 'trim|required|xss_clean');
 				break;
 			case 2:
 				$this->form_validation->set_rules("content_title", 'Judul Berita', 'trim|required|xss_clean');

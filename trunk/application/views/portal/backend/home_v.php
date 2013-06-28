@@ -1,4 +1,34 @@
-<style type="text/css">
+	<script  type="text/javascript" >		
+		$(function(){
+			var url = base_url+'portal/saveContent/1';
+		 	saveData<?=$objectId;?>=function(){
+				$('#fmedit<?=$objectId;?>').form('submit',{
+					url: url,
+					onSubmit: function(){
+						return $(this).form('validate');
+					},
+					success: function(result){
+						//alert(result);
+						var result = eval('('+result+')');
+						if (result.success){
+							$.messager.show({
+								title: 'Success',
+								msg: 'Data berhasil disimpan'
+							});
+						} else {
+							$.messager.show({
+								title: 'Error',
+								msg: result.msg
+							});
+						}
+					}
+				});
+			}
+			});
+			//end saveData
+	</script>
+
+	<style type="text/css">
 		
 	 #fmedit<?=$objectId;?>{margin:0;padding:5px}
 	  .ftitle{font-size:14px;font-weight:bold;color:#666;padding:5px 0;margin-bottom:10px;border-bottom:1px solid #ccc;}
@@ -38,25 +68,26 @@
 	</style>
 			
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
-		<div region="north" split="true" title="" style="height:450px;">
 			<div class="easyui-layout" fit="true">  				
 				<!------------Edit View-->
-				<div region="center" border="true" title="Tampilan Beranda Portal">
+				<div region="center" border="true" title=" Beranda e-Performance">
 					<form id="fmedit<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 						
-						<input type="hidden" name="content_id" value="">
+						<input type="hidden" name="content_id" value="<?=($home)?$home->content_id:'';?>">
 						
 						<div class="fitem">							
-						    <label style="width:150px">Content :</label><br/>
-							<div style="width:700px; margin:10px 0"><textarea name="content" id="content<?=$objectId;?>"><p>Example data</p></textarea></div>
+						    <label style="width:150px">Judul Halaman Beranda :</label><br/>
+						    <input style="margin:10px 0" id="content_title<?=$objectId?>" name="content_title" class="easyui-validatebox" required="true" size="40" value="<?=($home)?$home->content_title:'';?>">
+						</div>
+						<div class="fitem">							
+						    <label style="width:150px">Isi Halaman Beranda :</label><br/>
+							<div style="width:700px; margin:10px 0"><textarea name="content" id="content<?=$objectId;?>"><?=($home)?$home->content:'';?></textarea></div>
 							<?php echo display_ckeditor($ckeditor); ?>
 						</div>
 						<br>
 						<!------------Edit View-->
-						<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Simpan</a>
-						<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="closeView<?=$objectId;?>()">Close</a>
+						<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData<?=$objectId;?>()">Simpan</a>
 					</form>
 				</div>
 			</div>	
-		</div>
 	</div>
