@@ -33,7 +33,7 @@
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
-				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Sasaran Eselon I');
+				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Berita');
 				$('#fm<?=$objectId;?>').form('clear');  
 				$("#published<?=$objectId;?>").val("0");
 				//initCombo<?=$objectId?>();
@@ -56,7 +56,7 @@
 				if (row){
 					CKEDITOR.instances.content<?=$objectId;?>.destroy();
 					CKEDITOR.instances.summary<?=$objectId;?>.destroy();
-					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Sasaran Eselon I');
+					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Berita');
 					$('#fm<?=$objectId;?>').form('load',row);
 					CKEDITOR.replace('content<?=$objectId;?>',{height:'100px'});
 					CKEDITOR.replace('summary<?=$objectId;?>',{height:'100px'});
@@ -131,31 +131,6 @@
 				searchData<?=$objectId;?> ();
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/sasaran_eselon1/grid"});
 			},50);
-			
-			// yanto
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					
-					switch(field){
-						case "kode_e1":
-							showPopup('#popdesc<?=$objectId?>', row.nama_e1);
-							break;
-						case "kode_sasaran_kl":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
-							break;
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
-			
-			$("#popdesc<?=$objectId?>").click(function(){
-				closePopup('#popdesc<?=$objectId?>');
-			});
-			
 		 });
 	</script>
 	
@@ -196,10 +171,6 @@
 			$("#dlg<?=$objectId;?>").css('height',wHeight);
 		});
 		
-		function setSasaran<?=$objectId;?>(valu){
-			//alert("here");
-			document.getElementById('kode_sasaran_kl<?=$objectId;?>').value = valu;
-		}
 	</script>
 	
 	<style type="text/css">
@@ -338,5 +309,3 @@
 			<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg<?=$objectId;?>').dialog('close')">Cancel</a>
 		</div>
     </div>
-	
-	<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>

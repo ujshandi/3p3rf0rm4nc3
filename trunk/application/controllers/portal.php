@@ -109,7 +109,7 @@ class Portal extends CI_Controller {
 				break;
 			case 7:
 				$data['title'] = 'Kontak Portal';
-				$data['objectId'] = 'portalfaq';
+				$data['objectId'] = 'portalcontact';
 				$data['ckeditor'] = $this->initCKEditor('content'.$data['objectId']);
 				$data['about'] = $this->portal_model->getSingleContent(3);
 				$this->load->view('portal/backend/kontak_v', $data);
@@ -129,6 +129,16 @@ class Portal extends CI_Controller {
 
 	function grid($category_id=1){
 		echo $this->portal_model->easyGrid($category_id);
+	}
+
+	function saveContent($category_id){
+		$data = $this->getFormValues($category_id);
+		if($this->portal_model->contentExist($category_id)){
+			$this->save($category_id,'edit',$this->portal_model->getContentID($category_id),$data);
+		}
+		else{
+			$this->save($category_id,'add','',$data);
+		}
 	}
 
 	private function getFormValues($category_id=1) {
@@ -182,9 +192,9 @@ class Portal extends CI_Controller {
     	}
     }
 
-	function save($category_id=1, $aksi="", $kode=""){
+	function save($category_id=1, $aksi="", $kode="", $data=""){
 		$this->load->library('form_validation');
-		$data = $this->getFormValues($category_id);
+		if($data==""){$data=$this->getFormValues($category_id);}
 		$status = "";
 		$result = false;
 	    

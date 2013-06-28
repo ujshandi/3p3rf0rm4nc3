@@ -1,6 +1,6 @@
 	<script  type="text/javascript" >		
 		$(function(){
-			var url = base_url+'portal/save/3/edit/2';
+			var url = base_url+'portal/saveContent/3';
 		 	saveData<?=$objectId;?>=function(){
 				$('#fmedit<?=$objectId;?>').form('submit',{
 					url: url,
@@ -81,7 +81,7 @@
 						</div>
 						<div class="fitem">							
 						    <label style="width:150px">Isi Halaman Tentang :</label><br/>
-							<div style="width:700px; margin:10px 0"><textarea name="content" id="content<?=$objectId;?>"><p><?=$about->content;?></p></textarea></div>
+							<div style="width:700px; margin:10px 0"><textarea name="content" id="content<?=$objectId;?>"><?=$about->content;?></textarea></div>
 							<?php echo display_ckeditor($ckeditor); ?>
 						</div>
 						<br>

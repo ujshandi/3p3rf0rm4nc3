@@ -127,30 +127,6 @@
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/sasaran_eselon1/grid"});
 			},50);
 			
-			// yanto
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					
-					switch(field){
-						case "kode_e1":
-							showPopup('#popdesc<?=$objectId?>', row.nama_e1);
-							break;
-						case "kode_sasaran_kl":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
-							break;
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
-			
-			$("#popdesc<?=$objectId?>").click(function(){
-				closePopup('#popdesc<?=$objectId?>');
-			});
-			
 		 });
 	</script>
 	
@@ -186,11 +162,6 @@
 				});
 			*/
 		});
-		
-		function setSasaran<?=$objectId;?>(valu){
-			//alert("here");
-			document.getElementById('kode_sasaran_kl<?=$objectId;?>').value = valu;
-		}
 	</script>
 	
 	<style type="text/css">
@@ -276,7 +247,7 @@
 		</div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Berita Portal" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Link Portal" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
 		<thead>
 		<tr>
 			<th field="content_id" sortable="true" hidden="true">Kode Konten</th>
@@ -292,7 +263,7 @@
 	
 	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:350px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
-		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Berita Portal</div>
+		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Link Portal</div>
 		<form id="fm<?=$objectId;?>" method="post">
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Judul Tautan :</label>
@@ -318,4 +289,3 @@
 		</div>
     </div>
 	
-	<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>

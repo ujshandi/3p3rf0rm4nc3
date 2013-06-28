@@ -1,6 +1,6 @@
 	<script  type="text/javascript" >		
 		$(function(){
-			var url = base_url+'portal/save/7/edit/3';
+			var url = base_url+'portal/saveContent/7';
 		 	saveData<?=$objectId;?>=function(){
 				$('#fmedit<?=$objectId;?>').form('submit',{
 					url: url,
@@ -70,7 +70,7 @@
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 			<div class="easyui-layout" fit="true">  				
 				<!------------Edit View-->
-				<div region="center" border="true" title=" Tentang e-Performance">
+				<div region="center" border="true" title=" Kontak e-Performance">
 					<form id="fmedit<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 						
 						<input type="hidden" name="content_id" value="<?=$about->content_id;?>">

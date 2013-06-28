@@ -41,10 +41,10 @@
 		<div region="north" split="true" title="" style="height:450px;">
 			<div class="easyui-layout" fit="true">  				
 				<!------------Edit View-->
-				<div region="center" border="true" title=" Data Pengukuran Kinerja Eselon II">
+				<div region="center" border="true" title="Tampilan Beranda Portal">
 					<form id="fmedit<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 						
-						<input type="hidden" name="id_pengukuran_e2" value="">
+						<input type="hidden" name="content_id" value="">
 						
 						<div class="fitem">							
 						    <label style="width:150px">Content :</label><br/>
