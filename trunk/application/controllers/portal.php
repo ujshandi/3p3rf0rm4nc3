@@ -32,11 +32,11 @@ class Portal extends CI_Controller {
 	function page($page){
 		switch ($page) {
 			case 'about':
-				$this->data['about']=$this->portal_model->getSingleContent(2);
+				$this->data['about']=$this->portal_model->getSingleContent($this->portal_model->getContentID(3));
 				$this->loadView('portal/about_vw',$this->data);
 				break;
 			case 'contact':
-				$this->data['contact']=$this->portal_model->getSingleContent(3);
+				$this->data['contact']=$this->portal_model->getSingleContent($this->portal_model->getContentID(7));
 				$this->loadView('portal/contact_vw',$this->data);
 				break;
 			case 'news':
@@ -87,7 +87,7 @@ class Portal extends CI_Controller {
 				$data['title'] = 'Profil Portal';
 				$data['objectId'] = 'portalabout';
 				$data['ckeditor'] = $this->initCKEditor('content'.$data['objectId']);
-				$data['about'] = $this->portal_model->getSingleContent(2);
+				$data['about'] = $this->portal_model->getSingleContent($this->portal_model->getContentID(3));
 				$this->load->view('portal/backend/about_v', $data);
 				break;
 			case 4:
@@ -111,7 +111,7 @@ class Portal extends CI_Controller {
 				$data['title'] = 'Kontak Portal';
 				$data['objectId'] = 'portalcontact';
 				$data['ckeditor'] = $this->initCKEditor('content'.$data['objectId']);
-				$data['about'] = $this->portal_model->getSingleContent(3);
+				$data['about'] = $this->portal_model->getSingleContent($this->portal_model->getContentID(7));
 				$this->load->view('portal/backend/kontak_v', $data);
 				break;
 			case 8:
