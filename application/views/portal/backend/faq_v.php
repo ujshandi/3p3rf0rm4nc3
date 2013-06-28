@@ -33,7 +33,7 @@
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
-				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Sasaran Eselon I');
+				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add FAQ');
 				$('#fm<?=$objectId;?>').form('clear');  
 				//initCombo<?=$objectId?>();
 				url = base_url+'portal/save/6/add'; 
@@ -55,7 +55,7 @@
 				if (row){
 					CKEDITOR.instances.summary<?=$objectId;?>.destroy();
 					CKEDITOR.instances.content<?=$objectId;?>.destroy();
-					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Sasaran Eselon I');
+					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit FAQ');
 					$('#fm<?=$objectId;?>').form('load',row);
 					CKEDITOR.replace('content<?=$objectId;?>',{height:'100px'});
 					CKEDITOR.replace('summary<?=$objectId;?>',{height:'100px'});
@@ -131,29 +131,6 @@
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/sasaran_eselon1/grid"});
 			},50);
 			
-			// yanto
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					
-					switch(field){
-						case "kode_e1":
-							showPopup('#popdesc<?=$objectId?>', row.nama_e1);
-							break;
-						case "kode_sasaran_kl":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
-							break;
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
-			
-			$("#popdesc<?=$objectId?>").click(function(){
-				closePopup('#popdesc<?=$objectId?>');
-			});
 			
 		 });
 	</script>
@@ -284,7 +261,7 @@
 		</div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Berita Portal" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data FAQ Portal" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
 		<thead>
 		<tr>
 			<th field="content_id" sortable="true" hidden="true">Kode Konten</th>
@@ -300,7 +277,7 @@
 	
 	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
-		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Berita Portal</div>
+		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data FAQ Portal</div>
 		<form id="fm<?=$objectId;?>" method="post">
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Judul FAQ :</label>
@@ -330,4 +307,3 @@
 		</div>
     </div>
 	
-	<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>

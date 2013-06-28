@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><?=$title_page?></title>
-	<link type="image/x-icon" href="favicon.ico" rel="shortcut icon">
+	<link type="image/x-icon" href="<?php echo base_url(); ?>public/images/favicon.ico" rel="shortcut icon">
 	<?php if(count($css) > 0) load_css($css);?>    
 	<?php if(count($js) > 0) load_js($js);?>    
 
@@ -44,7 +44,7 @@
             <li><a href="#" title="">Sistem AKIP</a></li>
             <li><a href="#" title="">Regulasi Terkait</a></li>
             <li><a href="#" title="">FAQ</a></li>
-            <li class="last"><a href="#" title="">Kontak</a></li>
+            <li class="last"><a href="<?=base_url()?>portal/page/contact" title="">Kontak</a></li>
         </ul>
     </div>
     

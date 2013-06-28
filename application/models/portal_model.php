@@ -209,6 +209,29 @@ class Portal_model extends CI_Model
 		$query = $this->db->get();
 		return $query;
 	}
+
+	public function contentExist($category_id){
+		$this->db->select("*", false);
+		$this->db->from('portal_content a');
+		$this->db->where('category_id',$category_id);
+
+		$query = $this->db->get();
+		
+		if ($query->num_rows()>0){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+	}
+
+	public function getContentID($category_id){
+		$this->db->select("*", false);
+		$this->db->from('portal_content a');
+		$this->db->where('category_id',$category_id);
+
+		$query = $this->db->get();
+		return $query->row()->content_id;
+	}
 	
 }
 ?>
