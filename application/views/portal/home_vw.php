@@ -1,7 +1,3 @@
-
-
-
-
 <div id="rt">
 	<div class="slider">
 		<div class="flexslider">
@@ -70,6 +66,7 @@
                 </ul>
             </div>
         </div><!-- end section full -->
+        <div class="clear"></div>
     </div><!-- end center content -->
 </div><!--end block right-->
 <script  type="text/javascript" >

@@ -492,12 +492,32 @@
 
 <body class="easyui-layout" id="homeBody" >
 	<div region="north" border="false">
-		<div style="background: fixed url(<?=base_url();?>public/images/header_newer.png) no-repeat top left;height:70px;margin: 0px;width:100%; padding: 0px;border:1px"></div>
+		<!--<div style="background: fixed url(<?=base_url();?>public/images/header_newer.png) no-repeat top left;height:70px;margin: 0px;width:100%; padding: 0px;border:1px"></div>
 		<div id="user-container">
 			<div style="text-align:center;">
 				<a href="#" onclick="editData();"><?=(strlen($sess_fullname)<18)?$sess_fullname:substr($sess_fullname,0,18).'..';?></a>&nbsp;|&nbsp;<a href="<?=base_url()?>security/login/logout_user">Logout</a>
 			</div>
+		</div>-->
+		<div id="topheader">
+		<div class="bg">
+		  
+			<div class="logo"><a href="index.html">home</a></div>
+			<div class="title"><h1>e-Perfomance</h1><h2>Sistem Informasi Pengukuran Kinerja Kementerian Perhubungan</h2><!--<h2>Sistem Informasi Pengukuran Kinerja Kementerian Perhubungan</h2>--></div>
+			
+			<div class="rpanel">
+				<div class="left">
+					<h4>Welcome :</h4>
+					<p><a href="#"><?=(strlen($sess_fullname)<18)?$sess_fullname:substr($sess_fullname,0,18).'..';?></a></p>
+					<hr/>
+					<a href="#" onclick="editData();" class="inlink">Setting dan Ubah Password</a>
+				</div>
+				<div class="right"><a href="<?=base_url()?>security/login/logout_user" class="logout">LOGOUT</a></div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+
 		</div>
+		</div><!-- End of Header-->
 	</div>
 
 	<div region="west" split="true" title="Daftar Menu" style="width:200px;padding:10px;">
@@ -512,9 +532,26 @@
 
 	<div region="south" border="false" style="height:30px;background:#000000;padding:5px;"></div>
 
-	<div id="versionBar">
+	<div id="footer">
+		<div class="footer_content">
+	        <div class="footer_bottom">
+	            <div class="copyrights">&copy; e-Perfomance 2013 - <a href="#" target="_blank">Sistem Informasi Pengukuran Kinerja Kementerian Perhubungan RI</a></div>
+	            <div class="footer_right_links">
+	                <ul>
+	                    <li class="selected"><a href="index.html">HOME</a></li>
+	                    <li><a href="#">KONTAK</a></li>
+	                    <li><a href="#">WEB MAIL</a></li>
+	                    <li><a href="#">LOGIN</a></li>
+	                </ul>
+	            </div>
+	        </div>
+	     <div class="clear"></div>   
+		</div><!--end footer content-->
+	</div><!--end all footer-->
+	
+	<!-- <div id="versionBar">
 		<div class="copyright"> Copyright 2012  All Rights Reserved <span class="tip"><a href="#" title="Kemenhub">Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan</a></span></div>
-	</div>
+	</div> -->
 
 	<!-- AREA untuk Form Add/EDIT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	

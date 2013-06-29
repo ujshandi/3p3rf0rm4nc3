@@ -21,7 +21,7 @@ html[xmlns] .clearfix {display: block;}
 * html .clearfix {height: 1%;}
 .right{ float:right;}
 .left{ float:left;}
-p{padding:0;margin:0px;text-align:left;line-height:1.5em;}
+p{padding:0;margin:0 0 10px 0;font-size:13px;text-align:left;line-height:1.5em;}
 
 a{color:#006bd1; text-decoration:none;}
 a img{border:none;}
@@ -49,7 +49,7 @@ hr.style1 {margin:10px 0;border-top-color:#ddd;border-bottom-color:#fff}
 #header{width:100%; height:140px;}
 .header_content{ width:960px; margin:auto; line-height:140px;}
 #page_wrap{margin:auto;width:1000px;padding:0 0 40px 0; background-color:#FFFFFF;}
-.center_content{clear:both;padding:15px;/*background:#fff;background:rgba(255,255,255,.8);border:solid 1px #6699CC;border-radius:4px*/}
+.center_content{clear:both;padding:15px;background:#fff;background:rgba(255,255,255,.1);border:solid 1px rgba(255,255,255,.2);border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px}
 #lt {width:240px;float:left;margin:0 20px 0 0}
 #rt {width:680px;float:left;}
 .section_full {clear:both}
@@ -122,17 +122,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d8dbe3', end
 .page_title{ clear:both; padding:0 0 10px 0;}
 .page_title h1 {padding:0;font-family:'Jockey One',sans-serif;text-shadow:0 1px 1px #fff}
 .article_wrapper {margin:0 0 20px 0}
-.article_wrapper h2{color: #5699A7;text-shadow:0 1px 0 #fff; font-size:2em;margin:0;}
+.article_wrapper h2{color: #528989;text-shadow:0 1px 0 #BAE9E9; font-size:2em;margin:0;}
 .article_wrapper h2 a {color: #5699A7}
 .article_wrapper h2 a:hover {color:#006699}
 .article_wrapper h6.meta {color:#cc6600;font-family:Geneva, Arial, Helvetica, sans-serif;font-size:12px;line-height:normal;margin:0 0 15px}
-.article_wrapper p{padding-bottom:10px;font-size:1.2em;text-shadow:0 1px 0 #fff;}
+.article_wrapper p{padding-bottom:10px;font-size:1.2em;text-shadow:0 1px 0 #BAE9E9;}
 .article_wrapper img {float:left;padding:5px;background:#fff;border:solid 1px #ddd;border-radius:4px;margin:0 10px 0 0;width:150px;height:150px}
+.article_wrapper img.detil {width:250px;height:250px}
 .features{ border-bottom:1px dashed #999; padding:0 0 10px 0; margin:10px 0 0px 0; clear:both; float:left;}
 img.feat_thumb{float:left;}
 .feat_details{width:200px;float:left;padding:0 0 0 10px;}
 .feat_details h4 {font-size:15px;font-weight:bold;color:#cc6600;text-shadow:0 1px 1px #f9f9f9}
-p.feat_text{color:#555;text-shadow:0 1px 0 #D2EDF5}
+p.feat_text{color:#333;text-shadow:0 1px 0 #D2EDF5}
 p.feat_text span.meta {display:block;font-size:11px;font-style:normal;font-weight:bold;color:#17365D}
 .apl_box {background:#9BBB59;background:rgba(155,187,89,.8);border:solid 1px #5A8E25;overflow:auto;padding:15px;border-radius:4px;text-align:center;margin:5px 0 15px;box-shadow:0 0 10px rgba(102,153,51,.9) inset}
 .apl_box h3 {margin:0;padding:0;text-align:left;font-size:18px!important;color:#17365D;text-shadow:0 1px 0 #fff}
@@ -141,12 +142,54 @@ p.feat_text span.meta {display:block;font-size:11px;font-style:normal;font-weigh
 form.front {margin:5px 0 0;padding:0}
 form.front input[type=text], form.front input[type=password] {width:96%;background:#fff;box-shadow:0 0 5px rgba(0,0,0,.2) inset;border:solid 1px #999;border-radius:4px;padding:5px 2%;margin:5px 0;color:#ccc;font-size:12px}
 form.front input[type=text]:focus, form.front input[type=password]:focus {border-color:#336600;color:#003366}
-
+/* list content */
 .list ul{padding:5px 0 20px 0; margin:0px; list-style-type:none;}
 .list ul li{padding:5px 0; margin:0px;border-bottom:1px dotted #336699; line-height:19px;}
 .list ul li a{color:#17365D;text-shadow:0 1px 0 #D2EDF5}
 .list ul li a:hover{color:#336699;}
-/*-------------------------------------------------footer----------------------------------------------------------*/
+ul#iconlist {list-style-type: none;margin:5px 0;padding:0;}
+ul#iconlist li {padding:5px 0 5px 20px;margin-left:10px;border-bottom:dotted 1px #999;background:transparent url(../../images/portal/li_a.gif) 0 7px no-repeat;overflow:hidden;font-size:13px;line-height:1.5em;font-weight:normal;color:#21568B;text-shadow:0 1px 0 #BAE9E9;}
+ul#bulletlist {list-style-type: none;margin:5px 0 5px 30px;padding:0;}
+ul#bulletlist li {list-style-type:disc;padding:3px 0 3px 0;font-size:13px;line-height:1.5em;font-weight:normal;color:#21568B;text-shadow:0 1px 0 #BAE9E9;}
+/* faq list */
+ul#faq {margin:10px 0;padding:0;list-style-type:none}
+ul#faq li {margin:0;padding:15px;border-bottom:dotted 1px #fff;overflow:hidden;background:#fff;background:rgba(255,255,255,.5);box-shadow:0 10px 10px -10px rgba(0, 0, 0, 0.2) inset;-moz-box-shadow:0 10px 10px -10px rgba(0, 0, 0, 0.2) inset;-webkit-box-shadow:0 10px 10px -10px rgba(0, 0, 0, 0.2) inset;}
+ul#faq li:hover {background:#F0F7F9}
+ul#faq li:hover p {color:#993300}
+ul#faq li h3 {margin:0;padding:0 0 10px 30px;border-bottom:dashed 1px #ccc;font-family:Arial, Helvetica, sans-serif;background:url(../../images/portal/faq-icon.png) no-repeat 0 0}
+ul#faq li h3 a {color:#003366;text-shadow:0 1px 0 #fff;text-decoration:none;font-size:16px;font-weight:bold;line-height:1.4em}
+ul#faq li h3 a:hover {color:#CC3300}
+ul#faq li p {padding-left:50px;line-height:1.5em;font-size:12px;padding-top:10px;color:#666;text-shadow:0 1px 0 #fff;}
+ul#faq li img {float:left;margin:10px 0 0;}
+/* table */
+table {background:#FFFFFF;background:rgba(255,255,255,.7);border-collapse:collapse;font-size:12px;text-align:left;max-width:100%;width:100%;border-spacing:0;margin:0;border:0 none;text-shadow:0 1px 0 #fff;border:dotted 1px #ddd}
+table tbody tr:nth-child(2n) {background:#f9f9f9;background:rgba(249,249,249,.8);}
+table thead {
+background: #336699;
+background: -moz-linear-gradient(top, #336699 0%, #003366 50%, #022C56 51%, #02172C 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#336699), color-stop(50%,#003366), color-stop(51%,#022C56), color-stop(100%,#02172C));
+background: -webkit-linear-gradient(top, #336699 0%,#003366 50%,#022C56 51%,#02172C 100%);
+background: -o-linear-gradient(top, #336699 0%,#003366 50%,#b5c6d0 51%,#02172C 100%);
+background: -ms-linear-gradient(top, #336699 0%,#003366 50%,#022C56 51%,#02172C 100%);
+background: linear-gradient(to bottom, #336699 0%,#003366 50%,#022C56 51%,#02172C 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#336699', endColorstr='#02172C',GradientType=0 );
+border-top:solid 1px #b5c6d0}
+table tfoot {background:#f3f3f3;border-top:solid 1px #a8dbeb}
+table th {border-bottom:2px solid #6699CC;color:#fff;text-shadow:0 1px 0 #000;font-size:13px;font-weight:bold;text-transform:uppercase;padding:10px 8px;}
+table td {border-bottom:1px dotted #999;color:#333;padding:6px 8px;font-size:12px;display:table-cell;}
+table tbody tr:hover td {color:#000;background:#FAEEA9;}
+/* contact form */
+#contact-form {width:450px;margin:10px 0}
+#contact-form fieldset {width:450px;padding:15px;border:solid 1px rgba(255,255,255,.3);background:#fff;background:rgba(255,255,255,.3);border-radius:4px;}
+#contact-form label {display:block;height:31px;margin-bottom:10px}
+#contact-form input {float:right;width:300px;font-size:13px;line-height:1.23em;color:#666;padding:5px 10px;margin:0;font-family:Arial, Helvetica, sans-serif;border:1px solid #999;background:#CEECF6;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:0 0 3px rgba(0,0,0,.3) inset;-moz-box-shadow:0 0 3px rgba(0,0,0,.3) inset;-webkit-box-shadow:0 0 3px rgba(0,0,0,.3) inset}
+#contact-form textarea {float:right;height:100px;overflow:auto;width:300px;font-size:13px;line-height:1.23em;color:#666;padding:5px 10px;margin:0;font-family:Arial, Helvetica, sans-serif;border:1px solid #999;background:#CEECF6;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;box-shadow:0 0 3px rgba(0,0,0,.3) inset;-moz-box-shadow:0 0 3px rgba(0,0,0,.3) inset;-webkit-box-shadow:0 0 3px rgba(0,0,0,.3) inset}
+#contact-form input:focus, #contact-form textarea:focus {background:#FFFFCC;color:#000;border-color:#FF0000}
+.text-form {float:left;display:block;font-size:13px;font-weight:bold;line-height:26px;width:120px;color:#000;}
+.buttons {padding:30px 0 0 0;clear:both;text-align:center}
+.buttons a {background:#2D2D2D;color:#ccc;font-weight:bold;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;padding:5px 15px}
+.buttons a:hover {background:#EB3D00;color:#fff}
+/* footer */
 #footer{width:100%;clear:both;margin:0 0 0 0;background:url(../../images/portal/footer-bg.png) repeat left top;border-top:solid 3px #FFCC00}
 .footer_content{width:1000px;margin:auto;color:#999;}
 .footer_content a{color:#999; text-decoration:none;}

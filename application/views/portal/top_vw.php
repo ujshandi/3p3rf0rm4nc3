@@ -23,7 +23,7 @@
     <div class="header_content">
   
     <div class="logo"><a href="<?=base_url();?>portal">home</a></div>
-    <div class="title"><h1>e-Perfomance</h1><h2>Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan</h2></div>
+    <div class="title"><h1>e-Perfomance</h1><h2>Sistem Informasi Pengukuran Kinerja Kementerian Perhubungan</h2></div>
     
     <div class="menu">
        <ul>
@@ -43,7 +43,7 @@
             <li><a href="<?=base_url()?>portal/page/about" title="">Tentang e-Perfomance</a></li>
             <li><a href="#" title="">Sistem AKIP</a></li>
             <li><a href="#" title="">Regulasi Terkait</a></li>
-            <li><a href="#" title="">FAQ</a></li>
+            <li><a href="<?=base_url()?>portal/page/faq" title="">FAQ</a></li>
             <li class="last"><a href="<?=base_url()?>portal/page/contact" title="">Kontak</a></li>
         </ul>
     </div>
