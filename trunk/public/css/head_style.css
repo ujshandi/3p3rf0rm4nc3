@@ -1,0 +1,82 @@
+/* General */
+*, html {margin:0;padding:0}
+body{font-family:Arial, Helvetica, sans-serif;padding:0;font-size:12px;margin:0 auto;color:#5e5e5e;}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url(font/9k-RPmcnxYEPm8CNFsH2gg.woff) format('woff');
+}
+@font-face {
+  font-family: 'Jockey One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Jockey One'), local('JockeyOne-Regular'), url(font/8Hj8G_JpSADPYrRpzMno2hsxEYwM7FgeyaSgU71cLG0.woff) format('woff');
+}
+.clear{clear:both;}
+.clearfix:after {content: ".";display: block;clear: both;visibility: hidden;line-height: 0;height: 0;}
+.clearfix {display: inline-block;}
+html[xmlns] .clearfix {display: block;}
+* html .clearfix {height: 1%;}
+a {text-decoration:none}
+img, a img{border:none;}
+h1,h2,h3,h4,h5,h6{ padding:0px 0 10px 0; margin:0px; font-weight:normal;line-height:normal}
+h1{ font-size:26px;}
+h2{ font-size:22px;}
+h3{ font-size:18px;}
+h4{ font-size:16px;}
+h1, h2, h3, h4{font-family: 'Lato', sans-serif;}
+.right{ float:right;}
+.left{ float:left;}
+
+#topheader{width:100%;
+background: #336699;
+background: -moz-linear-gradient(top, #336699 0%, #003366 50%, #022C56 51%, #02172C 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#336699), color-stop(50%,#003366), color-stop(51%,#022C56), color-stop(100%,#02172C));
+background: -webkit-linear-gradient(top, #336699 0%,#003366 50%,#022C56 51%,#02172C 100%);
+background: -o-linear-gradient(top, #336699 0%,#003366 50%,#b5c6d0 51%,#02172C 100%);
+background: -ms-linear-gradient(top, #336699 0%,#003366 50%,#022C56 51%,#02172C 100%);
+background: linear-gradient(to bottom, #336699 0%,#003366 50%,#022C56 51%,#02172C 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#336699', endColorstr='#02172C',GradientType=0 );
+border-bottom:solid 3px #FFCC00;
+}
+.bg {width:100%;height:90px;background:url(../images/img-header.png) repeat-x 0 0;}
+.logo{float:left;margin:5px 0 0 20px;}
+.logo a {display:block;width:70px;height:80px;background:url(../images/h-logo.png) no-repeat;color:transparent!important}
+.title {float:left;margin:20px 0 0 20px}
+.title h1 {color:#ffcc00;text-shadow:0 2px 0 #000;font-family: 'Jockey One', sans-serif; font-size:22px;font-weight:bold;padding:0;}
+.title h2 {font-size:16px;font-family: 'Jockey One', sans-serif;color:#fff;text-shadow:0 1px 1px #333;text-transform:uppercase;padding:0}
+
+/* user panel */
+.rpanel {float:right;margin: 15px 20px 0;overflow: hidden;}
+.rpanel h4 {font-size: 14px;color:#fff;text-shadow:0 1px 0 #000;letter-spacing: -1px;margin: 0;padding: 0;}
+.rpanel p {color: #FFCC00;font-size: 12px;font-weight: bold;margin: 0;padding: 0;text-shadow: 0 1px 0 #000;}
+.rpanel p a {color: #FFCC00;text-decoration: none;}
+.rpanel p a:hover {color: #fff;}
+.rpanel hr {border-bottom-color: #20568B;border-top-color: #042C54;margin: 3px 0;}
+.rpanel .inlink {background: #336699;border-radius: 4px;color: #FFFFFF;display: inline-block;float: left;font-size: 11px;font-weight: bold;margin: 3px 3px 0 0;padding: 1px 5px;text-decoration: none;text-shadow: 0 1px 1px #333333;}
+.rpanel .inlink:hover {background: #000033;}
+.rpanel .logout {height:40px;line-height:40px;border-left: 1px dotted #6699CC;color: #fff;display: block;font-size: 11px;font-weight: bold;margin: 15px 0 0 10px;padding: 0 0 0 40px;text-align: center;text-decoration: none;text-shadow: 0 1px 0 #000;background:url(../images/ic-logout.png) no-repeat 10px 50%}
+.rpanel .logout:hover {color:#FFCC00}
+
+/* footer */
+#footer{width:100%;clear:both;margin:0 0 0 0;background:url(../images/portal/footer-bg.png) repeat left top;border-top:solid 3px #FFCC00;
+position: fixed;
+height: 35px;
+bottom: 0;
+left: 0;
+text-align: center;
+line-height: 35px;
+z-index: 11;
+}
+.footer_content{width:1000px;margin:auto;color:#999;}
+.footer_content a{color:#999; text-decoration:none;}
+.footer_content a:hover {color:#666}
+.footer_bottom{clear:both;padding:0 0;float:left;width:1000px;}
+.footer_bottom_left{float:left;}
+.copyrights{float:left; padding:0 0 0 5px;text-shadow:0 1px 0 #fff}
+.copyrights a {font-weight:bold}
+.footer_right_links{width:300px; float:right; padding:0; text-align:right;}
+.footer_right_links ul{ list-style:none; padding:0px; margin:0px; }
+.footer_right_links ul li{padding:0px; margin:0px;display:inline;}
+.footer_right_links ul li a{padding:0px; margin:0px; padding:0 12px 0 12px;color:#999;text-shadow:0 1px 0 #fff;text-decoration:none;}

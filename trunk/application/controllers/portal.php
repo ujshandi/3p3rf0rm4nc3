@@ -41,9 +41,12 @@ class Portal extends CI_Controller {
 				break;
 			case 'news':
 				$content_id = $this->uri->segment(4);
-				echo $content_id;
 				$this->data['news']=$this->portal_model->getSingleContent($content_id);
 				$this->loadView('portal/news_vw',$this->data);
+				break;
+			case 'faq':
+				$this->data['faqs']=$this->portal_model->getMuchContent(6);
+				$this->loadView('portal/faq_vw',$this->data);
 				break;
 			default:
 				# code...

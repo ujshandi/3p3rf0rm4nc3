@@ -25,7 +25,7 @@ class Home extends CI_Controller {
 					'sess_apptype'=>$this->session->userdata('app_type'),
 					'js'=>array('js/easyui/jquery-1.6.min.js','js/jquery-easyui-1.3.3/jquery.easyui.min.js','js/easyui/plugins/datagrid-detailview.js','js/uri_encode_decode.js','js/json2.js','js/jquery.autogrow.js','js/jquery.formatCurrency-1.4.0.min.js','js/formwizard.js','js/jquery.jqURL.js','js/ckeditor/ckeditor.js',
 					'js/purl.js'),
-					'css'=>array('css/jquery-easyui-1.3.3/themes/gray/easyui.css','css/themes/icon.css')
+					'css'=>array('css/jquery-easyui-1.3.3/themes/gray/easyui.css','css/themes/icon.css','css/head_style.css')
 				);
 		//$data['title'] =$this->session->userdata('userlogin');
 	  
