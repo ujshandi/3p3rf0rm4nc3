@@ -140,7 +140,7 @@ group by tahun,kode_kl, nama_kl*/
 			
 			$this->db->from('tbl_pengukuran_kl inner join tbl_kl on tbl_pengukuran_kl.kode_kl = tbl_kl.kode_kl ',false);
 			$this->db->group_by('tahun,kode_kl, nama_kl',false);
-		$q = $this->db->get();
+	//	$q = $this->db->get();
 		//return $q->row()->num_rows; 
 		return $this->db->count_all_results();
 		//$this->db->free_result();
