@@ -1,8 +1,8 @@
  <!--[if IE]><script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/excanvas.js"></script><![endif]-->
  
- <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/jquery.jqplot.min.js"></script>
- <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
- <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot/jquery.jqplot.css" />
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.pieRenderer.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.css" />
 	
 <div id="tb<?=$objectId;?>" style="height:auto">
 	  <table border="0" cellpadding="1" cellspacing="1" width="100%">
@@ -81,14 +81,20 @@ $(document).ready(function(){
 							//   alert(key + ' ' + value);
 							  objArrayData.push([key, parseFloat(value)]);
 						 });
+						// alert(objArrayData);
 						 var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
 							  gridPadding: {top:0, bottom:38, left:0, right:0},
-			seriesDefaults:{
-				renderer:$.jqplot.PieRenderer, 
-				trendline:{ show:false }, 
-				rendererOptions: { padding: 8, showDataLabels: true }
-			},
+								seriesDefaults:{
+									renderer:$.jqplot.PieRenderer, 
+									//trendline:{ show:false }, 
+									rendererOptions: {
+										dataLabels:'percent', 
+										showDataLabels: true,
+										//dataLabelCenterOn:true,
+										//dataLabelPositionFactor:0.5 
+										}
+								},
 							  legend:{
 									show:true, 
 									placement: 'outside', 
@@ -98,7 +104,7 @@ $(document).ready(function(){
 									location:'s',
 									marginTop: '15px'
 								},       
-							  series:[{lineWidth:3, markerOptions:{style:'square'}}]
+							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]
 							}    
 						  );
 						 

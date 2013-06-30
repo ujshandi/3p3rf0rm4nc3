@@ -1,9 +1,9 @@
  <!--[if IE]><script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/excanvas.js"></script><![endif]-->
  
- <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/jquery.jqplot.min.js"></script>
- <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.pieRenderer.min.js"></script>
  <!--<script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/plugins/jqplot.donutRenderer.min.js"></script>-->
- <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot/jquery.jqplot.css" />
+ <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.css" />
 	
 <div id="tb<?=$objectId;?>" style="height:auto">
 	  <table border="0" cellpadding="1" cellspacing="1" width="100%">
@@ -34,9 +34,10 @@
 	  </table>
 	  
 	
-	
-<div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left"></div> 
-<div  style="width:10px;float:left">&nbsp;</div> 
+<div>
+<div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left"> </div> 
+<div  style="width:10px;float:left">&nbsp;</div>
+
 <table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Kinerja Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
@@ -49,7 +50,8 @@
 	  </tr>
 	  </thead> 
 	</table>
-
+</div>	
+<div   style="width:10px;float:left"><input type="button" value="View Image"/></div>
 <script type="text/javascript">
 //$.jqplot('chartdiv',  [[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]);
 
@@ -94,6 +96,7 @@ $(document).ready(function(){
 											  series:[{lineWidth:3, markerOptions:{style:'square'}}]
 											}    
 										  );
+							
 						  
 					},//end onclickRow
 					onLoadSuccess:function(data){	
