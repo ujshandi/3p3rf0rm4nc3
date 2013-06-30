@@ -3,12 +3,11 @@
  *INVISI
 */
 
-class Dsb_capaian_e1_model extends CI_Model
+class Monitoring_kl_model extends CI_Model
 {	
 	/**
 	* constructor
 	*/
-	
 	var $dataPie = array();
 	public function __construct()
     {
@@ -17,7 +16,7 @@ class Dsb_capaian_e1_model extends CI_Model
     }
 	
 	// purpose : 1=buat grid, 2=buat pdf, 3=buat excel
-	public function easyGrid($filtahun=null,$purpose=1){
+	public function easyGrid($filtahun=null,$filperiode=null,$purpose=1){
 		$lastNo = isset($_POST['lastNo']) ? intval($_POST['lastNo']) : 0;  
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
@@ -32,31 +31,40 @@ class Dsb_capaian_e1_model extends CI_Model
 		
 		$count = $this->GetRecordCount($filtahun);
 		$response = new stdClass();
+		//var_dump($count);die;
 		$response->total = $count;
-		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'iku.kode_iku_e1';  
+		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'iku.kode_iku_kl';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';  
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		$this->dataPie = array();
 		if ($count>0){
 		 	if($filtahun != '' && $filtahun != '0' && $filtahun != '-1' && $filtahun != null) {
-				//$this->db->where("tbl_pengukuran_eselon1.tahun",$filtahun);
+				$this->db->where("tbl_pk_kl.tahun",$filtahun);
+			}		
+		 	if($filperiode != '' && $filperiode != '0' && $filperiode != '-1' && $filperiode != null) {
+				$this->db->where("tbl_checkpoint_kl.periode",$filperiode);
 			}		
 		 	
 			
 			
 			//$this->db->order_by($sort." ".$order );
-			$this->db->order_by("tbl_pengukuran_eselon1.tahun");
+			$this->db->order_by("tbl_pk_kl.tahun");
 			//$this->db->order_by("iku.deskripsi");
 			
 			//hanya utk grid saja
-			//if ($purpose==1) $this->db->limit($limit,$offset);
+			if ($purpose==1) $this->db->limit($limit,$offset);
+			//$this->db->distinct();
+			/*select tbl_checkpoint_kl.tahun,tbl_checkpoint_kl.kode_kl, tbl_kl.nama_kl,count(tbl_checkpoint_kl.kode_iku_kl) as jml_iku,
+0 as tercapai,0 as tdk_tercapai
+from tbl_checkpoint_kl inner join tbl_kl
+group by tahun,kode_kl, nama_kl*/
+			//$this->db->select("iku.deskripsi as indikator_kinerja,iku.satuan,rkt.realisasi,pk.target,case  when rkt.triwulan  =1 then rkt.realisasi else 0 end  as triwulan1,case  when rkt.triwulan  =2 then rkt.realisasi else 0 end  as triwulan2,case  when rkt.triwulan  =3 then rkt.realisasi else 0 end  as triwulan3,case  when rkt.triwulan  =4 then rkt.realisasi else 0 end  as triwulan4",false);
+			$this->db->select("tbl_pk_kl.tahun,tbl_pk_kl.kode_kl, tbl_kl.nama_kl,count(tbl_pk_kl.kode_iku_kl) as jml_iku,
+0 as seratus,0 as seratus_kurang, 0 as seratus_lebih",false);
 			
-			$this->db->select("tbl_pengukuran_eselon1.tahun,tbl_pengukuran_eselon1.kode_e1, tbl_eselon1.nama_e1,count(tbl_pengukuran_eselon1.kode_iku_e1) as jml_iku,
-0 as tercapai,0 as tdk_tercapai",false);
-			
-			$this->db->from('tbl_pengukuran_eselon1 inner join tbl_eselon1 on tbl_pengukuran_eselon1.kode_e1 = tbl_eselon1.kode_e1 ',false);
-			$this->db->group_by('tahun,kode_e1, nama_e1',false);
+		$this->db->from('tbl_checkpoint_kl inner join tbl_pk_kl on tbl_checkpoint_kl.id_pk_kl=tbl_pk_kl.id_pk_kl inner join tbl_kl on tbl_pk_kl.kode_kl = tbl_kl.kode_kl ',false);
+			$this->db->group_by('tahun,kode_kl, nama_kl',false);
 			$query = $this->db->get();
 			
 			$i=0;
@@ -65,32 +73,29 @@ class Dsb_capaian_e1_model extends CI_Model
 			//var_dump();
 			//$noIndikator =0;
 			$jumlah =0;
-			$response->pies['tercapai'] = array();
-			$response->pies['tdk_tercapai'] = array();
 			foreach ($query->result() as $row){
 				//$no++;			
 				
-				$response->rows[$i]['tahun']=$filtahun;//$row->tahun;				
-				$response->rows[$i]['kode_e1']=$row->kode_e1;				
-				$response->rows[$i]['nama_e1']=$row->nama_e1;	
-				$row->jml_iku =  $this->getJmlIku($filtahun,$row->kode_e1);			
+				$response->rows[$i]['tahun']=$row->tahun;				
+				$response->rows[$i]['kode_kl']=$row->kode_kl;				
+				$response->rows[$i]['nama_kl']=$row->nama_kl;				
 				$response->rows[$i]['jml_iku']=$row->jml_iku;				
-				$row->tercapai = $this->getPersen($filtahun,$row->kode_e1,true);
-				$response->rows[$i]['tercapai']= $row->tercapai;
-				$row->tdk_tercapai = $this->getPersen($filtahun,$row->kode_e1,false);
-				$response->rows[$i]['tdk_tercapai']= $row->tdk_tercapai;
+				$row->seratus = $this->getPersen($filtahun,$row->kode_kl,100,$filperiode);
+				$response->rows[$i]['seratus']= $row->seratus;
+				$row->seratus_lebih = $this->getPersen($filtahun,$row->kode_kl,101,$filperiode);
+				$response->rows[$i]['seratus_lebih']= $row->seratus_lebih;
+				$row->seratus_kurang = $this->getPersen($filtahun,$row->kode_kl,99,$filperiode);
+				$response->rows[$i]['seratus_kurang']= $row->seratus_kurang;
 				//$this->utility->cekNumericFmt($row->target);								
-				$this->dataPie[] = array("Tercapai"=>$row->tercapai,"Tidak Tercapai"=>$row->tdk_tercapai);
+				$this->dataPie = array("100%"=>(int)$row->seratus,">100%"=>(int)$row->seratus_lebih,"<100%"=>(int)$row->seratus_kurang);
 				$response->pies = $this->dataPie;
-			//	$response->pies['tercapai'] = array_merge($response->pies['tercapai'], array($row->nama_e1=>$row->tercapai));
-				//$response->pies['tdk_tercapai'] =array_merge($response->pies['tdk_tercapai'], array($row->nama_e1=>$row->tdk_tercapai));
 			//utk kepentingan export excel ==========================
 /*
 				$row->target = $response->rows[$i]['target'];
 				
 				$row->realiasi=$response->rows[$i]['realisasi'];
 				$row->persen=$response->rows[$i]['persen'];
-				unset($row->kode_iku_e1);
+				unset($row->kode_iku_kl);
 				unset($row->realisasi);
 */
 			//============================================================
@@ -100,16 +105,18 @@ class Dsb_capaian_e1_model extends CI_Model
 			
 				$i++;
 			} 
+		//	var_dump($this->dataPie);die;
 			//$response->lastNo = $no;
 			//$query->free_result();
 		}else {
 				
 				$response->rows[$count]['tahun']= "";
-				$response->rows[$count]['kode_e1']= "";
-				$response->rows[$count]['nama_e1']='';
+				$response->rows[$count]['kode_kl']= "";
+				$response->rows[$count]['nama_kl']='';
 				$response->rows[$count]['jml_iku']='';
-				$response->rows[$count]['tercapai']='';
-				$response->rows[$count]['tdk_tercapai']='';
+				$response->rows[$count]['seratus']='';
+				$response->rows[$count]['seratus_lebih']='';
+				$response->rows[$count]['seratus_kurang']='';
 				
 
 		}
@@ -127,21 +134,24 @@ class Dsb_capaian_e1_model extends CI_Model
 		
 	}
 	
-	public function GetRecordCount($filtahun=null){
+	public function GetRecordCount($filtahun=null,$filperiode=null){
 		$where = '';
 		 if($filtahun != '' && $filtahun != '0' && $filtahun != '-1' && $filtahun != null) {
 			 
-			 $this->db->where("tbl_pengukuran_eselon1.tahun",$filtahun);
+			 $this->db->where("tbl_pk_kl.tahun",$filtahun);
 		 }		
+		 if($filperiode != '' && $filperiode != '0' && $filperiode != '-1' && $filperiode != null) {
+				$this->db->where("tbl_checkpoint_kl.periode",$filperiode);
+			}
 			
 		
-		$this->db->select("tbl_pengukuran_eselon1.tahun,tbl_pengukuran_eselon1.kode_e1, tbl_eselon1.nama_e1,count(tbl_pengukuran_eselon1.kode_iku_e1) as jml_iku,
-0 as tercapai,0 as tdk_tercapai",false);
+		$this->db->select("tbl_pk_kl.tahun,tbl_pk_kl.kode_kl, tbl_kl.nama_kl",false);
 			
-			$this->db->from('tbl_pengukuran_eselon1 inner join tbl_eselon1 on tbl_pengukuran_eselon1.kode_e1 = tbl_eselon1.kode_e1 ',false);
-			$this->db->group_by('tahun,kode_e1, nama_e1',false);
+			$this->db->from('tbl_checkpoint_kl inner join tbl_pk_kl on tbl_checkpoint_kl.id_pk_kl=tbl_pk_kl.id_pk_kl inner join tbl_kl on tbl_pk_kl.kode_kl = tbl_kl.kode_kl ',false);
+		//	$this->db->group_by('tahun,kode_kl, nama_kl',false);
 		//$q = $this->db->get();
 		//return $q->row()->num_rows; 
+		//var_dump($this->db->count_all_results());die;
 		return $this->db->count_all_results();
 		//$this->db->free_result();
 	}
@@ -150,7 +160,7 @@ class Dsb_capaian_e1_model extends CI_Model
 		
 		$this->db->flush_cache();
 		$this->db->select('distinct tahun',false);
-		$this->db->from('tbl_kinerja_eselon1');
+		$this->db->from('tbl_pk_kl');
 		
 		$this->db->order_by('tahun');
 		
@@ -170,27 +180,18 @@ class Dsb_capaian_e1_model extends CI_Model
 		echo $out;
 	}
 	
-	public function getJmlIku($tahun,$kode_e1){
-		$this->db->flush_cache();
-		$this->db->select('count(tbl_pengukuran_eselon1.kode_iku_e1) as jumlah',false);
-		$this->db->from('tbl_pengukuran_eselon1');
-		//$this->db->where('persen '.($isTercapai?">=":"<"), 100);
-		$this->db->where('tahun', $tahun);
-		$this->db->where('kode_e1', $kode_e1);
-		$query = $this->db->get();
-		if ($query->num_rows()>0)
-			return $query->row()->jumlah;
-		else return 0;
-		
-	}
 	
-	public function getPersen($tahun,$kode_e1,$isTercapai){
+	
+	public function getPersen($tahun,$kode_kl,$capaian,$periode){
 		$this->db->flush_cache();
 		$this->db->select('count(*) as jumlah',false);
-		$this->db->from('tbl_pengukuran_eselon1');
-		$this->db->where('persen '.($isTercapai?">=":"<"), 100);
+		$this->db->from('tbl_checkpoint_kl inner join tbl_pk_kl on tbl_checkpoint_kl.id_pk_kl=tbl_pk_kl.id_pk_kl',false);
+		if ($capaian==100) $this->db->where("tbl_checkpoint_kl.target = tbl_checkpoint_kl.capaian");
+		if ($capaian==101) $this->db->where("tbl_checkpoint_kl.capaian > tbl_checkpoint_kl.target");
+		if ($capaian==99) $this->db->where("tbl_checkpoint_kl.capaian < tbl_checkpoint_kl.target");
 		$this->db->where('tahun', $tahun);
-		$this->db->where('kode_e1', $kode_e1);
+		$this->db->where('kode_kl', $kode_kl);
+		$this->db->where('tbl_checkpoint_kl.periode', $periode);
 		$query = $this->db->get();
 		if ($query->num_rows()>0)
 			return $query->row()->jumlah;

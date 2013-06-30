@@ -29,7 +29,7 @@ class Checkpointkl extends CI_Controller {
 		$this->objectId = 'checkpointkl';
 		$data['purpose'] = 'Rencana';
 		$data['objectId'] = $this->objectId; 
-		$data['listPeriode'] = $this->utility->getListCheckpoint("");
+		$data['listPeriode'] = $this->utility->getListCheckpoint("","cmbPeriode".$this->objectId);
 		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
 	  	$this->load->view('checkpoint/checkpointkls_v',$data);
 	}
@@ -78,7 +78,7 @@ class Checkpointkl extends CI_Controller {
 		$dt['unit_kerja'] = $this->input->post("unitkerja", TRUE); 
 		$dt['kriteria'] = $this->input->post("kriteria", TRUE); 
 		$dt['ukuran'] = $this->input->post("ukuran", TRUE); 
-		$dt['periode'] = $this->input->post("cmbPeriode", TRUE); 
+		$dt['periode'] = $this->input->post("cmbPeriode".$this->objectId, TRUE); 
 		$dt['target'] = $this->input->post("target", TRUE); 
 		$dt['keterangan'] = $this->input->post("keterangan", TRUE); 
 		$dt['capaian'] = null; 

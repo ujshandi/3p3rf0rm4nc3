@@ -38,7 +38,7 @@
 <div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left"> </div> 
 <div  style="width:10px;float:left">&nbsp;</div>
 
-<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Kinerja Eselon I"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Monitoring Checkpoint Eselon I"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="tahun" sortable="false" width="60">Tahun</th>
