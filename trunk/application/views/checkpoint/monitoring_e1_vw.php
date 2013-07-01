@@ -13,7 +13,7 @@
 			<table border="0" cellpadding="1" cellspacing="1">
 			<tr>
 				<td>Tahun :</td>
-				<td><?=$this->dsb_capaian_e1_model->getListTahun($objectId)?></td>
+				<td><?=$this->monitoring_e1_model->getListTahun($objectId)?></td>
 			</tr>
 			 	
 			
