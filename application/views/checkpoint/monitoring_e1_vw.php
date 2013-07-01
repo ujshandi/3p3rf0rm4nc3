@@ -45,13 +45,14 @@
 		<th field="kode_e1"   sortable="false" width="50">Kode E1</th>
 		<th field="nama_e1" align="left" sortable="false" width="200">Nama Eselon 1</th>
 		<th field="jml_iku" align="right"  sortable="false" width="70">Jml.Iku</th>	
-		<th field="tercapai" align="right"  sortable="false" width="70">Tercapai</th>	
-		<th field="tdk_tercapai" align="right"  sortable="false" width="70">Tdk. Tercapai</th>	
+		<th field="seratus_lebih" align="right"  sortable="false" width="70">&gt;100%</th>	
+		<th field="seratus" align="right"  sortable="false" width="70">&equiv;100%</th>	
+		<th field="seratus_kurang" align="right"  sortable="false" width="70">&lt;100%</th>	
 	  </tr>
 	  </thead> 
 	</table>
 </div>	
-<div   style="width:10px;float:left"><input type="button" value="View Image"/></div>
+<div   style="width:10px;float:left:display:none"><input type="button" value="View Image"/></div>
 <script type="text/javascript">
 //$.jqplot('chartdiv',  [[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]);
 
@@ -68,7 +69,7 @@ $(document).ready(function(){
 					return;
 				}
 				$('#dg<?=$objectId;?>').datagrid({
-					url:"<?=base_url()?>dashboard/dsb_capaian_e1/grid/"+filtahun,
+					url:"<?=base_url()?>checkpoint/monitoring_e1/grid/"+filtahun,
 					//queryParams:{lastNo:'0'},	
 					pageNumber : 1,
 					onClickRow:function(rowIndex, rowData){
