@@ -17,7 +17,7 @@ class Monitoring_e1_model extends CI_Model
     }
 	
 	// purpose : 1=buat grid, 2=buat pdf, 3=buat excel
-	public function easyGrid($filtahun=null,$purpose=1){
+	public function easyGrid($filtahun=null,$filperiode=null,$purpose=1){
 		$lastNo = isset($_POST['lastNo']) ? intval($_POST['lastNo']) : 0;  
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
@@ -46,17 +46,17 @@ class Monitoring_e1_model extends CI_Model
 			
 			
 			//$this->db->order_by($sort." ".$order );
-			$this->db->order_by("tbl_checkpoint_e1.tahun");
+			$this->db->order_by("tbl_pk_eselon1.tahun");
 			//$this->db->order_by("iku.deskripsi");
 			
 			//hanya utk grid saja
 			//if ($purpose==1) $this->db->limit($limit,$offset);
 			
-			$this->db->select("tbl_pk_eselon1.kode_e1, tbl_eselon1.nama_e1,count(tbl_pk_eselon1.kode_iku_e1) as jml_iku,
+			$this->db->select("distinct tbl_pk_eselon1.kode_e1, tbl_eselon1.nama_e1,0 as jml_iku,
 0 as seratus,0 as seratus_lebih,0 as seratus_kurang",false);
 			
-			$this->db->from('tbl_checkpoint_e1 inner join tbl_pk_eselon1 tbl_checkpoint_e1.id_pk_e1=tbl_pk_eselon1.id_pk_e1 inner join tbl_eselon1 on tbl_pk_eselon1.kode_e1 = tbl_eselon1.kode_e1 ',false);
-			$this->db->group_by('tbl_pk_eselon1.tahun,tbl_pk_eselon1.kode_e1, nama_e1',false);
+			$this->db->from('tbl_checkpoint_e1 right join tbl_pk_eselon1 on tbl_checkpoint_e1.id_pk_e1=tbl_pk_eselon1.id_pk_e1 inner join tbl_eselon1 on tbl_pk_eselon1.kode_e1 = tbl_eselon1.kode_e1 ',false);
+			//$this->db->group_by('tbl_pk_eselon1.tahun,tbl_pk_eselon1.kode_e1, nama_e1',false);
 			$query = $this->db->get();
 			
 			$i=0;
@@ -75,11 +75,11 @@ class Monitoring_e1_model extends CI_Model
 				$response->rows[$i]['nama_e1']=$row->nama_e1;	
 				$row->jml_iku =  $this->getJmlIku($filtahun,$row->kode_e1);			
 				$response->rows[$i]['jml_iku']=$row->jml_iku;				
-				$row->seratus = $this->getPersen($filtahun,$row->kode_e1,100);
+				$row->seratus = $this->getPersen($filtahun,$row->kode_e1,100,$filperiode);
 				$response->rows[$i]['seratus']= $row->seratus;
-				$row->seratus_lebih = $this->getPersen($filtahun,$row->kode_e1,101);
+				$row->seratus_lebih = $this->getPersen($filtahun,$row->kode_e1,101,$filperiode);
 				$response->rows[$i]['seratus_lebih']= $row->seratus_lebih;
-				$row->seratus_kurang = $this->getPersen($filtahun,$row->kode_e1,99);
+				$row->seratus_kurang = $this->getPersen($filtahun,$row->kode_e1,99,$filperiode);
 				$response->rows[$i]['seratus_kurang']= $row->seratus_kurang;
 				//$this->utility->cekNumericFmt($row->target);								
 				$this->dataPie = array("100%"=>(int)$row->seratus,">100%"=>(int)$row->seratus_lebih,"<100%"=>(int)$row->seratus_kurang);
@@ -130,16 +130,19 @@ class Monitoring_e1_model extends CI_Model
 		
 	}
 	
-	public function GetRecordCount($filtahun=null){
+	public function GetRecordCount($filtahun=null,$filperiode=null){
 		$where = '';
 		 if($filtahun != '' && $filtahun != '0' && $filtahun != '-1' && $filtahun != null) {
 			 
-			 $this->db->where("tbl_checkpoint_e1.tahun",$filtahun);
+			 //$this->db->where("tbl_checkpoint_e1.tahun",$filtahun);
 		 }		
 			
-		$this->db->select("tbl_pk_eselon1.kode_e1, tbl_eselon1.nama_e1",false);
+			if($filperiode != '' && $filperiode != '0' && $filperiode != '-1' && $filperiode != null) {
+				$this->db->where("tbl_checkpoint_e1.periode",$filperiode);
+			}
+		$this->db->select("distinct tbl_pk_eselon1.kode_e1, tbl_eselon1.nama_e1",false);
 			
-			$this->db->from('tbl_checkpoint_e1 inner join tbl_pk_eselon1 tbl_checkpoint_e1.id_pk_e1=tbl_pk_eselon1.id_pk_e1 inner join tbl_eselon1 on tbl_pk_eselon1.kode_e1 = tbl_eselon1.kode_e1 ',false);
+			$this->db->from('tbl_checkpoint_e1 right join tbl_pk_eselon1 on tbl_checkpoint_e1.id_pk_e1=tbl_pk_eselon1.id_pk_e1 inner join tbl_eselon1 on tbl_pk_eselon1.kode_e1 = tbl_eselon1.kode_e1 ',false);
 			//$this->db->group_by('tahun,kode_e1, nama_e1',false);
 		$q = $this->db->get();
 		//return $q->row()->num_rows; 
@@ -174,7 +177,7 @@ class Monitoring_e1_model extends CI_Model
 	public function getJmlIku($tahun,$kode_e1){
 		$this->db->flush_cache();
 		$this->db->select('count(tbl_pk_eselon1.kode_iku_e1) as jumlah',false);
-			$this->db->from('tbl_checkpoint_e1 inner join tbl_pk_eselon1 tbl_checkpoint_e1.id_pk_e1=tbl_pk_eselon1.id_pk_e1',false);
+			$this->db->from('tbl_checkpoint_e1 inner join tbl_pk_eselon1 on tbl_checkpoint_e1.id_pk_e1=tbl_pk_eselon1.id_pk_e1',false);
 		//$this->db->where('persen '.($isTercapai?">=":"<"), 100);
 		$this->db->where('tbl_pk_eselon1.tahun', $tahun);
 		$this->db->where('tbl_pk_eselon1.kode_e1', $kode_e1);
@@ -185,7 +188,7 @@ class Monitoring_e1_model extends CI_Model
 		
 	}
 	
-	public function getPersen($tahun,$kode_e1,$isTercapai){
+	public function getPersen($tahun,$kode_e1,$capaian,$periode){
 		$this->db->flush_cache();
 		$this->db->select('count(*) as jumlah',false);
 		$this->db->from('tbl_checkpoint_e1 inner join tbl_pk_eselon1 on tbl_checkpoint_e1.id_pk_e1=tbl_pk_eselon1.id_pk_e1',false);
@@ -193,7 +196,7 @@ class Monitoring_e1_model extends CI_Model
 		if ($capaian==101) $this->db->where("tbl_checkpoint_e1.capaian > tbl_checkpoint_e1.target");
 		if ($capaian==99) $this->db->where("tbl_checkpoint_e1.capaian < tbl_checkpoint_e1.target");
 		$this->db->where('tahun', $tahun);
-		$this->db->where('kode_e1', $kode_kl);
+		$this->db->where('kode_e1', $kode_e1);
 		$this->db->where('tbl_checkpoint_e1.periode', $periode);
 		$query = $this->db->get();
 		if ($query->num_rows()>0)

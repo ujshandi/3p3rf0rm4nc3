@@ -535,7 +535,8 @@
 	<div id="footer">
 		<div class="footer_content">
 	        <div class="footer_bottom">
-	            <div class="copyrights">&copy; e-Perfomance 2013 - <a href="#" target="_blank">Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan RI</a></div>
+	            <div class="copyright" style="align:center">&copy; e-Perfomance 2013 - <a href="#" target="_blank">Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan RI</a></div>
+	            <!-- modif by chan 
 	            <div class="footer_right_links">
 	                <ul>
 	                    <li class="selected"><a href="<?=base_url();?>">HOME</a></li>
@@ -543,7 +544,7 @@
 	                    <li><a href="#">WEB MAIL</a></li>
 	                    <li><a href="#">LOGIN</a></li>
 	                </ul>
-	            </div>
+	            </div>-->
 	        </div>
 	     <div class="clear"></div>   
 		</div><!--end footer content-->
@@ -555,7 +556,7 @@
 
 	<!-- AREA untuk Form Add/EDIT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dglChangePasswd" class="easyui-dialog" style="width:440px;height:270px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dglChangePasswd" class="easyui-dialog" style="width:440px;height:320px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<div class="ftitle">Edit Data Pribadi</div>
 		<form id="fm" method="post">
 			<div class="fitem">
