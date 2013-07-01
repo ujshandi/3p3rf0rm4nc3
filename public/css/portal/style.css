@@ -129,6 +129,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d8dbe3', end
 .article_wrapper p{padding-bottom:10px;font-size:1.2em;text-shadow:0 1px 0 #BAE9E9;}
 .article_wrapper img {float:left;padding:5px;background:#fff;border:solid 1px #ddd;border-radius:4px;margin:0 10px 0 0;width:150px;height:150px}
 .article_wrapper img.detil {width:250px;height:250px}
+.article_wrapper ul {padding:5px 0 20px 0; margin:12px;}
 .features{ border-bottom:1px dashed #999; padding:0 0 10px 0; margin:10px 0 0px 0; clear:both; float:left;}
 img.feat_thumb{float:left;}
 .feat_details{width:200px;float:left;padding:0 0 0 10px;}
