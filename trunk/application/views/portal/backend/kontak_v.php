@@ -73,15 +73,15 @@
 				<div region="center" border="true" title=" Kontak e-Performance">
 					<form id="fmedit<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 						
-						<input type="hidden" name="content_id" value="<?=($about)?$about->content_id:'';?>">
+						<input type="hidden" name="content_id" value="<?=($contact)?$contact->content_id:'';?>">
 						
 						<div class="fitem">							
 						    <label style="width:150px">Judul Halaman Kontak :</label><br/>
-						    <input style="margin:10px 0" id="content_title<?=$objectId?>" name="content_title" class="easyui-validatebox" required="true" size="40" value="<?=($about)?$about->content_title:'';?>">
+						    <input style="margin:10px 0" id="content_title<?=$objectId?>" name="content_title" class="easyui-validatebox" required="true" size="40" value="<?=($contact)?$contact->content_title:'';?>">
 						</div>
 						<div class="fitem">							
 						    <label style="width:150px">Isi Halaman Kontak :</label><br/>
-							<div style="width:700px;  margin:10px 0"><textarea name="content" cols="70" class="easyui-validatebox" style="resize:none" id="content<?=$objectId;?>"><?=($about)?$about->content:'';?></textarea></div>
+							<div style="width:700px;  margin:10px 0"><textarea name="content" cols="70" class="easyui-validatebox" style="resize:none" id="content<?=$objectId;?>"><?=($contact)?$contact->content:'';?></textarea></div>
 							<?php echo display_ckeditor($ckeditor); ?>
 						</div>
 						<br>

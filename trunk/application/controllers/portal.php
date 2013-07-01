@@ -47,7 +47,7 @@ class Portal extends CI_Controller {
 				if($this->portal_model->contentExist(7)){
 					$this->data['contact']=$this->portal_model->getSingleContent($this->portal_model->getContentID(7));
 				}else{
-					$this->data['about'] = '';
+					$this->data['contact'] = '';
 				}
 				$this->loadView('portal/contact_vw',$this->data);
 				break;
@@ -97,7 +97,12 @@ class Portal extends CI_Controller {
 				$this->data['title'] = 'Beranda Portal';
 				$this->data['objectId'] = 'portalhome';
 				$this->data['ckeditor'] = $this->initCKEditor('content'.$this->data['objectId']);
-				$this->data['home'] = $this->portal_model->getSingleContent($this->portal_model->getContentID(1));
+				if($this->portal_model->contentExist(1)){
+					$this->data['home'] = $this->portal_model->getSingleContent($this->portal_model->getContentID(1));
+				}	
+				else {
+					$this->data['home'] = '';
+				}
 				$this->load->view('portal/backend/home_v',$this->data);
 				break;
 			case 2:
