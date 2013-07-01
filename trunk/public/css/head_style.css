@@ -62,11 +62,11 @@ border-bottom:solid 3px #FFCC00;
 /* footer */
 #footer{width:100%;clear:both;margin:0 0 0 0;background:url(../images/portal/footer-bg.png) repeat left top;border-top:solid 3px #FFCC00;
 position: fixed;
-height: 35px;
+height: 29px;
 bottom: 0;
 left: 0;
 text-align: center;
-line-height: 35px;
+line-height: 29px;
 z-index: 11;
 }
 .footer_content{width:1000px;margin:auto;color:#999;}
