@@ -20,6 +20,7 @@
     <div class="big-shadow"></div>
     
     <div class="center_content">
+        <?if($latest_news){?>
     	<div class="page_title"><h1>Latest News</h1></div>
         <div class="article_wrapper color">
             <h2><a href="<?=base_url()?>portal/page/news/<?=$latest_news->row()->content_id?>"><?=$latest_news->row()->content_title?></a></h2>
@@ -66,6 +67,9 @@
                 </ul>
             </div>
         </div><!-- end section full -->
+        <?}else{?>
+            <div class="page_title"><h1>Saat ini data berita masih kosong</h1></div>
+        <?}?>
         <div class="clear"></div>
     </div><!-- end center content -->
 </div><!--end block right-->

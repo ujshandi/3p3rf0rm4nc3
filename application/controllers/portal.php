@@ -25,27 +25,47 @@ class Portal extends CI_Controller {
 	
 	function index()
 	{
-		$this->data['latest_news']=$this->portal_model->getLastNews(3);
+		if($this->portal_model->contentExist(2)){
+			$this->data['latest_news']=$this->portal_model->getLastNews(3);
+		}else{
+			$this->data['latest_news'] = '';
+		}
 		$this->loadView('portal/home_vw',$this->data);
 	}
 
 	function page($page){
 		switch ($page) {
 			case 'about':
-				$this->data['about']=$this->portal_model->getSingleContent($this->portal_model->getContentID(3));
+				if($this->portal_model->contentExist(3)){
+					$this->data['about']=$this->portal_model->getSingleContent($this->portal_model->getContentID(3));
+				}else{
+					$this->data['about'] = '';
+				}
 				$this->loadView('portal/about_vw',$this->data);
 				break;
 			case 'contact':
-				$this->data['contact']=$this->portal_model->getSingleContent($this->portal_model->getContentID(7));
+				if($this->portal_model->contentExist(7)){
+					$this->data['contact']=$this->portal_model->getSingleContent($this->portal_model->getContentID(7));
+				}else{
+					$this->data['about'] = '';
+				}
 				$this->loadView('portal/contact_vw',$this->data);
 				break;
 			case 'news':
 				$content_id = $this->uri->segment(4);
-				$this->data['news']=$this->portal_model->getSingleContent($content_id);
+				if($this->portal_model->singleContentExist($content_id)){
+					$this->data['news']=$this->portal_model->getSingleContent($content_id);
+				}else{
+					$this->data['news'] = '';
+				}
 				$this->loadView('portal/news_vw',$this->data);
 				break;
 			case 'faq':
-				$this->data['faqs']=$this->portal_model->getMuchContent(6);
+				if($this->portal_model->contentExist(6)){
+					$this->data['faqs']=$this->portal_model->getMuchContent(6);
+				}else{
+					$this->data['faqs'] = '';
+				}
 				$this->loadView('portal/faq_vw',$this->data);
 				break;
 			default:
@@ -91,7 +111,12 @@ class Portal extends CI_Controller {
 				$data['title'] = 'Profil Portal';
 				$data['objectId'] = 'portalabout';
 				$data['ckeditor'] = $this->initCKEditor('content'.$data['objectId']);
-				$data['about'] = $this->portal_model->getSingleContent($this->portal_model->getContentID(3));
+				if($this->portal_model->contentExist(3)){
+					$data['about'] = $this->portal_model->getSingleContent($this->portal_model->getContentID(3));
+				}
+				else{
+					$data['about'] = '';
+				}
 				$this->load->view('portal/backend/about_v', $data);
 				break;
 			case 4:
@@ -115,7 +140,12 @@ class Portal extends CI_Controller {
 				$data['title'] = 'Kontak Portal';
 				$data['objectId'] = 'portalcontact';
 				$data['ckeditor'] = $this->initCKEditor('content'.$data['objectId']);
-				$data['about'] = $this->portal_model->getSingleContent($this->portal_model->getContentID(7));
+				if($this->portal_model->contentExist(7)){
+					$data['contact'] = $this->portal_model->getSingleContent($this->portal_model->getContentID(7));
+				}
+				else{
+					$data['contact'] = '';
+				}
 				$this->load->view('portal/backend/kontak_v', $data);
 				break;
 			case 8:
