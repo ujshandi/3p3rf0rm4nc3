@@ -39,9 +39,9 @@ class Monitoring_e1 extends CI_Controller {
 	}
 	
 
-	public function grid($filtahun=null){
+	public function grid($filtahun=null,$filperiode=null){
 		
-		echo $this->monitoring_e1_model->easyGrid($filtahun);
+		echo $this->monitoring_e1_model->easyGrid($filtahun,$filperiode);
 	}
 	
 	

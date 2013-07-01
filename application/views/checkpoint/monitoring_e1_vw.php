@@ -16,7 +16,10 @@
 				<td><?=$this->monitoring_e1_model->getListTahun($objectId)?></td>
 			</tr>
 			 	
-			
+			<tr>
+				<td>Periode :</td>
+				<td><?=$this->utility->getListCheckpoint("","cmbPeriode".$objectId)?></td>
+			</tr>
 			<tr style="height:10px">
 			  <td style="">
 			  </td>
@@ -63,20 +66,23 @@ $(document).ready(function(){
 				var filstart = $("#cmbBulanStart<?=$objectId;?>").val();
 				var filend = $("#cmbBulanEnd<?=$objectId;?>").val();				
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
+				var filperiode = $("#cmbPeriode<?=$objectId;?>").val();
 				if(filtahun==null) filtahun ="-1";
+				if(filperiode==null) filperiode ="-1";
 				if (parseInt(filstart)>parseInt(filend)){
 					alert("Periode Bulan tidak bisa diproses");
 					return;
 				}
 				$('#dg<?=$objectId;?>').datagrid({
-					url:"<?=base_url()?>checkpoint/monitoring_e1/grid/"+filtahun,
+					url:"<?=base_url()?>checkpoint/monitoring_e1/grid/"+filtahun+"/"+filperiode,
 					//queryParams:{lastNo:'0'},	
 					pageNumber : 1,
 					onClickRow:function(rowIndex, rowData){
 						var row = rowData;//$('#dg<?=$objectId;?>').datagrid('getSelected');
 						 var objArrayData=[];
-						  objArrayData.push(["Tercapai", parseFloat(row.tercapai)]);
-						  objArrayData.push(["Tidak Tercapai", parseFloat(row.tdk_tercapai)]);
+						  objArrayData.push(["100%", parseFloat(row.seratus)]);
+						  objArrayData.push([">100%", parseFloat(row.seratus_lebih)]);
+						  objArrayData.push(["<100%", parseFloat(row.seratus_kurang)]);
 						  var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
 							  gridPadding: {top:0, bottom:38, left:0, right:0},
