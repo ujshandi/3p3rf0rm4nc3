@@ -23,6 +23,8 @@
 				var tr = jQuery('#dg<?=$objectId;?>').closest('tr.datagrid-row');
 				//alert('row index parent'+tr.attr('datagrid-row-index'));
 				alert(idCheckpoint+"KA") ;
+				if ((idCheckpoint ==null)||(idCheckpoint =='undefined')) return false;
+				
 				alert($.url().param()+"Parent");
 				if (row){
 					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add <?=$purpose?> Checkpoint Kementerian');  
@@ -403,6 +405,7 @@
                        onClickCell:function(rowIndex, field, value){
 							 $('#ddv<?=$objectId;?>-'+index).datagrid('selectRow', rowIndex);
 							var row = $('#ddv<?=$objectId;?>-'+index).datagrid('getSelected');
+							alert(row);
 							idCheckpoint = row.id_checkpoint_kl;
 							alert(idCheckpoint);
 					   },
@@ -419,6 +422,7 @@
 				onClickCell: function(rowIndex, field, value){
 					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+					idCheckpoint = null;
 					//alert(row.deskripsi_iku_kl);
 					switch(field){
 						case "kode_kl":
