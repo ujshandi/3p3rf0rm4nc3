@@ -14,7 +14,7 @@ class Checkpointe1 extends CI_Controller {
 				
 		//if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
 		$this->load->model('/security/sys_menu_model');
-		$this->load->model('/penetapan/penetapaneselon1_model');
+		$this->load->model('/checkpoint/checkpointe1_model');
 		$this->load->model('/rencana/rpt_rkteselon1_model');
 		$this->load->model('/rujukan/eselon1_model');
 		$this->load->model('/pengaturan/sasaran_eselon1_model');
@@ -26,15 +26,27 @@ class Checkpointe1 extends CI_Controller {
 	function index(){
 		$data['title'] = 'Penetapan Kinerja Eselon I';	
 		$data['objectId'] = $this->objectId;
+		$data['purpose'] = 'Rencana';
+		$data['listPeriode'] = $this->utility->getListCheckpoint("","cmbPeriode".$this->objectId);
 		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
-	  	$this->load->view('penetapan/penetapaneselon1s_v',$data);
+	  	$this->load->view('checkpoint/checkpointe1s_v',$data);
+	}
+	
+	function capaian(){
+		$data['title'] = 'Penetapan Kinerja Eselon I';	
+		$this->objectId = 'checkpointCapaiane1';
+		$data['objectId'] = $this->objectId;
+		$data['purpose'] = 'Capaian';
+		$data['listPeriode'] = $this->utility->getListCheckpoint("","cmbPeriode".$this->objectId);
+		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
+	  	$this->load->view('checkpoint/checkpointe1s_v',$data);
 	}
 	
 	public function add(){
 		$data['title'] = 'Add Data Penetapan Kinerja Eselon I';	
 		$data['objectId'] = $this->objectId;
 		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
-	  	$this->load->view('penetapan/penetapaneselon1_v',$data);
+	  	$this->load->view('checkpoint/checkpointe1_v',$data);
 	}
 	
 	public function edit($id, $editmode='true'){
@@ -44,15 +56,19 @@ class Checkpointe1 extends CI_Controller {
 		$data['objectId'] = $this->objectId;
 		$data['editMode'] = $editmode;
 		
-		$data['result'] = $this->penetapaneselon1_model->getDataEdit($id);
+		$data['result'] = $this->checkpointe1_model->getDataEdit($id);
 		
-	  	$this->load->view('penetapan/penetapaneselon1_v_edit',$data);
+	  	$this->load->view('checkpoint/checkpointe1_v_edit',$data);
 	}
 	
 	function grid($filtahun=null,$file1=null){
 		if (($file1==null)&&($this->session->userdata('unit_kerja_e1'))!=-1)
 			$file1= $this->session->userdata('unit_kerja_e1');
-		echo $this->penetapaneselon1_model->easyGrid($filtahun,$file1);
+		echo $this->checkpointe1_model->easyGrid($filtahun,$file1);
+	}
+	
+	function griddetail($id_pk){
+		echo $this->checkpointe1_model->easyGridDetail($id_pk);
 	}
 	
 	function getListSasaranE1($objectId,$e1){
@@ -60,13 +76,15 @@ class Checkpointe1 extends CI_Controller {
 	}
 	
 	private function get_form_values() {
-		$dt['tahun'] = $this->input->post("tahun", TRUE); 
-		if ($this->session->userdata('unit_kerja_e1')=='-1')
-			$dt['kode_e1'] = $this->input->post("kode_e1", TRUE); //id
-		else 
-			$dt['kode_e1'] = $this->session->userdata('unit_kerja_e1');
-		$dt['kode_sasaran_e1'] = $this->input->post("kode_sasaran_e1", TRUE); 
-		$dt['detail'] = $this->input->post("detail", TRUE); 
+		$dt['id_pk_e1'] = $this->input->post("id_pk_e1", TRUE); 
+		$dt['id_checkpoint_e1'] = $this->input->post("id_checkpoint_e1", TRUE); 
+		$dt['unit_kerja'] = $this->input->post("unitkerja", TRUE); 
+		$dt['kriteria'] = $this->input->post("kriteria", TRUE); 
+		$dt['ukuran'] = $this->input->post("ukuran", TRUE); 
+		$dt['periode'] = $this->input->post("cmbPeriode".$this->objectId, TRUE); 
+		$dt['target'] = $this->input->post("target", TRUE); 
+		$dt['keterangan'] = $this->input->post("keterangan", TRUE); 
+		$dt['capaian'] = null; 
 		
 		return $dt;
     }
@@ -85,27 +103,36 @@ class Checkpointe1 extends CI_Controller {
 		
 		// validation
 		# rules
+/*
 		$this->form_validation->set_rules("tahun", 'Tahun', 'trim|required|numeric|exact_length[4]|xss_clean');
 		$this->form_validation->set_rules("kode_e1", 'Eselon 1', 'trim|required|xss_clean');
 		$this->form_validation->set_rules("kode_sasaran_e1", 'Sasaran Eselon 1', 'trim|required|xss_clean');
 		
+		
+*/
+		$this->form_validation->set_rules("id_pk_e1", 'ID Penetapan Eselon I', 'trim|required|xss_clean');
 		# message rules
 		$this->form_validation->set_message('required', 'Field %s harus diisi.');
 		$this->form_validation->set_message('numeric', 'Isi field %s dengan angka');
 		$this->form_validation->set_message('exact_length', 'Isi field %s dengan 4 karakter angka');
 		
 		if ($this->form_validation->run() == FALSE){ // jika tidak valid
+		$data['pesan_error'].=(trim(form_error('id_pk_e1',' ',' '))==''?'':form_error('id_pk_e1',' ','<br>'));
+/*
 			$data['pesan_error'].=(trim(form_error('tahun',' ',' '))==''?'':form_error('tahun',' ','<br>'));
 			$data['pesan_error'].=(trim(form_error('kode_e1',' ',' '))==''?'':form_error('kode_e1',' ','<br>'));
 			$data['pesan_error'].=(trim(form_error('kode_sasaran_e1',' ',' '))==''?'':form_error('kode_sasaran_e1',' ','<br>'));
+*/
 			
 		}else{
 			// validasi detail
-			if($this->check_detail($data, $pesan)){
-				$result = $this->penetapaneselon1_model->InsertOnDb($data);
+		//	if($this->check_detail($data, $pesan)){
+				$result = $this->checkpointe1_model->InsertOnDb($data);
+/*
 			}else{
 				$data['pesan_error'].= $pesan;
 			}
+*/
 		}
 		
 		if ($result){
@@ -138,7 +165,7 @@ class Checkpointe1 extends CI_Controller {
 		
 		// validation
 		
-		$result = $this->penetapaneselon1_model->UpdateOnDb($data);
+		$result = $this->checkpointe1_model->UpdateOnDb($data);
 		
 		if ($result){
 			echo json_encode(array('success'=>true, 'tindakan_rwj_id'=>$return_id));
@@ -149,7 +176,7 @@ class Checkpointe1 extends CI_Controller {
 	
 	function delete($id=''){
 		if($id != ''){
-			$result = $this->penetapaneselon1_model->DeleteOnDb($id);
+			$result = $this->checkpointe1_model->DeleteOnDb($id);
 			if ($result){
 				echo json_encode(array('success'=>true, 'haha'=>''));
 			} else {
@@ -159,7 +186,7 @@ class Checkpointe1 extends CI_Controller {
 	}
 	
 	public function getDetail($tahun="", $kode_e1="", $kode_sasaran_e1=""){
-		echo $this->penetapaneselon1_model->getDetail($tahun, $kode_e1, $kode_sasaran_e1);
+		echo $this->checkpointe1_model->getDetail($tahun, $kode_e1, $kode_sasaran_e1);
 	}
 	
 }
