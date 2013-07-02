@@ -152,6 +152,7 @@ class Checkpointe1_model extends CI_Model
 				$response->rows[$count]['ukuran']='';
 				$response->rows[$count]['target']='';
 				$response->rows[$count]['capaian']='';
+				$response->rows[$count]['keterangan']='';
 				
 		}
 		
@@ -174,120 +175,18 @@ class Checkpointe1_model extends CI_Model
 		$this->db->free_result();
 	}
 	
-	public function getDetail($tahun, $kode_e1, $kode_sasaran_e1){
-		$out = '';
-		$i = 1;
-		
-		# header table
-		$header = '	<tr>
-						<th bgcolor="#F4F4F4" width="10px">No.</th>
-						<th width="100%" bgcolor="#F4F4F4">Indikator Kerja Utama</th>
-						<th bgcolor="#F4F4F4" width="100">Target (RKT)</th>
-						<th bgcolor="#F4F4F4" width="100">Target (PK)</th>
-						<th bgcolor="#F4F4F4">Satuan</th>
-					</tr>';
-		
-		# Ambil Data dari PK
-		# -------------------------------------------------------------------------------------
-		$this->db->flush_cache();
-		$this->db->select('*');
-		$this->db->from('tbl_pk_eselon1 a');
-		$this->db->join('tbl_iku_eselon1 b','a.kode_iku_e1 = b.kode_iku_e1 and a.tahun = b.tahun');
-		$this->db->where('a.tahun', $tahun);
-		$this->db->where('a.kode_e1', $kode_e1);
-		$this->db->where('a.kode_sasaran_e1', $kode_sasaran_e1);
-		//$this->db->where('a.status !=', '1');
-		
-		$query = $this->db->get();
-		
-		if($query->num_rows() > 0){
-			foreach($query->result() as $row){
-				$out .= '<tr>';
-					$out .= '<td>'.$i.'<input type="hidden" name="detail['.$i.'][id_pk_e1]" value="'.$row->id_pk_e1.'"></td>';
-					$out .= '<td>';
-						$out .= '<input type="hidden" name="detail['.$i.'][kode_iku_e1]" value="'.$row->kode_iku_e1.'" >';
-						$out .= $row->deskripsi;
-					$out .= '</td>';
-				
-					$out .= '<td>';
-						$out .= '<input name="detail['.$i.'][target]" value="'.$row->target.'" readonly="readonly" size="15">';
-					$out .= '</td>';
-				
-					$out .= '<td>';
-						$out .= '<input name="detail['.$i.'][penetapan]" value="'.$row->penetapan.'" size="15" '.($row->status=='1'?'readonly="readonly"':'').'>';
-					$out .= '</td>';
-				
-					$out .= '<td>';
-						$out .= '<input name="detail['.$i.'][satuan]" value="'.$row->satuan.'" readonly="readonly">';
-					$out .= '</td>';
-					
-				$out .= '</tr>';
-				
-				$i++;
-			} // end foreach
-		}
-		
-		# End Ambil Data dari PK
-		# -------------------------------------------------------------------------------------
-		
-		
-		# Ambil data dari RKT
-		# -------------------------------------------------------------------------------------
-		$this->db->flush_cache();
-		$this->db->select('*');
-		$this->db->from('tbl_rkt_kl a');
-		$this->db->join('tbl_iku_eselon1 b','a.kode_iku_e1 = b.kode_iku_e1 and a.tahun = b.tahun');
-		$this->db->where('a.tahun', $tahun);
-		$this->db->where('a.kode_e1', $kode_e1);
-		$this->db->where('a.kode_sasaran_e1', $kode_sasaran_e1);
-		$this->db->where('a.status !=', '1');
-		
-		$query = $this->db->get();
-		
-		foreach($query->result() as $row){
-			$out .= '<tr>';
-				$out .= '<td>'.$i.'<input type="hidden" name="detail['.$i.'][id_pk_e1]" value="0"></td>';
-				$out .= '<td>';
-					$out .= '<input type="hidden" name=detail['.$i.'][kode_iku_e1] value="'.$row->kode_iku_e1.'" >';
-					$out .= $row->deskripsi;
-				$out .= '</td>';
-			
-				$out .= '<td>';
-					$out .= '<input name=detail['.$i.'][target] value="'.$row->target.'" readonly="readonly" size="15">';
-				$out .= '</td>';
-			
-				$out .= '<td>';
-					$out .= '<input name=detail['.$i.'][penetapan] value="" size="15">';
-				$out .= '</td>';
-			
-				$out .= '<td>';
-					$out .= '<input name=detail['.$i.'][satuan] value="'.$row->satuan.'" readonly="readonly">';
-				$out .= '</td>';
-				
-			$out .= '</tr>';
-			
-			$i++;
-		}
-		# End Ambil data dari RKT
-		# -------------------------------------------------------------------------------------
-		
-		//chan 
-		if ($out=="")
-			return $out .= 'Data RKT Kementerian belum tersedia.';
-				
-		return $header.$out;
-	}
+	
 	
 	public function getDataEdit($id){
 		$this->db->flush_cache();
-		$this->db->select('*, b.deskripsi as sasaran, c.deskripsi as iku_e1');
-		$this->db->from('tbl_pk_eselon1 a');
-		$this->db->join('tbl_sasaran_eselon1 b', 'b.kode_sasaran_e1 = a.kode_sasaran_e1');
-		$this->db->join('tbl_iku_eselon1 c', 'c.kode_iku_e1 = a.kode_iku_e1 and c.tahun = a.tahun');
-		$this->db->join('tbl_eselon1 d', 'd.kode_e1 = a.kode_e1');
-		$this->db->where('a.id_pk_e1', $id);
-		
-		return $this->db->get()->row();
+		$this->db->select('tbl_pk_eselon1.*,tbl_checkpoint_e1.*,tbl_iku_eselon1.deskripsi as deskripsi_iku_e1,tbl_iku_eselon1.satuan,tbl_sasaran_eselon1.deskripsi as deskripsi_sasaran_e1, tbl_eselon1.nama_e1');
+		$this->db->from('tbl_pk_eselon1 ');
+			$this->db->join('tbl_iku_eselon1','tbl_iku_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_pk_eselon1.tahun');
+			$this->db->join('tbl_sasaran_eselon1','tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_pk_eselon1.kode_sasaran_e1');
+			$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_pk_eselon1.kode_e1');
+			$this->db->join('tbl_checkpoint_e1', 'tbl_checkpoint_e1.id_pk_e1 = tbl_pk_eselon1.id_pk_e1');
+		$this->db->where('tbl_checkpoint_e1.id_checkpoint_e1', $id);
+		return json_encode($this->db->get()->row());
 	}
 	
 	public function InsertOnDB($data) {
@@ -315,7 +214,8 @@ class Checkpointe1_model extends CI_Model
 				$this->db->set('ukuran',$data['ukuran']);
 				$this->db->set('target',$data['target']);
 				$this->db->set('keterangan',$data['keterangan']);
-				$this->db->set('capaian',$data['capaian']);
+				if ($data['purpose']=='Capaian')
+					$this->db->set('capaian',$data['capaian']);
 				$this->db->set('log_insert', 	$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 				$result = $this->db->insert('tbl_checkpoint_e1');
 				
@@ -353,28 +253,19 @@ class Checkpointe1_model extends CI_Model
 	
 	public function UpdateOnDb($data){
 		$this->db->flush_cache();
-		$this->db->where('id_pk_e1', $data['id_pk_e1']);
-		$this->db->set('penetapan', $data['penetapan']);
-		$result = $this->db->update('tbl_pk_eselon1', $data);
+		$this->db->where('id_checkpoint_e1', $data['id_checkpoint_e1']);
 		
-		# insert to log
-		$this->db->flush_cache();
-		$this->db->select("*");
-		$this->db->from("tbl_pk_eselon1");
-		$this->db->where('id_pk_e1', $data['id_pk_e1']);
-		$qt = $this->db->get();
-		
-		$this->db->flush_cache();
-		$this->db->set('tahun',				$qt->row()->tahun);
-		$this->db->set('kode_e1',			$qt->row()->kode_e1);
-		$this->db->set('kode_sasaran_e1',	$qt->row()->kode_sasaran_e1);
-		$this->db->set('kode_iku_e1',		$qt->row()->kode_iku_e1);
-		$this->db->set('target',			$qt->row()->target);
-		$this->db->set('penetapan',			$qt->row()->penetapan);
-		$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
-		$result = $this->db->insert('tbl_pk_eselon1_log');
-		
-		
+			//$this->db->set('id_pk_e1',$data['id_pk_e1']);
+				$this->db->set('unit_kerja',$data['unit_kerja']);
+				$this->db->set('periode',$data['periode']);
+				$this->db->set('kriteria',$data['kriteria']);
+				$this->db->set('ukuran',$data['ukuran']);
+				$this->db->set('target',$data['target']);
+				$this->db->set('keterangan',$data['keterangan']);
+				if ($data['purpose']=='Capaian')
+					$this->db->set('capaian',$data['capaian']);
+				$this->db->set('log_update', 	$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
+			$result = $this->db->update('tbl_checkpoint_e1');	
 		$errNo   = $this->db->_error_number();
 	    $errMess = $this->db->_error_message();
 		$error = $errMess;
@@ -391,27 +282,9 @@ class Checkpointe1_model extends CI_Model
 	//hapus data
 	public function DeleteOnDb($id){
 	
-		# insert to log
-		$this->db->flush_cache();
-		$this->db->select("*");
-		$this->db->from("tbl_pk_eselon1");
-		$this->db->where('id_pk_e1', $id);
-		$qt = $this->db->get();
-		
-		$this->db->flush_cache();
-		$this->db->set('tahun',				$qt->row()->tahun);
-		$this->db->set('kode_e1',			$qt->row()->kode_e1);
-		$this->db->set('kode_sasaran_e1',	$qt->row()->kode_sasaran_e1);
-		$this->db->set('kode_iku_e1',		$qt->row()->kode_iku_e1);
-		$this->db->set('target',			$qt->row()->target);
-		$this->db->set('penetapan',			$qt->row()->penetapan);
-		$this->db->set('log',				'DELETE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
-		$result = $this->db->insert('tbl_pk_eselon1_log');
-		
-		// proses
-		$this->db->flush_cache();
-		$this->db->where('id_pk_e1', $id);
-		$result = $this->db->delete('tbl_pk_eselon1');
+			$this->db->flush_cache();
+		$this->db->where('id_checkpoint_e1', $id);
+		$result = $this->db->delete('tbl_checkpoint_e1');
 		
 		
 		$errNo   = $this->db->_error_number();

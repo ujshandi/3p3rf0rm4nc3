@@ -39,7 +39,8 @@ class Checkpointkl extends CI_Controller {
 		$this->objectId = 'checkpointCapaiankl';
 		$data['objectId'] = $this->objectId;
 		$data['purpose'] = 'Capaian';
-		$data['listPeriode'] = $this->utility->getListCheckpoint("");
+		$data['listPeriode'] = $this->utility->getListCheckpoint("","cmbPeriode".$this->objectId);
+		
 		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
 	  	$this->load->view('checkpoint/checkpointkls_v',$data);
 	}
@@ -62,6 +63,9 @@ class Checkpointkl extends CI_Controller {
 		
 	  	$this->load->view('checkpoint/checkpointkl_v_edit',$data);
 	}
+	function getDataEdit($id){
+		echo $this->checkpointkl_model->getDataEdit($id);
+	}
 	
 	function grid($filtahun=null){
 		echo $this->checkpointkl_model->easyGrid($filtahun);
@@ -79,10 +83,11 @@ class Checkpointkl extends CI_Controller {
 		$dt['kriteria'] = $this->input->post("kriteria", TRUE); 
 		$dt['ukuran'] = $this->input->post("ukuran", TRUE); 
 		$dt['periode'] = $this->input->post("cmbPeriode".$this->objectId, TRUE); 
+		//var_dump($dt['periode']);die;
 		$dt['target'] = $this->input->post("target", TRUE); 
 		$dt['keterangan'] = $this->input->post("keterangan", TRUE); 
-		$dt['capaian'] = null; 
-		
+		$dt['capaian'] = $this->input->post("capaian", TRUE); 
+		$dt['purpose'] = $this->input->post("purpose", TRUE);
 		return $dt;
     }
 	
@@ -112,7 +117,10 @@ class Checkpointkl extends CI_Controller {
 			
 		}else{
 			// validasi detail
-		//	if($this->check_detail($data, $pesan)){
+			if(($data['id_checkpoint_kl']!="")&&($data['id_checkpoint_kl']!=null)){
+				$result = $this->checkpointkl_model->UpdateOnDb($data);
+			}
+			else
 				$result = $this->checkpointkl_model->InsertOnDb($data);
 			//}else{
 				//$data['pesan_error'].= $pesan;
@@ -120,9 +128,9 @@ class Checkpointkl extends CI_Controller {
 		}
 		
 		if ($result){
-			echo json_encode(array('success'=>true, 'status'=>$return_id));
+			echo json_encode(array('success'=>true));
 		} else {
-			echo json_encode(array('msg'=>$data['pesan_error']));
+			echo json_encode(array('msg'=>'Penyimpanan tidak berhasil.'));
 		}
 	}
 	
@@ -145,7 +153,7 @@ class Checkpointkl extends CI_Controller {
 		$result = "";
 		
 		$data['id_pk_kl'] = $this->input->post('id_pk_kl');
-		$data['penetapan'] = $this->input->post('penetapan');
+		
 		
 		// validation
 		

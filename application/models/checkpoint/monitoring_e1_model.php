@@ -138,7 +138,7 @@ class Monitoring_e1_model extends CI_Model
 		 }		
 			
 			if($filperiode != '' && $filperiode != '0' && $filperiode != '-1' && $filperiode != null) {
-				$this->db->where("tbl_checkpoint_e1.periode",$filperiode);
+				//$this->db->where("tbl_checkpoint_e1.periode",$filperiode);
 			}
 		$this->db->select("distinct tbl_pk_eselon1.kode_e1, tbl_eselon1.nama_e1",false);
 			

@@ -140,9 +140,9 @@ class Dsb_capaian_e1_model extends CI_Model
 			
 			$this->db->from('tbl_pengukuran_eselon1 inner join tbl_eselon1 on tbl_pengukuran_eselon1.kode_e1 = tbl_eselon1.kode_e1 ',false);
 			$this->db->group_by('tahun,kode_e1, nama_e1',false);
-		//$q = $this->db->get();
-		//return $q->row()->num_rows; 
-		return $this->db->count_all_results();
+		$q = $this->db->get();
+		return $q->num_rows(); 
+		//return $this->db->count_all_results();
 		//$this->db->free_result();
 	}
 	
