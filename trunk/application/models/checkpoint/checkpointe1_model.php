@@ -257,7 +257,8 @@ class Checkpointe1_model extends CI_Model
 		
 			//$this->db->set('id_pk_e1',$data['id_pk_e1']);
 				$this->db->set('unit_kerja',$data['unit_kerja']);
-				$this->db->set('periode',$data['periode']);
+				if ($data['purpose']=='Rencana')
+					$this->db->set('periode',$data['periode']);
 				$this->db->set('kriteria',$data['kriteria']);
 				$this->db->set('ukuran',$data['ukuran']);
 				$this->db->set('target',$data['target']);
