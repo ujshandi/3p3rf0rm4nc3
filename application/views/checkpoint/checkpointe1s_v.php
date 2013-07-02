@@ -286,8 +286,10 @@
 		</tr>
 		</table>
 	  <div style="margin-bottom:5px">
+	    <? if ($purpose=='Rencana') {?>
 		<? if($this->sys_menu_model->cekAkses('ADD;',125,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="newData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-add" plain="true">Add</a>  
+		<?}?>
 		<?}?>
 		<!------------Edit View-->
 		<? if($this->sys_menu_model->cekAkses('EDIT;',125,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
