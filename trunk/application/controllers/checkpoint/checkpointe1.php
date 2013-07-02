@@ -60,6 +60,9 @@ class Checkpointe1 extends CI_Controller {
 		
 	  	$this->load->view('checkpoint/checkpointe1_v_edit',$data);
 	}
+	function getDataEdit($id){
+		echo $this->checkpointe1_model->getDataEdit($id);
+	}
 	
 	function grid($filtahun=null,$file1=null){
 		if (($file1==null)&&($this->session->userdata('unit_kerja_e1'))!=-1)
@@ -84,7 +87,8 @@ class Checkpointe1 extends CI_Controller {
 		$dt['periode'] = $this->input->post("cmbPeriode".$this->objectId, TRUE); 
 		$dt['target'] = $this->input->post("target", TRUE); 
 		$dt['keterangan'] = $this->input->post("keterangan", TRUE); 
-		$dt['capaian'] = null; 
+		$dt['capaian'] = $this->input->post("capaian", TRUE);
+		$dt['purpose'] = $this->input->post("purpose", TRUE);
 		
 		return $dt;
     }
@@ -127,6 +131,11 @@ class Checkpointe1 extends CI_Controller {
 		}else{
 			// validasi detail
 		//	if($this->check_detail($data, $pesan)){
+				
+				if(($data['id_checkpoint_e1']!="")&&($data['id_checkpoint_e1']!=null)){
+				$result = $this->checkpointe1_model->UpdateOnDb($data);
+			}
+			else
 				$result = $this->checkpointe1_model->InsertOnDb($data);
 /*
 			}else{

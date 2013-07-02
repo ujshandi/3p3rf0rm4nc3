@@ -1,6 +1,7 @@
 	<script  type="text/javascript" >
 				var idCheckpoint;
-
+				var rowIndexDetail;
+				
 		$(function(){
 			var url;
 			newData<?=$objectId;?> = function (){  
@@ -13,6 +14,7 @@
 					$("#deskripsi_sasaran_e1<?=$objectId?>").val(row.deskripsi_sasaran_e1);
 					$("#id_pk_e1<?=$objectId?>").val(row.id_pk_e1);
 					$("#penanggungjawab<?=$objectId?>").val(row.nama_e1);
+					$("#purpose<?=$objectId?>").val('<?=$purpose?>');
 				}	
 				//addTab("Add PK Eselon I", "checkpoint/checkpointe1/add");
 			}
@@ -21,31 +23,50 @@
 			editData<?=$objectId;?> = function (editmode){
 				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 				var tr = jQuery('#dg<?=$objectId;?>').closest('tr.datagrid-row');
+				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");
 				//alert('row index parent'+tr.attr('datagrid-row-index'));
-				alert(idCheckpoint+"KA") ;
-				alert($.url().param()+"Parent");
-				if (row){
-					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add <?=$purpose?> Checkpoint Eselon I');  
-					$('#fm<?=$objectId;?>').form('clear');  
-					url = base_url+'checkpoint/checkpointe1/save';  
-					$("#deskripsi_iku_e1<?=$objectId?>").val(row.deskripsi_iku_e1);
-					$("#deskripsi_sasaran_e1<?=$objectId?>").val(row.deskripsi_sasaran_e1);
-					$("#id_pk_e1<?=$objectId?>").val(row.id_pk_e1);
-					$("#penanggungjawab<?=$objectId?>").val(row.nama_e1);
-					$("#target<?=$objectId?>").val(row.target);
-					$("#capaian<?=$objectId?>").val(row.capaian);
-				}	
+				//alert(idCheckpoint+"=idcheckpoint") ;
+				if ((idCheckpoint ==null)||(idCheckpoint =='undefined')) return false;
+			//	$('#dg<?=$objectId;?>').datagrid('options').queryParams.
+				//alert($.url().param("parentIndex")+"Parent");
+				//if (row){
+					$.ajax({
+					url:'<?=base_url()?>checkpoint/checkpointe1/getDataEdit/'+idCheckpoint,
+					success:function(data){
+						//alert(data);
+						var data = eval('('+data+')');
+							$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit <?=$purpose?> Checkpoint Eselon I');  
+						$('#fm<?=$objectId;?>').form('clear');  
+						url = base_url+'checkpoint/checkpointe1/save';  
+						$("#deskripsi_iku_e1<?=$objectId?>").val(data.deskripsi_iku_e1);
+						$("#deskripsi_sasaran_e1<?=$objectId?>").val(data.deskripsi_sasaran_e1);
+						$("#id_pk_e1<?=$objectId?>").val(data.id_pk_e1);
+						$("#id_checkpoint_e1<?=$objectId?>").val(data.id_checkpoint_e1);
+						$("#penanggungjawab<?=$objectId?>").val(data.nama_e1);
+						$("#kriteria<?=$objectId?>").val(data.kriteria);
+						$("#unitkerja<?=$objectId?>").val(data.unit_kerja);
+						$("#ukuran<?=$objectId?>").val(data.ukuran);
+						$("#target<?=$objectId?>").val(data.target);
+						$("#keterangan<?=$objectId?>").val(data.keterangan);
+						$("#capaian<?=$objectId?>").val(data.capaian);
+						$("#cmbPeriode<?=$objectId?>").val(data.periode);
+						$("#purpose<?=$objectId?>").val('<?=$purpose?>');
+					}});	
 			}
 			//end editData
 			
 			deleteData<?=$objectId;?> = function (){
 				<? if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					if(row){
-						if(confirm("Apakah yakin akan menghapus data '" + row.kode_iku_e1 + "'?")){
+					if ((idCheckpoint ==null)||(idCheckpoint =='undefined')) return false;
+					$.ajax({
+					url:'<?=base_url()?>checkpoint/checkpointe1/getDataEdit/'+idCheckpoint,
+					success:function(data){
+						var data = eval('('+data+')');
+						if(confirm("Apakah yakin akan menghapus data " + '' + "?")){
 							var response = '';
 							$.ajax({ type: "GET",
-									 url: base_url+'checkpoint/checkpointe1/delete/' + row.id_pk_e1,
+									 url: base_url+'checkpoint/checkpointe1/delete/' + data.id_checkpoint_e1,
 									 async: false,
 									 success : function(response)
 									 {
@@ -57,7 +78,8 @@
 											});
 											
 											// reload and close tab
-											$('#dg<?=$objectId;?>').datagrid('reload');
+										//	$('#dg<?=$objectId;?>').datagrid('reload');
+										$('#ddv<?=$objectId;?>-'+rowIndexDetail).datagrid('reload');
 										} else {
 											$.messager.show({
 												title: 'Error',
@@ -67,7 +89,7 @@
 									 }
 							});
 						}
-					}
+					}});
 				<?} else { ?>	
 					alert("Silahkan Login sebagai Superadmin");
 				<?} ?>
@@ -134,7 +156,8 @@
 								msg: result.msg
 							}); */
 							$('#dlg<?=$objectId;?>').dialog('close');		// close the dialog
-							$('#dg<?=$objectId;?>').datagrid('reload');	// reload the user data
+							//$('#dg<?=$objectId;?>').datagrid('reload');	// reload the user data
+							$('#ddv<?=$objectId;?>-'+rowIndexDetail).datagrid('reload');
 						} else {
 							$.messager.show({
 								title: 'Error',
@@ -313,7 +336,8 @@
 				<label style="width:130px">Sasaran Strategis:</label>					
 					<textarea readonly name="deskripsi_sasaran_e1" id="deskripsi_sasaran_e1<?=$objectId?>" cols="70" class="easyui-validatebox" ></textarea>
 				<input type="hidden" id="id_pk_e1<?=$objectId?>" name="id_pk_e1"/>
-				<input type="hidden" id="id_checkpoint_kl<?=$objectId?>" name="id_checkpoint_kl"/>
+				<input type="hidden" id="id_checkpoint_e1<?=$objectId?>" name="id_checkpoint_e1"/>
+				<input type="hidden" id="purpose<?=$objectId?>" name="purpose" value="<?=$purpose?>"/>
 			</div>
 			
 			<div class="fitem">
@@ -326,15 +350,15 @@
 			</div>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Unit Kerja Terkait :</label>
-				<input name="unitkerja" size="60" class="easyui-validatebox">
+				<input name="unitkerja" id="unitkerja<?=$objectId?>" size="60" class="easyui-validatebox">
 			</div>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Kriteria Keberhasilan :</label>
-				<input name="kriteria" size="60" class="easyui-validatebox">
+				<input name="kriteria" id="kriteria<?=$objectId?>" size="60" class="easyui-validatebox">
 			</div>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Ukuran Keberhasilan :</label>
-				<input name="ukuran" size="60" class="easyui-validatebox">
+				<input name="ukuran" id="ukuran<?=$objectId?>" size="60" class="easyui-validatebox">
 			</div>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Periode :</label>
@@ -343,17 +367,21 @@
 			<? if ($purpose=='Rencana') {?>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Target (%):</label>
-				<input name="target" size="5" class="easyui-validatebox">
+				<input name="target" id="target<?=$objectId?>" size="5" class="easyui-validatebox">
 			</div>
 			<?} ?>
 			<? if ($purpose=='Capaian') {?>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Target (%):</label>
-				<input name="target" size="5" readonly class="easyui-validatebox">
+				<input name="target" id="target<?=$objectId?>" size="5" readonly class="easyui-validatebox">
 				&nbsp;&nbsp;Capaian (%):
-				<input name="target" size="5" class="easyui-validatebox">
+				<input name="capaian" id="capaian<?=$objectId?>" size="5" class="easyui-validatebox">
 			</div>
 			<?} ?>
+			<div class="fitem">
+				<label style="width:130px;vertical-align:top">Keterangan :</label>
+				<input name="keterangan" size="60" id="keterangan<?=$objectId?>" class="easyui-validatebox">
+			</div>
 		</form>
 		<div id="dlg-buttons">
 			<!----------------Edit title-->
@@ -383,7 +411,7 @@
                         loadMsg:'',
                         height:'auto',
                         columns:[[
-                            {field:'id_checkpoint_kl',title:'id',width:200,hidden:true},
+                            {field:'id_checkpoint_e1',title:'id',width:200,hidden:true},
                             {field:'unit_kerja',title:'Unit Kerja',width:200},
                             {field:'periode',title:'Periode',width:200},
                             {field:'kriteria',title:'Kriteria Capaian',width:200},
@@ -403,8 +431,9 @@
                        onClickCell:function(rowIndex, field, value){
 							 $('#ddv<?=$objectId;?>-'+index).datagrid('selectRow', rowIndex);
 							var row = $('#ddv<?=$objectId;?>-'+index).datagrid('getSelected');
-							idCheckpoint = row.id_checkpoint_kl;
-							alert(idCheckpoint);
+							idCheckpoint = row.id_checkpoint_e1;
+							rowIndexDetail = index;
+							//alert(idCheckpoint);
 					   },
                         onLoadSuccess:function(){
                             setTimeout(function(){
@@ -419,6 +448,7 @@
 				onClickCell: function(rowIndex, field, value){
 					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+					idCheckpoint = null;
 					//alert(row.deskripsi_iku_e1);
 					switch(field){
 						case "kode_e1":

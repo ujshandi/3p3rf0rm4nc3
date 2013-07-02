@@ -43,7 +43,7 @@ class Monitoring_kl_model extends CI_Model
 				$this->db->where("tbl_pk_kl.tahun",$filtahun);
 			}		
 		 	if($filperiode != '' && $filperiode != '0' && $filperiode != '-1' && $filperiode != null) {
-				$this->db->where("tbl_checkpoint_kl.periode",$filperiode);
+				//$this->db->where("tbl_checkpoint_kl.periode",$filperiode);
 			}		
 		 	
 			
@@ -60,11 +60,11 @@ class Monitoring_kl_model extends CI_Model
 from tbl_checkpoint_kl inner join tbl_kl
 group by tahun,kode_kl, nama_kl*/
 			//$this->db->select("iku.deskripsi as indikator_kinerja,iku.satuan,rkt.realisasi,pk.target,case  when rkt.triwulan  =1 then rkt.realisasi else 0 end  as triwulan1,case  when rkt.triwulan  =2 then rkt.realisasi else 0 end  as triwulan2,case  when rkt.triwulan  =3 then rkt.realisasi else 0 end  as triwulan3,case  when rkt.triwulan  =4 then rkt.realisasi else 0 end  as triwulan4",false);
-			$this->db->select("tbl_pk_kl.tahun,tbl_pk_kl.kode_kl, tbl_kl.nama_kl,count(tbl_pk_kl.kode_iku_kl) as jml_iku,
+			$this->db->select("distinct tbl_pk_kl.tahun,tbl_pk_kl.kode_kl, tbl_kl.nama_kl,0 as jml_iku,
 0 as seratus,0 as seratus_kurang, 0 as seratus_lebih",false);
 			
-		$this->db->from('tbl_checkpoint_kl inner join tbl_pk_kl on tbl_checkpoint_kl.id_pk_kl=tbl_pk_kl.id_pk_kl inner join tbl_kl on tbl_pk_kl.kode_kl = tbl_kl.kode_kl ',false);
-			$this->db->group_by('tahun,kode_kl, nama_kl',false);
+		$this->db->from('tbl_checkpoint_kl right join tbl_pk_kl on tbl_checkpoint_kl.id_pk_kl=tbl_pk_kl.id_pk_kl inner join tbl_kl on tbl_pk_kl.kode_kl = tbl_kl.kode_kl ',false);
+		//	$this->db->group_by('tahun,kode_kl, nama_kl',false);
 			$query = $this->db->get();
 			
 			$i=0;
@@ -78,7 +78,8 @@ group by tahun,kode_kl, nama_kl*/
 				
 				$response->rows[$i]['tahun']=$row->tahun;				
 				$response->rows[$i]['kode_kl']=$row->kode_kl;				
-				$response->rows[$i]['nama_kl']=$row->nama_kl;				
+				$response->rows[$i]['nama_kl']=$row->nama_kl;
+				$row->jml_iku =  $this->getJmlIku($filtahun,$row->kode_kl);					
 				$response->rows[$i]['jml_iku']=$row->jml_iku;				
 				$row->seratus = $this->getPersen($filtahun,$row->kode_kl,100,$filperiode);
 				$response->rows[$i]['seratus']= $row->seratus;
@@ -141,18 +142,18 @@ group by tahun,kode_kl, nama_kl*/
 			 $this->db->where("tbl_pk_kl.tahun",$filtahun);
 		 }		
 		 if($filperiode != '' && $filperiode != '0' && $filperiode != '-1' && $filperiode != null) {
-				$this->db->where("tbl_checkpoint_kl.periode",$filperiode);
+				//$this->db->where("tbl_checkpoint_kl.periode",$filperiode);
 			}
 			
 		
-		$this->db->select("tbl_pk_kl.tahun,tbl_pk_kl.kode_kl, tbl_kl.nama_kl",false);
+		$this->db->select("distinct tbl_pk_kl.tahun,tbl_pk_kl.kode_kl, tbl_kl.nama_kl",false);
 			
-			$this->db->from('tbl_checkpoint_kl inner join tbl_pk_kl on tbl_checkpoint_kl.id_pk_kl=tbl_pk_kl.id_pk_kl inner join tbl_kl on tbl_pk_kl.kode_kl = tbl_kl.kode_kl ',false);
+			$this->db->from('tbl_checkpoint_kl right join tbl_pk_kl on tbl_checkpoint_kl.id_pk_kl=tbl_pk_kl.id_pk_kl inner join tbl_kl on tbl_pk_kl.kode_kl = tbl_kl.kode_kl ',false);
 		//	$this->db->group_by('tahun,kode_kl, nama_kl',false);
-		//$q = $this->db->get();
-		//return $q->row()->num_rows; 
+		$q = $this->db->get();
+		return $q->num_rows(); 
 		//var_dump($this->db->count_all_results());die;
-		return $this->db->count_all_results();
+		//return $this->db->count_all_results();
 		//$this->db->free_result();
 	}
 	
@@ -181,6 +182,19 @@ group by tahun,kode_kl, nama_kl*/
 	}
 	
 	
+	public function getJmlIku($tahun,$kode_kl){
+		$this->db->flush_cache();
+		$this->db->select('count(tbl_pk_kl.kode_iku_kl) as jumlah',false);
+			$this->db->from('tbl_checkpoint_kl inner join tbl_pk_kl on tbl_checkpoint_kl.id_pk_kl=tbl_pk_kl.id_pk_kl',false);
+		//$this->db->where('persen '.($isTercapai?">=":"<"), 100);
+		$this->db->where('tbl_pk_kl.tahun', $tahun);
+		$this->db->where('tbl_pk_kl.kode_kl', $kode_kl);
+		$query = $this->db->get();
+		if ($query->num_rows()>0)
+			return $query->row()->jumlah;
+		else return 0;
+		
+	}
 	
 	public function getPersen($tahun,$kode_kl,$capaian,$periode){
 		$this->db->flush_cache();
