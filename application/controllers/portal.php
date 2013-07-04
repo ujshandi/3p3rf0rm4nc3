@@ -221,8 +221,14 @@ class Portal extends CI_Controller {
 				$this->form_validation->set_rules("content", 'Isi Profil', 'trim|required|xss_clean');
 				break;
 			case 4:
+				$this->form_validation->set_rules("content_title", 'Judul AKIP', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("content", 'Isi AKIP', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("summary", 'Ringkas AKIP', 'trim|required|xss_clean');
 				break;
 			case 5:
+				$this->form_validation->set_rules("content_title", 'Judul Regulasi', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("content", 'Isi Regulasi', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("summary", 'Ringkas Regulasi', 'trim|required|xss_clean');
 				break;
 			case 6:
 				$this->form_validation->set_rules("content_title", 'Judul FAQ', 'trim|required|xss_clean');
