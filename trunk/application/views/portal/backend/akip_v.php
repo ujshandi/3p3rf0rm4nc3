@@ -33,8 +33,9 @@
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
-				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Sasaran Eselon I');
+				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add AKIP');
 				$('#fm<?=$objectId;?>').form('clear');  
+				$("#published<?=$objectId;?>").val("0");
 				//initCombo<?=$objectId?>();
 				url = base_url+'portal/save/4/add'; 
 				
@@ -53,8 +54,12 @@
 				$('#fm<?=$objectId;?>').form('clear');  
 				//initCombo();
 				if (row){
-					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Sasaran Eselon I');
+					CKEDITOR.instances.content<?=$objectId;?>.destroy();
+					CKEDITOR.instances.summary<?=$objectId;?>.destroy();
+					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit AKIP');
 					$('#fm<?=$objectId;?>').form('load',row);
+					CKEDITOR.replace('content<?=$objectId;?>',{height:'100px'});
+					CKEDITOR.replace('summary<?=$objectId;?>',{height:'100px'});
 										
 					url = base_url+'portal/save/4/edit/'+row.content_id;
 				}
@@ -126,31 +131,6 @@
 				searchData<?=$objectId;?> ();
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/sasaran_eselon1/grid"});
 			},50);
-			
-			// yanto
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					
-					switch(field){
-						case "kode_e1":
-							showPopup('#popdesc<?=$objectId?>', row.nama_e1);
-							break;
-						case "kode_sasaran_kl":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
-							break;
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
-			
-			$("#popdesc<?=$objectId?>").click(function(){
-				closePopup('#popdesc<?=$objectId?>');
-			});
-			
 		 });
 	</script>
 	
@@ -185,12 +165,12 @@
 					$("#drop<?=$objectId;?>").slideUp("slow");
 				});
 			*/
+			var wWidth = $(window).width();
+			var wHeight = $(window).height();
+			$("#dlg<?=$objectId;?>").css('width',wWidth);
+			$("#dlg<?=$objectId;?>").css('height',wHeight);
 		});
 		
-		function setSasaran<?=$objectId;?>(valu){
-			//alert("here");
-			document.getElementById('kode_sasaran_kl<?=$objectId;?>').value = valu;
-		}
 	</script>
 	
 	<style type="text/css">
@@ -276,39 +256,51 @@
 		</div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Berita Portal" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data AKIP Portal" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
 		<thead>
 		<tr>
 			<th field="content_id" sortable="true" hidden="true">Kode Konten</th>
-			<th field="content_title" sortable="true" width="15">Judul Berita</th>
-			<th field="content" sortable="true" width="25">Isi Berita</th>
-			<th field="summary" sortable="true" width="125">Ringkas Berita</th>
-			<th field="url" sortable="true" width="25">Tautan</th>		
+			<th field="content_title" sortable="true" width="50">Judul AKIP</th>
+			<th field="content" sortable="true" width="100" hidden="true">Isi AKIP</th>
+			<th field="summary" sortable="true" width="100">Ringkas AKIP</th>
+			<th field="url" sortable="true" width="50">Tautan</th>		
+			<th field="date_post" sortable="true" width="30">Tanggal Posting</th>		
+			<th field="published" sortable="true" hidden="true">Publikasikan</th>		
+			<th field="published_label" sortable="true" width="25">Publikasikan</th>		
 		</tr>
 		</thead>  
 	</table>
 
 	<!-- Area untuk Form Add/Edit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:350px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
-		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Berita Portal</div>
+		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data AKIP Portal</div>
 		<form id="fm<?=$objectId;?>" method="post">
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Judul Berita :</label>
+				<label style="width:150px;vertical-align:top">Judul AKIP :</label>
 				<input name="content_title" class="easyui-validatebox" size="50" required="true" id="content_title<?=$objectId;?>">
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Isi Berita :</label>
-				<textarea name="content" cols="70" class="easyui-validatebox" style="resize:none"></textarea>
+				<label style="width:150px;vertical-align:top">Isi AKIP :</label><br/>
+				<div style="width:100%;  margin:10px 0"><textarea name="content" cols="70" class="easyui-validatebox" style="resize:none" id="content<?=$objectId;?>"></textarea></div>
+				<?php echo display_ckeditor($ckeditor1); ?>
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Ringkas Berita :</label>
-				<textarea name="summary" cols="70" class="easyui-validatebox" style="resize:none"></textarea>
+				<label style="width:150px;vertical-align:top">Ringkas AKIP :</label><br/>
+				<div style="width:100%;  margin:10px 0"><textarea name="summary" cols="70" class="easyui-validatebox" style="resize:none" id="summary<?=$objectId;?>"></textarea></div>
+				<?php echo display_ckeditor($ckeditor2); ?>
 			</div>
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Tautan :</label>
 				<input name="url" class="easyui-validatebox" size="40" id="url<?=$objectId;?>">
+			</div>
+			<div class="fitem">
+				<label style="width:150px;vertical-align:top">Publikasikan :</label>
+				<select name="published" id="published<?=$objectId;?>">
+					<option value='1'>Ya</option>
+					<option value='0'>Tidak</option>
+				</select>
 			</div>
 		</form>
 		<div id="dlg-buttons">
@@ -317,5 +309,3 @@
 			<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg<?=$objectId;?>').dialog('close')">Cancel</a>
 		</div>
     </div>
-	
-	<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>

@@ -86,6 +86,12 @@ class Portal extends CI_Controller {
 				'toolbar' 	=> 	"Full", 	//Using the Full toolbar
 				'width' 	=> 	"100%",	//Setting a custom width
 				'height' 	=> 	'100px',	//Setting a custom height
+			   	'filebrowserBrowseUrl' => base_url().'/public/js/kcfinder/browse.php?type=files',
+			   	'filebrowserImageBrowseUrl' => base_url().'/public/js/kcfinder/browse.php?type=images',
+			   	'filebrowserFlashBrowseUrl' => base_url().'/public/js/kcfinder/browse.php?type=flash',
+			   	'filebrowserUploadUrl' => base_url().'/public/js/kcfinder/upload.php?type=files',
+			   	'filebrowserImageUploadUrl' => base_url().'/public/js/kcfinder/upload.php?type=images',
+			   	'filebrowserFlashUploadUrl' => base_url().'/public/js/kcfinder/upload.php?type=flash'
 			),
 		
 		);
@@ -127,11 +133,15 @@ class Portal extends CI_Controller {
 			case 4:
 				$data['title'] = 'AKIP Portal';
 				$data['objectId'] = 'portalakip';
+				$data['ckeditor1'] = $this->initCKEditor('content'.$data['objectId']);
+				$data['ckeditor2'] = $this->initCKEditor('summary'.$data['objectId']);
 				$this->load->view('portal/backend/akip_v', $data);
 				break;
 			case 5:
 				$data['title'] = 'Regulasi Portal';
 				$data['objectId'] = 'portalreg';
+				$data['ckeditor1'] = $this->initCKEditor('content'.$data['objectId']);
+				$data['ckeditor2'] = $this->initCKEditor('summary'.$data['objectId']);
 				$this->load->view('portal/backend/regulasi_v', $data);
 				break;
 			case 6:
