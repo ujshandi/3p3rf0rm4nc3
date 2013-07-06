@@ -35,7 +35,7 @@
 	  
 	
 <div>
-<div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left"> </div> 
+<div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left;color:#FFFFFF"> </div> 
 <div  style="width:10px;float:left">&nbsp;</div>
 
 <table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Kinerja Eselon I"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
@@ -51,7 +51,7 @@
 	  </thead> 
 	</table>
 </div>	
-<div   style="width:10px;float:left"><input type="button" value="View Image"/></div>
+<div   style="width:10px;float:left;display:none"><input type="button" value="View Image"/></div>
 <script type="text/javascript">
 //$.jqplot('chartdiv',  [[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]);
 
@@ -78,6 +78,7 @@ $(document).ready(function(){
 						  objArrayData.push(["Tidak Tercapai", parseFloat(row.tdk_tercapai)]);
 						  var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
+							  	seriesColors: [ "green","red"]	,
 							  gridPadding: {top:0, bottom:38, left:0, right:0},
 							seriesDefaults:{
 								renderer:$.jqplot.PieRenderer, 
@@ -93,7 +94,8 @@ $(document).ready(function(){
 													location:'s',
 													marginTop: '15px'
 												},       
-											  series:[{lineWidth:3, markerOptions:{style:'square'}}]
+											
+										//	  series:[{lineWidth:3, markerOptions:{style:'square'}}]
 											}    
 										  );
 							
@@ -140,7 +142,17 @@ $(document).ready(function(){
 					}});
 			}
 
-			
+		$.jqplot.postDrawHooks.push(function() {   
+			var labels = $('table.jqplot-table-legend tr td.jqplot-table-legend-label');
+			 //alert(labels);
+			 //$(labels)..css('color',"#000000" );
+			 labels.each(function(index) {
+					//turn the label's text color to the swatch's color
+					//var color = $(swatches[index]).find("div div").css('background-color');
+					$(this).css('color',"#000000" );
+				//	alert('here');
+			 });      
+	});		
 	
 	
   setTimeout(function(){

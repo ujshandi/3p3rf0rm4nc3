@@ -12,7 +12,7 @@
 			<table border="0" cellpadding="1" cellspacing="1">
 			<tr>
 				<td>Tahun :</td>
-				<td><?=$this->dsb_capaian_kl_model->getListTahun($objectId)?></td>
+				<td><?=$this->dsb_kinerja_kl_model->getListTahun($objectId)?></td>
 			</tr>
 			<!--<tr>
 				<td>Bulan dari :</td>
@@ -69,7 +69,7 @@ $(document).ready(function(){
 					return;
 				}
 				$('#dg<?=$objectId;?>').datagrid({
-					url:"<?=base_url()?>dashboard/dsb_capaian_kl/grid/"+filtahun,
+					url:"<?=base_url()?>dashboard/dsb_kinerja_kl/grid/"+filtahun,
 					//queryParams:{lastNo:'0'},	
 					pageNumber : 1,
 					onLoadSuccess:function(data){	
@@ -104,19 +104,18 @@ $(document).ready(function(){
 									location:'s',
 									marginTop: '15px'
 								},       
-								seriesColors: [ "green","red"]	
+							seriesColors: [ "green","red"]	
 							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]
 							}    
 						  );
 						 
-						 
+						 //jqplot-table-legend
 						//$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
 					}});
 			}
 
-			
-		$.jqplot.postDrawHooks.push(function() {   
+	$.jqplot.postDrawHooks.push(function() {   
 			var labels = $('table.jqplot-table-legend tr td.jqplot-table-legend-label');
 			 //alert(labels);
 			 //$(labels)..css('color',"#000000" );
@@ -127,6 +126,8 @@ $(document).ready(function(){
 				//	alert('here');
 			 });      
 	});
+			//jqplot-table-legend jqplot-table-legend-label
+	 
 
   
   setTimeout(function(){

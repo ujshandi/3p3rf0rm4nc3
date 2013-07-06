@@ -41,7 +41,7 @@
     <div class="leftbox grd">
         <ul class="borderedlist">
             <li><a href="<?=base_url()?>portal/page/about" title="">Tentang e-Perfomance</a></li>
-            <li><a href="#" title="">Sistem AKIP</a></li>
+            <li><a href="<?=base_url()?>portal/page/akip" title="">Sistem AKIP</a></li>
             <li><a href="#" title="">Regulasi Terkait</a></li>
             <li><a href="<?=base_url()?>portal/page/faq" title="">FAQ</a></li>
             <li class="last"><a href="<?=base_url()?>portal/page/contact" title="">Kontak</a></li>
