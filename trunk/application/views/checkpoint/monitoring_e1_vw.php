@@ -38,7 +38,7 @@
 	  
 	
 <div>
-<div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left"> </div> 
+<div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left;color:#FFFFFF"> </div> 
 <div  style="width:10px;float:left">&nbsp;</div>
 
 <table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Monitoring Checkpoint Eselon I"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
@@ -99,7 +99,8 @@ $(document).ready(function(){
 													}, 
 													location:'s',
 													marginTop: '15px'
-												},       
+												},    
+												seriesColors: [ "green","blue","red"],   
 											  series:[{lineWidth:3, markerOptions:{style:'square'}}]
 											}    
 										  );
@@ -147,7 +148,17 @@ $(document).ready(function(){
 					}});
 			}
 
-			
+			$.jqplot.postDrawHooks.push(function() {   
+			var labels = $('table.jqplot-table-legend tr td.jqplot-table-legend-label');
+			 //alert(labels);
+			 //$(labels)..css('color',"#000000" );
+			 labels.each(function(index) {
+					//turn the label's text color to the swatch's color
+					//var color = $(swatches[index]).find("div div").css('background-color');
+					$(this).css('color',"#000000" );
+				//	alert('here');
+			 });      
+	});
 	
 	
   setTimeout(function(){
