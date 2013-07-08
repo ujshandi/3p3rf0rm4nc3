@@ -234,7 +234,7 @@ class Rpt_penetapankl extends CI_Controller {
 		$this->our_pdf->CheckPageBreakChan($newHeight,108);		
 		$this->our_pdf->Wrap(100, 5, $pdfdata[$i][1]." : ".$pdfdata[$i][3], 0, 0, 'LM', false, '', 100, $newHeight2);
 		$this->our_pdf->Ln($newHeight);
-		$program = $this->rpt_penetapankl_model->getProgram(true);
+		$program = $this->rpt_penetapankl_model->getProgram(true,$filtahun);
 		foreach($program->result() as $r){
 			$this->our_pdf->CheckPageBreak($newHeight);		
 		$this->our_pdf->Wrap(250, 5, 'Program : '.$r->nama_program.'. Anggaran : '.$this->utility->cekNumericFmt($r->total), 0, 0, 'LM', false, '', 250, $newHeight2);
