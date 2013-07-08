@@ -36,6 +36,7 @@
 				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Regulasi');
 				$('#fm<?=$objectId;?>').form('clear');  
 				$("#published<?=$objectId;?>").val("0");
+				CKEDITOR.instances.content<?=$objectId;?>.setData('');
 				//initCombo<?=$objectId?>();
 				url = base_url+'portal/save/5/add'; 
 				
@@ -54,12 +55,9 @@
 				$('#fm<?=$objectId;?>').form('clear');  
 				//initCombo();
 				if (row){
-					CKEDITOR.instances.content<?=$objectId;?>.destroy();
-					CKEDITOR.instances.summary<?=$objectId;?>.destroy();
 					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Regulasi');
 					$('#fm<?=$objectId;?>').form('load',row);
-					CKEDITOR.replace('content<?=$objectId;?>',{height:'100px'});
-					CKEDITOR.replace('summary<?=$objectId;?>',{height:'100px'});
+					CKEDITOR.instances.content<?=$objectId;?>.setData(row.content);
 										
 					url = base_url+'portal/save/5/edit/'+row.content_id;
 				}
@@ -260,11 +258,11 @@
 		<thead>
 		<tr>
 			<th field="content_id" sortable="true" hidden="true">Kode Konten</th>
-			<th field="content_title" sortable="true" width="50">Judul Regulasi</th>
-			<th field="content" sortable="true" width="100" hidden="true">Isi Regulasi</th>
-			<th field="summary" sortable="true" width="100">Ringkas Regulasi</th>
-			<th field="url" sortable="true" width="50">Tautan</th>		
-			<th field="date_post" sortable="true" width="30">Tanggal Posting</th>		
+			<th field="content_title" sortable="true" width="15">Nomor Regulasi</th>
+			<th field="content" sortable="true" width="100">Deskripsi</th>
+			<!-- <th field="summary" sortable="true" width="100">Ringkas Regulasi</th> -->
+			<th field="url" sortable="true" width="50">Link Download</th>		
+			<!-- <th field="date_post" sortable="true" width="30">Tanggal Posting</th>		 -->
 			<th field="published" sortable="true" hidden="true">Publikasikan</th>		
 			<th field="published_label" sortable="true" width="25">Publikasikan</th>		
 		</tr>
@@ -278,21 +276,16 @@
 		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Regulasi Portal</div>
 		<form id="fm<?=$objectId;?>" method="post">
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Judul Regulasi :</label>
+				<label style="width:150px;vertical-align:top">Nomor Regulasi :</label>
 				<input name="content_title" class="easyui-validatebox" size="50" required="true" id="content_title<?=$objectId;?>">
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Isi Regulasi :</label><br/>
+				<label style="width:150px;vertical-align:top">Deskripsi :</label><br/>
 				<div style="width:100%;  margin:10px 0"><textarea name="content" cols="70" class="easyui-validatebox" style="resize:none" id="content<?=$objectId;?>"></textarea></div>
-				<?php echo display_ckeditor($ckeditor1); ?>
+				<?php echo display_ckeditor($ckeditor); ?>
 			</div>
 			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Ringkas Regulasi :</label><br/>
-				<div style="width:100%;  margin:10px 0"><textarea name="summary" cols="70" class="easyui-validatebox" style="resize:none" id="summary<?=$objectId;?>"></textarea></div>
-				<?php echo display_ckeditor($ckeditor2); ?>
-			</div>
-			<div class="fitem">
-				<label style="width:150px;vertical-align:top">Tautan :</label>
+				<label style="width:150px;vertical-align:top">Link Download :</label>
 				<input name="url" class="easyui-validatebox" size="40" id="url<?=$objectId;?>">
 			</div>
 			<div class="fitem">

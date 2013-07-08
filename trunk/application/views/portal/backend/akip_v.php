@@ -36,7 +36,10 @@
 				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add AKIP');
 				$('#fm<?=$objectId;?>').form('clear');  
 				$("#published<?=$objectId;?>").val("0");
+				CKEDITOR.instances.content<?=$objectId;?>.setData('');
+				CKEDITOR.instances.summary<?=$objectId;?>.setData('');
 				//initCombo<?=$objectId?>();
+				
 				url = base_url+'portal/save/4/add'; 
 				
 				$("#content_title<?=$objectId?>").removeAttr('readonly');
@@ -54,12 +57,10 @@
 				$('#fm<?=$objectId;?>').form('clear');  
 				//initCombo();
 				if (row){
-					CKEDITOR.instances.content<?=$objectId;?>.destroy();
-					CKEDITOR.instances.summary<?=$objectId;?>.destroy();
 					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit AKIP');
 					$('#fm<?=$objectId;?>').form('load',row);
-					CKEDITOR.replace('content<?=$objectId;?>',{height:'100px'});
-					CKEDITOR.replace('summary<?=$objectId;?>',{height:'100px'});
+					CKEDITOR.instances.content<?=$objectId;?>.setData(row.content);
+					CKEDITOR.instances.summary<?=$objectId;?>.setData(row.summary);
 										
 					url = base_url+'portal/save/4/edit/'+row.content_id;
 				}

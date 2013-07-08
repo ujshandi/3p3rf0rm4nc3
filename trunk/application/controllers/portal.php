@@ -43,6 +43,55 @@ class Portal extends CI_Controller {
 				}
 				$this->loadView('portal/about_vw',$this->data);
 				break;
+			case 'akip':
+				$this->load->library('pagination');
+
+				$config['base_url'] = base_url().'portal/page/akip/';
+				$config['total_rows'] = $this->portal_model->countContent(4);
+				$config['per_page'] = 5; 
+				$config['uri_segment'] = 4;
+
+				$this->pagination->initialize($config); 
+
+				$off = ($this->uri->segment(4)=='')?0:$this->uri->segment(4);
+				$limit = 5;
+				$offset = $off;
+				if($this->portal_model->contentExist(4)){
+					$this->data['akips']=$this->portal_model->getMuchContent(4,$limit,$offset);
+				}else{
+					$this->data['akips'] = '';
+				}
+				$this->loadView('portal/akip_vw',$this->data);
+				break;
+			case 'akip_det':
+				$content_id = $this->uri->segment(4);
+				if($this->portal_model->singleContentExist($content_id)){
+					$this->data['akip']=$this->portal_model->getSingleContent($content_id);
+				}else{
+					$this->data['akip'] = '';
+				}
+				$this->loadView('portal/akip_detail_vw',$this->data);
+				break;
+			case 'regulasi':
+				$this->load->library('pagination');
+
+				$config['base_url'] = base_url().'portal/page/regulasi/';
+				$config['total_rows'] = $this->portal_model->countContent(5);
+				$config['per_page'] = 5; 
+				$config['uri_segment'] = 4;
+
+				$this->pagination->initialize($config); 
+
+				$off = ($this->uri->segment(4)=='')?0:$this->uri->segment(4);
+				$limit = 5;
+				$this->data['offset'] = $off;
+				if($this->portal_model->contentExist(5)){
+					$this->data['regulasi']=$this->portal_model->getMuchContent(5,$limit,$off);
+				}else{
+					$this->data['regulasi'] = '';
+				}
+				$this->loadView('portal/regulasi_vw',$this->data);
+				break;
 			case 'contact':
 				if($this->portal_model->contentExist(7)){
 					$this->data['contact']=$this->portal_model->getSingleContent($this->portal_model->getContentID(7));
@@ -58,7 +107,7 @@ class Portal extends CI_Controller {
 				}else{
 					$this->data['news'] = '';
 				}
-				$this->loadView('portal/news_vw',$this->data);
+				$this->loadView('portal/news_vw',$this->data); 
 				break;
 			case 'faq':
 				if($this->portal_model->contentExist(6)){
@@ -69,7 +118,7 @@ class Portal extends CI_Controller {
 				$this->loadView('portal/faq_vw',$this->data);
 				break;
 			default:
-				# code...
+				redirect('portal/index');
 				break;
 		}
 	}
@@ -140,8 +189,7 @@ class Portal extends CI_Controller {
 			case 5:
 				$data['title'] = 'Regulasi Portal';
 				$data['objectId'] = 'portalreg';
-				$data['ckeditor1'] = $this->initCKEditor('content'.$data['objectId']);
-				$data['ckeditor2'] = $this->initCKEditor('summary'.$data['objectId']);
+				$data['ckeditor'] = $this->initCKEditor('content'.$data['objectId']);
 				$this->load->view('portal/backend/regulasi_v', $data);
 				break;
 			case 6:
@@ -226,9 +274,9 @@ class Portal extends CI_Controller {
 				$this->form_validation->set_rules("summary", 'Ringkas AKIP', 'trim|required|xss_clean');
 				break;
 			case 5:
-				$this->form_validation->set_rules("content_title", 'Judul Regulasi', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("content", 'Isi Regulasi', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("summary", 'Ringkas Regulasi', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("content_title", 'Nomor Regulasi', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("content", 'Deskripsi Regulasi', 'trim|required|xss_clean');
+				//$this->form_validation->set_rules("url", 'Link Download', 'trim|required|xss_clean');
 				break;
 			case 6:
 				$this->form_validation->set_rules("content_title", 'Judul FAQ', 'trim|required|xss_clean');

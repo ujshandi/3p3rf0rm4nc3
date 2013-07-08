@@ -190,10 +190,21 @@ class Portal_model extends CI_Model
 		return $query->row();
 	}
 
-	public function getMuchContent($category_id){
+	public function countContent($category_id){
 		$this->db->select("*", false);
 		$this->db->from('portal_content a');
 		$this->db->where('category_id',$category_id);
+
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	public function getMuchContent($category_id, $limit=0, $offset=0){
+		$this->db->select("*", false);
+		$this->db->from('portal_content a');
+		$this->db->where('category_id',$category_id);
+		if($limit!=0)
+			$this->db->limit($limit,$offset);
 
 		$query = $this->db->get();
 		return $query;
