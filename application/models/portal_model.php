@@ -194,6 +194,7 @@ class Portal_model extends CI_Model
 		$this->db->select("*", false);
 		$this->db->from('portal_content a');
 		$this->db->where('category_id',$category_id);
+		$this->db->where('published',1);
 
 		$query = $this->db->get();
 		return $query->num_rows();
@@ -203,6 +204,7 @@ class Portal_model extends CI_Model
 		$this->db->select("*", false);
 		$this->db->from('portal_content a');
 		$this->db->where('category_id',$category_id);
+		$this->db->where('published',1);
 		if($limit!=0)
 			$this->db->limit($limit,$offset);
 

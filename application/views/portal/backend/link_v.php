@@ -35,6 +35,7 @@
 				$('#saveBtn<?=$objectId;?>').css("display","");
 				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Link Portal');
 				$('#fm<?=$objectId;?>').form('clear');  
+				$('#published<?=$objectId;?>').val('1');  
 				//initCombo<?=$objectId?>();
 				url = base_url+'portal/save/8/add'; 
 				
@@ -265,6 +266,7 @@
 		<!----------------Edit title-->
 		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Link Portal</div>
 		<form id="fm<?=$objectId;?>" method="post">
+			<input type="hidden" name="published" id="published<?=$objectId;?>" value='1'>
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Judul Tautan :</label>
 				<input name="content_title" class="easyui-validatebox" size="50" required="true" id="content_title<?=$objectId;?>">
