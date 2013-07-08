@@ -36,6 +36,8 @@
 				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Berita');
 				$('#fm<?=$objectId;?>').form('clear');  
 				$("#published<?=$objectId;?>").val("0");
+				CKEDITOR.instances.content<?=$objectId;?>.setData('');
+				CKEDITOR.instances.summary<?=$objectId;?>.setData('');
 				//initCombo<?=$objectId?>();
 				url = base_url+'portal/save/2/add'; 
 				
@@ -54,12 +56,10 @@
 				$('#fm<?=$objectId;?>').form('clear');  
 				//initCombo();
 				if (row){
-					CKEDITOR.instances.content<?=$objectId;?>.destroy();
-					CKEDITOR.instances.summary<?=$objectId;?>.destroy();
 					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Berita');
 					$('#fm<?=$objectId;?>').form('load',row);
-					CKEDITOR.replace('content<?=$objectId;?>',{height:'100px'});
-					CKEDITOR.replace('summary<?=$objectId;?>',{height:'100px'});
+					CKEDITOR.instances.content<?=$objectId;?>.setData(row.content);
+					CKEDITOR.instances.summary<?=$objectId;?>.setData(row.summary);
 										
 					url = base_url+'portal/save/2/edit/'+row.content_id;
 				}

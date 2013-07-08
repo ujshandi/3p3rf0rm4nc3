@@ -35,6 +35,8 @@
 				$('#saveBtn<?=$objectId;?>').css("display","");
 				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add FAQ');
 				$('#fm<?=$objectId;?>').form('clear');  
+				CKEDITOR.instances.content<?=$objectId;?>.setData('');
+				CKEDITOR.instances.summary<?=$objectId;?>.setData('');
 				//initCombo<?=$objectId?>();
 				url = base_url+'portal/save/6/add'; 
 				
@@ -53,12 +55,10 @@
 				$('#fm<?=$objectId;?>').form('clear');  
 				//initCombo();
 				if (row){
-					CKEDITOR.instances.summary<?=$objectId;?>.destroy();
-					CKEDITOR.instances.content<?=$objectId;?>.destroy();
 					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit FAQ');
 					$('#fm<?=$objectId;?>').form('load',row);
-					CKEDITOR.replace('content<?=$objectId;?>',{height:'100px'});
-					CKEDITOR.replace('summary<?=$objectId;?>',{height:'100px'});
+					CKEDITOR.instances.content<?=$objectId;?>.setData(row.content);
+					CKEDITOR.instances.summary<?=$objectId;?>.setData(row.summary);
 										
 					url = base_url+'portal/save/6/edit/'+row.content_id;
 				}
