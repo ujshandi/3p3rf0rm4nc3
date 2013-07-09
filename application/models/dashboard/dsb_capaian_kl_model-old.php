@@ -16,7 +16,7 @@ class Dsb_capaian_kl_model extends CI_Model
     }
 	
 	// purpose : 1=buat grid, 2=buat pdf, 3=buat excel
-	public function easyGrid($filtahun=null,$filsasaran=null,$purpose=1){
+	public function easyGrid($filtahun=null,$purpose=1){
 		$lastNo = isset($_POST['lastNo']) ? intval($_POST['lastNo']) : 0;  
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
@@ -29,7 +29,7 @@ class Dsb_capaian_kl_model extends CI_Model
 		//	var_dump($pageSize);
 		}
 		
-		$count = $this->GetRecordCount($filtahun,$filsasaran);
+		$count = $this->GetRecordCount($filtahun);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'iku.kode_iku_kl';  
@@ -42,10 +42,7 @@ class Dsb_capaian_kl_model extends CI_Model
 				$this->db->where("tbl_pengukuran_kl.tahun",$filtahun);
 			}		
 		 	
-			 if($filsasaran != '' && $filsasaran != '0' && $filsasaran != '-1' && $filsasaran != null) {
-			 
-			 $this->db->where("tbl_pengukuran_kl.kode_sasaran_kl",$filsasaran);
-		 }	
+			
 			
 			//$this->db->order_by($sort." ".$order );
 			$this->db->order_by("tbl_pengukuran_kl.tahun");
@@ -79,12 +76,12 @@ group by tahun,kode_kl, nama_kl*/
 				$response->rows[$i]['kode_kl']=$row->kode_kl;				
 				$response->rows[$i]['nama_kl']=$row->nama_kl;				
 				$response->rows[$i]['jml_iku']=$row->jml_iku;				
-				$row->tercapai = $this->getPersen($filtahun,$row->kode_kl,$filsasaran,true);
+				$row->tercapai = $this->getPersen($filtahun,$row->kode_kl,true);
 				$response->rows[$i]['tercapai']= $row->tercapai;
-				$row->tdk_tercapai = $this->getPersen($filtahun,$row->kode_kl,$filsasaran,false);
+				$row->tdk_tercapai = $this->getPersen($filtahun,$row->kode_kl,false);
 				$response->rows[$i]['tdk_tercapai']= $row->tdk_tercapai;
 				//$this->utility->cekNumericFmt($row->target);								
-				$this->dataPie = array("Memenuhi"=>(int)$row->tercapai,"Tidak Memenuhi"=>(int)$row->tdk_tercapai);
+				$this->dataPie = array("Tercapai"=>(int)$row->tercapai,"Tidak Tercapai"=>(int)$row->tdk_tercapai);
 				$response->pies = $this->dataPie;
 			//utk kepentingan export excel ==========================
 /*
@@ -130,15 +127,11 @@ group by tahun,kode_kl, nama_kl*/
 		
 	}
 	
-	public function GetRecordCount($filtahun=null,$filsasaran=null){
+	public function GetRecordCount($filtahun=null){
 		$where = '';
 		 if($filtahun != '' && $filtahun != '0' && $filtahun != '-1' && $filtahun != null) {
 			 
 			 $this->db->where("tbl_pengukuran_kl.tahun",$filtahun);
-		 }		
-		 if($filsasaran != '' && $filsasaran != '0' && $filsasaran != '-1' && $filsasaran != null) {
-			 
-			 $this->db->where("tbl_pengukuran_kl.kode_sasaran_kl",$filsasaran);
 		 }		
 			
 		
@@ -179,15 +172,13 @@ group by tahun,kode_kl, nama_kl*/
 	
 	
 	
-	public function getPersen($tahun,$kode_kl,$filsasaran,$isTercapai){
+	public function getPersen($tahun,$kode_kl,$isTercapai){
 		$this->db->flush_cache();
 		$this->db->select('count(*) as jumlah',false);
 		$this->db->from('tbl_pengukuran_kl');
 		$this->db->where('persen '.($isTercapai?">=":"<"), 100);
 		$this->db->where('tahun', $tahun);
 		$this->db->where('kode_kl', $kode_kl);
-		 if($filsasaran != '' && $filsasaran != '0' && $filsasaran != '-1' && $filsasaran != null) 
-		$this->db->where('kode_sasaran_kl', $filsasaran);
 		$query = $this->db->get();
 		if ($query->num_rows()>0)
 			return $query->row()->jumlah;

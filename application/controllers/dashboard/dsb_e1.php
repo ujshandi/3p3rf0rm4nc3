@@ -1,7 +1,7 @@
 <?php
 
-class Dsb_capaian_kl extends CI_Controller {
-	var $dataPie = array();
+class Dsb_e1 extends CI_Controller {
+
 	function __construct()
 	{
 		parent::__construct();			
@@ -13,8 +13,8 @@ class Dsb_capaian_kl extends CI_Controller {
 				
 	//if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
 		$this->load->model('/security/sys_menu_model');
-		$this->load->model('/dashboard/dsb_kinerja_kl_model');
-		$this->load->model('/pengaturan/sasaran_kl_model');
+		$this->load->model('/dashboard/dsb_e1_model');
+		$this->load->model('/rujukan/eselon1_model');
 		$this->load->library("utility");
 	}
 	
@@ -24,8 +24,8 @@ class Dsb_capaian_kl extends CI_Controller {
 		$data = array(
 				
 					'title_page'=>'Biroren Kemenhub',
-					'title'=>'Capaian Akhir IKU Kementerian',
-					'objectId'=>'dashboardCapaianKl',
+					'title'=>'Capaian Akhir IKU Eselon I',
+					'objectId'=>'dashboardCapaianE1',
 					'sess_fullname'=>$this->session->userdata('full_name'),
 					'sess_apptype'=>$this->session->userdata('app_type'),
 					'js'=>array('js/easyui/jquery-1.6.min.js','js/easyui/jquery.easyui.min.js','js/uri_encode_decode.js','js/json2.js','js/jquery.autogrow.js','js/jquery.formatCurrency-1.4.0.min.js','js/formwizard.js','js/jquery.jqURL.js'),
@@ -35,28 +35,24 @@ class Dsb_capaian_kl extends CI_Controller {
 	  
 		//$data['menuList'] =  $this->sys_menu_model->prepareMenuManual();//($this->session->userdata('groupId'),'');
 		
-		$this->load->view('dashboard/dsb_kinerja_kl_vw',$data);
+		$this->load->view('dashboard/dsb_e1_vw',$data);
 		//$this->load->view('footer_vw',$data);
 	}
 	
 
-	public function grid($filtahun=null,$filsasaran=null){
+	public function grid($filtahun=null,$file1=null){
 		
-		echo $this->dsb_kinerja_kl_model->easyGrid($filtahun,$filsasaran);
-		 $this->dataPie = $this->dsb_kinerja_kl_model->dataPie;
-		 // $data = array("Tercapai"=>20,"Tidak Tercapai"=>3);
-			//var_dump($this->dataPie );die;
+		echo $this->dsb_e1_model->easyGrid($filtahun,$file1);
+	}
+	public function gride1($filtahun=null){
+		
+		echo $this->dsb_e1_model->easyGridE1($filtahun);
 	}
 	
 	
 	function getDataPie($filtahun=null){
-		//  $data = $this->dsb_kinerja_kl_model->dataPie;// 
-		  
-		// $this->dsb_kinerja_kl_model->easyGrid($filtahun);
-		// $this->dataPie = $this->dsb_kinerja_kl_model->dataPie;
-		//  $data = array("Tercapai"=>20,"Tidak Tercapai"=>3);
-		//	var_dump($this->dataPie);die;
-			echo json_encode($this->dataPie);
+		   $data = $this->dsb_e1_model->dataPie;//array("Tercapai"=>20,"Tidak Tercapai"=>3);
+			echo json_encode($data);
 	}
 	
 	function getLoginStatus(){
