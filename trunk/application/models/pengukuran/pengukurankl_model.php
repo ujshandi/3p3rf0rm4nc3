@@ -47,6 +47,7 @@ class pengukurankl_model extends CI_Model
 				$response->rows[$i]['deskripsi_sasaran_kl']=$row->deskripsi_sasaran_kl;
 				$response->rows[$i]['kode_iku_kl']=$row->kode_iku_kl;
 				$response->rows[$i]['deskripsi_iku_kl']=$row->deskripsi_iku_kl;
+/*
 				if(is_numeric($row->realisasi)){
 					if(strpos($row->realisasi, '.') || strpos($row->realisasi, ',')){
 						$response->rows[$i]['realisasi'] = number_format($row->realisasi, 4, ',', '.');
@@ -54,8 +55,9 @@ class pengukurankl_model extends CI_Model
 						$response->rows[$i]['realisasi'] = number_format($row->realisasi, 0, ',', '.');
 					}
 				}else{
-					$response->rows[$i]['realisasi'] = $row->realisasi;
-				}		
+*/
+					$response->rows[$i]['realisasi'] = $this->utility->cekNumericFmt($row->realisasi);
+				//}		
 				$response->rows[$i]['satuan']=$row->satuan;
 				$response->rows[$i]['persen']=$row->persen;
 				$response->rows[$i]['opini']=$row->opini;

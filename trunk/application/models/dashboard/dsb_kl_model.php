@@ -3,7 +3,7 @@
  *INVISI
 */
 
-class Dsb_capaian_kl_model extends CI_Model
+class Dsb_kl_model extends CI_Model
 {	
 	/**
 	* constructor
@@ -16,7 +16,7 @@ class Dsb_capaian_kl_model extends CI_Model
     }
 	
 	// purpose : 1=buat grid, 2=buat pdf, 3=buat excel
-	public function easyGrid($filtahun=null,$filsasaran=null,$purpose=1){
+	public function easyGrid($filtahun=null,$purpose=1){
 		$lastNo = isset($_POST['lastNo']) ? intval($_POST['lastNo']) : 0;  
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
@@ -29,7 +29,7 @@ class Dsb_capaian_kl_model extends CI_Model
 		//	var_dump($pageSize);
 		}
 		
-		$count = $this->GetRecordCount($filtahun,$filsasaran);
+		$count = $this->GetRecordCount($filtahun);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'iku.kode_iku_kl';  
@@ -42,10 +42,7 @@ class Dsb_capaian_kl_model extends CI_Model
 				$this->db->where("tbl_pengukuran_kl.tahun",$filtahun);
 			}		
 		 	
-			 if($filsasaran != '' && $filsasaran != '0' && $filsasaran != '-1' && $filsasaran != null) {
-			 
-			 $this->db->where("tbl_pengukuran_kl.kode_sasaran_kl",$filsasaran);
-		 }	
+			
 			
 			//$this->db->order_by($sort." ".$order );
 			$this->db->order_by("tbl_pengukuran_kl.tahun");
@@ -59,11 +56,10 @@ class Dsb_capaian_kl_model extends CI_Model
 from tbl_pengukuran_kl inner join tbl_kl
 group by tahun,kode_kl, nama_kl*/
 			//$this->db->select("iku.deskripsi as indikator_kinerja,iku.satuan,rkt.realisasi,pk.target,case  when rkt.triwulan  =1 then rkt.realisasi else 0 end  as triwulan1,case  when rkt.triwulan  =2 then rkt.realisasi else 0 end  as triwulan2,case  when rkt.triwulan  =3 then rkt.realisasi else 0 end  as triwulan3,case  when rkt.triwulan  =4 then rkt.realisasi else 0 end  as triwulan4",false);
-			$this->db->select("tbl_pengukuran_kl.tahun,tbl_pengukuran_kl.kode_kl, tbl_kl.nama_kl,count(tbl_pengukuran_kl.kode_iku_kl) as jml_iku,
-0 as tercapai,0 as tdk_tercapai",false);
+			$this->db->select("tbl_iku_kl.deskripsi,tbl_iku_kl.satuan,tbl_pengukuran_kl.persen,tbl_pengukuran_kl.kode_kl",false);
 			
-			$this->db->from('tbl_pengukuran_kl inner join tbl_kl on tbl_pengukuran_kl.kode_kl = tbl_kl.kode_kl ',false);
-			$this->db->group_by('tahun,kode_kl, nama_kl',false);
+			$this->db->from('tbl_pengukuran_kl inner join tbl_kl on tbl_pengukuran_kl.kode_kl = tbl_kl.kode_kl inner join tbl_iku_kl on tbl_iku_kl.kode_iku_kl=tbl_pengukuran_kl.kode_iku_kl and tbl_pengukuran_kl.tahun=tbl_iku_kl.tahun',false);
+			//$this->db->group_by('tahun,kode_kl, nama_kl',false);
 			$query = $this->db->get();
 			
 			$i=0;
@@ -72,20 +68,37 @@ group by tahun,kode_kl, nama_kl*/
 			//var_dump();
 			//$noIndikator =0;
 			$jumlah =0;
+			$memenuhi = 0;$tdkmemenuhi=0;
+			$old_kodekl = '';
 			foreach ($query->result() as $row){
 				//$no++;			
 				
-				$response->rows[$i]['tahun']=$row->tahun;				
-				$response->rows[$i]['kode_kl']=$row->kode_kl;				
-				$response->rows[$i]['nama_kl']=$row->nama_kl;				
-				$response->rows[$i]['jml_iku']=$row->jml_iku;				
-				$row->tercapai = $this->getPersen($filtahun,$row->kode_kl,$filsasaran,true);
-				$response->rows[$i]['tercapai']= $row->tercapai;
-				$row->tdk_tercapai = $this->getPersen($filtahun,$row->kode_kl,$filsasaran,false);
-				$response->rows[$i]['tdk_tercapai']= $row->tdk_tercapai;
-				//$this->utility->cekNumericFmt($row->target);								
-				$this->dataPie = array("Memenuhi"=>(int)$row->tercapai,"Tidak Memenuhi"=>(int)$row->tdk_tercapai);
-				$response->pies = $this->dataPie;
+				
+				
+				
+				$response->rows[$i]['deskripsi']=$row->deskripsi;				
+				$response->rows[$i]['satuan']=$row->satuan;				
+				$response->rows[$i]['persen']=$this->utility->cekNumericFmt($row->persen);				
+				$response->rows[$i]['status']=$row->persen;				
+				//$row->tercapai = $this->getPersen($filtahun,$row->kode_kl,true);
+				if ($old_kodekl!=$row->kode_kl){
+					$old_kodekl = $row->kode_kl;
+					$memenuhi += $this->getPersen($filtahun,$old_kodekl,true);
+					$tdkmemenuhi += $this->getPersen($filtahun,$old_kodekl,false);
+				}
+				//$response->rows[$i]['tercapai']= $row->tercapai;
+				//$row->tdk_tercapai = $this->getPersen($filtahun,$row->kode_kl,false);
+				
+				//$response->rows[$i]['tdk_tercapai']= $row->tdk_tercapai;
+				
+/*
+				if ((int)$row->persen>=100)
+					$memenuhi++;
+				else 
+				    $tdkmemenuhi++;
+*/
+				
+				
 			//utk kepentingan export excel ==========================
 /*
 				$row->target = $response->rows[$i]['target'];
@@ -102,17 +115,20 @@ group by tahun,kode_kl, nama_kl*/
 			
 				$i++;
 			} 
+			
+			$this->dataPie = array("Jumlah Memenuhi"=>$memenuhi,"Jumlah Tidak Memenuhi"=>$tdkmemenuhi);
+				$response->pies = $this->dataPie;
 		//	var_dump($this->dataPie);die;
 			//$response->lastNo = $no;
 			//$query->free_result();
 		}else {
 				
-				$response->rows[$count]['tahun']= "";
-				$response->rows[$count]['kode_kl']= "";
-				$response->rows[$count]['nama_kl']='';
-				$response->rows[$count]['jml_iku']='';
-				$response->rows[$count]['tercapai']='';
-				$response->rows[$count]['tdk_tercapai']='';
+				$response->rows[$count]['deskripsi']= "";
+				$response->rows[$count]['capaian']= "";
+				$response->rows[$count]['persen']='';
+				$response->rows[$count]['status']='';
+				$response->rows[$count]['no']='';
+				$response->rows[$count]['satuan']='';
 				
 
 		}
@@ -130,23 +146,18 @@ group by tahun,kode_kl, nama_kl*/
 		
 	}
 	
-	public function GetRecordCount($filtahun=null,$filsasaran=null){
+	public function GetRecordCount($filtahun=null){
 		$where = '';
 		 if($filtahun != '' && $filtahun != '0' && $filtahun != '-1' && $filtahun != null) {
 			 
 			 $this->db->where("tbl_pengukuran_kl.tahun",$filtahun);
 		 }		
-		 if($filsasaran != '' && $filsasaran != '0' && $filsasaran != '-1' && $filsasaran != null) {
-			 
-			 $this->db->where("tbl_pengukuran_kl.kode_sasaran_kl",$filsasaran);
-		 }		
 			
 		
-		$this->db->select("tbl_pengukuran_kl.tahun,tbl_pengukuran_kl.kode_kl, tbl_kl.nama_kl,count(tbl_pengukuran_kl.kode_iku_kl) as jml_iku,
-0 as tercapai,0 as tdk_tercapai",false);
+		$this->db->select("tbl_iku_kl.deskripsi,tbl_iku_kl.satuan,tbl_pengukuran_kl.persen",false);
 			
-			$this->db->from('tbl_pengukuran_kl inner join tbl_kl on tbl_pengukuran_kl.kode_kl = tbl_kl.kode_kl ',false);
-			$this->db->group_by('tahun,kode_kl, nama_kl',false);
+			$this->db->from('tbl_pengukuran_kl inner join tbl_kl on tbl_pengukuran_kl.kode_kl = tbl_kl.kode_kl inner join tbl_iku_kl on tbl_iku_kl.kode_iku_kl=tbl_pengukuran_kl.kode_iku_kl and tbl_pengukuran_kl.tahun=tbl_iku_kl.tahun',false);
+			//$this->db->group_by('tahun,kode_kl, nama_kl',false);
 		$q = $this->db->get();
 		return $q->num_rows(); 
 		//return $this->db->count_all_results();
@@ -179,15 +190,13 @@ group by tahun,kode_kl, nama_kl*/
 	
 	
 	
-	public function getPersen($tahun,$kode_kl,$filsasaran,$isTercapai){
+	public function getPersen($tahun,$kode_kl,$isTercapai){
 		$this->db->flush_cache();
 		$this->db->select('count(*) as jumlah',false);
 		$this->db->from('tbl_pengukuran_kl');
 		$this->db->where('persen '.($isTercapai?">=":"<"), 100);
 		$this->db->where('tahun', $tahun);
 		$this->db->where('kode_kl', $kode_kl);
-		 if($filsasaran != '' && $filsasaran != '0' && $filsasaran != '-1' && $filsasaran != null) 
-		$this->db->where('kode_sasaran_kl', $filsasaran);
 		$query = $this->db->get();
 		if ($query->num_rows()>0)
 			return $query->row()->jumlah;
