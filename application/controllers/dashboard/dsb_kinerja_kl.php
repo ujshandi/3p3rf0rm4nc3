@@ -14,6 +14,7 @@ class Dsb_kinerja_kl extends CI_Controller {
 	//if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/dashboard/dsb_kinerja_kl_model');
+		$this->load->model('/pengaturan/sasaran_kl_model');
 		$this->load->library("utility");
 	}
 	
@@ -39,9 +40,9 @@ class Dsb_kinerja_kl extends CI_Controller {
 	}
 	
 
-	public function grid($filtahun=null){
+	public function grid($filtahun=null,$filsasaran=null){
 		
-		echo $this->dsb_kinerja_kl_model->easyGrid($filtahun);
+		echo $this->dsb_kinerja_kl_model->easyGrid($filtahun,$filsasaran);
 		 $this->dataPie = $this->dsb_kinerja_kl_model->dataPie;
 		 // $data = array("Tercapai"=>20,"Tidak Tercapai"=>3);
 			//var_dump($this->dataPie );die;

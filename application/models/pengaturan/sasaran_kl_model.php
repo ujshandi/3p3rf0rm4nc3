@@ -309,7 +309,7 @@ class Sasaran_kl_model extends CI_Model
 	}
 	
 	
-	public function getListFilterTahun($objectId){
+	public function getListFilterTahun($objectId,$withSemua=true){
 		
 		$this->db->flush_cache();
 		$this->db->select('distinct tahun',false);
@@ -320,7 +320,8 @@ class Sasaran_kl_model extends CI_Model
 		$que = $this->db->get();
 		
 		$out = '<select name="filter_tahun'.$objectId.'" id="filter_tahun'.$objectId.'">';
-		$out .= '<option value="-1">Semua</option>';
+		if ($withSemua)
+			$out .= '<option value="-1">Semua</option>';
 		foreach($que->result() as $r){
 			$out .= '<option value="'.$r->tahun.'">'.$r->tahun.'</option>';
 		}
