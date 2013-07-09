@@ -35,6 +35,7 @@
 				$('#saveBtn<?=$objectId;?>').css("display","");
 				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add FAQ');
 				$('#fm<?=$objectId;?>').form('clear');  
+				$('#published<?=$objectId;?>').val('1');  
 				CKEDITOR.instances.content<?=$objectId;?>.setData('');
 				CKEDITOR.instances.summary<?=$objectId;?>.setData('');
 				//initCombo<?=$objectId?>();
@@ -268,7 +269,7 @@
 			<th field="content_title" sortable="true" width="15">Judul FAQ</th>
 			<th field="content" sortable="true" width="25">Pertanyaan</th>
 			<th field="summary" sortable="true" width="125">Jawaban</th>
-			<th field="url" sortable="true" width="25">Tautan</th>		
+			<!-- <th field="url" sortable="true" width="25">Tautan</th>		 -->
 		</tr>
 		</thead>  
 	</table>
@@ -279,6 +280,7 @@
 		<!----------------Edit title-->
 		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data FAQ Portal</div>
 		<form id="fm<?=$objectId;?>" method="post">
+			<input type="hidden" name="published" id="published<?=$objectId;?>" value='1'>
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Judul FAQ :</label>
 				<input name="content_title" class="easyui-validatebox" size="50" required="true" id="content_title<?=$objectId;?>">
@@ -295,10 +297,10 @@
 				<textarea name="summary" cols="70" class="easyui-validatebox" style="resize:none" id="summary<?=$objectId;?>"></textarea></div>
 				<?php echo display_ckeditor($ckeditor2); ?>
 			</div>
-			<div class="fitem">
+			<!-- <div class="fitem">
 				<label style="width:150px;vertical-align:top">Tautan :</label>
 				<input name="url" class="easyui-validatebox" size="40" id="url<?=$objectId;?>">
-			</div>
+			</div> -->
 		</form>
 		<div id="dlg-buttons">
 			<!----------------Edit title-->
