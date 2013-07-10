@@ -38,7 +38,7 @@ class pengukuraneselon1_model extends CI_Model
 			$this->db->select('*, a.kode_e1 as pngukuran_kode_e1, b.kode_iku_e1, a.tahun as tahun2, b.deskripsi AS deskripsi_iku_e1, c.deskripsi AS deskripsi_sasaran_e1');
 			$this->db->from('tbl_pengukuran_eselon1 a');
 			$this->db->join('tbl_iku_eselon1 b', 'b.kode_iku_e1 = a.kode_iku_e1 and b.tahun = a.tahun');
-			$this->db->join('tbl_sasaran_eselon1 c', 'c.kode_sasaran_e1 = a.kode_sasaran_e1');
+			$this->db->join('tbl_sasaran_eselon1 c', 'c.kode_sasaran_e1 = a.kode_sasaran_e1 and a.tahun=c.tahun');
 			$this->db->order_by("a.tahun DESC, a.kode_sasaran_e1 ASC, a.kode_iku_e1 ASC");
 			$query = $this->db->get();
 			

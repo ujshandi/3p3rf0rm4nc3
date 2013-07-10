@@ -36,7 +36,7 @@ class pengukurankl_model extends CI_Model
 			$this->db->select("*, b.satuan, a.tahun as tahun2, b.deskripsi AS deskripsi_iku_kl, c.deskripsi AS deskripsi_sasaran_kl");
 			$this->db->from('tbl_pengukuran_kl a');
 			$this->db->join('tbl_iku_kl b', 'b.kode_iku_kl = a.kode_iku_kl and b.tahun = a.tahun');
-			$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl');
+			$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl  and a.tahun=c.tahun');
 			$query = $this->db->get();
 			
 			foreach ($query->result() as $row)

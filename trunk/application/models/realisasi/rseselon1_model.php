@@ -82,6 +82,7 @@ class rseselon1_model extends CI_Model
 				}						
 */
 				$response->rows[$i]['realisasi']=$this->utility->cekNumericFmt($row->realisasi);
+				$response->rows[$i]['realisasi_persen']=$this->utility->cekNumericFmt($row->realisasi_persen);
 				//$response->rows[$i]['realisasi_persen']=$this->utility->cekNumericFmt($row->realisasi_persen);
 				$response->rows[$i]['keterangan']=$row->keterangan;
 				$i++;

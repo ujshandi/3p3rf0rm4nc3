@@ -128,6 +128,7 @@ from tbl_iku_kl iku   left join tbl_pk_kl pk on pk.kode_iku_kl=iku.kode_iku_kl  
 			} 
 			$i--;
 			$response->lastNo = $no;
+			if ($i==0) $i=1;//spy tidak div by zero
 			$rataPast = $sumRataPast/$i;
 			$rataNow = $sumRataNow/$i;
 		//	$query->free_result();

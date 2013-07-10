@@ -119,7 +119,7 @@ $(document).ready(function(){
 					return;
 				}
 				$('#dg<?=$objectId;?>').datagrid({
-					url:"<?=base_url()?>dashboard/dsb_kinerja_kl/grid/"+filtahun+"/"+sasaran,
+					url:"<?=base_url()?>dashboard/dsb_capaian_kl/grid/"+filtahun+"/"+sasaran,
 					//queryParams:{lastNo:'0'},	
 					pageNumber : 1,
 					onLoadSuccess:function(data){	

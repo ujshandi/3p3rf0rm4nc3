@@ -6,14 +6,22 @@
 
 			}
 						
+						
+	setSasaran<?=$objectId?> = function(kode){
+		//do nothing
+		$('#kode_sasaran_e1<?=$objectId;?>').val(kode);
+	//	searchData<?=$objectId?>();
+	}
 			function filterSasaranE1<?=$objectId;?>(e1){
 				<? if ($this->session->userdata('unit_kerja_e1')!="-1") {?>
 					e1 = "<?=$this->session->userdata('unit_kerja_e1');?>"
 					
 				<?}?>
 				if (e1==null) e1="-1";
+				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
+				if(filtahun==null) filtahun ="-1";
 				$("#divSasaranE1<?=$objectId;?>").load(
-					base_url+"pengaturan/sasaran_eselon1/getListSasaranE1/"+"<?=$objectId;?>"+"/"+e1,
+					base_url+"pengaturan/sasaran_eselon1/getListSasaranE1/"+"<?=$objectId;?>"+"/"+e1+"/"+filtahun,
 					//on complete
 					function (){
 					
@@ -73,7 +81,7 @@
 				
 				
 				if(filtahun==null) filtahun ="-1";
-				if (filsasaran==null) filsasaran = "-1";
+				if ((filsasaran==null)||(filsasaran=='')) filsasaran = "-1";
 				if (file1==null) file1 = "-1";
 				if (filiku==null) filiku = "-1";
 				
