@@ -300,7 +300,8 @@
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Link Download :</label>
 				<input name="url" class="easyui-validatebox" size="40" id="url<?=$objectId;?>" readonly="readonly" onclick="openKCFinder(this)"
-    value="Click here and select a file double clicking on it" style="width:600px;cursor:pointer">
+    tyle="width:600px;cursor:pointer">
+    			<a href="#" id="browse<?=$objectId;?>" class="easyui-linkbutton" iconCls="icon-import" onclick='openKCFinder(document.getElementById("url<?=$objectId;?>"))'>Browse/Upload</a>
 			</div>
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Publikasikan :</label>
