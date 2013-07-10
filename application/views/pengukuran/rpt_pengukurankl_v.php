@@ -1,9 +1,51 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
-			setSasaran<?=$objectId;?>= function(valu){
-				document.getElementById('kode_sasaran_kl<?=$objectId;?>').value = valu;				
-			}
+		
+			
+			$("#filter_tahun<?=$objectId;?>").change(function(){				
+				  getListSasaran<?=$objectId;?>($(this).val());
+				
+			});
+			
+	getListSasaran<?=$objectId?> = function (tahun){
+		if ((tahun==null)||(tahun=="")) tahun = "-1";
+				$("#divSasaranKL<?=$objectId?>").load(
+					base_url+"pengaturan/sasaran_eselon1/getListSasaranKL/"+"<?=$objectId;?>"+"/"+tahun,
+					function(){
+						$("textarea").autogrow();
+						if($("#drop<?=$objectId;?>").is(":visible")){
+							$("#drop<?=$objectId;?>").slideUp("slow");
+						}
+						
+						$("#txtkode_sasaran_kl<?=$objectId;?>").click(function(){
+							$("#drop<?=$objectId;?>").slideDown("slow");
+						});
+						
+						$("#drop<?=$objectId;?> li").click(function(e){
+							var chose = $(this).text();
+							$("#txtkode_sasaran_kl<?=$objectId;?>").text(chose);
+						//	alert($("#txtkode_sasaran_kl<?=$objectId;?>").text());
+							$("#drop<?=$objectId;?>").slideUp("slow");
+						});
+						
+							
+				
+				
+						
+					}
+				);
+	};
+
+
+	getListSasaran<?=$objectId;?>($("#filter_tahun<?=$objectId;?>").val());
+	
+	setSasaran<?=$objectId?> = function(kode){
+		//do nothing
+		$('#kode_sasaran_kl<?=$objectId;?>').val(kode);
+		searchData<?=$objectId?>();
+	}
+	
 			
 			clearFilter<?=$objectId;?> = function (){
 				//ambil nilai-nilai filter
@@ -287,7 +329,8 @@
 			</tr>			
 			<tr>
 				<td>Sasaran :</td>
-				<td><?=$this->sasaran_kl_model->getListSasaranKL($objectId);?></td>
+				<td><div id="divSasaranKL<?=$objectId?>"></div></td>
+				<!--<td><?//$this->sasaran_kl_model->getListSasaranKL($objectId);?></td> -->
 			</tr>
 		<!--	<tr>
 				<td>Kode IKU :</td>

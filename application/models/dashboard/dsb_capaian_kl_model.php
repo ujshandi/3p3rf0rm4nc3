@@ -42,10 +42,10 @@ class Dsb_capaian_kl_model extends CI_Model
 				$this->db->where("tbl_pengukuran_kl.tahun",$filtahun);
 			}		
 		 	
-			 if($filsasaran != '' && $filsasaran != '0' && $filsasaran != '-1' && $filsasaran != null) {
+		//if($filsasaran != '' && $filsasaran != '0' && $filsasaran != '-1' && $filsasaran != null) {
 			 
 			 $this->db->where("tbl_pengukuran_kl.kode_sasaran_kl",$filsasaran);
-		 }	
+		 //}	
 			
 			//$this->db->order_by($sort." ".$order );
 			$this->db->order_by("tbl_pengukuran_kl.tahun");
@@ -59,11 +59,10 @@ class Dsb_capaian_kl_model extends CI_Model
 from tbl_pengukuran_kl inner join tbl_kl
 group by tahun,kode_kl, nama_kl*/
 			//$this->db->select("iku.deskripsi as indikator_kinerja,iku.satuan,rkt.realisasi,pk.target,case  when rkt.triwulan  =1 then rkt.realisasi else 0 end  as triwulan1,case  when rkt.triwulan  =2 then rkt.realisasi else 0 end  as triwulan2,case  when rkt.triwulan  =3 then rkt.realisasi else 0 end  as triwulan3,case  when rkt.triwulan  =4 then rkt.realisasi else 0 end  as triwulan4",false);
-			$this->db->select("tbl_pengukuran_kl.tahun,tbl_pengukuran_kl.kode_kl, tbl_kl.nama_kl,count(tbl_pengukuran_kl.kode_iku_kl) as jml_iku,
-0 as tercapai,0 as tdk_tercapai",false);
+			$this->db->select("tbl_iku_kl.deskripsi,tbl_iku_kl.satuan,tbl_pk_kl.target,tbl_pengukuran_kl.persen,tbl_pengukuran_kl.realisasi,tbl_pengukuran_kl.kode_kl",false);
 			
-			$this->db->from('tbl_pengukuran_kl inner join tbl_kl on tbl_pengukuran_kl.kode_kl = tbl_kl.kode_kl ',false);
-			$this->db->group_by('tahun,kode_kl, nama_kl',false);
+			$this->db->from('tbl_pengukuran_kl inner join tbl_kl on tbl_pengukuran_kl.kode_kl = tbl_kl.kode_kl inner join tbl_iku_kl on tbl_iku_kl.kode_iku_kl=tbl_pengukuran_kl.kode_iku_kl and tbl_pengukuran_kl.tahun=tbl_iku_kl.tahun inner join tbl_pk_kl on tbl_pk_kl.kode_iku_kl=tbl_pengukuran_kl.kode_iku_kl and tbl_pengukuran_kl.tahun=tbl_pk_kl.tahun and tbl_pengukuran_kl.kd_sasaran_kl = tbl_pk_kl.kode_sasaran_kl',false);
+			//$this->db->group_by('tahun,kode_kl, nama_kl',false);
 			$query = $this->db->get();
 			
 			$i=0;
@@ -75,14 +74,18 @@ group by tahun,kode_kl, nama_kl*/
 			foreach ($query->result() as $row){
 				//$no++;			
 				
-				$response->rows[$i]['tahun']=$row->tahun;				
-				$response->rows[$i]['kode_kl']=$row->kode_kl;				
-				$response->rows[$i]['nama_kl']=$row->nama_kl;				
-				$response->rows[$i]['jml_iku']=$row->jml_iku;				
+				$response->rows[$i]['deskripsi']=$row->deskripsi;				
+				$response->rows[$i]['satuan']=$row->satuan;				
+				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);				
+				$response->rows[$i]['realisasi']=$this->utility->cekNumericFmt($row->realisasi);				
+				$response->rows[$i]['persen']=$this->utility->cekNumericFmt($row->persen);				
+				
+/*
 				$row->tercapai = $this->getPersen($filtahun,$row->kode_kl,$filsasaran,true);
 				$response->rows[$i]['tercapai']= $row->tercapai;
 				$row->tdk_tercapai = $this->getPersen($filtahun,$row->kode_kl,$filsasaran,false);
 				$response->rows[$i]['tdk_tercapai']= $row->tdk_tercapai;
+*/
 				//$this->utility->cekNumericFmt($row->target);								
 				$this->dataPie = array("Memenuhi"=>(int)$row->tercapai,"Tidak Memenuhi"=>(int)$row->tdk_tercapai);
 				$response->pies = $this->dataPie;

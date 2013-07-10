@@ -63,8 +63,11 @@ class Sasaran_eselon1 extends CI_Controller {
     }
 	
 	//chan
-	function getListSasaranE1($objectId,$e1){
-		echo $this->sasaran_eselon1_model->getListSasaranE1($objectId,$e1);
+	function getListSasaranE1($objectId,$e1,$tahun=null){
+		$data['tahun'] = $tahun;
+		$data['kode'] = '';
+		$data['deskripsi'] = '';
+		echo $this->sasaran_eselon1_model->getListSasaranE1($objectId,$e1,$data);
 	}
 	
 	function getListSasaranKL($objectId,$tahun){
