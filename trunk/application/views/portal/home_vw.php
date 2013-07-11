@@ -32,7 +32,7 @@
         <!--    <img src="<?php echo base_url(); ?>/public/images/portal/main-news-foto.JPG" /> -->
             <p><?=$latest_news->row()->summary?></p>
             <!-- <=base_url()?>portal/page/news/<=$latest_news->row()->content_id?> !-->
-            <a href="#" class="inlink">selengkapnya</a>
+            <a href="<?=base_url()?>portal/page/news/<?=$latest_news->row()->content_id?>" class="inlink">selengkapnya</a>
             <div class="clear"></div>
         </div>
         
