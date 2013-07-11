@@ -1,7 +1,8 @@
  <!--[if IE]><script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/excanvas.js"></script><![endif]-->
  
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.min.js"></script>
- <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.pieRenderer.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.barRenderer.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.categoryAxisRenderer.min.js"></script>
  <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.css" />
 	
 <div id="tb<?=$objectId;?>" style="height:auto">
@@ -43,17 +44,17 @@
 	  </table>
 	  
 	
-<div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left;color:#FFFFFF"></div> 
+<div id="chartCapaianKL<?=$objectId?>" style="height:350px;width:350px;float:left"></div> 
 <div  style="width:10px;float:left">&nbsp;</div> 
-<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Kinerja Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian IKU Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
-		<th field="tahun" sortable="false" width="60">Tahun</th>
-		<th field="kode_kl"   sortable="false" width="50">Kode KL</th>
-		<th field="nama_kl" align="left" sortable="false" width="200">Nama KL</th>
-		<th field="jml_iku" align="right"  sortable="false" width="70">Jml.Iku</th>	
-		<th field="tercapai" align="right"  sortable="false" width="70">Memenuhi</th>	
-		<th field="tdk_tercapai" align="right"  sortable="false" width="70">Tdk. Memenuhi</th>	
+		<th field="deskripsi"   sortable="false" width="250">Deskripsi</th>
+		<th field="satuan" align="left" sortable="false" width="100">Satuan</th>
+		<th field="target" align="right"  sortable="false" width="70">Target</th>	
+		<th field="realisasi" align="right"  sortable="false" width="70">Realisasi</th>	
+		<th field="persen" align="right"  sortable="false" width="70">Persen</th>	
+		
 	  </tr>
 	  </thead> 
 	</table>
@@ -124,46 +125,65 @@ $(document).ready(function(){
 					pageNumber : 1,
 					onLoadSuccess:function(data){	
 				//		alert(data.pies);
-						 var objArrayData=[];
-                var objArray = [];    
+				
+				//start plot
+//						alert(data.rows.length);
+						var objArrayData=[];
+						var objArrayData2=[];
+						var ticks = [];    
 						var obj = data.pies;
+						for (i=0;i<data.rows.length;i++){
+								//alert(data.rows[i].deskripsi);
+								objArrayData.push(parseFloat(data.rows[i].persen));
+								objArrayData2.push(parseFloat(data.rows[i].persen100));
+								ticks.push((i+1));
+							}
 						 $.each(obj, function(key, value) {
-							//   alert(key + ' ' + value);
-							  objArrayData.push([key, parseFloat(value)]);
+							//  alert(key + ' ' + value);
+							  //objArrayData.push([key, parseFloat(value)]);
+							  objArrayData.push(value);
 						 });
 						// alert(objArrayData);
-						 var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
+						
+						 var plot1 = jQuery.jqplot ('chartCapaianKL<?=$objectId?>', [objArrayData2,objArrayData],
 							{
 							  title: {
-								text: 'Analisis Per Sasaran',   // title for the plot,
+								text: '',   // title for the plot,
 								show: true,
 							},
 
-							  
-							  gridPadding: {top:20, bottom:38, left:5, right:0},
+							   animate: !$.jqplot.use_excanvas,
+							  //gridPadding: {top:20, bottom:38, left:10, right:0},
 								seriesDefaults:{
-									renderer:$.jqplot.PieRenderer, 
-									//trendline:{ show:false }, 
-									rendererOptions: {
-										dataLabels:'percent', 
-										showDataLabels: true,
-										//dataLabelCenterOn:true,
-										//dataLabelPositionFactor:0.5 
-										}
+									renderer:$.jqplot.BarRenderer, 
+									pointLabels: {show: true},
+									
 								},
+								axes: {
+									// yaxis: { autoscale: true },
+									xaxis: {
+										renderer: $.jqplot.CategoryAxisRenderer,
+										ticks: ticks
+									}
+								},
+							 series:[
+								{label:'Target'},
+								{label:'Realisasi'},
+								
+							],	
 							  legend:{
 									show:true, 
 									placement: 'outside', 
 									rendererOptions: {
-										numberRows: 1
+										numberRows: 2
 									}, 
 									location:'s',
 									marginTop: '15px'
 								},       
-							seriesColors: [ "green","red"]	
-							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]
-							}    
-						  );
+						//	seriesColors: [ "green","red"]	
+							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]		
+							  					}); //end plot
+
 						 
 						 //jqplot-table-legend
 						//$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
@@ -171,21 +191,15 @@ $(document).ready(function(){
 					}});
 			}
 
+/*
 	$.jqplot.postDrawHooks.push(function() {   
 			var labels = $('table.jqplot-table-legend tr td.jqplot-table-legend-label');
-			 //alert(labels);
 			 $(".jqplot-title").css('color',"#000000" );
-			 //$(labels)..css('color',"#000000" );
 			 labels.each(function(index) {
-					//turn the label's text color to the swatch's color
-					//var color = $(swatches[index]).find("div div").css('background-color');
 					$(this).css('color',"#000000" );
-				//	alert('here');
 			 });      
 	});
-			//jqplot-table-legend jqplot-table-legend-label
-	 
-
+*/
   
   setTimeout(function(){
 			searchData<?=$objectId;?>();

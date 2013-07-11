@@ -38,7 +38,7 @@
 	  </table>
 	  
 	
-<div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left;color:#FFFFFF"></div> 
+<div id="chartKinerjaKl<?=$objectId?>" style="height:350px;width:350px;float:left;color:#FFFFFF"></div> 
 <div  style="width:10px;float:left">&nbsp;</div> 
 <table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian IKU Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
@@ -89,9 +89,10 @@ $(document).ready(function(){
 							  objArrayData.push([key, parseFloat(value)]);
 						 });
 						// alert(objArrayData);
-						 var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
+						 var plot1 = jQuery.jqplot ('chartKinerjaKl<?=$objectId?>', [objArrayData],
 							{
 							  gridPadding: {top:0, bottom:38, left:10, right:0},
+							  animate: !$.jqplot.use_excanvas,
 								seriesDefaults:{
 									renderer:$.jqplot.PieRenderer, 
 									//trendline:{ show:false }, 

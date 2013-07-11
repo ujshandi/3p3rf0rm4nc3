@@ -65,6 +65,33 @@ $(document).ready(function(){
 	
 
 	searchData<?=$objectId;?> = function (){
+				//inisialisasi jqplot
+						
+						 var objArrayData=[];
+						  objArrayData.push(["100%", parseFloat(0)]);
+						  objArrayData.push([">100%", parseFloat(0)]);
+						  objArrayData.push(["<100%", parseFloat(0)]);
+						  var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
+							{
+							  gridPadding: {top:0, bottom:38, left:10, right:0},
+							seriesDefaults:{
+								renderer:$.jqplot.PieRenderer, 
+								trendline:{ show:false }, 
+								rendererOptions: { padding: 8, showDataLabels: true }
+							},
+							  legend:{
+									show:true, 
+									placement: 'outside', 
+									rendererOptions: {
+										numberRows: 1
+									}, 
+									location:'s',
+									marginTop: '15px'
+								},    
+								seriesColors: [ "green","blue","red"],   
+							  series:[{lineWidth:3, markerOptions:{style:'square'}}]
+							}); //end inisialisasijqplot
+				
 				var filstart = $("#cmbBulanStart<?=$objectId;?>").val();
 				var filend = $("#cmbBulanEnd<?=$objectId;?>").val();				
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
@@ -91,7 +118,7 @@ $(document).ready(function(){
 						// alert(objArrayData);
 						 var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
-							  gridPadding: {top:0, bottom:38, left:0, right:0},
+							  gridPadding: {top:0, bottom:38, left:10, right:0},
 								seriesDefaults:{
 									renderer:$.jqplot.PieRenderer, 
 									//trendline:{ show:false }, 
