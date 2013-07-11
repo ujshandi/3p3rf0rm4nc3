@@ -104,13 +104,13 @@
 						</div>
 						<div class="fitem">
 							<label style="width:150px">Target :</label>
-							<?=$result->penetapan?>
+							<?=$this->utility->cekNumericFmt($result->penetapan);?>
 							&nbsp;&nbsp;
 							<?=$result->satuan?>
 						</div>
 						<div class="fitem">
 							<label style="width:150px">Realisasi :</label>
-							<?=$result->realisasi?>
+							<?=$this->utility->cekNumericFmt($result->realisasi);?>
 							&nbsp;&nbsp;
 							<?=$result->satuan?>
 						</div>
