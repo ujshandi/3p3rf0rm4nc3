@@ -28,6 +28,9 @@
     <div class="menu">
        <ul>
             <li><a href="<?=base_url();?>portal">home</a></li>
+               <? if($sess_fullname!=''){?>
+            <li><a href="<?=base_url();?>home">aplikasi</a></li>
+            <? }?>
           <!--   <li><a href="<?=base_url();?>home">dashboard</a></li>-->
         </ul> 
     </div><!--end top menu-->
