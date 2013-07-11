@@ -14,6 +14,10 @@
                     <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image3.jpg" alt="" title="" border="0"/></a>
                     <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
                 </li>
+                  <li>
+                    <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image4.jpg" alt="" title="" border="0"/></a>
+                    <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
+                </li>
             </ul>
 	  	</div>
     </div><!--end slider-->
@@ -25,7 +29,7 @@
         <div class="article_wrapper color">
             <h2><a href="<?=base_url()?>portal/page/news/<?=$latest_news->row()->content_id?>"><?=$latest_news->row()->content_title?></a></h2>
             <h6 class="meta"><?= date("d M Y", strtotime($latest_news->row()->date_post)); ?></h6>
-            <img src="<?php echo base_url(); ?>/public/images/portal/main-news-foto.JPG" />
+        <!--    <img src="<?php echo base_url(); ?>/public/images/portal/main-news-foto.JPG" /> -->
             <p><?=$latest_news->row()->summary?></p>
             <!-- <=base_url()?>portal/page/news/<=$latest_news->row()->content_id?> !-->
             <a href="#" class="inlink">selengkapnya</a>

@@ -35,7 +35,7 @@
 	  
 	
 <div>
-<div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left;color:#FFFFFF"> </div> 
+<div id="chartKinerjaE1<?=$objectId?>" style="height:350px;width:350px;float:left;color:#FFFFFF"> </div> 
 <div  style="width:10px;float:left">&nbsp;</div>
 
 <table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian IKU Eselon I"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
@@ -72,9 +72,9 @@ $(document).ready(function(){
 						//start jqplot
 						  objArrayData.push(["Jumlah Memenuhi", 0]);
 						  objArrayData.push(["Jumlah Tidak Memenuhi", 0]);
-			jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],{
+			jQuery.jqplot ('chartKinerjaE1<?=$objectId?>', [objArrayData],{
 							  	seriesColors: [ "green","red"]	,
-							  gridPadding: {top:0, bottom:38, left:0, right:0},
+							  gridPadding: {top:0, bottom:38, left:10, right:0},
 							seriesDefaults:{
 								renderer:$.jqplot.PieRenderer, 
 								trendline:{ show:false }, 
@@ -157,10 +157,10 @@ $(document).ready(function(){
 						//start jqplot
 						  objArrayData.push(["Jumlah Memenuhi", parseFloat(row.tercapai)]);
 						  objArrayData.push(["Jumlah Tidak Memenuhi", parseFloat(row.tdk_tercapai)]);
-						  var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
+						  var plot1 = jQuery.jqplot ('chartKinerjaE1<?=$objectId?>', [objArrayData],
 							{
 							  	seriesColors: [ "green","red"]	,
-							  gridPadding: {top:0, bottom:38, left:0, right:0},
+							  gridPadding: {top:0, bottom:38, left:10, right:0},
 							seriesDefaults:{
 								renderer:$.jqplot.PieRenderer, 
 								trendline:{ show:false }, 
