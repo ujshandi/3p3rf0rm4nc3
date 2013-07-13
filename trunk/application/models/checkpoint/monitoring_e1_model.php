@@ -75,14 +75,25 @@ class Monitoring_e1_model extends CI_Model
 				$response->rows[$i]['nama_e1']=$row->nama_e1;	
 				$row->jml_iku =  $this->getJmlIku($filtahun,$row->kode_e1);			
 				$response->rows[$i]['jml_iku']=$row->jml_iku;				
+				$row->sangat_puas = $this->getPersen($filtahun,$row->kode_e1,'sangat_puas',$filperiode);
+				$response->rows[$i]['sangat_puas']= $row->sangat_puas;
+				$row->puas = $this->getPersen($filtahun,$row->kode_e1,'puas',$filperiode);
+				$response->rows[$i]['puas']= $row->puas;
+				$row->kurang_puas = $this->getPersen($filtahun,$row->kode_e1,'kurang_puas',$filperiode);
+				$response->rows[$i]['kurang_puas']= $row->kurang_puas;
+				$row->kecewa = $this->getPersen($filtahun,$row->kode_e1,'kecewa',$filperiode);
+				$response->rows[$i]['kecewa']= $row->kecewa;
+/*
 				$row->seratus = $this->getPersen($filtahun,$row->kode_e1,100,$filperiode);
 				$response->rows[$i]['seratus']= $row->seratus;
 				$row->seratus_lebih = $this->getPersen($filtahun,$row->kode_e1,101,$filperiode);
 				$response->rows[$i]['seratus_lebih']= $row->seratus_lebih;
 				$row->seratus_kurang = $this->getPersen($filtahun,$row->kode_e1,99,$filperiode);
 				$response->rows[$i]['seratus_kurang']= $row->seratus_kurang;
+*/
 				//$this->utility->cekNumericFmt($row->target);								
-				$this->dataPie = array("100%"=>(int)$row->seratus,">100%"=>(int)$row->seratus_lebih,"<100%"=>(int)$row->seratus_kurang);
+				//$this->dataPie = array("100%"=>(int)$row->seratus,">100%"=>(int)$row->seratus_lebih,"<100%"=>(int)$row->seratus_kurang);
+					$this->dataPie = array("Sangat Memuaskan"=>(int)$row->sangat_puas,"Memuaskan"=>(int)$row->puas,"Kurang Memuaskan"=>(int)$row->kurang_puas,"Mengecewakan"=>(int)$row->kecewa);
 				$response->pies = $this->dataPie;
 			//	$response->pies['tercapai'] = array_merge($response->pies['tercapai'], array($row->nama_e1=>$row->tercapai));
 				//$response->pies['tdk_tercapai'] =array_merge($response->pies['tdk_tercapai'], array($row->nama_e1=>$row->tdk_tercapai));
@@ -192,9 +203,17 @@ class Monitoring_e1_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->select('count(*) as jumlah',false);
 		$this->db->from('tbl_checkpoint_e1 inner join tbl_pk_eselon1 on tbl_checkpoint_e1.id_pk_e1=tbl_pk_eselon1.id_pk_e1',false);
+/*
 		if ($capaian==100) $this->db->where("tbl_checkpoint_e1.target = tbl_checkpoint_e1.capaian");
 		if ($capaian==101) $this->db->where("tbl_checkpoint_e1.capaian > tbl_checkpoint_e1.target");
 		if ($capaian==99) $this->db->where("tbl_checkpoint_e1.capaian < tbl_checkpoint_e1.target");
+*/
+		switch ($capaian) {
+			case 'sangat_puas' : $this->db->where("((tbl_checkpoint_e1.capaian/tbl_checkpoint_e1.target)*100)>100");break;
+			case 'puas' : $this->db->where("((tbl_checkpoint_e1.capaian/tbl_checkpoint_e1.target)*100) between 76 and 100");break;
+			case 'kurang_puas' : $this->db->where("((tbl_checkpoint_e1.capaian/tbl_checkpoint_e1.target)*100) between 50 and 75");break;
+			case 'kecewa' : $this->db->where("((tbl_checkpoint_e1.capaian/tbl_checkpoint_e1.target)*100)<50");break;
+		}
 		$this->db->where('tahun', $tahun);
 		$this->db->where('kode_e1', $kode_e1);
 		$this->db->where('tbl_checkpoint_e1.periode', $periode);
