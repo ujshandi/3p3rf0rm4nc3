@@ -338,10 +338,18 @@ function getListCheckpoint($value,$name=null){
 		$tmp = "<select name='cmbPeriode' id='cmbPeriode'>";
 	else
 		$tmp = "<select name='$name' id='$name'>";
-	
+	//jadi 12 bulan per 2013.07.13
+	$tmp.= "<option value='1' ".(($value=='1')?'selected':'').">B.01</option>";
+	$tmp.= "<option value='2' ".(($value=='2')?'selected':'').">B.02</option>";
 	$tmp.= "<option value='3' ".(($value=='3')?'selected':'').">B.03</option>";
+	$tmp.= "<option value='4' ".(($value=='4')?'selected':'').">B.04</option>";
+	$tmp.= "<option value='5' ".(($value=='5')?'selected':'').">B.05</option>";
 	$tmp.= "<option value='6' ".(($value=='6')?'selected':'').">B.06</option>";
+	$tmp.= "<option value='7' ".(($value=='7')?'selected':'').">B.07</option>";
+	$tmp.= "<option value='8' ".(($value=='8')?'selected':'').">B.08</option>";
 	$tmp.= "<option value='9' ".(($value=='9')?'selected':'').">B.09</option>";
+	$tmp.= "<option value='10' ".(($value=='10')?'selected':'').">B.10</option>";
+	$tmp.= "<option value='11' ".(($value=='11')?'selected':'').">B.11</option>";
 	$tmp.= "<option value='12' ".(($value=='12')?'selected':'').">B.12</option>";
 	
 	$tmp.= "</select>";
