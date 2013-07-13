@@ -51,9 +51,10 @@
 		<th field="kode_kl"   sortable="false" width="50">Kode KL</th>
 		<th field="nama_kl" align="left" sortable="false" width="200">Nama KL</th>
 		<th field="jml_iku" align="right"  sortable="false" width="70">Jml.Iku</th>	
-		<th field="seratus_lebih" align="right"  sortable="false" width="70">&gt;100%</th>	
-		<th field="seratus" align="right"  sortable="false" width="70">&equiv;100%</th>	
-		<th field="seratus_kurang" align="right"  sortable="false" width="70">&lt;100%</th>	
+		<th field="sangat_puas" align="right"  sortable="false" width="160">Sangat Memuaskan</th>	
+		<th field="puas" align="right"  sortable="false" width="100">Memuaskan</th>	
+		<th field="kurang_puas" align="right"  sortable="false" width="160">Kurang Memuaskan</th>	
+		<th field="kecewa" align="right"  sortable="false" width="120">Mengecewakan</th>	
 	  </tr>
 	  </thead> 
 	</table>
@@ -68,9 +69,10 @@ $(document).ready(function(){
 				//inisialisasi jqplot
 						
 						 var objArrayData=[];
-						  objArrayData.push(["100%", parseFloat(0)]);
-						  objArrayData.push([">100%", parseFloat(0)]);
-						  objArrayData.push(["<100%", parseFloat(0)]);
+						  objArrayData.push(["Sangat Memuaskan", parseFloat(0)]);
+						  objArrayData.push(["Memuaskan", parseFloat(0)]);
+						  objArrayData.push(["Kurang Memuaskan", parseFloat(0)]);
+						  objArrayData.push(["Mengecewakan", parseFloat(0)]);
 						  var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
 							  gridPadding: {top:0, bottom:38, left:10, right:0},
@@ -88,7 +90,7 @@ $(document).ready(function(){
 									location:'s',
 									marginTop: '15px'
 								},    
-								seriesColors: [ "green","blue","red"],   
+								seriesColors: [ "blue","green","orange","red"],   
 							  series:[{lineWidth:3, markerOptions:{style:'square'}}]
 							}); //end inisialisasijqplot
 				
@@ -138,7 +140,7 @@ $(document).ready(function(){
 									location:'s',
 									marginTop: '15px'
 								},       
-									seriesColors: [ "green","blue","red"]	
+									seriesColors: [ "blue","green","orange","red"]	
 							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]
 							}    
 						  );

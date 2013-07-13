@@ -73,6 +73,8 @@ group by tahun,kode_kl, nama_kl*/
 			//var_dump();
 			//$noIndikator =0;
 			$jumlah =0;
+			//M = Memuaskan
+			
 			foreach ($query->result() as $row){
 				//$no++;			
 				
@@ -81,14 +83,16 @@ group by tahun,kode_kl, nama_kl*/
 				$response->rows[$i]['nama_kl']=$row->nama_kl;
 				$row->jml_iku =  $this->getJmlIku($filtahun,$row->kode_kl);					
 				$response->rows[$i]['jml_iku']=$row->jml_iku;				
-				$row->seratus = $this->getPersen($filtahun,$row->kode_kl,100,$filperiode);
-				$response->rows[$i]['seratus']= $row->seratus;
-				$row->seratus_lebih = $this->getPersen($filtahun,$row->kode_kl,101,$filperiode);
-				$response->rows[$i]['seratus_lebih']= $row->seratus_lebih;
-				$row->seratus_kurang = $this->getPersen($filtahun,$row->kode_kl,99,$filperiode);
-				$response->rows[$i]['seratus_kurang']= $row->seratus_kurang;
+				$row->sangat_puas = $this->getPersen($filtahun,$row->kode_kl,'sangat_puas',$filperiode);
+				$response->rows[$i]['sangat_puas']= $row->sangat_puas;
+				$row->puas = $this->getPersen($filtahun,$row->kode_kl,'puas',$filperiode);
+				$response->rows[$i]['puas']= $row->puas;
+				$row->kurang_puas = $this->getPersen($filtahun,$row->kode_kl,'kurang_puas',$filperiode);
+				$response->rows[$i]['kurang_puas']= $row->kurang_puas;
+				$row->kecewa = $this->getPersen($filtahun,$row->kode_kl,'kecewa',$filperiode);
+				$response->rows[$i]['kecewa']= $row->kecewa;
 				//$this->utility->cekNumericFmt($row->target);								
-				$this->dataPie = array("100%"=>(int)$row->seratus,">100%"=>(int)$row->seratus_lebih,"<100%"=>(int)$row->seratus_kurang);
+				$this->dataPie = array("Sangat Memuaskan"=>(int)$row->sangat_puas,"Memuaskan"=>(int)$row->puas,"Kurang Memuaskan"=>(int)$row->kurang_puas,"Mengecewakan"=>(int)$row->kecewa);
 				$response->pies = $this->dataPie;
 			//utk kepentingan export excel ==========================
 /*
@@ -200,9 +204,17 @@ group by tahun,kode_kl, nama_kl*/
 		$this->db->flush_cache();
 		$this->db->select('count(*) as jumlah',false);
 		$this->db->from('tbl_checkpoint_kl inner join tbl_pk_kl on tbl_checkpoint_kl.id_pk_kl=tbl_pk_kl.id_pk_kl',false);
+/*
 		if ($capaian==100) $this->db->where("tbl_checkpoint_kl.target = tbl_checkpoint_kl.capaian");
 		if ($capaian==101) $this->db->where("tbl_checkpoint_kl.capaian > tbl_checkpoint_kl.target");
 		if ($capaian==99) $this->db->where("tbl_checkpoint_kl.capaian < tbl_checkpoint_kl.target");
+*/
+		switch ($capaian) {
+			case 'sangat_puas' : $this->db->where("((tbl_checkpoint_kl.capaian/tbl_checkpoint_kl.target)*100)>100");break;
+			case 'puas' : $this->db->where("((tbl_checkpoint_kl.capaian/tbl_checkpoint_kl.target)*100) between 76 and 100");break;
+			case 'kurang_puas' : $this->db->where("((tbl_checkpoint_kl.capaian/tbl_checkpoint_kl.target)*100) between 50 and 75");break;
+			case 'kecewa' : $this->db->where("((tbl_checkpoint_kl.capaian/tbl_checkpoint_kl.target)*100)<50");break;
+		}
 		$this->db->where('tahun', $tahun);
 		$this->db->where('kode_kl', $kode_kl);
 		$this->db->where('tbl_checkpoint_kl.periode', $periode);
