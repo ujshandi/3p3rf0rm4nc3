@@ -41,18 +41,19 @@
 <div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left;color:#FFFFFF"> </div> 
 <div  style="width:10px;float:left">&nbsp;</div>
 
-<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Monitoring Checkpoint Eselon I"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Monitoring Checkpoint Eselon I"  fitColumns="false" singleSelect="true" nowrap="false" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
-		<th field="tahun" sortable="false" width="60">Tahun</th>
-		<th field="kode_e1"   sortable="false" width="50">Kode E1</th>
-		<th field="nama_e1" align="left" sortable="false" width="200">Nama Eselon 1</th>
-		<th field="jml_iku" align="right"  sortable="false" width="70">Jml.Iku</th>	
-		<th field="sangat_puas" align="right"  sortable="false" width="160">Sangat Memuaskan</th>	
-		<th field="puas" align="right"  sortable="false" width="100">Memuaskan</th>	
-		<th field="kurang_puas" align="right"  sortable="false" width="160">Kurang Memuaskan</th>	
-		<th field="kecewa" align="right"  sortable="false" width="120">Mengecewakan</th>	
+		<th field="tahun" sortable="false" width="45">Tahun</th>
+		<th field="kode_e1"   sortable="false" width="50">Kode</th>
+		<th field="nama_e1" align="left" sortable="false" width="200">Nama Unit Kerja</th>
+		<th field="jml_iku" align="right"  sortable="false" width="50">Jml.Iku</th>	
+		<th field="sangat_puas" align="center"  sortable="false" width="75">Sangat <br> Memuaskan</th>	
+		<th field="puas" align="center"  sortable="false" width="75">Memuaskan</th>	
+		<th field="kurang_puas" align="center"  sortable="false" width="75">Kurang <br>Memuaskan</th>	
+		<th field="kecewa" align="center"  sortable="false" width="90">Mengecewakan</th>	
 	  </tr>
+	  
 	  </thead> 
 	</table>
 </div>	
@@ -78,7 +79,7 @@ $(document).ready(function(){
 							seriesDefaults:{
 								renderer:$.jqplot.PieRenderer, 
 								trendline:{ show:false }, 
-								rendererOptions: { padding: 8, showDataLabels: true }
+								rendererOptions: { padding: 8, dataLabels:"percent",showDataLabels: true,dataLabelFormatString:'%.2f%' }
 							},
 							  legend:{
 									show:true, 
@@ -123,7 +124,7 @@ $(document).ready(function(){
 							seriesDefaults:{
 								renderer:$.jqplot.PieRenderer, 
 								trendline:{ show:false }, 
-								rendererOptions: { padding: 8, showDataLabels: true }
+								rendererOptions: { padding: 8, dataLabels:"percent",showDataLabels: true,dataLabelFormatString:'%.2f%' }
 							},
 							  legend:{
 									show:true, 

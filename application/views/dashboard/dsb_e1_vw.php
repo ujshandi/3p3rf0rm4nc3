@@ -67,6 +67,7 @@ $(document).ready(function(){
 
 	searchData<?=$objectId;?> = function (){
 			//inisialiasi jqplot
+			$('#chartKinerjaE1<?=$objectId?>').empty();
 			  var objArrayData=[];
 						  // alert(row.tercapai);
 						//start jqplot
@@ -78,7 +79,7 @@ $(document).ready(function(){
 							seriesDefaults:{
 								renderer:$.jqplot.PieRenderer, 
 								trendline:{ show:false }, 
-								rendererOptions: { padding: 8, showDataLabels: true }
+								rendererOptions: { padding: 8, dataLabels:"percent",showDataLabels: true,dataLabelFormatString:'%.2f%' }
 							},
 							  legend:{
 									show:true, 
@@ -164,7 +165,7 @@ $(document).ready(function(){
 							seriesDefaults:{
 								renderer:$.jqplot.PieRenderer, 
 								trendline:{ show:false }, 
-								rendererOptions: { padding: 8, showDataLabels: true }
+								rendererOptions: { padding: 8, dataLabels:"percent",showDataLabels: true,dataLabelFormatString:'%.2f%' }
 							},
 							  legend:{
 									show:true, 

@@ -75,13 +75,19 @@ $(document).ready(function(){
 					alert("Periode Bulan tidak bisa diproses");
 					return;
 				}
+				$('#chartKinerjaKl<?=$objectId?>').empty();
+				$('chartKinerjaKl<?=$objectId?>').empty();
+				$('#chartKinerjaKl<?=$objectId?>').html('');
+				$('#chartKinerjaKl<?=$objectId?>').children().remove();
 				$('#dg<?=$objectId;?>').datagrid({
 					url:"<?=base_url()?>dashboard/dsb_kl/grid/"+filtahun,
 					//queryParams:{lastNo:'0'},	
 					pageNumber : 1,
 					onLoadSuccess:function(data){	
+						//alert(plot1);
+						  if(plot1){plot1.destroy(); alert("kadieu uy");}
 				//		alert(data.pies);
-						 var objArrayData=[];
+						 var objArrayData=[];					 
                 var objArray = [];    
 						var obj = data.pies;
 						 $.each(obj, function(key, value) {
@@ -96,12 +102,7 @@ $(document).ready(function(){
 								seriesDefaults:{
 									renderer:$.jqplot.PieRenderer, 
 									//trendline:{ show:false }, 
-									rendererOptions: {
-										dataLabels:'percent', 
-										showDataLabels: true,
-										//dataLabelCenterOn:true,
-										//dataLabelPositionFactor:0.5 
-										}
+									rendererOptions: { padding: 8, dataLabels:"percent",showDataLabels: true,dataLabelFormatString:'%.2f%' }
 								},
 							  legend:{
 									show:true, 
@@ -116,11 +117,14 @@ $(document).ready(function(){
 							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]
 							}    
 						  );
-						 
-						 
+						 	//$('#chartKinerjaKl<?=$objectId?>').empty();
+					plot1.redraw();
+							
 						//$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
 					}});
+					
+				
 			}
 
 			

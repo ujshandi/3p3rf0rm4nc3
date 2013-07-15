@@ -13,7 +13,7 @@
 			<table border="0" cellpadding="1" cellspacing="1">
 			<tr>
 				<td>Tahun :</td>
-				<td><?=$this->sasaran_kl_model->getListFilterTahun($objectId,false)?></td>
+				<td><?=$this->sasaran_eselon1_model->getListFilterTahun($objectId,false)?></td>
 			</tr>
 			<tr>
 				<td>Sasaran :</td>
@@ -80,14 +80,14 @@ $(document).ready(function(){
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						}
 						
-						$("#txtkode_sasaran_kl<?=$objectId;?>").click(function(){
+						$("#txtkode_sasaran_e1<?=$objectId;?>").click(function(){
 							$("#drop<?=$objectId;?>").slideDown("slow");
 						});
 						
 						$("#drop<?=$objectId;?> li").click(function(e){
 							var chose = $(this).text();
-							$("#txtkode_sasaran_kl<?=$objectId;?>").text(chose);
-						//	alert($("#txtkode_sasaran_kl<?=$objectId;?>").text());
+							$("#txtkode_sasaran_e1<?=$objectId;?>").text(chose);
+						//	alert($("#txtkode_sasaran_e1<?=$objectId;?>").text());
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						});
 						
@@ -104,7 +104,7 @@ $(document).ready(function(){
 	
 	setSasaran<?=$objectId?> = function(kode){
 		//do nothing
-		$('#kode_sasaran_kl<?=$objectId;?>').val(kode);
+		$('#kode_sasaran_e1<?=$objectId;?>').val(kode);
 		searchData<?=$objectId?>();
 	}
 	
@@ -112,7 +112,7 @@ $(document).ready(function(){
 				var filstart = $("#cmbBulanStart<?=$objectId;?>").val();
 				var filend = $("#cmbBulanEnd<?=$objectId;?>").val();				
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
-				var sasaran = $("#kode_sasaran_kl<?=$objectId;?>").val();
+				var sasaran = $("#kode_sasaran_e1<?=$objectId;?>").val();
 				if(filtahun==null) filtahun ="-1";
 				if(sasaran==null) sasaran ="-1";
 				if (parseInt(filstart)>parseInt(filend)){
@@ -121,7 +121,7 @@ $(document).ready(function(){
 				}
 				$('#chartCapaianKL<?=$objectId?>').empty();
 				$('#dg<?=$objectId;?>').datagrid({
-					url:"<?=base_url()?>dashboard/dsb_capaian_kl/grid/"+filtahun+"/"+sasaran,
+					url:"<?=base_url()?>dashboard/dsb_capaian_e1/grid/"+filtahun+"/"+sasaran,
 					//queryParams:{lastNo:'0'},	
 					pageNumber : 1,
 					onLoadSuccess:function(data){	
