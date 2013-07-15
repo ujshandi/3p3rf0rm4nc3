@@ -31,8 +31,9 @@
 			</tr>
 			<tr>			  
 			  <td colspan="2" align="right">
-				<a href="#" class="easyui-linkbutton" onclick="clearFilter<?=$objectId;?>();" iconCls="icon-reset">Reset</a>
-				<a href="#" class="easyui-linkbutton" onclick="searchData<?=$objectId;?>();" iconCls="icon-search">Search</a>
+				<!--<a href="#" class="easyui-linkbutton" onclick="clearFilter<?=$objectId;?>();" iconCls="icon-reset">Reset</a>
+				<a href="#" class="easyui-linkbutton" onclick="searchData<?=$objectId;?>();" iconCls="icon-search">Search</a> -->
+				<a href="#" class="easyui-linkbutton" onclick="searchData<?=$objectId;?>();" iconCls="icon-reload">Refresh</a>
 			  </td>
 			</tr>
 			</table>
@@ -79,7 +80,7 @@ $(document).ready(function(){
 							seriesDefaults:{
 								renderer:$.jqplot.PieRenderer, 
 								trendline:{ show:false }, 
-								rendererOptions: { padding: 8, showDataLabels: true }
+								rendererOptions: { padding: 8, dataLabels:"percent",showDataLabels: true,dataLabelFormatString:'%.2f%' }
 							},
 							  legend:{
 									show:true, 
@@ -124,12 +125,7 @@ $(document).ready(function(){
 								seriesDefaults:{
 									renderer:$.jqplot.PieRenderer, 
 									//trendline:{ show:false }, 
-									rendererOptions: {
-										dataLabels:'percent', 
-										showDataLabels: true,
-										//dataLabelCenterOn:true,
-										//dataLabelPositionFactor:0.5 
-										}
+									rendererOptions: { padding: 8, dataLabels:"percent",showDataLabels: true,dataLabelFormatString:'%.2f%' }
 								},
 							  legend:{
 									show:true, 

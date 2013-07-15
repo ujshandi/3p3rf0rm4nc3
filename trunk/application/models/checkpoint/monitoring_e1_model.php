@@ -46,7 +46,7 @@ class Monitoring_e1_model extends CI_Model
 			
 			
 			//$this->db->order_by($sort." ".$order );
-			$this->db->order_by("tbl_pk_eselon1.tahun");
+			$this->db->order_by("tbl_pk_eselon1.kode_e1");
 			//$this->db->order_by("iku.deskripsi");
 			
 			//hanya utk grid saja
