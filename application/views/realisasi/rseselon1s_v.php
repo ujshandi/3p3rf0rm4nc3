@@ -6,7 +6,7 @@
 				//$('#fm<?=$objectId;?>').form('clear');  
 				//url = base_url+'realisasi/rseselon1/save';  
 				
-				addTab("Add Realisasi Kinerja Eselon I", "realisasi/rseselon1/add");
+				addTab("Add Capaian Kinerja Eselon I", "realisasi/rseselon1/add");
 			}
 			//end newData 
 			
@@ -65,7 +65,7 @@
 			editData<?=$objectId;?> = function (editmode){
 				<? //chan------if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					addTab((editmode?"Edit":"View")+" Realisasi Kinerja Eselon I", "realisasi/rseselon1/edit/"+ row.id_kinerja_e1 +  "/" + editmode);
+					addTab((editmode?"Edit":"View")+" Capaian Kinerja Eselon I", "realisasi/rseselon1/edit/"+ row.id_kinerja_e1 +  "/" + editmode);
 				<?//} else { ?>	
 				//	alert("Silahkan Login sebagai Superadmin");
 				<?//} ?>
@@ -298,12 +298,12 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Realisasi Kinerja Eselon I" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Realisasi Kinerja Eselon I" toolbar="#tb<?=$objectId;?>" fitColumns="true" nowrap="false" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="id_kinerja_e1" sortable="true" hidden="true" width="30px">id_kinerja_e1</th>
-		<th field="tahun" sortable="true" width="30px">Tahun</th>
-		<th field="triwulan" sortable="true" width="30px">Bulan</th>
+		<th field="tahun" sortable="true" width="23px">Tahun</th>
+		<th field="triwulan" sortable="true" width="37px">Bulan</th>
 		<th field="kode_e1" sortable="true" width="50px" <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'hidden="true"')?>>Kode Unit Kerja</th>
 		<th field="nama_e1" hidden="true">nama</th>
 		<th field="kode_sasaran_e1" sortable="true" width="50px">Kode Sasaran</th>
@@ -313,7 +313,9 @@
 		<th field="target" sortable="true" width="50px" align="right" formatter="formatPrice">Target</th>
 		<th field="satuan" sortable="true" width="60px">Satuan</th>
 		<th field="realisasi" sortable="true" width="50px" align="right" formatter="formatPrice">Realisasi</th>
-		<th field="realisasi_persen" sortable="true" width="35px" align="right" formatter="formatPrice">Realisasi(%)</th>
+		<th field="realisasi_persen" sortable="true" width="35px" align="right" formatter="formatPrice">Realisasi<br>(%)</th>
+		<th field="keterangan" sortable="true" width="80px">Keterangan</th>
+			<th field="action_plan" sortable="true" width="80px">Action Plan</th>
 	  </tr>
 	  </thead>
 	</table>

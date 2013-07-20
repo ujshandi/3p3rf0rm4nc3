@@ -15,6 +15,12 @@
 				<td>Tahun :</td>
 				<td><?=$this->sasaran_eselon1_model->getListFilterTahun($objectId,false)?></td>
 			</tr>
+				<tr  <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'style="display:none"')?>>
+					<td>Unit Kerja Eselon I&nbsp</td>
+					<td>
+						<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'),false)?>
+					</td>
+				</tr>
 			<tr>
 				<td>Sasaran :</td>
 				<td><div id="divSasaranKL<?=$objectId?>"></div></td>
@@ -46,7 +52,7 @@
 	
 <div id="chartCapaianKL<?=$objectId?>" style="height:350px;width:350px;float:left"></div> 
 <div  style="width:10px;float:left">&nbsp;</div> 
-<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian IKU Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian IKU Kementerian"  fitColumns="true" singleSelect="true" nowrap="false" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="deskripsi"   sortable="false" width="250">Deskripsi</th>
@@ -65,15 +71,28 @@
 
 $(document).ready(function(){
 	
-	$("#filter_tahun<?=$objectId;?>").change(function(){				
-				  getListSasaran<?=$objectId;?>($(this).val());
+	$("#filter_tahun<?=$objectId;?>").change(function(){	
+					<? if ($this->session->userdata('unit_kerja_e1')!='-1') {?>
+				 e1 = '<?=$this->session->userdata('unit_kerja_e1');?>';
+				 $("#filter_e1<?=$objectId;?>").val(e1);
+				<?}?>		
+				  getListSasaran<?=$objectId;?>($(this).val(),e1);
+				
+			});
+	$("#filter_e1<?=$objectId;?>").change(function(){				
+				  getListSasaran<?=$objectId;?>($("#filter_tahun<?=$objectId;?>").val(),$(this).val());
 				
 			});
 			
-	getListSasaran<?=$objectId?> = function (tahun){
-		if ((tahun==null)||(tahun=="")) tahun = "-1";
+	getListSasaran<?=$objectId?> = function (tahun,e1){
+			<? if ($this->session->userdata('unit_kerja_e1')!='-1') {?>
+				 e1 = '<?=$this->session->userdata('unit_kerja_e1');?>';
+				 $("#filter_e1<?=$objectId;?>").val(e1);
+				<?}?>
+				
+			if ((tahun==null)||(tahun=="")) tahun = "-1";
 				$("#divSasaranKL<?=$objectId?>").load(
-					base_url+"pengaturan/sasaran_eselon1/getListSasaranKL/"+"<?=$objectId;?>"+"/"+tahun,
+					base_url+"pengaturan/sasaran_eselon1/getListSasaranE1/"+"<?=$objectId;?>"+"/"+e1+"/"+tahun,
 					function(){
 						$("textarea").autogrow();
 						if($("#drop<?=$objectId;?>").is(":visible")){
@@ -100,7 +119,7 @@ $(document).ready(function(){
 	};
 
 
-	getListSasaran<?=$objectId;?>($("#filter_tahun<?=$objectId;?>").val());
+	getListSasaran<?=$objectId;?>($("#filter_tahun<?=$objectId;?>").val(),$("#filter_e1<?=$objectId;?>").val());
 	
 	setSasaran<?=$objectId?> = function(kode){
 		//do nothing

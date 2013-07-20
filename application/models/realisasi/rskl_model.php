@@ -32,7 +32,7 @@ class rskl_model extends CI_Model
 			}
 			$this->db->order_by($sort." ".$order );
 			$this->db->limit($limit,$offset);
-			$this->db->select("tbl_kinerja_kl.id_kinerja_kl, tbl_kinerja_kl.tahun, tbl_kinerja_kl.triwulan, tbl_kinerja_kl.kode_kl, tbl_kinerja_kl.kode_sasaran_kl, tbl_kinerja_kl.kode_iku_kl, tbl_kinerja_kl.realisasi,tbl_kinerja_kl.realisasi_persen,tbl_kinerja_kl.keterangan, tbl_iku_kl.satuan, tbl_pk_kl.penetapan, tbl_kl.nama_kl, tbl_sasaran_kl.deskripsi AS deskripsi_sasaran_kl, tbl_iku_kl.deskripsi AS deskripsi_iku_kl");
+			$this->db->select("tbl_kinerja_kl.id_kinerja_kl, tbl_kinerja_kl.tahun, tbl_kinerja_kl.triwulan, tbl_kinerja_kl.kode_kl, tbl_kinerja_kl.kode_sasaran_kl, tbl_kinerja_kl.kode_iku_kl, tbl_kinerja_kl.realisasi,tbl_kinerja_kl.realisasi_persen,tbl_kinerja_kl.keterangan,tbl_kinerja_kl.action_plan, tbl_iku_kl.satuan, tbl_pk_kl.penetapan, tbl_kl.nama_kl, tbl_sasaran_kl.deskripsi AS deskripsi_sasaran_kl, tbl_iku_kl.deskripsi AS deskripsi_iku_kl");
 			$this->db->from('tbl_kinerja_kl');
 			$this->db->join('tbl_pk_kl', 'tbl_pk_kl.kode_iku_kl = tbl_kinerja_kl.kode_iku_kl and tbl_pk_kl.tahun = tbl_kinerja_kl.tahun and tbl_pk_kl.kode_kl = tbl_kinerja_kl.kode_kl');
 			$this->db->join('tbl_iku_kl', 'tbl_iku_kl.kode_iku_kl = tbl_kinerja_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_kinerja_kl.tahun');
@@ -80,6 +80,7 @@ class rskl_model extends CI_Model
 				$response->rows[$i]['realisasi']=$this->utility->cekNumericFmt($row->realisasi);
 				$response->rows[$i]['realisasi_persen']=$this->utility->cekNumericFmt($row->realisasi_persen);
 				$response->rows[$i]['keterangan']=$row->keterangan;
+				$response->rows[$i]['action_plan']=$row->action_plan;
 				$i++;
 			} 
 			
@@ -99,6 +100,7 @@ class rskl_model extends CI_Model
 				$response->rows[$count]['nama_kl']='';
 				$response->rows[$count]['deskripsi_iku_kl']='';
 				$response->rows[$count]['deskripsi_sasaran_kl']='';
+				$response->rows[$count]['action_plan']='';
 				
 		}
 		
@@ -275,6 +277,10 @@ class rskl_model extends CI_Model
 								  <label style="width:150px">Keterangan :</label>
 								  <textarea name=detail['.$i.'][keterangan] cols="60"></textarea>
 								</div>
+								<div class="fitem">
+								  <label style="width:150px">Action Plan :</label>
+								  <textarea name=detail['.$i.'][action_plan] cols="60"></textarea>
+								</div>
 								<!--<div class="fitem">
 								  <label style="width:150px">Persentase Capaian :</label>
 								  <input name=detail['.$i.'][realisasi_persen] value="" size="8">
@@ -403,6 +409,7 @@ class rskl_model extends CI_Model
 			$this->db->set('realisasi',$dt['realisasi']);
 			//$this->db->set('realisasi_persen',$dt['realisasi_persen']);
 			$this->db->set('keterangan',$dt['keterangan']);
+			$this->db->set('action_plan',$dt['action_plan']);
 			$this->db->set('log_insert', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			
 			$result = $this->db->insert('tbl_kinerja_kl');
@@ -417,6 +424,7 @@ class rskl_model extends CI_Model
 			$this->db->set('realisasi',$dt['realisasi']);
 			//$this->db->set('realisasi_persen',$dt['realisasi_persen']);
 			$this->db->set('keterangan',$dt['keterangan']);
+			$this->db->set('action_plan',$dt['action_plan']);
 			$this->db->set('log',				'INSERT;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_kinerja_kl_log');
 			
@@ -439,6 +447,7 @@ class rskl_model extends CI_Model
 		$this->db->set('realisasi', $data['realisasi']);
 		//$this->db->set('realisasi_persen', $data['realisasi_persen']);
 		$this->db->set('keterangan', $data['keterangan']);
+		$this->db->set('action_plan', $data['action_plan']);
 		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->update('tbl_kinerja_kl', $data);
 
@@ -458,6 +467,7 @@ class rskl_model extends CI_Model
 			$this->db->set('realisasi',			$qt->row()->realisasi);
 			//$this->db->set('realisasi_persen',			$qt->row()->realisasi_persen);
 			$this->db->set('keterangan',			$qt->row()->keterangan);
+			$this->db->set('action_plan',			$qt->row()->action_plan);
 			$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_kinerja_kl_log');
 		
@@ -495,6 +505,7 @@ class rskl_model extends CI_Model
 			$this->db->set('realisasi',			$qt->row()->realisasi);
 			//$this->db->set('realisasi_persen',			$qt->row()->realisasi_persen);
 			$this->db->set('keterangan',			$qt->row()->keterangan);
+			$this->db->set('action_plan',			$qt->row()->action_plan);
 			$this->db->set('log',				'DELETE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_kinerja_kl_log');
 		
