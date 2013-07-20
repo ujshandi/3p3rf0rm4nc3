@@ -153,7 +153,7 @@ group by tahun,kode_e1, nama_e1*/
 		 $this->db->where("tbl_pengukuran_eselon1.kode_sasaran_e1",$filsasaran);
 		$this->db->select("tbl_iku_eselon1.deskripsi,tbl_iku_eselon1.satuan,tbl_pk_eselon1.target,tbl_pengukuran_eselon1.persen,tbl_pengukuran_eselon1.realisasi,tbl_pengukuran_eselon1.kode_e1",false);
 			
-			$this->db->from('tbl_pengukuran_eselon1 inner join tbl_eselon1 on tbl_pengukuran_eselon1.kode_e1 = tbl_eselon1.kode_e1 inner join tbl_iku_eselon1 on tbl_iku_eselon1.kode_iku_e1=tbl_pengukuran_eselon1.kode_iku_e1 and tbl_pengukuran_eselon1.tahun=tbl_iku_eselon1.tahun inner join tbl_pk_eselon1 on tbl_pk_eselon1.kode_iku_e1=tbl_pengukuran_eselon1.kode_iku_e1 and tbl_pengukuran_eselon1.tahun=tbl_pk_eselon1.tahun and tbl_pengukuran_eselon1.kode_sasaran_e1 = tbl_pk_eselon1.kode_sasaran_e1',false);
+	
 			$this->db->from('tbl_pengukuran_eselon1 inner join tbl_eselon1 on tbl_pengukuran_eselon1.kode_e1 = tbl_eselon1.kode_e1 inner join tbl_iku_eselon1 on tbl_iku_eselon1.kode_iku_e1=tbl_pengukuran_eselon1.kode_iku_e1 and tbl_pengukuran_eselon1.tahun=tbl_iku_eselon1.tahun inner join tbl_pk_eselon1 on tbl_pk_eselon1.kode_iku_e1=tbl_pengukuran_eselon1.kode_iku_e1 and tbl_pengukuran_eselon1.tahun=tbl_pk_eselon1.tahun and tbl_pengukuran_eselon1.kode_sasaran_e1 = tbl_pk_eselon1.kode_sasaran_e1',false);
 			//$this->db->group_by('tahun,kode_e1, nama_e1',false);
 		$q = $this->db->get();

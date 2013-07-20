@@ -15,6 +15,7 @@ class Dsb_capaian_e1 extends CI_Controller {
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/dashboard/dsb_capaian_e1_model');
 		$this->load->model('/pengaturan/sasaran_eselon1_model');
+		$this->load->model('/rujukan/eselon1_model');
 		$this->load->library("utility");
 	}
 	
@@ -25,7 +26,7 @@ class Dsb_capaian_e1 extends CI_Controller {
 				
 					'title_page'=>'Biroren Kemenhub',
 					'title'=>'Capaian Akhir IKU Kementerian',
-					'objectId'=>'dashboardCapaianKl',
+					'objectId'=>'dashboardCapaianE1',
 					'sess_fullname'=>$this->session->userdata('full_name'),
 					'sess_apptype'=>$this->session->userdata('app_type'),
 					'js'=>array('js/easyui/jquery-1.6.min.js','js/easyui/jquery.easyui.min.js','js/uri_encode_decode.js','js/json2.js','js/jquery.autogrow.js','js/jquery.formatCurrency-1.4.0.min.js','js/formwizard.js','js/jquery.jqURL.js'),

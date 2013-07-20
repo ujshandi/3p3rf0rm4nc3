@@ -223,7 +223,7 @@ class Eselon1_model extends CI_Model
 		echo $out;
 	}
 	
-	public function getListFilterEselon1($objectId,$unit_kerja_E1){
+	public function getListFilterEselon1($objectId,$unit_kerja_E1,$plusSemua=true){
 		
 		$this->db->flush_cache();
 		$this->db->select('kode_e1, nama_e1',false);
@@ -236,7 +236,8 @@ class Eselon1_model extends CI_Model
 		//var_dump($unit_kerja_E1);die;
 		if ($unit_kerja_E1 == "-1"){
 			$out = '<select name="filter_e1'.$objectId.'" id="filter_e1'.$objectId.'" >';
-			$out .= '<option value="-1">Semua</option>';
+			if ($plusSemua)
+				$out .= '<option value="-1">Semua</option>';
 			foreach($que->result() as $r){
 				$out .= '<option value="'.$r->kode_e1.'">'.$r->nama_e1.'</option>';
 			}
