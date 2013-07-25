@@ -70,7 +70,7 @@ from tbl_iku_eselon1 iku  inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kod
 			union 
 			select iku.deskripsi as indikator_kinerja,   iku.satuan,iku.kode_iku_e1 
 from tbl_iku_eselon1 iku   inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kode_iku_e1  '.$where1.'
-) as t1  order by indikator_kinerja '.$limitMode;
+) as t1  order by kode_iku_e1 '.$limitMode;
 			$query = $this->db->query($sql);
 			
 			$i=0;

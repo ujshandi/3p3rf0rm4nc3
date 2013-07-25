@@ -133,10 +133,13 @@ $(document).ready(function(){
 						var objArrayData2=[];
 						var ticks = [];    
 						var obj = data.pies;
+						var rata_rata = data.rata_rata;
+						alert(rata_rata);
 						for (i=0;i<data.rows.length;i++){
 								//alert(data.rows[i].deskripsi);
 								objArrayData.push(parseFloat(data.rows[i].persen));
-								objArrayData2.push(parseFloat(data.rows[i].persen100));
+								objArrayData2.push([parseFloat(rata_rata),i+1]);
+								//objArrayData2.push(parseFloat(data.rows[i].persen100));
 								ticks.push((i+1));
 							}
 						 $.each(obj, function(key, value) {
@@ -145,8 +148,13 @@ $(document).ready(function(){
 						//	  objArrayData.push(value);
 						 });
 						// alert(objArrayData);
-						
-						 var plotchartCapaianKL<?=$objectId?> = jQuery.jqplot ('chartCapaianKL<?=$objectId?>', [objArrayData2,objArrayData],
+						//[objArrayData2,objArrayData]
+						  var grid = {
+							gridLineWidth: 1.5,
+							gridLineColor: 'rgb(235,235,235)',
+							drawGridlines: true
+						};
+						 var plotchartCapaianKL<?=$objectId?> = jQuery.jqplot ('chartCapaianKL<?=$objectId?>', [objArrayData],
 							{
 							  title: {
 								text: '',   // title for the plot,
@@ -155,37 +163,62 @@ $(document).ready(function(){
 
 //							   animate: !$.jqplot.use_excanvas,
 							  //gridPadding: {top:20, bottom:38, left:10, right:0},
+							  grid:grid,
+							   canvasOverlay: {
+								    show: true,
+									objects: [{horizontalLine: {
+										name: 'barney',
+										y: 50,
+										lineWidth: 6,
+										color: 'rgb(100, 55, 124)',
+										shadow: false
+									}}]
+								   },
 								seriesDefaults:{
 									renderer:$.jqplot.BarRenderer, 
-									pointLabels: {show: true},
+									pointLabels: { show: true, location: 'e', edgeTolerance: -15 ,stackedValue: true},
 									rendererOptions: {
-										dataLabels:'percent', 
+										//dataLabels:'percent', 
 										showDataLabels: true,
-										//dataLabelCenterOn:true,
-										//dataLabelPositionFactor:0.5 
+										barWidth: 10,
+										 barDirection: 'horizontal'
 										}
 									
 								},
-								axes: {
-									// yaxis: { autoscale: true },
+								axes: { //model horizontal
+									 yaxis: {
+										renderer: $.jqplot.CategoryAxisRenderer
+									}		
+/*  kalo model vertival
 									xaxis: {
 										renderer: $.jqplot.CategoryAxisRenderer,
 										ticks: ticks
 									}
+*/
 								},
 							 series:[
-								{label:'Target'},
-								{label:'Realisasi'},
+								{},
+								{},
+								{ 
+										 disableStack : true,//otherwise it wil be added to values of previous series
+								renderer: $.jqplot.LineRenderer,
+								lineWidth: 2,
+								pointLabels: {
+									show: false
+								},
+								markerOptions: {
+									size: 5
+								}}
 								
 							],	
 							  legend:{
 									show:true, 
 									placement: 'outside', 
 									rendererOptions: {
-										numberRows: 2
+										numberRows: 1
 									}, 
 									location:'s',
-									marginTop: '15px'
+									marginTop: '45px'
 								},       
 						//	seriesColors: [ "green","red"]	
 							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]		

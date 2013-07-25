@@ -138,6 +138,8 @@ class rskl extends CI_Controller {
 		
 		$data['id_kinerja_kl'] = $this->input->post('id_kinerja_kl');
 		$data['realisasi'] = $this->input->post('realisasi');
+		$data['keterangan'] = $this->input->post('keterangan');
+		$data['action_plan'] = $this->input->post('action_plan');
 		
 		// validation
 		

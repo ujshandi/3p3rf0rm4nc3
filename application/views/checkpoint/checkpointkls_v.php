@@ -1,3 +1,9 @@
+<link rel="stylesheet" type="text/css" media="screen" href="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/css/jquery.fileupload-ui.css"/>
+<script  type="text/javascript" src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload.js" ></script>
+      
+        <script  type="text/javascript" src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload-ui.js" ></script>
+        
+        
 	<script  type="text/javascript" >
 				var idCheckpoint;
 				var rowIndexDetail;
@@ -388,6 +394,42 @@
 				<label style="width:130px;vertical-align:top">Keterangan :</label>
 				<input name="keterangan" size="60" id="keterangan<?=$objectId?>" class="easyui-validatebox">
 			</div>
+			<!-- upload data pendukung 
+			<div class="fitem">
+				<label style="width:130px;vertical-align:top">Data Pendukung :</label>
+			<div class="row fileupload-buttonbar">
+                                    <div class="span7">
+                                        
+                                        <span class="btn btn-success fileinput-button">
+                                            <span><i class="icon-plus icon-white"></i> Add files...</span>
+                                            <input type="file" name="userfile" multiple>
+                                        </span>
+                                        <button type="submit" class="btn btn-primary start">
+                                            <i class="icon-upload icon-white"></i> Start upload
+                                        </button>
+                                        <button type="reset" class="btn btn-warning cancel">
+                                            <i class="icon-ban-circle icon-white"></i> Cancel upload
+                                        </button>
+                                        <button type="button" class="btn btn-danger delete">
+                                            <i class="icon-trash icon-white"></i> Delete
+                                        </button>
+                                        <input type="checkbox" class="toggle">
+                                    </div>
+                                    <div class="span5">
+                                        <!-- The global progress bar ->
+                                        <div class="progress progress-success progress-striped active fade">
+                                            <div class="bar" style="width:0%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- The loading indicator is shown during image processing ->
+                                <div class="fileupload-loading"></div>
+                                <br>
+                                <!-- The table listing the files available for upload/download ->
+                                <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+                </div>                
+			<!-- end upload data pendukung -->
+			
 		</form>
 		<div id="dlg-buttons">
 			<!----------------Edit title-->
