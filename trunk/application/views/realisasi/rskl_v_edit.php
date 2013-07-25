@@ -113,10 +113,18 @@
 							<?=$result->satuan?>
 						</div>
 						<div class="fitem">
-							<label style="width:140px">Realisasi :</label>
+							<label style="width:140px">Capaian Bulan Ini :</label>
 							<input name="realisasi" class="easyui-validatebox" required="true" size="10" maxlength="10" value="<?=$result->realisasi?>">
 							&nbsp;&nbsp;
 							<?=$result->satuan?>
+						</div>
+						<div class="fitem">
+						  <label style="width:140px">Keterangan :</label>
+						  <textarea name="keterangan" cols="60"><?=$result->keterangan?></textarea>
+						</div>
+						<div class="fitem">
+						  <label style="width:140px">Action Plan :</label>
+						  <textarea name="action_plan" cols="60"><?=$result->action_plan?></textarea>
 						</div>
 						<br>
 						<!------------Edit View-->

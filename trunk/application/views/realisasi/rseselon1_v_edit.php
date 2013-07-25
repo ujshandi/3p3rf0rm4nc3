@@ -117,6 +117,14 @@
 							&nbsp;&nbsp;&nbsp;
 							<?=$result->satuan?>
 						</div>
+						<div class="fitem">
+						  <label style="width:150px">Keterangan :</label>
+						  <textarea name="keterangan" cols="60"><?=$result->keterangan?></textarea>
+						</div>
+						<div class="fitem">
+						  <label style="width:150px">Action Plan :</label>
+						  <textarea name="action_plan" cols="60"><?=$result->action_plan?></textarea>
+						</div>
 						<br>
 						<!------------Edit View-->
 						<?if($editMode=="true"){?>

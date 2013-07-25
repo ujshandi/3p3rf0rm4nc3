@@ -80,6 +80,7 @@ group by tahun,kode_kl, nama_kl*/
 				$response->rows[$i]['realisasi']=$this->utility->cekNumericFmt($row->realisasi);				
 				$response->rows[$i]['persen']=$this->utility->cekNumericFmt($row->persen);				
 				$response->rows[$i]['persen100']=100;				
+				$jumlah += $row->persen;
 				
 /*
 				$row->tercapai = $this->getPersen($filtahun,$row->kode_kl,$filsasaran,true);
@@ -106,6 +107,7 @@ group by tahun,kode_kl, nama_kl*/
 			
 				$i++;
 			} 
+			if ($i>0) $response->rata_rata = ($jumlah/$i); else $response->rata_rata=0;
 		//	var_dump($this->dataPie);die;
 			//$response->lastNo = $no;
 			//$query->free_result();
@@ -119,6 +121,7 @@ group by tahun,kode_kl, nama_kl*/
 				$response->rows[$count]['persen100']=0;				
 					$this->dataPie[] = array("Target"=>0,"Realisasi"=>0);
 				$response->pies = $this->dataPie;
+				$response->rata_rata = 0;
 			//	$response->rows[$count]['tdk_tercapai']='';
 				
 

@@ -64,7 +64,7 @@ from tbl_iku_kl iku  left join tbl_pk_kl pk on pk.kode_iku_kl=iku.kode_iku_kl  '
 			union 
 			select iku.deskripsi as indikator_kinerja,   iku.satuan,iku.kode_iku_kl 
 from tbl_iku_kl iku   left join tbl_pk_kl pk on pk.kode_iku_kl=iku.kode_iku_kl  '.$where1.'
-) as t1 order by indikator_kinerja '.$limitMode;
+) as t1 order by kode_iku_kl '.$limitMode;
 			$query = $this->db->query($sql);
 			
 			$i=0;

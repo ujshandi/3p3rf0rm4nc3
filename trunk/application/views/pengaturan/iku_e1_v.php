@@ -79,11 +79,16 @@
 				);
 			}
 			
-			$("#kode_e1<?=$objectId?>").change(function(){
+			function kodeE1Change<?=$objectId?>(editmode){
 				setListE2<?=$objectId?>();
-				setSasaranE1<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$(this).val(),"");
+				setSasaranE1<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val(),"");
 				setIKUKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val());
+				if (!editmode)
 				 setKodeOtomatis<?=$objectId?>();
+			}
+			
+			$("#kode_e1<?=$objectId?>").change(function(){
+				kodeE1Change<?=$objectId?>(true);
 			});
 			
 			
@@ -210,6 +215,7 @@
 					//initCombo<?=$objectId?>();
 					setIKUKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),row.kode_iku_kl,row.deskripsi_ikukl);
 					setListE2<?=$objectId?>(row.kode_e2);
+					kodeE1Change<?=$objectId?>(true);
 					/* // ajax
 					var response = '';
 					$.ajax({ type: "GET",   

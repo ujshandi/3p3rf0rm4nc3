@@ -143,7 +143,8 @@ class rseselon1 extends CI_Controller {
 		
 		$data['id_kinerja_e1'] = $this->input->post('id_kinerja_e1');
 		$data['realisasi'] = $this->input->post('realisasi');
-		
+		$data['keterangan'] = $this->input->post('keterangan');
+		$data['action_plan'] = $this->input->post('action_plan');
 		// validation
 		
 		$result = $this->rseselon1_model->UpdateOnDb($data);

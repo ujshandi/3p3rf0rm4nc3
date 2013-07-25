@@ -165,7 +165,7 @@ $(document).ready(function(){
 						 });
 						// alert(objArrayData);
 						
-						 var plotchartCapaianKL<?=$objectId?> = jQuery.jqplot ('chartCapaianKL<?=$objectId?>', [objArrayData2,objArrayData],
+						 var plotchartCapaianKL<?=$objectId?> = jQuery.jqplot ('chartCapaianKL<?=$objectId?>', [objArrayData],
 							{
 							  title: {
 								text: '',   // title for the plot,
@@ -173,28 +173,43 @@ $(document).ready(function(){
 							},
 
 //							   animate: !$.jqplot.use_excanvas,
-							  //gridPadding: {top:20, bottom:38, left:10, right:0},
+							  gridPadding: {top:20, bottom:50, left:30, right:10},
 								seriesDefaults:{
 									renderer:$.jqplot.BarRenderer, 
-									pointLabels: {show: true},
+									pointLabels: { show: true, location: 'e', edgeTolerance: -15 },
 									rendererOptions: {
 										dataLabels:'percent', 
 										showDataLabels: true,
-										//dataLabelCenterOn:true,
-										//dataLabelPositionFactor:0.5 
+										barWidth: 10,
+										 barDirection: 'horizontal'
 										}
 									
 								},
-								axes: {
-									// yaxis: { autoscale: true },
+								axes: { //model horizontal
+									 yaxis: {
+										renderer: $.jqplot.CategoryAxisRenderer
+									}		
+/*  kalo model vertival
 									xaxis: {
 										renderer: $.jqplot.CategoryAxisRenderer,
 										ticks: ticks
 									}
+*/
 								},
 							 series:[
-								{label:'Target'},
-								{label:'Realisasi'},
+								{label:'Persentase Capaian'},{},
+								{ 
+										 disableStack : true,//otherwise it wil be added to values of previous series
+								renderer: $.jqplot.LineRenderer,
+								lineWidth: 2,
+								pointLabels: {
+									show: false
+								},
+								markerOptions: {
+									size: 5
+								}}
+								
+							//	{label:'Realisasi'},
 								
 							],	
 							  legend:{
