@@ -3,6 +3,11 @@
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.barRenderer.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+ 
+  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasTextRenderer.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasOverlay.min.js"></script>
+
  <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.css" />
 	
 <div id="tb<?=$objectId;?>" style="height:auto">
@@ -152,6 +157,7 @@ $(document).ready(function(){
 						var objArrayData2=[];
 						var ticks = [];    
 						var obj = data.pies;
+						var rata_rata = parseFloat(data.rata_rata);
 						for (i=0;i<data.rows.length;i++){
 								//alert(data.rows[i].deskripsi);
 								objArrayData.push(parseFloat(data.rows[i].persen));
@@ -185,6 +191,16 @@ $(document).ready(function(){
 										}
 									
 								},
+								 canvasOverlay: {
+								    show: true,
+									objects: [{verticalLine: {
+										name: 'barney',
+										x: rata_rata,
+										lineWidth: 6,
+										color: 'orange',
+										shadow: false
+									}}]
+								   },
 								axes: { //model horizontal
 									 yaxis: {
 										renderer: $.jqplot.CategoryAxisRenderer
@@ -213,7 +229,7 @@ $(document).ready(function(){
 								
 							],	
 							  legend:{
-									show:true, 
+									show:false, 
 									placement: 'outside', 
 									rendererOptions: {
 										numberRows: 2
