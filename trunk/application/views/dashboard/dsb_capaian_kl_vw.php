@@ -3,6 +3,12 @@
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.barRenderer.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasTextRenderer.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasOverlay.min.js"></script>
+ 
+   
  <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.css" />
 	
 <div id="tb<?=$objectId;?>" style="height:auto">
@@ -133,12 +139,12 @@ $(document).ready(function(){
 						var objArrayData2=[];
 						var ticks = [];    
 						var obj = data.pies;
-						var rata_rata = data.rata_rata;
-						alert(rata_rata);
+						var rata_rata = parseFloat(data.rata_rata);
+//						alert(rata_rata);
 						for (i=0;i<data.rows.length;i++){
 								//alert(data.rows[i].deskripsi);
 								objArrayData.push(parseFloat(data.rows[i].persen));
-								objArrayData2.push([parseFloat(rata_rata),i+1]);
+						//		objArrayData2.push([parseFloat(rata_rata),i+1]);
 								//objArrayData2.push(parseFloat(data.rows[i].persen100));
 								ticks.push((i+1));
 							}
@@ -166,11 +172,11 @@ $(document).ready(function(){
 							  grid:grid,
 							   canvasOverlay: {
 								    show: true,
-									objects: [{horizontalLine: {
+									objects: [{verticalLine: {
 										name: 'barney',
-										y: 50,
+										x: rata_rata,
 										lineWidth: 6,
-										color: 'rgb(100, 55, 124)',
+										color: 'orange',
 										shadow: false
 									}}]
 								   },
@@ -178,9 +184,9 @@ $(document).ready(function(){
 									renderer:$.jqplot.BarRenderer, 
 									pointLabels: { show: true, location: 'e', edgeTolerance: -15 ,stackedValue: true},
 									rendererOptions: {
-										//dataLabels:'percent', 
+										dataLabels:'percent', 
 										showDataLabels: true,
-										barWidth: 10,
+										barWidth: 20,
 										 barDirection: 'horizontal'
 										}
 									
@@ -212,7 +218,7 @@ $(document).ready(function(){
 								
 							],	
 							  legend:{
-									show:true, 
+									show:false, 
 									placement: 'outside', 
 									rendererOptions: {
 										numberRows: 1
