@@ -127,6 +127,9 @@ group by tahun,kode_kl, nama_kl*/
 
 		}
 		
+		$response->footer[0]['deskripsi']='<b>Rata-rata Capaian </b>';
+		$response->footer[0]['persen']='<b>'.$this->utility->cekNumericFmt($response->rata_rata).'</b>';
+		
 		if ($purpose==1) //grid normal
 			return json_encode($response);
 		else if($purpose==2){//pdf
