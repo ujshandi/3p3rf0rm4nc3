@@ -122,7 +122,7 @@
 						  <textarea name="keterangan" cols="60"><?=$result->keterangan?></textarea>
 						</div>
 						<div class="fitem">
-						  <label style="width:150px">Action Plan :</label>
+						  <label style="width:150px">Rencana Aksi :</label>
 						  <textarea name="action_plan" cols="60"><?=$result->action_plan?></textarea>
 						</div>
 						<br>

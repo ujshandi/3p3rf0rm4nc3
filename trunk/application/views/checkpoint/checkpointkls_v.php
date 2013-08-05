@@ -1,14 +1,22 @@
-<link rel="stylesheet" type="text/css" media="screen" href="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/css/jquery.fileupload-ui.css"/>
+    
+ <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/js/jQuery-File-Upload-8.6.0/css/jquery.fileupload-ui.css" />     
 <script  type="text/javascript" src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload.js" ></script>
-      
-        <script  type="text/javascript" src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload-ui.js" ></script>
-        
+<script type="text/javascript"  src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.iframe-transport.js"></script>
+<script  type="text/javascript" src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload-ui.js" ></script>
+
         
 	<script  type="text/javascript" >
 				var idCheckpoint;
 				var rowIndexDetail;
 
 		$(function(){
+			var wWidth = $(window).width();
+			var wHeight = $(window).height();
+			$("#dlg<?=$objectId;?>").css('width',wWidth);
+			$("#dlg<?=$objectId;?>").css('height',wHeight);
+			
+			
+			
 			var url;
 			newData<?=$objectId;?> = function (){  
 				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
@@ -266,6 +274,33 @@
 			margin-bottom:5px;
 		}
 		
+		.btn-success {
+		  background-color: #5BB75B;
+		  background-image: linear-gradient(to bottom, #62C462, #51A351);
+		  background-repeat: repeat-x;
+		  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+		  color: #FFFFFF;
+		  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+		}
+
+		.btn {
+		  -moz-border-bottom-colors: none;
+		  -moz-border-left-colors: none;
+		  -moz-border-right-colors: none;
+		  -moz-border-top-colors: none;
+		  border-image: none;
+		  border-radius: 4px 4px 4px 4px;
+		  border-style: solid;
+		  border-width: 1px;
+		  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+		  cursor: pointer;
+		  display: inline-block;
+		  font-size: 14px;
+		  line-height: 20px;
+		  padding: 4px 12px;
+		  text-align: center;
+		  vertical-align: middle;
+		}
 	</style>
 	
 	<div id="tb<?=$objectId;?>" style="height:auto">
@@ -339,10 +374,10 @@
 	
 	<!-- Area untuk Form Add/Edit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:450px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
 		<!--<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Rencana Checkpoint Kementerian</div> -->
-		<form id="fm<?=$objectId;?>" method="post">
+		<form id="fm<?=$objectId;?>" method="post" enctype="multipart/form-data">
 			
 			<div class="fitem">
 				<label style="width:130px">Sasaran Strategis:</label>					
@@ -394,40 +429,26 @@
 				<label style="width:130px;vertical-align:top">Keterangan :</label>
 				<input name="keterangan" size="60" id="keterangan<?=$objectId?>" class="easyui-validatebox">
 			</div>
-			<!-- upload data pendukung 
+			<!-- upload data pendukung -->
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Data Pendukung :</label>
-			<div class="row fileupload-buttonbar">
-                                    <div class="span7">
-                                        
-                                        <span class="btn btn-success fileinput-button">
-                                            <span><i class="icon-plus icon-white"></i> Add files...</span>
-                                            <input type="file" name="userfile" multiple>
-                                        </span>
-                                        <button type="submit" class="btn btn-primary start">
-                                            <i class="icon-upload icon-white"></i> Start upload
-                                        </button>
-                                        <button type="reset" class="btn btn-warning cancel">
-                                            <i class="icon-ban-circle icon-white"></i> Cancel upload
-                                        </button>
-                                        <button type="button" class="btn btn-danger delete">
-                                            <i class="icon-trash icon-white"></i> Delete
-                                        </button>
-                                        <input type="checkbox" class="toggle">
-                                    </div>
-                                    <div class="span5">
-                                        <!-- The global progress bar ->
-                                        <div class="progress progress-success progress-striped active fade">
-                                            <div class="bar" style="width:0%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- The loading indicator is shown during image processing ->
-                                <div class="fileupload-loading"></div>
-                                <br>
-                                <!-- The table listing the files available for upload/download ->
-                                <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
-                </div>                
+				  <!-- The fileinput-button span is used to style the file input field as button -->
+					<span class="btn btn-success fileinput-button">
+						<i class="icon-plus icon-white"></i>
+						<span>Tambah file...</span>
+						<!-- The file input field used as target for the file upload widget -->
+						<input id="fileupload" type="file" name="files[]" multiple>
+					</span>
+					<br>
+					<br>
+					<!-- The global progress bar -->
+					<div id="progress" class="progress progress-success progress-striped">
+						<div class="bar"></div>
+					</div>
+					<!-- The container for the uploaded files -->
+					<div id="files" class="files"></div>
+					<br>
+			</div>
 			<!-- end upload data pendukung -->
 			
 		</form>
@@ -526,4 +547,37 @@
         });
     </script>
     
+     
+ 
 	<div class="popdesc" id="popdesc<?=$objectId?>">pops</div>
+
+ 	
+<script type="text/javascript" >
+/*jslint unparam: true */
+/*global window, $ */
+
+$(function () {
+    'use strict';
+
+    // Change this to the location of your server-side upload handler:
+    var url = window.location.hostname === 'blueimp.github.io' ?
+                '//jquery-file-upload.appspot.com/' : 'server/php/';
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+</script>

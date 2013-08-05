@@ -23,7 +23,7 @@
     <div class="header_content">
   
     <div class="logo"><a href="<?=base_url();?>portal">home</a></div>
-    <div class="title"><h1>e-Perfomance</h1><h2>Sistem Informasi Pengukuran Kinerja Kementerian Perhubungan</h2></div>
+    <div class="title"><h1>e-Performance</h1><h2>Sistem Informasi Pengukuran Kinerja Kementerian Perhubungan</h2></div>
     
     <div class="menu">
        <ul>
@@ -44,7 +44,7 @@
 	<h3 class="lefthead">Informasi</h3>
     <div class="leftbox grd">
         <ul class="borderedlist">
-            <li><a href="<?=base_url()?>portal/page/about" title="">Tentang e-Perfomance</a></li>
+            <li><a href="<?=base_url()?>portal/page/about" title="">Tentang e-Performance</a></li>
             <li><a href="<?=base_url()?>portal/page/akip" title="">Sistem AKIP</a></li>
             <li><a href="<?=base_url()?>portal/page/regulasi" title="">Regulasi Terkait</a></li>
             <li><a href="<?=base_url()?>portal/page/faq" title="">FAQ</a></li>
@@ -61,7 +61,7 @@
     <? }else{?>
         <h3 class="typo">LOGIN Aplikasi</h3>
         <hr/>
-        <p>Masukkan username dan password Anda untuk masuk aplikasi e-Perfomance</p>
+        <p>Masukkan username dan password Anda untuk masuk aplikasi e-Performance</p>
         <form class="front" id="formLogin" method="post" action="<?=base_url();?>security/login/login_usr/portal">
         <input name="username" type="text"  id="username_id" title="Username"/>
         <input name="password" type="password" id="password" title="Password" onkeypress="runScript(event)"/>

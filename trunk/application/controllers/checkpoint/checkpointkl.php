@@ -181,5 +181,27 @@ class Checkpointkl extends CI_Controller {
 		echo $this->checkpointkl_model->getDetail($tahun, $kode_kl, $kode_sasaran_kl);
 	}
 	
+	
+	 function uploadifyUploader()
+        {
+           
+           if (!empty($_FILES))
+               {
+                $tempFile = $_FILES['Filedata']['tmp_name'];
+                $targetPath = './uploads/';
+                $targetFile =  str_replace('//','/',$targetPath) . $_FILES['Filedata']['name'];
+
+                 if ( ! @copy($tempFile,$targetFile))
+                        {
+                                if ( ! @move_uploaded_file($tempFile,$targetFile))
+                                {
+                                        echo "error";
+                                }
+                                else echo str_replace($_SERVER['DOCUMENT_ROOT'],'',$targetFile);
+                        }
+                 else echo str_replace($_SERVER['DOCUMENT_ROOT'],'',$targetFile);
+            } 
+        }
+	
 }
 ?>

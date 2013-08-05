@@ -481,9 +481,27 @@ class Sys_menu_model extends CI_Model
 		return $this->isCan(6,$menu_id,$group_id);
 	}
 	
-	
+	public function getAutoTab($group_id){
+/*
+		$this->db->select('*');
+		$this->db->from('tbl_menu');
+		$this->db->where_like('policy','%AUTOTAB;%',false);
+*/
+		$sql = "select tbl_menu.* from tbl_menu inner join tbl_group_access g on tbl_menu.menu_id = g.menu_id where g.policy like '%AUTOTAB;%'  and hide<>1 and group_id ='$group_id' ";//like '%$app_type%'  ";
+		$query = $this->db->query($sql);
+		$response = array();//stdClass();
+/*
+		$i=0;
+		foreach ($query->result() as $row){
+			$response[]=array($row->menu_name,$row->url);
+			$i++;
+		}
+		$query->free_result();
+*/
+		return $query->result();
+	}
 	
 }
 
-//b_express/application/model/bengkel/mekanik_model.php
+
 ?>

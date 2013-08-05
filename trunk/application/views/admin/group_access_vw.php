@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    var jmlAuto = 0;
 	selectModul = function(policy,modulName){
 		var compId = "chk"+policy+modulName;
 		alert($(this).attr("checked"));
@@ -7,13 +8,43 @@
 		}
 		
 	}
+	$("input[class='chkAutoTab']").live("click",function(){
+		var b = $('.chkAutoTab');
+						//alert($b.filter(':checked').length);
+						var jmlCheck = b.filter(':checked').length;
+						if (jmlCheck>3){
+							$(this).prop("checked", false);
+							alert("Maaf, jumlah auto Tab tidak boleh melebih 3 menu");
+						//	$(this).removeAttr("checked");
+							
+						//	return false;
+							}
+						//else return true;
+		
+		/*if ($(this).is(":checked")){
+			jmlAuto--;
+		}else if($(this).is(":not(:checked)")){
+			jmlAuto++;
+		}
+		alert(jmlAuto);*/
+	});
 	
 	saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: base_url+'admin/group_access/save',
+					
 					onSubmit: function(){
-						//alert("kadie");
-						return true;///$(this).form('validate');
+						
+						//var $b = $('input[type=checkbox]');
+						var b = $('.chkAutoTab');
+						//alert($b.filter(':checked').length);
+						var jmlCheck = b.filter(':checked').length;
+						if (jmlCheck>3){
+							alert("Maaf, jumlah auto Tab tidak boleh melebih 3 menu");
+							return false;
+							}
+						else return true;
+						//return (jmlCheck<3);///$(this).form('validate');
 					},
 					success: function(result){
 						//alert(result);
@@ -236,8 +267,10 @@
 				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Excel&nbsp;</td>
 				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Import&nbsp;</td>
 				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Proses&nbsp;</td>			  			  
+				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Auto Tab&nbsp;</td>			  			  
 				</tr>
 				<tr>
+				  <td>&nbsp;</td>
 				  <td>&nbsp;</td>
 				  <td>&nbsp;</td>
 				  <td>&nbsp;</td>

@@ -315,7 +315,7 @@
 		<th field="realisasi" sortable="true" width="50px" align="right" formatter="formatPrice">Realisasi</th>
 		<th field="realisasi_persen" sortable="true" width="35px" align="right" formatter="formatPrice">Realisasi<br>(%)</th>
 		<th field="keterangan" sortable="true" width="80px">Keterangan</th>
-			<th field="action_plan" sortable="true" width="80px">Action Plan</th>
+			<th field="action_plan" sortable="true" width="80px">Rencana Aksi</th>
 	  </tr>
 	  </thead>
 	</table>

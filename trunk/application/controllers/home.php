@@ -30,7 +30,7 @@ class Home extends CI_Controller {
 		//$data['title'] =$this->session->userdata('userlogin');
 	  
 		//$data['menuList'] =  $this->sys_menu_model->prepareMenuManual();//($this->session->userdata('groupId'),'');
-		
+		$data['listAutoTab'] = $this->sys_menu_model->getAutoTab($this->session->userdata('group_id'));
 		$this->load->view('home_vw',$data);
 		//$this->load->view('footer_vw',$data);
 	}
