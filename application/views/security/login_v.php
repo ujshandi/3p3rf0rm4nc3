@@ -88,7 +88,7 @@
 	<!--Login div-->
 	<div class="clear"></div>
 	<div id="versionBar">
-		<div class="copyright" > Copyright 2012  All Rights Reserved <span class="tip"><a href="#" style="color:#A31F1A" title="Kemenhub">Biro Perencanaan Kementerian Perhubungan</a></span></div>
+		<div class="copyright" > Copyright 2012  All Rights Reserved <span class="tip"><a href="#" style="color:#A31F1A" title="Kemenhub">Kementerian Perhubungan</a></span></div>
   <!-- // copyright-->
 	</div>
 	

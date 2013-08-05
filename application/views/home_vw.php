@@ -502,7 +502,7 @@
 		<div class="bg">
 		  
 			<div class="logo"><a href="<?=base_url()?>">home</a></div>
-			<div class="title"><h1>e-Perfomance</h1><h2>Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan</h2><!--<h2>Sistem Informasi Pengukuran Kinerja Kementerian Perhubungan</h2>--></div>
+			<div class="title"><h1>e-Performance</h1><h2>Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan</h2><!--<h2>Sistem Informasi Pengukuran Kinerja Kementerian Perhubungan</h2>--></div>
 			
 			<div class="rpanel">
 				<div class="left">
@@ -585,6 +585,13 @@
 	<script type="text/javascript">
 		setTimeout(function(){
 						//	addTab('Dashboard','dashboard');
+					//	var autotab = <?=$listAutoTab;?>
+						//alert(autoTab);
+						<? foreach ($listAutoTab as $row){?>
+						//	alert("<?=$row->menu_name?>");
+						addTab('<?=$row->menu_name?>','<?=$row->url?>');
+						<? }
+						?>
 						},100);
 	</script>
 </body>

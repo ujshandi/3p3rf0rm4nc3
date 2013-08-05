@@ -145,7 +145,7 @@ $(document).ready(function(){
 								//alert(data.rows[i].deskripsi);
 								objArrayData.push(parseFloat(data.rows[i].persen));
 						//		objArrayData2.push([parseFloat(rata_rata),i+1]);
-								//objArrayData2.push(parseFloat(data.rows[i].persen100));
+								objArrayData2.push(parseFloat(data.rows[i].persen100));
 								ticks.push((i+1));
 							}
 						 $.each(obj, function(key, value) {
@@ -160,7 +160,7 @@ $(document).ready(function(){
 							gridLineColor: 'rgb(235,235,235)',
 							drawGridlines: true
 						};
-						 var plotchartCapaianKL<?=$objectId?> = jQuery.jqplot ('chartCapaianKL<?=$objectId?>', [objArrayData],
+						 var plotchartCapaianKL<?=$objectId?> = jQuery.jqplot ('chartCapaianKL<?=$objectId?>', [objArrayData,objArrayData2],
 							{
 							  title: {
 								text: '',   // title for the plot,

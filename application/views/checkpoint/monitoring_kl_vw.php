@@ -45,17 +45,17 @@
 	
 <div id="chart1<?=$objectId?>" style="height:350px;width:350px;float:left;color:#FFFFFF"></div> 
 <div  style="width:10px;float:left">&nbsp;</div> 
-<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Monitoring Checkpoint Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Monitoring Checkpoint Kementerian"  fitColumns="false" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
-		<th field="tahun" sortable="false" width="60">Tahun</th>
+		<th field="tahun" sortable="false" width="45">Tahun</th>
 		<th field="kode_kl"   sortable="false" width="50">Kode KL</th>
 		<th field="nama_kl" align="left" sortable="false" width="200">Nama KL</th>
-		<th field="jml_iku" align="right"  sortable="false" width="70">Jml.Iku</th>	
-		<th field="sangat_puas" align="right"  sortable="false" width="160">Sangat Memuaskan</th>	
-		<th field="puas" align="right"  sortable="false" width="100">Memuaskan</th>	
-		<th field="kurang_puas" align="right"  sortable="false" width="160">Kurang Memuaskan</th>	
-		<th field="kecewa" align="right"  sortable="false" width="120">Mengecewakan</th>	
+		<th field="jml_iku" align="right"  sortable="false" width="50">Jml.Iku</th>	
+		<th field="sangat_puas" align="center"  sortable="false" width="75">Sangat <br> Memuaskan</th>	
+		<th field="puas" align="center"  sortable="false" width="75">Memuaskan</th>	
+		<th field="kurang_puas" align="center"  sortable="false" width="75">Kurang <br> Memuaskan</th>	
+		<th field="kecewa" align="center"  sortable="false" width="90">Mengecewakan</th>	
 	  </tr>
 	  </thead> 
 	</table>
@@ -68,12 +68,36 @@ $(document).ready(function(){
 
 	searchData<?=$objectId;?> = function (){
 				//inisialisasi jqplot
-						
-						 var objArrayData=[];
-						  objArrayData.push(["Sangat Memuaskan", parseFloat(0)]);
+							
+				var filstart = $("#cmbBulanStart<?=$objectId;?>").val();
+				var filend = $("#cmbBulanEnd<?=$objectId;?>").val();				
+				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
+				var filperiode = $("#cmbPeriode<?=$objectId;?>").val();
+				 var objArrayData=[];
+				if(filtahun==null) filtahun ="-1";
+				if(filperiode==null) filperiode ="-1";
+				var pieColor = [ "blue","green","orange","red"];
+				
+/*
+				if (parseInt(filperiode)==12){
+					pieColor = ["green","red"];
+					 objArrayData.push(["Memenuhi", parseFloat(0)]);
+						  objArrayData.push(["Tidak Memenuhi", parseFloat(0)]);
+						  
+				}else{
+*/
+					 objArrayData.push(["Sangat Memuaskan", parseFloat(0)]);
 						  objArrayData.push(["Memuaskan", parseFloat(0)]);
 						  objArrayData.push(["Kurang Memuaskan", parseFloat(0)]);
-						  objArrayData.push(["Mengecewakan", parseFloat(0)]);
+						  objArrayData.push(["Mengecewakan", parseFloat(0)]);	
+				//}
+				
+				if (parseInt(filstart)>parseInt(filend)){
+					alert("Periode Bulan tidak bisa diproses");
+					return;
+				}
+						
+						 
 						  var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
 							  gridPadding: {top:0, bottom:38, left:10, right:0},
@@ -91,20 +115,10 @@ $(document).ready(function(){
 									location:'s',
 									marginTop: '15px'
 								},    
-								seriesColors: [ "blue","green","orange","red"],   
+								seriesColors:pieColor,   
 							  series:[{lineWidth:3, markerOptions:{style:'square'}}]
 							}); //end inisialisasijqplot
-				
-				var filstart = $("#cmbBulanStart<?=$objectId;?>").val();
-				var filend = $("#cmbBulanEnd<?=$objectId;?>").val();				
-				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
-				var filperiode = $("#cmbPeriode<?=$objectId;?>").val();
-				if(filtahun==null) filtahun ="-1";
-				if(filperiode==null) filperiode ="-1";
-				if (parseInt(filstart)>parseInt(filend)){
-					alert("Periode Bulan tidak bisa diproses");
-					return;
-				}
+			
 				$('#dg<?=$objectId;?>').datagrid({
 					url:"<?=base_url()?>checkpoint/monitoring_kl/grid/"+filtahun+"/"+filperiode,
 					//queryParams:{lastNo:'0'},	
@@ -136,7 +150,7 @@ $(document).ready(function(){
 									location:'s',
 									marginTop: '15px'
 								},       
-									seriesColors: [ "blue","green","orange","red"]	
+								seriesColors:pieColor
 							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]
 							}    
 						  );
