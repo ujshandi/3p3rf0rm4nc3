@@ -123,6 +123,8 @@ class Checkpointkl extends CI_Controller {
 		$dt['capaian'] = $this->input->post("capaian", TRUE); 
 		$dt['purpose'] = $this->input->post("purpose", TRUE);
 		$dt['nama_folder_pendukung'] = $this->input->post("nama_folder_pendukung", TRUE);
+		if ($dt['nama_folder_pendukung']=="")
+			$dt['nama_folder_pendukung'] = base_url().'upload/pendukung/kl/'.$dt['id_pk_kl'].'/'.$dt['periode'];
 		return $dt;
     }
 	
@@ -205,6 +207,15 @@ class Checkpointkl extends CI_Controller {
 		} else {
 			echo json_encode(array('msg'=>'Some errors occured uy.', 'data'=> ''));
 		}
+	}
+	
+	function deleteFile($kd_kl,$id_pk_kl,$periode,$file){
+		$url = "./".$this->getPath_img_upload_folder().$kd_kl.'/'.$id_pk_kl.'/'.$periode.'/'.urldecode($file);
+		$success = is_file($url);
+		 if ($success) {
+			 $success=unlink($url); 
+		}
+		echo $success;
 	}
 	
 	function delete($id=''){
@@ -450,6 +461,33 @@ public function deleteImage() {
              array($this, 'get_file_object'), scandir($this->getPath_img_upload_folder())
                    )));
     }
+	
+	public function getListFile($kd_kl,$id_pk_kl,$periode){
+		$url = "./".$this->getPath_img_upload_folder().$kd_kl.'/'.$id_pk_kl.'/'.$periode.'/';
+		$data =get_dir_file_info($url);
+		$rs = '';
+		if ($data != null) {
+			foreach($data as $row){
+				if ($row['name']=='thumbnail') continue;
+				$rs .= '<tr class="template-download fade">';	
+				//$fileInfo=get_file_info($url.$row['name'],"size,date");
+				$filename=$row['name'];
+				$urlDelete="'".$kd_kl."','".$id_pk_kl."','".$periode."','".$filename."'";
+				//
+				$rs .= ''
+				.'<td class="name">'.$row['name'].'</td>'
+				.'<td  class="size"></td><td colspan="2"></td>'			
+				.'<td><button class="btn btn-danger delete" onclick="deleteFilePendukung('.$urlDelete.');return false;"><i class="icon-bootstrap-trash icon-bootstrap-white"></i><span>Delete</span></button> ' 
+										.'</td>'
+				.'</tr>';
+			}
+		}	
+		
+		echo $rs;
+		//$rs = scandir($url);
+		//header('Content-type: application/json');
+        //echo json_encode($rs);           
+	}
 
 
     public function getPath_img_upload_folder() {

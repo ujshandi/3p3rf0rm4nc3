@@ -308,18 +308,19 @@ class rseselon1_model extends CI_Model
 								  <textarea name=detail['.$i.'][keterangan] cols="60"></textarea>
 								</div>
 								<div class="fitem">
-								  <label style="width:150px">Action Plan :</label>
+								  <label style="width:150px">Rencana Aksi :</label>
 								  <textarea name=detail['.$i.'][action_plan] cols="60"></textarea>
 								</div>
 								<!--<div class="fitem">
 								  <label style="width:150px">Persentase Capaian :</label>
 								  <input name=detail['.$i.'][realisasi_persen] value="" size="15">
 								</div>-->';
-			//if($i == $akhir){
+			// dibuka dl request p.Toto 2013.08.16
+			if($i == $akhir){
 				$out .='<br><div class="fitem">';
 				$out .= '<label style="width:150px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Simpan" />';
 				$out .='</div>';
-			//}
+			}
 			
 		//ditutup coz data eselon 2 semua di hide	$out .=  $this->getPendukung($tahun, $triwulan, $kode_sasaran_e1, $row[$i]->kode_iku_e1);
 			

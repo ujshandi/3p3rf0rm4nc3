@@ -175,7 +175,20 @@ class Checkpointe1_model extends CI_Model
 		$this->db->free_result();
 	}
 	
-	
+	public function isExist($id_pk_e1,$periode){	
+		
+			$this->db->where('id_pk_e1',$id_pk_e1); //buat validasi
+		
+			$this->db->where('periode',$periode); //buat validasi
+			
+		$this->db->select('*');
+		$this->db->from('tbl_checkpoint_e1');
+						
+		$query = $this->db->get();
+		$rs = $query->num_rows() ;		
+		$query->free_result();
+		return ($rs>0);
+	}
 	
 	public function getDataEdit($id){
 		$this->db->flush_cache();
@@ -214,6 +227,7 @@ class Checkpointe1_model extends CI_Model
 				$this->db->set('ukuran',$data['ukuran']);
 				$this->db->set('target',$data['target']);
 				$this->db->set('keterangan',$data['keterangan']);
+				$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
 				if ($data['purpose']=='Capaian')
 					$this->db->set('capaian',$data['capaian']);
 				$this->db->set('log_insert', 	$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
@@ -257,12 +271,13 @@ class Checkpointe1_model extends CI_Model
 		
 			//$this->db->set('id_pk_e1',$data['id_pk_e1']);
 				$this->db->set('unit_kerja',$data['unit_kerja']);
-				if ($data['purpose']=='Rencana')
-					$this->db->set('periode',$data['periode']);
+				//if ($data['purpose']=='Rencana')
+					//$this->db->set('periode',$data['periode']);  ga bisa edit
 				$this->db->set('kriteria',$data['kriteria']);
 				$this->db->set('ukuran',$data['ukuran']);
 				$this->db->set('target',$data['target']);
 				$this->db->set('keterangan',$data['keterangan']);
+				$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
 				if ($data['purpose']=='Capaian')
 					$this->db->set('capaian',$data['capaian']);
 				$this->db->set('log_update', 	$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));

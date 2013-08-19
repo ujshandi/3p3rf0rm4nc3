@@ -18,6 +18,7 @@
 				if (row){
 					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add <?=$purpose?> Checkpoint Kementerian');  
 					$('#fm<?=$objectId;?>').form('clear');  
+					$("#cmbPeriode<?=$objectId?>").prop('disabled', false);
 					url = base_url+'checkpoint/checkpointkl/save';  
 					$("#deskripsi_iku_kl<?=$objectId?>").val(row.deskripsi_iku_kl);
 					$("#deskripsi_sasaran_kl<?=$objectId?>").val(row.deskripsi_sasaran_kl);
@@ -26,9 +27,10 @@
 					$("#purpose<?=$objectId?>").val('<?=$purpose?>');
 					$("#kd_kl<?=$objectId?>").val(row.kode_kl);
 					$("#cmbPeriode<?=$objectId?>").val(<?=date("n")?>);
+					$('#files').empty();
 					//$("#nama_folder_pendukung<?=$objectId?>").val(row.nama_folder_pendukung);
 					getFolderName<?=$objectId?>();
-					prepareUpload();
+					prepareUpload<?=$objectId?>();
 				}	
 				//addTab("Add PK Kementerian", "checkpoint/checkpointkl/add");
 			}
@@ -51,7 +53,9 @@
 						var data = eval('('+data+')');
 							$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit <?=$purpose?> Checkpoint Kementerian');  
 						$('#fm<?=$objectId;?>').form('clear');  
+						$('#files').empty();
 						url = base_url+'checkpoint/checkpointkl/save';  
+						$("#cmbPeriode<?=$objectId?>").prop('disabled', 'disabled');
 						$("#deskripsi_iku_kl<?=$objectId?>").val(data.deskripsi_iku_kl);
 						$("#deskripsi_sasaran_kl<?=$objectId?>").val(data.deskripsi_sasaran_kl);
 						$("#id_pk_kl<?=$objectId?>").val(data.id_pk_kl);
@@ -67,6 +71,8 @@
 						$("#kd_kl<?=$objectId?>").val(row.kode_kl);
 						$("#nama_folder_pendukung<?=$objectId?>").val(row.nama_folder_pendukung);
 						$("#purpose<?=$objectId?>").val('<?=$purpose?>');
+						getListFilePendukung(data.kode_kl,data.id_pk_kl,data.periode);
+						prepareUpload<?=$objectId?>();
 					}});
 					
 				//}	
@@ -145,7 +151,7 @@
 					queryParams:{lastNo:'0'},	
 					pageNumber : 1,
 					onLoadSuccess:function(data){	
-						$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
+				//		$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
 				}});
 			}
@@ -200,7 +206,7 @@
 
 			
 			setTimeout(function(){
-				searchData<?=$objectId;?>();
+				//searchData<?=$objectId;?>();
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>checkpoint/checkpointkl/grid"});
 			},0);
 			
@@ -219,6 +225,32 @@
 			$("#cmbPeriode<?=$objectId?>").change(function(){
 					getFolderName<?=$objectId?>();
 			})
+			
+			deleteFilePendukung = function(kode_kl,id_pk_kl, periode,file){
+				jQuery.ajax({
+					url:base_url+'checkpoint/checkpointkl/deleteFile/'+kode_kl+'/'+id_pk_kl+'/'+periode+'/'+file,
+					success: function(data, textStatus,jqXHR){
+						$('#files').empty();
+						getListFilePendukung(kode_kl,id_pk_kl, periode);
+					},
+					error: function(jqXHR, textStatus, error){
+							alert(error);
+							return false;
+					}
+				});
+			}
+			
+			getListFilePendukung = function(kode_kl,id_pk_kl, periode){
+				jQuery.ajax({
+					url:base_url+'checkpoint/checkpointkl/getListFile/'+kode_kl+'/'+id_pk_kl+'/'+periode,
+					success: function(data, textStatus,jqXHR){
+						if (data==null) return false;
+						var row = $(data);
+						row.appendTo('#files');
+
+					}//end success
+				});
+			}
 			
 			
 			
@@ -623,8 +655,8 @@
 		-->
 	  </div>
 	</div>
-	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto"
+	<!-- class="easyui-datagrid" -->
+	<table id="dg<?=$objectId;?>"  style="height:auto;width:auto"
 	 title="Data Checkpoint Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
@@ -646,7 +678,7 @@
 	
 	<!-- Area untuk Form Add/Edit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="padding:10px 20px" closed="true"  buttons="#dlg-buttons">
 		<!----------------Edit title-->
 		<!--<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Rencana Checkpoint Kementerian</div> -->
 		<form id="fm<?=$objectId;?>" method="post" enctype="multipart/form-data">
@@ -703,27 +735,7 @@
 				<input name="keterangan" size="60" id="keterangan<?=$objectId?>" class="easyui-validatebox">
 			</div>
 			<!-- upload data pendukung -->
-		<!-- basic 
-			<div class="fitem">
-				<label style="width:130px;vertical-align:top">Data Pendukung :</label>
-				  <!-- The fileinput-button span is used to style the file input field as button ->
-					<span class="btn btn-success fileinput-button">
-						<i class="icon-plus icon-whichmod(base_url."upload/barang/".$tmp['file_name'], 755); te"></i>
-						<span>Tambah file...</span>
-						<!-- The file input field used as target for the file upload widget ->
-						<input id="fileupload" type="file" name="fileupload" multiple>
-					</span>
-					<br>
-					<br>
-					<-- The global progress bar ->
-					<div id="progress" class="progress progress-success progress-striped">
-						<div class="bar"></div>
-					</div>
-					<-- The container for the uploaded files ->
-					<div id="files" class="files"></div>
-					<br>
-			</div>
-			end basic -->
+		
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Data Pendukung :</label>
 					<div class="row fileupload-buttonbar">
@@ -732,7 +744,7 @@
 						<span class="btn btn-success fileinput-button">
 							<i class="icon-bootstrap-plus icon-bootstrap-white"></i>
 							<span>Tambah file...</span>  <!-- files[] -->
-							<input id="fileupload" type="file" name="files[]" >
+							<input id="fileupload<?=$objectId?>" type="file" name="files[]" >
 						</span>
 						<!--<button type="submit" class="btn btn-primary start">
 							<i class="icon-bootstrap-upload icon-bootstrap-white"></i>
@@ -785,6 +797,7 @@
 			var parentId;
 			// chan
 			$('#dg<?=$objectId;?>').datagrid({
+				url:getUrl<?=$objectId;?>(1),	
 				view: detailview,
 				queryParams:{rowIdx:'0'},	
 				 detailFormatter:function(index,row){
@@ -864,7 +877,7 @@
 			});
 			
 			
-            ;
+            //searchData<?=$objectId;?>();
         });
     </script>
     
@@ -888,9 +901,9 @@
 <script src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload-process.js"></script>
 <!-- The File Upload image preview & resize plugin -->
 <script src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload-image.js"></script>
-<!-- The File Upload audio preview plugin -->
+<!-- The File Upload audio preview plugin 
 <script src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload-audio.js"></script>
-<!-- The File Upload video preview plugin -->
+<!-- The File Upload video preview plugin
 <script src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload-video.js"></script>
 <!-- The File Upload validation plugin -->
 <script src="<?=base_url()?>public/js/jQuery-File-Upload-8.6.0/js/jquery.fileupload-validate.js"></script>
@@ -900,18 +913,11 @@
 /*jslint unparam: true */
 /*global window, $ */
 	//prepare upload
-	prepareUpload = function(){
-		//alert("kadie");
-/*
-		if ($("#cmbPeriode<?=$objectId?>").val()==""){
-				alert("Periode belum dipilih");
-				$("#cmbPeriode<?=$objectId?>").focus();
-				return;
-		}
-*/
+	prepareUpload<?=$objectId?> = function(){
+
 	      url =  base_url+'checkpoint/checkpointkl/upload';
 
-			jQuery('#fileupload').unbind('fileupload').fileupload({
+			jQuery('#fileupload<?=$objectId?>').unbind('fileupload').fileupload({
 				url: base_url+'checkpoint/checkpointkl/upload/'+$("#kd_kl<?=$objectId?>").val()+'/'+$("#id_pk_kl<?=$objectId?>").val()+'/'+$("#cmbPeriode<?=$objectId?>").val(),
 				dataType: 'json',
 				maxFileSize: 5000000, // 5 MB
@@ -929,7 +935,7 @@
 						var row = $('<tr class="template-download fade">' +
 							(file.error ? '<td></td><td class="name"></td>' +
 								'<td class="size"></td><td class="error" colspan="2"></td>' :
-									'<td class="preview"></td>' +
+								//	'<td class="preview"></td>' +
 										'<td class="name"><a></a></td>' +
 										'<td class="size">&nbsp;</td><td colspan="2"></td>'
 							) + '<td><button class="btn btn-danger delete" ><i class="icon-bootstrap-trash icon-bootstrap-white"></i><span>Delete</span></button> ' +
@@ -950,7 +956,7 @@
 							}
 							row.find('a').prop('href', file.url);
 						//	var deleteUrl = base_url+"checkpoint_kl/upload/"+$("#kd_kl<?=$objectId?>").val()+'/'+$("#id_pk_kl<?=$objectId?>").val()+'/'+$("#cmbPeriode<?=$objectId?>").val();
-							var deleteUrl = base_url+"checkpoint/chekcpoint_kl/upload/"+$("#kd_kl<?=$objectId?>").val()+'/'+$("#id_pk_kl<?=$objectId?>").val()+'/'+$("#cmbPeriode<?=$objectId?>").val()+"/?file="+file.name;
+							var deleteUrl = base_url+"checkpoint/chekcpointkl/upload/"+$("#kd_kl<?=$objectId?>").val()+'/'+$("#id_pk_kl<?=$objectId?>").val()+'/'+$("#cmbPeriode<?=$objectId?>").val()+"/?file="+file.name;
 							row.find('.delete')
 								.attr('data-type', file.deleteType)
 								.attr('data-url', file.deleteUrl);//file.deleteUrl);
@@ -1066,111 +1072,6 @@
 	}
 	//end prepare upload
 
- $(document).ready(function() {
-	 
-	
-    // Change this to the location of your server-side upload handler:
-    var url = window.location.hostname === 'blueimp.github.io' ?
-                '//jquery-file-upload.appspot.com/' : 'server/php/';
-                
-	
-	
-		
-				//basic plus
-/*
-			jQuery('#fileupload').fileupload({
-				url: url,
-				dataType: 'json',
-				autoUpload: false,
-				acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-				maxFileSize: 5000000, // 5 MB
-				// Enable image resizing, except for Android and Opera,
-				// which actually support image resizing, but fail to
-				// send Blob objects via XHR requests:
-				disableImageResize: /Android(?!.*Chrome)|Opera/
-					.test(window.navigator.userAgent),
-				previewMaxWidth: 100,
-				previewMaxHeight: 100,
-				previewCrop: true
-			}).on('fileuploadadd', function (e, data) {
-				data.context = $('<div/>').appendTo('#files');
-				$.each(data.files, function (index, file) {
-					var node = $('<p/>')
-							.append($('<span/>').text(file.name));
-					if (!index) {
-						node
-							.append('<br>')
-							.append(uploadButton.clone(true).data(data));
-					}
-					node.appendTo(data.context);
-				});
-			}).on('fileuploadprocessalways', function (e, data) {
-				var index = data.index,
-					file = data.files[index],
-					node = $(data.context.children()[index]);
-				if (file.preview) {
-					node
-						.prepend('<br>')
-						.prepend(file.preview);
-				}
-				if (file.error) {
-					node
-						.append('<br>')
-						.append(file.error);
-				}
-				if (index + 1 === data.files.length) {
-					data.context.find('button')
-						.text('Upload')
-						.prop('disabled', !!data.files.error);
-				}
-			}).on('fileuploadprogressall', function (e, data) {
-				var progress = parseInt(data.loaded / data.total * 100, 10);
-				$('#progress .bar').css(
-					'width',
-					progress + '%'
-				);
-			}).on('fileuploaddone', function (e, data) {
-				$.each(data.result.files, function (index, file) {
-					var link = $('<a>')
-						.attr('target', '_blank')
-						.prop('href', file.url);
-					$(data.context.children()[index])
-						.wrap(link);
-				});
-			}).on('fileuploadfail', function (e, data) {
-				$.each(data.result.files, function (index, file) {
-					var error = $('<span/>').text(file.error);
-					$(data.context.children()[index])
-						.append('<br>')
-						.append(error);
-				});
-			}).prop('disabled', !$.support.fileInput)
-				.parent().addClass($.support.fileInput ? undefined : 'disabled');
-*/
-			//end basic plus	
-
-/*
-    $('#fileupload').fileupload({
-        url: url,
-        dataType: 'json',
-        autoUpload:true,
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo('#files');
-            });
-        },
-        progressall: function (e, data) {
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#progress .bar').css(
-                'width',
-                progress + '%'
-            );
-        }
-    }).prop('disabled', !$.support.fileInput)
-        .parent().addClass($.support.fileInput ? undefined : 'disabled');
-*/
-
-});
 
 
 

@@ -3,7 +3,13 @@
 class Checkpointe1 extends CI_Controller {
 	
 	var $objectId = 'checkpointe1';
-	
+	protected $path_img_upload_folder;
+    protected $path_img_thumb_upload_folder;
+    protected $path_url_img_upload_folder;
+    protected $path_url_img_thumb_upload_folder;
+
+    protected $delete_img_url;
+    
 	function __construct()
 	{
 		parent::__construct();			
@@ -20,6 +26,19 @@ class Checkpointe1 extends CI_Controller {
 		$this->load->model('/pengaturan/sasaran_eselon1_model');
 		$this->load->model('/rencana/rkteselon1_model');
 		$this->load->library("utility");
+		//upload
+		//Set relative Path with CI Constant
+        $this->setPath_img_upload_folder("upload/pendukung/e1/");
+        $this->setPath_img_thumb_upload_folder("assets/img/articles/thumbnails/");
+
+        
+//Delete img url
+        $this->setDelete_img_url(base_url() . 'checkpoint/checkpointe1/deleteImage/');
+ 
+
+//Set url img with Base_url()
+        $this->setPath_url_img_upload_folder(base_url() . "upload/pendukung/e1/");
+        $this->setPath_url_img_thumb_upload_folder(base_url() . "assets/img/articles/thumbnails/");
 		
 	}
 	
@@ -27,8 +46,9 @@ class Checkpointe1 extends CI_Controller {
 		$data['title'] = 'Penetapan Kinerja Eselon I';	
 		$data['objectId'] = $this->objectId;
 		$data['purpose'] = 'Rencana';
-		$data['listPeriode'] = $this->utility->getListCheckpoint("","cmbPeriode".$this->objectId);
+		$data['listPeriode'] = $this->utility->getListCheckpoint(date("n"),"cmbPeriode".$this->objectId);
 		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
+		$data['nama_folder'] = $this->getFolderName();
 	  	$this->load->view('checkpoint/checkpointe1s_v',$data);
 	}
 	
@@ -60,6 +80,17 @@ class Checkpointe1 extends CI_Controller {
 		
 	  	$this->load->view('checkpoint/checkpointe1_v_edit',$data);
 	}
+	
+	function getFolderName(){
+		//fieldName,$tblName,$condition,$prefix,$suffix,$minLength=5
+		$prefix = "";//$this->utility->getValueFromSQL("select prefix as rs from tbl_prefix where kode_e1 = '$e1'","UNSET");
+		//var_dump($prefix); die;
+		//echo $this->utility->ourGetNextIDNum("nama_folder_pendukung","tbl_checkpoint_kl","",$prefix.".","",10);
+		//return date('y-m-d_H-i-s-u');
+		return 'ga jadi';
+	}
+
+
 	function getDataEdit($id){
 		echo $this->checkpointe1_model->getDataEdit($id);
 	}
@@ -89,6 +120,9 @@ class Checkpointe1 extends CI_Controller {
 		$dt['keterangan'] = $this->input->post("keterangan", TRUE); 
 		$dt['capaian'] = $this->input->post("capaian", TRUE);
 		$dt['purpose'] = $this->input->post("purpose", TRUE);
+		$dt['nama_folder_pendukung'] = $this->input->post("nama_folder_pendukung", TRUE);
+		if ($dt['nama_folder_pendukung']=="")
+			$dt['nama_folder_pendukung'] = base_url().'upload/pendukung/kl/'.$dt['id_pk_kl'].'/'.$dt['periode'];
 		
 		return $dt;
     }
@@ -132,11 +166,15 @@ class Checkpointe1 extends CI_Controller {
 			// validasi detail
 		//	if($this->check_detail($data, $pesan)){
 				
-				if(($data['id_checkpoint_e1']!="")&&($data['id_checkpoint_e1']!=null)){
+			if(($data['id_checkpoint_e1']!="")&&($data['id_checkpoint_e1']!=null)){
 				$result = $this->checkpointe1_model->UpdateOnDb($data);
 			}
 			else
-				$result = $this->checkpointe1_model->InsertOnDb($data);
+				if (!$this->checkpointkl_model->isExist($data['id_pk_kl'],$data['periode'])){
+					$result = $this->checkpointe1_model->InsertOnDb($data);
+				}
+				else
+					$data['pesan_error'] .= 'Data Checkpoint untuk periode ini sudah ada!';	
 /*
 			}else{
 				$data['pesan_error'].= $pesan;
@@ -197,6 +235,137 @@ class Checkpointe1 extends CI_Controller {
 	public function getDetail($tahun="", $kode_e1="", $kode_sasaran_e1=""){
 		echo $this->checkpointe1_model->getDetail($tahun, $kode_e1, $kode_sasaran_e1);
 	}
+	
+	function deleteFile($kd_e1,$id_pk_e1,$periode,$file){
+		$url = "./".$this->getPath_img_upload_folder().$kd_e1.'/'.$id_pk_e1.'/'.$periode.'/'.urldecode($file);
+		$success = is_file($url);
+		 if ($success) {
+			 $success=unlink($url); 
+		}
+		echo $success;
+	}
+	
+	
+	public function upload($kd_kl,$id_pk_kl,$periode)
+    {
+        error_reporting(E_ALL | E_STRICT);
+
+        $this->load->helper("upload.class");
+	//	$name = $_FILES['fileupload']['name'];
+       // $name = strtr($name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+
+// remplacer les caracteres autres que lettres, chiffres et point par _
+
+        // $name = preg_replace('/([^.a-z0-9]+)/i', '_', $name);
+
+        //Your upload directory, see CI user guide
+        $config['upload_dir'] = $this->getPath_img_upload_folder().'/'.$kd_kl.'/'.$id_pk_kl.'/'.$periode.'/';
+        $config['upload_url'] = $this->getPath_img_upload_folder().'/'.$kd_kl.'/'.$id_pk_kl.'/'.$periode.'/';
+  
+        $config['allowed_types'] = 'docx|doc|xls|xlsx|ppt|pptx|gif|jpg|png|JPG|GIF|PNG';
+        $config['max_size'] = '1000';
+     //   $config['file_name'] = $name;
+      //  $config['script_url'] = $name;
+        ///$upload_handler = new UploadHandler($config);
+        $upload_handler = new UploadHandler($config,false);
+
+        header('Pragma: no-cache');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Content-Disposition: inline; filename="files.json"');
+        header('X-Content-Type-Options: nosniff');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
+        header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
+
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'OPTIONS':
+                break;
+            case 'HEAD':
+            case 'GET':
+                $upload_handler->get();
+                break;
+            case 'POST':
+                if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
+                    $upload_handler->delete();
+                } else {
+                    $upload_handler->post();
+                }
+                break;
+            case 'DELETE':
+                $upload_handler->delete();
+                break;
+            default:
+                header('HTTP/1.1 405 Method Not Allowed');
+        }
+
+    }
+    
+    public function getListFile($kd_e1,$id_pk_e1,$periode){
+		$url = "./".$this->getPath_img_upload_folder().$kd_e1.'/'.$id_pk_e1.'/'.$periode.'/';
+		$data =get_dir_file_info($url);
+		$rs = '';
+		if ($data != null) {
+			foreach($data as $row){
+				if ($row['name']=='thumbnail') continue;
+				$rs .= '<tr class="template-download fade">';	
+				//$fileInfo=get_file_info($url.$row['name'],"size,date");
+				$filename=$row['name'];
+				$urlDelete="'".$kd_e1."','".$id_pk_e1."','".$periode."','".$filename."'";
+				//
+				$rs .= ''
+				.'<td class="name">'.$row['name'].'</td>'
+				.'<td  class="size"></td><td colspan="2"></td>'			
+				.'<td><button class="btn btn-danger delete" onclick="deleteFilePendukung('.$urlDelete.');return false;"><i class="icon-bootstrap-trash icon-bootstrap-white"></i><span>Delete</span></button> ' 
+										.'</td>'
+				.'</tr>';
+			}
+		}	
+		
+		echo $rs;
+		//$rs = scandir($url);
+		//header('Content-type: application/json');
+        //echo json_encode($rs);           
+	}
+	
+	public function getPath_img_upload_folder() {
+        return $this->path_img_upload_folder;
+    }
+
+    public function setPath_img_upload_folder($path_img_upload_folder) {
+        $this->path_img_upload_folder = $path_img_upload_folder;
+    }
+
+    public function getPath_img_thumb_upload_folder() {
+        return $this->path_img_thumb_upload_folder;
+    }
+
+    public function setPath_img_thumb_upload_folder($path_img_thumb_upload_folder) {
+        $this->path_img_thumb_upload_folder = $path_img_thumb_upload_folder;
+    }
+
+    public function getPath_url_img_upload_folder() {
+        return $this->path_url_img_upload_folder;
+    }
+
+    public function setPath_url_img_upload_folder($path_url_img_upload_folder) {
+        $this->path_url_img_upload_folder = $path_url_img_upload_folder;
+    }
+
+    public function getPath_url_img_thumb_upload_folder() {
+        return $this->path_url_img_thumb_upload_folder;
+    }
+
+    public function setPath_url_img_thumb_upload_folder($path_url_img_thumb_upload_folder) {
+        $this->path_url_img_thumb_upload_folder = $path_url_img_thumb_upload_folder;
+    }
+
+    public function getDelete_img_url() {
+        return $this->delete_img_url;
+    }
+
+    public function setDelete_img_url($delete_img_url) {
+        $this->delete_img_url = $delete_img_url;
+    }
 	
 }
 ?>
