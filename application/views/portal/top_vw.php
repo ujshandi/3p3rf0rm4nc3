@@ -71,7 +71,7 @@
         </form>
     <? }?>
     </div>
-    
+   <!--
     <h3 class="lefthead">Link Terkait</h3>
     <div class="leftbox grd">
         <ul class="borderedlist">
@@ -83,5 +83,5 @@
                 <li class="<?=(++$i === $numItems)?'last':'';?>"><a href="http://<?=$link->url?>" title=""><?=$link->content_title?></a></li>
             <? }?>
         </ul>
-    </div>
+    </div> -->
 </div><!--end block left-->
