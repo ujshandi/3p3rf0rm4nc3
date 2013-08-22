@@ -110,7 +110,8 @@ group by tahun,kode_kl, nama_kl*/
 */
 			//============================================================
 			//utk kepentingan export pdf===================
-				//$pdfdata[] = array($no,$response->rows[$i]['indikator_kinerja'],$response->rows[$i]['satuan'],$response->rows[$i]['target'],$response->rows[$i]['bulan1'],$response->rows[$i]['bulan2'],$response->rows[$i]['bulan3'],$response->rows[$i]['bulan4'],$response->rows[$i]['bulan5'],$response->rows[$i]['bulan6'],$response->rows[$i]['bulan7'],$response->rows[$i]['bulan8'],$response->rows[$i]['bulan9'],$response->rows[$i]['bulan10'],$response->rows[$i]['bulan11'],$response->rows[$i]['bulan12'],$response->rows[$i]['persen']);
+			if ($purpose==2)
+				$pdfdata[] = array($response->rows[$i]['deskripsi'],$response->rows[$i]['satuan'],$response->rows[$i]['persen'],$response->rows[$i]['status']);
 			//============================================================
 			
 				$i++;

@@ -56,7 +56,7 @@ class Eselon1_model extends CI_Model
 				
 
 				//$pdfdata[] = array($i+1,$response->rows[$i]['kode_e1'],$response->rows[$i]['kode_kl'],$response->rows[$i]['nama_e1'],$response->rows[$i]['singkatan'],$response->rows[$i]['nama_dirjen'],$response->rows[$i]['nip'],$response->rows[$i]['pangkat'],$response->rows[$i]['gol']);
-				$pdfdata[] = array($i+1,$response->rows[$i]['nama_e1'],$response->rows[$i]['singkatan'],$response->rows[$i]['nama_dirjen'],$response->rows[$i]['nip'],$response->rows[$i]['pangkat'],$response->rows[$i]['gol']);
+				$pdfdata[] = array($i+1,$response->rows[$i]['nama_e1'],$response->rows[$i]['singkatan'],$response->rows[$i]['nama_dirjen'],$response->rows[$i]['nip'],$response->rows[$i]['pangkat'],$response->rows[$i]['gol'],$response->rows[$i]['kode_e1']);
 				unset($row->nama_kl);
 				
 				$i++;
