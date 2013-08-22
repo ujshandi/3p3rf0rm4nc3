@@ -1,9 +1,39 @@
+ <!--[if IE]><script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/excanvas.js"></script><![endif]-->
+ 
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.pieRenderer.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.css" />
+
 <div id="rt">
 	<div class="slider">
 		<div class="flexslider">
             <ul class="slides">
                 <li>
-                    <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image1.jpg" alt="" title="" border="0"/></a>
+                    <!--<a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image1.jpg" alt="" title="" border="0"/></a> -->
+                    <div id="dashboardFrontKl" style="height:350px;width:350px;float:left;color:#FFFFFF"></div> 
+                    <table width="100%">
+					  <thead>
+						<th>No</th>
+						<th>Nomor Regulasi</th>
+						<th>Deskripsi</th>
+						<th>Link Download</th>
+					  </thead>
+					  <tbody>
+						<?
+						//	$i=($offset)?$offset:0;
+							//foreach ($regulasi->result() as $reg) {
+								$i=0;
+								$i++;
+								echo '<tr>';
+								echo '<td>'.$i.'</td>';
+								echo '<td>tes</td>';
+								echo '<td>tes</td>';
+								echo "<td></td>";//<a href='{$reg->url}'>Download</a>
+								echo '</tr>';
+						//	}
+						?>
+					  </tbody>
+					</table>
                     <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
                 </li>
                 <li>
@@ -23,7 +53,7 @@
     </div><!--end slider-->
     <div class="big-shadow"></div>
     
-    <div class="center_content">
+    <div class="center_content"  style="display:none">
         <?if($latest_news){?>
     	<div class="page_title"><h1>Latest News</h1></div>
         <div class="article_wrapper color">
@@ -81,5 +111,12 @@
 $('.flexslider').flexslider({
 	  animation: "slide",
 });
+$(document).ready(function(){
+		$.jqplot('dashboardFrontKl',  
+			[[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]],
+			{gridPadding: {top:50, bottom:38, left:10, right:0}}
+		);
+});
+
 
 </script>

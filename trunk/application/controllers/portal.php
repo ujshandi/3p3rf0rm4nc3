@@ -11,6 +11,7 @@ class Portal extends CI_Controller {
 		$this->load->helper('ckeditor');			
 		$this->load->model('/security/sys_menu_model');		
 		$this->load->model('portal_model');		
+		$this->load->model('/dashboard/dsb_kl_model');
 		
 		$this->data = array(
 				
@@ -357,6 +358,13 @@ class Portal extends CI_Controller {
 		$this->load->view('portal/top_vw',$data);
 		$this->load->view($view,$data);
 		$this->load->view('portal/bottom_vw',$data);
+	}
+	
+	
+	//buat dashboard
+	function getDataDashboarKl(){
+		$filtahun = 2012;
+		echo $this->dsb_kl_model->easyGrid($filtahun);
 	}
 	
 }

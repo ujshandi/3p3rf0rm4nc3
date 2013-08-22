@@ -97,7 +97,7 @@ html[xmlns] .slides {display: block;}
 .flex-control-nav li a {width: 13px; height: 13px; display: block; cursor: pointer; text-indent: -9999px;}
 .flex-control-nav li a:hover {background-position: 0 -13px;}
 .flex-control-nav li a.active {background-position: 0 -26px; cursor: default;}
-.flex-caption{ position: absolute;left:0px; bottom:0; width:650px;padding:10px;text-align:left;background:rgba(0,0,0,.8);border-top:solid 2px #FFCC00;text-align:left;font-family: 'Lato', sans-serif;font-size:14px;color:#FFFFFF;text-shadow:0 1px 1px #000}
+.flex-caption{ position: absolute;left:0px; top:0; width:650px;padding:10px;text-align:left;background:rgba(0,0,0,.8);border-top:solid 2px #FFCC00;text-align:left;font-family: 'Lato', sans-serif;font-size:14px;color:#FFFFFF;text-shadow:0 1px 1px #000}
 .flex-caption h2{ font-size:30px; color:#FFFFFF;} 
 .flex-caption a {color:#FFCC00;font-weight:bold}
 .big-shadow {width:600px;height:21px;background:url(../../images/portal/banner_shadow.png) no-repeat;margin:0 auto;clear:both}
