@@ -12,7 +12,9 @@ class Portal extends CI_Controller {
 		$this->load->model('/security/sys_menu_model');		
 		$this->load->model('portal_model');		
 		$this->load->model('/dashboard/dsb_kl_model');
-		
+		$this->load->model('/dashboard/dsb_e1_model');
+		$this->load->model('/rujukan/eselon1_model');
+		$this->load->library("utility");
 		$this->data = array(
 				
 			'title_page'=>'Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan',
@@ -30,6 +32,12 @@ class Portal extends CI_Controller {
 			$this->data['latest_news']=$this->portal_model->getLastNews(3);
 		}else{
 			$this->data['latest_news'] = '';
+		}
+		
+		$this->data['dataDashboadKl'] = $this->getDataDashboardKl();
+		$this->data['listEselon1'] = $this->eselon1_model->easyGrid(2);
+		for ($i=0;$i<count($this->data['listEselon1']);$i++){
+			$this->data['listEselon1'][$i]['data'] = $this->getDataDashboardE1($this->data['listEselon1'][$i][7]);
 		}
 		$this->loadView('portal/home_vw',$this->data);
 	}
@@ -362,9 +370,14 @@ class Portal extends CI_Controller {
 	
 	
 	//buat dashboard
-	function getDataDashboarKl(){
-		$filtahun = 2012;
-		echo $this->dsb_kl_model->easyGrid($filtahun);
+	function getDataDashboardKl(){
+		$filtahun = '2012';
+		return $this->dsb_kl_model->easyGrid($filtahun,2);//purpose return array sama seperti utk pdf
+	}
+	
+	function getDataDashboardE1($e1){
+		$filtahun = '2012';
+		return $this->dsb_e1_model->easyGrid($filtahun,$e1,2);//purpose return array sama seperti utk pdf
 	}
 	
 }
