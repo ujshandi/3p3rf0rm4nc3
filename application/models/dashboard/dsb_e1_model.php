@@ -64,8 +64,12 @@ public function easyGridE1($filtahun,$purpose=1){
 				$response->pies = $this->dataPie;
 
 				//$pdfdata[] = array($i+1,$response->rows[$i]['kode_e1'],$response->rows[$i]['kode_kl'],$response->rows[$i]['nama_e1'],$response->rows[$i]['singkatan'],$response->rows[$i]['nama_dirjen'],$response->rows[$i]['nip'],$response->rows[$i]['pangkat'],$response->rows[$i]['gol']);
-				$pdfdata[] = array($i+1,$response->rows[$i]['nama_e1'],$response->rows[$i]['singkatan'],$response->rows[$i]['nama_dirjen'],$response->rows[$i]['nip'],$response->rows[$i]['pangkat'],$response->rows[$i]['gol']);
-				unset($row->nama_kl);
+				if ($purpose==2){
+					$pdfdata['data'][] = array($i+1,$response->rows[$i]['nama_e1'],$response->rows[$i]['singkatan'],$response->rows[$i]['nama_dirjen'],$response->rows[$i]['nip'],$response->rows[$i]['pangkat'],$response->rows[$i]['gol'],$response->rows[$i]['kode_e1']);
+					$pdfdata['pies'][] = array("tercapai"=>(double)$row->tercapai,"tdk_tercapai"=>(double)$row->tdk_tercapai);
+					unset($row->nama_kl);
+					
+				}
 				
 				$i++;
 			} 
