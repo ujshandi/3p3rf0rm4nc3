@@ -9,6 +9,10 @@
 	<div class="slider">
 		<div class="flexslider">
             <ul class="slides">
+				  <li>
+                    <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image4.jpg" alt="" title="" border="0"/></a>
+                    <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
+                </li>
                 <li>
                     <!--<a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image1.jpg" alt="" title="" border="0"/></a> -->
                     <div id="dashboardFrontKl" style="height:300px;width:350px;top:50px;left:25%;color:#FFFFFF"></div> 
@@ -91,6 +95,10 @@
 					}
 					
 				?>
+				  <li>
+                    <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image4.jpg" alt="" title="" border="0"/></a>
+                    <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
+                </li>
                 <!--<li>
                     <a href="#"><img src="<php echo base_url(); ?>/public/images/portal/slider-image2.jpg" alt="" title="" border="0"/></a>
                     <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
@@ -163,9 +171,7 @@
     </div><!-- end center content -->
 </div><!--end block right-->
 <script  type="text/javascript" >
-$('.flexslider').flexslider({
-			  animation: "slide",
-		});
+
 $(document).ready(function(){
 	
 		setTimeout(function(){
@@ -247,7 +253,7 @@ $(document).ready(function(){
 								}    
 							  );
 								
-				}, 3000);		
+				}, 4000);		
 	
 			
 });
@@ -255,7 +261,12 @@ $(document).ready(function(){
 		<?	}?>	
 <script  type="text/javascript" >
 $(document).ready(function(){
-	$.jqplot.postDrawHooks.push(function() {   
+	//setTimeout(function(){
+		$('.flexslider').flexslider({
+				  animation: "slide",
+			});
+	//}, 1000);	
+	/* $.jqplot.postDrawHooks.push(function() {   
 							var labels = $('table.jqplot-table-legend tr td.jqplot-table-legend-label');
 							 //alert(labels);
 							 //$(labels)..css('color',"#000000" );
@@ -265,6 +276,6 @@ $(document).ready(function(){
 									$(this).css('color',"#000000" );
 								//	alert('here');
 							 });      
-					}); 
+					});  */
 });
 </script>
