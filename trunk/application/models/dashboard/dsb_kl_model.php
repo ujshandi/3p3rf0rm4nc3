@@ -110,15 +110,16 @@ group by tahun,kode_kl, nama_kl*/
 */
 			//============================================================
 			//utk kepentingan export pdf===================
+			$this->dataPie = array("Jumlah Memenuhi"=>$memenuhi,"Jumlah Tidak Memenuhi"=>$tdkmemenuhi);
+				$response->pies = $this->dataPie;
 			if ($purpose==2)
-				$pdfdata[] = array($response->rows[$i]['deskripsi'],$response->rows[$i]['satuan'],$response->rows[$i]['persen'],$response->rows[$i]['status']);
+				$pdfdata['data'][] = array($response->rows[$i]['deskripsi'],$response->rows[$i]['satuan'],$response->rows[$i]['persen'],$response->rows[$i]['status']);
 			//============================================================
 			
 				$i++;
 			} 
+			$pdfdata['pies'] = $this->dataPie;
 			
-			$this->dataPie = array("Jumlah Memenuhi"=>$memenuhi,"Jumlah Tidak Memenuhi"=>$tdkmemenuhi);
-				$response->pies = $this->dataPie;
 		//	var_dump($this->dataPie);die;
 			//$response->lastNo = $no;
 			//$query->free_result();

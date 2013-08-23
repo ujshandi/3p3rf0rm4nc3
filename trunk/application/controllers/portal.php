@@ -3,6 +3,7 @@
 class Portal extends CI_Controller {
 
 	var $data;
+	var $tahunDashboard = '2012';
 
 	function __construct()
 	{
@@ -35,9 +36,12 @@ class Portal extends CI_Controller {
 		}
 		
 		$this->data['dataDashboadKl'] = $this->getDataDashboardKl();
-		$this->data['listEselon1'] = $this->eselon1_model->easyGrid(2);
-		for ($i=0;$i<count($this->data['listEselon1']);$i++){
-			$this->data['listEselon1'][$i]['data'] = $this->getDataDashboardE1($this->data['listEselon1'][$i][7]);
+		$this->data['listEselon1'] = $this->getDataE1();
+		//var_dump($this->data['listEselon1']['data']);die;
+		for ($i=0;$i<count($this->data['listEselon1']['data']);$i++){
+			$this->data['listEselon1']['data'][$i]['detail'] = $this->getDataDashboardE1($this->data['listEselon1']['data'][$i][7]);
+			$this->data['listEselon1']['pies'][$i] = $this->data['listEselon1']['pies'][$i];
+			
 		}
 		$this->loadView('portal/home_vw',$this->data);
 	}
@@ -371,13 +375,18 @@ class Portal extends CI_Controller {
 	
 	//buat dashboard
 	function getDataDashboardKl(){
-		$filtahun = '2012';
-		return $this->dsb_kl_model->easyGrid($filtahun,2);//purpose return array sama seperti utk pdf
+		
+		return $this->dsb_kl_model->easyGrid($this->tahunDashboard,2);//purpose return array sama seperti utk pdf
+	}
+	
+	function getDataE1(){
+		
+		return $this->dsb_e1_model->easyGridE1($this->tahunDashboard,2);//purpose return array sama seperti utk pdf
 	}
 	
 	function getDataDashboardE1($e1){
-		$filtahun = '2012';
-		return $this->dsb_e1_model->easyGrid($filtahun,$e1,2);//purpose return array sama seperti utk pdf
+		
+		return $this->dsb_e1_model->easyGrid($this->tahunDashboard,$e1,2);//purpose return array sama seperti utk pdf
 	}
 	
 }

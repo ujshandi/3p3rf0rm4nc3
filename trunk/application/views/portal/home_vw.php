@@ -11,7 +11,7 @@
             <ul class="slides">
                 <li>
                     <!--<a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image1.jpg" alt="" title="" border="0"/></a> -->
-                    <div id="dashboardFrontKl" style="height:300px;width:350px;top:50px;left:25%"></div> 
+                    <div id="dashboardFrontKl" style="height:300px;width:350px;top:50px;left:25%;color:#FFFFFF"></div> 
                     <table width="100%">
 					  <thead>
 						<th>No</th>
@@ -22,14 +22,14 @@
 					  <tbody>
 						<?
 						//	$i=($offset)?$offset:0;
-					
-							for ($i=0;$i<count($dataDashboadKl);$i++){							
+							//var_dump($dataDashboadKl['data']);die;
+							for ($i=0;$i<count($dataDashboadKl['data']);$i++){							
 								
 								echo '<tr>';
 								echo '<td>'.($i+1).'</td>';
-								echo '<td>'.$dataDashboadKl[$i][0].'</td>';
-								echo '<td>'.$dataDashboadKl[$i][1].'</td>';
-								echo '<td align="right">'.$dataDashboadKl[$i][2].' %</td>';
+								echo '<td>'.$dataDashboadKl['data'][$i][0].'</td>';
+								echo '<td>'.$dataDashboadKl['data'][$i][1].'</td>';
+								echo '<td align="right">'.$dataDashboadKl['data'][$i][2].' %</td>';
 								
 								
 								echo '</tr>';
@@ -48,11 +48,13 @@
                 </li>
 				
 				<?  //generate dashboard eselon 1
-				//var_dump(count($listEselon1));die;
-					for ($i=0;$i<count($listEselon1);$i++){
+				//var_dump(count($listEselon1['data']));
+				//var_dump(count($listEselon1['pies']));die;
+			//var_dump($listEselon1['pies']);die;
+					for ($i=0;$i<count($listEselon1['data']);$i++){
 					//	var_dump($listEselon1[$i]['data']);die;
 						echo '<li>';
-						echo '  <div id="dashboardFrontE1-'.$i.'" style="height:300px;width:350px;top:50px;left:25%"></div> ';
+						echo '  <div id="dashboardFrontE1-'.$i.'" style="height:300px;width:350px;top:50px;left:25%;color:#FFFFFF"></div> ';
 						echo '  <table width="100%">
 								  <thead>
 									<th>No</th>
@@ -63,19 +65,19 @@
 								  <tbody>';
 								  
 							
-							for ($j=0;$j<count($listEselon1[$i]['data']);$j++){							
+							for ($j=0;$j<count($listEselon1['data'][$i]['detail']);$j++){							
 								
 								echo '<tr>';
 								echo '<td>'.($j+1).'</td>';
-								echo '<td>'.$listEselon1[$i]['data'][$j][0].'</td>';
-								echo '<td>'.$listEselon1[$i]['data'][$j][1].'</td>';
-								echo '<td align="right">'.$listEselon1[$i]['data'][$j][2].' %</td>';
+								echo '<td>'.$listEselon1['data'][$i]['detail'][$j][0].'</td>';
+								echo '<td>'.$listEselon1['data'][$i]['detail'][$j][1].'</td>';
+								echo '<td align="right">'.$listEselon1['data'][$i]['detail'][$j][2].' %</td>';
 								
 								
 								echo '</tr>';
 								//$i++;
 							}
-							if ($i==0){
+							if ($j==0){
 								echo '<tr>';
 								echo '<td colspan="5">Belum ada data.</td>';
 								
@@ -84,7 +86,7 @@
 							
 						echo '  </tbody>
 								</table>';		  
-						echo '<p class="flex-caption">'.$listEselon1[$i][1].'</p>';
+						echo '<p class="flex-caption">'.$listEselon1['data'][$i][1].'</p>';
 						echo '</li>';
 					}
 					
@@ -167,27 +169,102 @@ $('.flexslider').flexslider({
 $(document).ready(function(){
 	
 		setTimeout(function(){
-		
-				$.jqplot('dashboardFrontKl',  
-					[[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]],
+				var objArrayData=[];
+				var obj = <?= json_encode($dataDashboadKl['pies']) ?>;
+				$.each(obj, function(key, value) {
+							//   alert(key + ' ' + value);
+							  objArrayData.push([key, parseFloat(value)]);
+						 });
+				 var plot1 = jQuery.jqplot ('dashboardFrontKl', [objArrayData],
+							{
+							  gridPadding: {top:30, bottom:100, left:10, right:0},
+							  animate: !$.jqplot.use_excanvas,
+								seriesDefaults:{
+									renderer:$.jqplot.PieRenderer, 
+									//trendline:{ show:false }, 
+									rendererOptions: { padding: 8, dataLabels:"percent",showDataLabels: true,dataLabelFormatString:'%.2f%' }
+								},
+							  legend:{
+									show:true, 
+									placement: 'outside', 
+									rendererOptions: {
+										numberRows: 1
+									}, 
+									location:'s',
+									marginTop: '15px'
+								},       
+								seriesColors: [ "green","red"]	
+							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]
+							}    
+						  );
+						 	
+				}, 1000);				
+					//plot1.redraw();		 
+				/* $.jqplot('dashboardFrontKl',[objArrayData],
 					{gridPadding: {top:30, bottom:80, left:10, right:0}}
-				);
-				<?
-				for ($i=0;$i<count($listEselon1);$i++){
-			?>
-					$.jqplot('dashboardFrontE1-<?=$i?>',  
-						[[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]],
-						{gridPadding: {top:30, bottom:80, left:10, right:0}}
-					);
-		
-			<?	}?>	
-			
-		
-		}, 1000);
-		
-		
-		
+				); */
+				
 });
+</script>
 
+<?
+					
+				for ($i=0;$i<count($listEselon1['pies']);$i++){
+			?>
+<script  type="text/javascript" >
+$(document).ready(function(){
 
+				setTimeout(function(){
+					var objArrayData<?=$i?>=[];
+					var obj<?=$i?> = <?= json_encode($listEselon1['pies'][$i]) ?>;
+				/* 	$.each(obj<?=$i?>, function(key, value) {
+								   alert(key + ' ' + value);
+								  objArrayData<?=$i?>.push([key, parseFloat(value)]);
+							 }); */
+							// alert(obj<?=$i?>.tdk_tercapai);
+					 objArrayData<?=$i?>.push(["Jumlah Memenuhi", parseFloat(obj<?=$i?>.tercapai)]);
+					 objArrayData<?=$i?>.push(["Jumlah Tidak Memenuhi", parseFloat(obj<?=$i?>.tdk_tercapai)]);
+					 var plotEselon<?=$i?> = jQuery.jqplot ('dashboardFrontE1-<?=$i?>', [objArrayData<?=$i?>],
+								{
+								  gridPadding: {top:30, bottom:100, left:10, right:0},
+								  animate: !$.jqplot.use_excanvas,
+									seriesDefaults:{
+										renderer:$.jqplot.PieRenderer, 
+										//trendline:{ show:false }, 
+										rendererOptions: { padding: 8, dataLabels:"percent",showDataLabels: true,dataLabelFormatString:'%.2f%' }
+									},
+								  legend:{
+										show:true, 
+										placement: 'outside', 
+										rendererOptions: {
+											numberRows: 1
+										}, 
+										location:'s',
+										marginTop: '15px'
+									},       
+									seriesColors: [ "green","red"]	
+								  //series:[{lineWidth:3, markerOptions:{style:'square'}}]
+								}    
+							  );
+								
+				}, 3000);		
+	
+			
+});
+</script>
+		<?	}?>	
+<script  type="text/javascript" >
+$(document).ready(function(){
+	$.jqplot.postDrawHooks.push(function() {   
+							var labels = $('table.jqplot-table-legend tr td.jqplot-table-legend-label');
+							 //alert(labels);
+							 //$(labels)..css('color',"#000000" );
+							 labels.each(function(index) {
+									//turn the label's text color to the swatch's color
+									//var color = $(swatches[index]).find("div div").css('background-color');
+									$(this).css('color',"#000000" );
+								//	alert('here');
+							 });      
+					}); 
+});
 </script>

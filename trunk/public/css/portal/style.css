@@ -85,7 +85,7 @@ html[xmlns] .slides {display: block;}
 .flexslider .slides {zoom: 1;}
 .flexslider .slides > li {position: relative;}
 .flex-container {zoom: 1; position: relative;}
-.flex-direction-nav li a {width:62px; height:62px; margin:0; display: block; position: absolute; top:45%; cursor: pointer; text-indent: -9999px;}
+.flex-direction-nav li a {width:62px; height:62px; margin:0; display: block; position: absolute; top:10%/*45%*/; cursor: pointer; text-indent: -9999px;}
 .flex-direction-nav li a.next {background:url(../../images/portal/next.png) no-repeat center; right:20px;}
 .flex-direction-nav li a.prev {background:url(../../images/portal/prev.png) no-repeat center;left:20px;}
 .flex-direction-nav li a.next:hover {background:url(../../images/portal/next_a.png) no-repeat center;}
