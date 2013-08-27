@@ -275,7 +275,7 @@
 	
 	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
-		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Berita Portal</div>
+		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Berita Kinerja Kemenhub</div>
 		<form id="fm<?=$objectId;?>" method="post">
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Judul Berita :</label>

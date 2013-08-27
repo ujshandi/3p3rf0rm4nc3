@@ -5,12 +5,12 @@
  <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.css" />
 
 <div id="rt">
-	<h3 class="lefthead">Dashboard</h2>
+	<h3 class="lefthead">Dashboard Kinerja Tahun <?=$filterTahunDashboard?></h2>
 	<div class="slider">
 		<div class="flexslider">
             <ul class="slides">
 				  <li>
-                    <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image4.jpg" alt="" title="" border="0"/></a>
+                    <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider.png" alt="" title="" border="0"/></a>
                     <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
                 </li>
                 <li>
@@ -96,7 +96,7 @@
 					
 				?>
 				  <li>
-                    <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider-image4.jpg" alt="" title="" border="0"/></a>
+                    <a href="#"><img src="<?php echo base_url(); ?>/public/images/portal/slider.png" alt="" title="" border="0"/></a>
                     <p class="flex-caption">Selamat datang di Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan (e-Performance)</p>
                 </li>
                 <!--<li>

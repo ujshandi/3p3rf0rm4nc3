@@ -26,8 +26,10 @@
 					$("#cmbPeriode<?=$objectId?>").val(<?=date("n")?>);
 					$('#files<?=$objectId?>').empty();
 					//$("#nama_folder_pendukung<?=$objectId?>").val(row.nama_folder_pendukung);
+					<? if ($purpose=='Capaian') {?>
 					getFolderName<?=$objectId?>();
 					prepareUpload<?=$objectId?>();
+					<?}?>
 				}	
 				//addTab("Add PK Eselon I", "checkpoint/checkpointe1/add");
 			}
@@ -66,8 +68,10 @@
 						$("#purpose<?=$objectId?>").val('<?=$purpose?>');
 						$("#kd_e1<?=$objectId?>").val(row.kode_e1);
 						$("#nama_folder_pendukung<?=$objectId?>").val(row.nama_folder_pendukung);
+						<? if ($purpose=='Capaian') {?>
 						getListFilePendukung(data.kode_e1,data.id_pk_e1,data.periode);
 						prepareUpload<?=$objectId?>();
+						<?}?>
 					}});	
 			}
 			//end editData
@@ -720,7 +724,7 @@
 				<input name="keterangan" size="60" id="keterangan<?=$objectId?>" class="easyui-validatebox">
 			</div>
 			<!-- upload data pendukung -->
-		
+		<? if ($purpose=='Capaian') {?>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Data Pendukung :</label>
 					<div class="row fileupload-buttonbar">
@@ -769,6 +773,7 @@
 					<tbody id="files<?=$objectId?>" class="files"></tbody>
 				</table>			
 			</div>
+			<?}?>
 		</form>
 		<div id="dlg-buttons">
 			<!----------------Edit title-->

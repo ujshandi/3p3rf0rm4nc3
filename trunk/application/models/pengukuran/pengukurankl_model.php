@@ -511,14 +511,7 @@ class pengukurankl_model extends CI_Model
 		}
 	}
 	
-	public function GetRecordCountTindak($register_id){
-				
-		$this->db->from('trs_rwj_tindakan d');
-		$this->db->where('d.daftar_rwj_id', $register_id);
-			
-		return $this->db->count_all_results();
-		$this->db->free_result();
-	}
+
 
 	public function data_exist($tahun, $triwulan, $kode_kl, $kode_sasaran_kl, $kode_iku_kl){
 		$this->db->flush_cache();

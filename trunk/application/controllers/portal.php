@@ -29,12 +29,14 @@ class Portal extends CI_Controller {
 	
 	function index()
 	{
+		//$this->tahunDashboard = 
 		if($this->portal_model->contentExist(2)){
 			$this->data['latest_news']=$this->portal_model->getLastNews(3);
 		}else{
 			$this->data['latest_news'] = '';
 		}
 		
+		$this->data['filterTahunDashboard'] = $this->tahunDashboard;
 		$this->data['dataDashboadKl'] = $this->getDataDashboardKl();
 		$this->data['listEselon1'] = $this->getDataE1();
 		//var_dump($this->data['listEselon1']['data']);die;
@@ -114,13 +116,34 @@ class Portal extends CI_Controller {
 				$this->loadView('portal/contact_vw',$this->data);
 				break;
 			case 'news':
+				$this->load->library('pagination');
+
+				$config['base_url'] = base_url().'portal/page/news/';
+				$config['total_rows'] = $this->portal_model->countContent(4);
+				$config['per_page'] = 5; 
+				$config['uri_segment'] = 4;
+
+				$this->pagination->initialize($config); 
+
+				$off = ($this->uri->segment(4)=='')?0:$this->uri->segment(4);
+				$limit = 5;
+				$offset = $off;
+				if($this->portal_model->contentExist(2)){
+					$this->data['newss']=$this->portal_model->getMuchContent(2,$limit,$offset);
+				}else{
+					$this->data['newss'] = '';
+				}
+				$this->loadView('portal/news_vw',$this->data);
+			break;
+			case 'news_det':
 				$content_id = $this->uri->segment(4);
+				//var_dump($content_id);die;
 				if($this->portal_model->singleContentExist($content_id)){
 					$this->data['news']=$this->portal_model->getSingleContent($content_id);
 				}else{
 					$this->data['news'] = '';
 				}
-				$this->loadView('portal/news_vw',$this->data); 
+				$this->loadView('portal/news_detail_vw',$this->data); 
 				break;
 			case 'faq':
 				if($this->portal_model->contentExist(6)){
@@ -174,7 +197,7 @@ class Portal extends CI_Controller {
 				$this->load->view('portal/backend/home_v',$this->data);
 				break;
 			case 2:
-				$data['title'] = 'Berita Portal';
+				$data['title'] = 'Berita Kinerja Kemenhub';
 				$data['objectId'] = 'portalnews';
 				$data['ckeditor1'] = $this->initCKEditor('content'.$data['objectId']);
 				$data['ckeditor2'] = $this->initCKEditor('summary'.$data['objectId']);
@@ -254,7 +277,11 @@ class Portal extends CI_Controller {
 	private function getFormValues($category_id=1) {
 		// XXS Filtering enforced for user input
 		$data['category_id'] = $category_id;
-		$data['content_title'] = $this->input->post("content_title", TRUE);
+		//jika categori 1 - home
+		if ($category_id==1)
+			$data['content_title'] = $this->input->post("filter_tahunportalhome", TRUE);
+		else	
+			$data['content_title'] = $this->input->post("content_title", TRUE);
 		$data['content'] = $this->input->post("content", TRUE); 
 		$data['summary'] = $this->input->post("summary", TRUE);		
 		$data['url'] = $this->input->post("url", TRUE);
@@ -269,8 +296,9 @@ class Portal extends CI_Controller {
     private function validateRules($category_id=1){
     	switch ($category_id) {	
 			case 1:
-				$this->form_validation->set_rules("content_title", 'Judul Halaman', 'trim|required|xss_clean');
-				$this->form_validation->set_rules("content", 'Isi Halaman', 'trim|required|xss_clean');
+				$this->form_validation->set_rules("filter_tahunportalhome", 'Filter Tahun Dashboard', 'trim|required|xss_clean');
+				//$this->form_validation->set_rules("content_title", 'Judul Halaman', 'trim|required|xss_clean');
+				//$this->form_validation->set_rules("content", 'Isi Halaman', 'trim|required|xss_clean');
 				break;
 			case 2:
 				$this->form_validation->set_rules("content_title", 'Judul Berita', 'trim|required|xss_clean');
@@ -326,11 +354,16 @@ class Portal extends CI_Controller {
 		
 		if ($this->form_validation->run() == FALSE){
 			//jika data tidak valid kembali ke view
-			$data["pesan_error"].=(trim(form_error("content_title"," "," "))==""?"":form_error("content_title"," "," ")."<br>");
-			//$data["pesan_error"].=(trim(form_error("kode_sasaran_kl"," "," "))==""?"":form_error("kode_sasaran_kl"," "," ")."<br>");
-			$data["pesan_error"].=(trim(form_error("content"," "," "))==""?"":form_error("content"," "," ")."<br>");
-			$data["pesan_error"].=(trim(form_error("summary"," "," "))==""?"":form_error("summary"," "," ")."<br>");
-			$data["pesan_error"].=(trim(form_error("url"," "," "))==""?"":form_error("url"," "," ")."<br>");
+			if ($category_id!=1){
+				$data["pesan_error"].=(trim(form_error("content_title"," "," "))==""?"":form_error("content_title"," "," ")."<br>");
+				$data["pesan_error"].=(trim(form_error("content"," "," "))==""?"":form_error("content"," "," ")."<br>");
+				$data["pesan_error"].=(trim(form_error("summary"," "," "))==""?"":form_error("summary"," "," ")."<br>");
+				$data["pesan_error"].=(trim(form_error("url"," "," "))==""?"":form_error("url"," "," ")."<br>");
+			}
+			else {
+				$data["pesan_error"].=(trim(form_error("filter_tahunportalhome"," "," "))==""?"":form_error("filter_tahunportalhome"," "," ")."<br>");
+			} 
+			
 			$status = $data["pesan_error"];
 			
 		}else {

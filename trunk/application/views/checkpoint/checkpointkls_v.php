@@ -29,8 +29,10 @@
 					$("#cmbPeriode<?=$objectId?>").val(<?=date("n")?>);
 					$('#files').empty();
 					//$("#nama_folder_pendukung<?=$objectId?>").val(row.nama_folder_pendukung);
+					  <? if ($purpose=='Capaian') {?>
 					getFolderName<?=$objectId?>();
 					prepareUpload<?=$objectId?>();
+					<?}?>
 				}	
 				//addTab("Add PK Kementerian", "checkpoint/checkpointkl/add");
 			}
@@ -71,8 +73,10 @@
 						$("#kd_kl<?=$objectId?>").val(row.kode_kl);
 						$("#nama_folder_pendukung<?=$objectId?>").val(row.nama_folder_pendukung);
 						$("#purpose<?=$objectId?>").val('<?=$purpose?>');
+						<? if ($purpose=='Capaian') {?>
 						getListFilePendukung(data.kode_kl,data.id_pk_kl,data.periode);
 						prepareUpload<?=$objectId?>();
+						<?}?>
 					}});
 					
 				//}	
@@ -735,17 +739,20 @@
 				<input name="keterangan" size="60" id="keterangan<?=$objectId?>" class="easyui-validatebox">
 			</div>
 			<!-- upload data pendukung -->
-		
+			  <? if ($purpose=='Capaian') {?>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Data Pendukung :</label>
 					<div class="row fileupload-buttonbar">
 					<div class="span7">
 						<!-- The fileinput-button span is used to style the file input field as button -->
+					
 						<span class="btn btn-success fileinput-button">
 							<i class="icon-bootstrap-plus icon-bootstrap-white"></i>
 							<span>Tambah file...</span>  <!-- files[] -->
 							<input id="fileupload<?=$objectId?>" type="file" name="files[]" >
 						</span>
+						
+						
 						<!--<button type="submit" class="btn btn-primary start">
 							<i class="icon-bootstrap-upload icon-bootstrap-white"></i>
 							<span>Start upload</span>
@@ -784,6 +791,8 @@
 					<tbody id="files" class="files"></tbody>
 				</table>			
 			</div>
+			
+			<? }?>
 		</form>
 		<div id="dlg-buttons">
 			<!----------------Edit title-->

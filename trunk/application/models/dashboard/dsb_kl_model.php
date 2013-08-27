@@ -166,7 +166,7 @@ group by tahun,kode_kl, nama_kl*/
 		//$this->db->free_result();
 	}
 	
-	public function getListTahun($objectId){
+	public function getListTahun($objectId,$filtahun=null){
 		
 		$this->db->flush_cache();
 		$this->db->select('distinct tahun',false);
@@ -178,8 +178,13 @@ group by tahun,kode_kl, nama_kl*/
 		
 		$out = '<select name="filter_tahun'.$objectId.'" id="filter_tahun'.$objectId.'">';
 	//	$out .= '<option value="-1">Semua</option>';
+		$selected ="";
+		
 		foreach($que->result() as $r){
-			$out .= '<option value="'.$r->tahun.'">'.$r->tahun.'</option>';
+			if ($filtahun!=null) 
+				$selected = ($filtahun==$r->tahun?"selected='selected'":"");
+			
+			$out .= '<option value="'.$r->tahun.'" '.$selected.'>'.$r->tahun.'</option>';
 		}
 		
 		$out .= '</select>';
