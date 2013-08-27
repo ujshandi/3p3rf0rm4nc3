@@ -263,7 +263,7 @@ class Checkpointkl_model extends CI_Model
 		//}
 	
 		$this->db->trans_complete();
-			//print_r($this->db);die;
+			print_r($this->db);die;
 	    return $this->db->trans_status();
 	}
 	

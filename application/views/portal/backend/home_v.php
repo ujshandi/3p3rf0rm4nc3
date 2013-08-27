@@ -74,7 +74,11 @@
 					<form id="fmedit<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 						
 						<input type="hidden" name="content_id" value="<?=($home)?$home->content_id:'';?>">
-						
+						<div class="fitem">							
+						    <label style="width:150px">Filter Tahun Dashboard :</label><br/>
+						    <?=$this->dsb_kl_model->getListTahun($objectId,($home)?$home->content_title:null)?>
+						</div>
+						<!--
 						<div class="fitem">							
 						    <label style="width:150px">Judul Halaman Beranda :</label><br/>
 						    <input style="margin:10px 0" id="content_title<?=$objectId?>" name="content_title" class="easyui-validatebox" required="true" size="40" value="<?=($home)?$home->content_title:'';?>">
@@ -83,7 +87,7 @@
 						    <label style="width:150px">Isi Halaman Beranda :</label><br/>
 							<div style="width:700px; margin:10px 0"><textarea name="content" id="content<?=$objectId;?>"><?=($home)?$home->content:'';?></textarea></div>
 							<?php echo display_ckeditor($ckeditor); ?>
-						</div>
+						</div> -->
 						<br>
 						<!------------Edit View-->
 						<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData<?=$objectId;?>()">Simpan</a>
