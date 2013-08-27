@@ -706,7 +706,7 @@
 			</div>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Kriteria Keberhasilan :</label>
-				<input name="kriteria" size="60" id="kriteria<?=$objectId?>" class="easyui-validatebox" value="<?=$nama_folder?>">
+				<input name="kriteria" size="60" id="kriteria<?=$objectId?>" class="easyui-validatebox" >
 			</div>
 			<div class="fitem">
 				<label style="width:130px;vertical-align:top">Ukuran Keberhasilan :</label>
