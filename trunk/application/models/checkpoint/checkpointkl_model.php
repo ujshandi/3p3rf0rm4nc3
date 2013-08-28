@@ -186,6 +186,7 @@ class Checkpointkl_model extends CI_Model
 						
 		$query = $this->db->get();
 		$rs = $query->num_rows() ;		
+	//	var_dump($rs>0);die;
 		$query->free_result();
 		return ($rs>0);
 	}
@@ -229,12 +230,14 @@ class Checkpointkl_model extends CI_Model
 				$this->db->set('ukuran',$data['ukuran']);
 				$this->db->set('target',$data['target']);
 				$this->db->set('keterangan',$data['keterangan']);
-				$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
-				if ($data['purpose']=='Capaian')
+				
+				if ($data['purpose']=='Capaian'){
 					$this->db->set('capaian',$data['capaian']);
+					$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
+				}
 				$this->db->set('log_insert', 	$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 				$result = $this->db->insert('tbl_checkpoint_kl');
-				
+				//var_dump($result);die;
 /*
 				// update status tabel RKT
 				$this->db->flush_cache();
@@ -263,7 +266,7 @@ class Checkpointkl_model extends CI_Model
 		//}
 	
 		$this->db->trans_complete();
-			print_r($this->db);die;
+		//	print_r($this->db);die;
 	    return $this->db->trans_status();
 	}
 	
@@ -279,9 +282,11 @@ class Checkpointkl_model extends CI_Model
 				$this->db->set('ukuran',$data['ukuran']);
 				$this->db->set('target',$data['target']);
 				$this->db->set('keterangan',$data['keterangan']);
-				$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
-				if ($data['purpose']=='Capaian')
+				
+				if ($data['purpose']=='Capaian'){
 					$this->db->set('capaian',$data['capaian']);
+					$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
+				}
 				$this->db->set('log_update', 	$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->update('tbl_checkpoint_kl');	
 		$errNo   = $this->db->_error_number();

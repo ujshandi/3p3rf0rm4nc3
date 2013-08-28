@@ -122,7 +122,7 @@ class Checkpointe1 extends CI_Controller {
 		$dt['purpose'] = $this->input->post("purpose", TRUE);
 		$dt['nama_folder_pendukung'] = $this->input->post("nama_folder_pendukung", TRUE);
 		if ($dt['nama_folder_pendukung']=="")
-			$dt['nama_folder_pendukung'] = base_url().'upload/pendukung/kl/'.$dt['id_pk_kl'].'/'.$dt['periode'];
+			$dt['nama_folder_pendukung'] = base_url().'upload/pendukung/e1/'.$dt['id_pk_e1'].'/'.$dt['periode'];
 		
 		return $dt;
     }
@@ -170,7 +170,7 @@ class Checkpointe1 extends CI_Controller {
 				$result = $this->checkpointe1_model->UpdateOnDb($data);
 			}
 			else
-				if (!$this->checkpointkl_model->isExist($data['id_pk_kl'],$data['periode'])){
+				if (!$this->checkpointe1_model->isExist($data['id_pk_e1'],$data['periode'])){
 					$result = $this->checkpointe1_model->InsertOnDb($data);
 				}
 				else

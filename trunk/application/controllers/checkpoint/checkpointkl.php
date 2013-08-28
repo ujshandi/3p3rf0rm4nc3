@@ -122,6 +122,7 @@ class Checkpointkl extends CI_Controller {
 		$dt['keterangan'] = $this->input->post("keterangan", TRUE); 
 		$dt['capaian'] = $this->input->post("capaian", TRUE); 
 		$dt['purpose'] = $this->input->post("purpose", TRUE);
+		
 		$dt['nama_folder_pendukung'] = $this->input->post("nama_folder_pendukung", TRUE);
 		if ($dt['nama_folder_pendukung']=="")
 			$dt['nama_folder_pendukung'] = base_url().'upload/pendukung/kl/'.$dt['id_pk_kl'].'/'.$dt['periode'];
@@ -154,12 +155,16 @@ class Checkpointkl extends CI_Controller {
 			
 		}else{
 			// validasi detail
+			
 			if(($data['id_checkpoint_kl']!="")&&($data['id_checkpoint_kl']!=null)){
 				$result = $this->checkpointkl_model->UpdateOnDb($data);
 			}
 			else{
+		//	var_dump("kadieuvalid=".(!$this->checkpointkl_model->isExist($data['id_pk_kl'],$data['periode'])));die;
 				if (!$this->checkpointkl_model->isExist($data['id_pk_kl'],$data['periode'])){
+				
 					$result = $this->checkpointkl_model->InsertOnDb($data);
+				//	var_dump("kadieu=".$result);die;
 				}
 				else
 					$data['pesan_error'] .= 'Data Checkpoint untuk periode ini sudah ada!';	
@@ -169,11 +174,11 @@ class Checkpointkl extends CI_Controller {
 				//$data['pesan_error'].= $pesan;
 		//	}
 		}
-		
+	//	var_dump("kadieueeee=".$result);die;
 		if ($result){
 			echo json_encode(array('success'=>true));
 		} else {
-			echo json_encode(array('msg'=>'Penyimpanan tidak berhasil.'));
+			echo json_encode(array('msg'=>$data['pesan_error'] ));
 		}
 	}
 	

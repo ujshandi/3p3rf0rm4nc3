@@ -115,6 +115,7 @@ class User_model extends CI_Model
 			else if ($app_type=="E1"){
 				$this->db->select('kode_e1 as kode,nama_e1 as nama');
 				$this->db->from('tbl_eselon1');
+				//if (FILTER_E1_LOCKING) $this->db->where('kode_e1 in ('.FILTER_E1_LIST.')');
 				$this->db->order_by('kode_e1');
 			}
 			else if ($app_type=="E2"){
