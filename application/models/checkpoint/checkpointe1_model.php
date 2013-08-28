@@ -227,9 +227,11 @@ class Checkpointe1_model extends CI_Model
 				$this->db->set('ukuran',$data['ukuran']);
 				$this->db->set('target',$data['target']);
 				$this->db->set('keterangan',$data['keterangan']);
-				$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
-				if ($data['purpose']=='Capaian')
+				
+				if ($data['purpose']=='Capaian'){
 					$this->db->set('capaian',$data['capaian']);
+					$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
+				}
 				$this->db->set('log_insert', 	$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 				$result = $this->db->insert('tbl_checkpoint_e1');
 				
@@ -277,9 +279,11 @@ class Checkpointe1_model extends CI_Model
 				$this->db->set('ukuran',$data['ukuran']);
 				$this->db->set('target',$data['target']);
 				$this->db->set('keterangan',$data['keterangan']);
-				$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
-				if ($data['purpose']=='Capaian')
+				
+				if ($data['purpose']=='Capaian'){
 					$this->db->set('capaian',$data['capaian']);
+					$this->db->set('nama_folder_pendukung',$data['nama_folder_pendukung']);
+				}
 				$this->db->set('log_update', 	$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->update('tbl_checkpoint_e1');	
 		$errNo   = $this->db->_error_number();

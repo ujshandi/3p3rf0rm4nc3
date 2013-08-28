@@ -42,3 +42,6 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 // Define Ajax Request
 define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+
+define('FILTER_E1_LOCKING',TRUE);
+define('FILTER_E1_LIST',"'022.01'");//kalau lebih dari 1 tinggal tambah pake comma

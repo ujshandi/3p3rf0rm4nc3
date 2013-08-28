@@ -826,7 +826,7 @@
                         columns:[[
                             {field:'id_checkpoint_kl',title:'id',width:200,hidden:true},
                             {field:'unit_kerja',title:'Unit Kerja',width:200},
-                            {field:'periode',title:'Periode',width:200},
+                            {field:'periode',title:'Periode',width:75},
                             {field:'kriteria',title:'Kriteria Capaian',width:200},
                             {field:'ukuran',title:'Ukuran Capaian',width:200},
                             {field:'target',title:'Target',width:100,align:'right'},

@@ -204,6 +204,8 @@ class Eselon1_model extends CI_Model
 			$this->db->where('kode_e1',$e1);
 			$value = $e1;
 		}
+		
+			if (FILTER_E1_LOCKING) $this->db->where('kode_e1 in ('.FILTER_E1_LIST.')');
 		$this->db->order_by('kode_e1');
 		
 		$que = $this->db->get();
@@ -231,7 +233,7 @@ class Eselon1_model extends CI_Model
 		if ($unit_kerja_E1 != "-1")
 			$this->db->where("kode_e1",$unit_kerja_E1);
 		$this->db->order_by('kode_e1');
-		
+		//if (FILTER_E1_LOCKING) $this->db->where('kode_e1 in ('.FILTER_E1_LIST.')');
 		$que = $this->db->get();
 		//var_dump($unit_kerja_E1);die;
 		if ($unit_kerja_E1 == "-1"){
