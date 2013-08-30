@@ -298,7 +298,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Realisasi Kinerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian Kinerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="id_kinerja_e2" sortable="true" hidden="true" width="30px">id_kinerja_e2</th>
@@ -312,7 +312,7 @@
 		<th field="deskripsi_ikk" hidden="true">Des IKK</th>
 		<th field="target" sortable="true" width="50px" align="right" formatter="formatPrice">Target</th>
 		<th field="satuan" sortable="true" width="60px">Satuan</th>
-		<th field="realisasi" sortable="true" width="50px" align="right" formatter="formatPrice">Realisasi</th>
+		<th field="realisasi" sortable="true" width="50px" align="right" formatter="formatPrice">Capaian</th>
 	  </tr>
 	  </thead>
 	</table>
