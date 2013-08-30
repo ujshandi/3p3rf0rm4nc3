@@ -1,6 +1,7 @@
  <!--[if IE]><script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot/excanvas.js"></script><![endif]-->
  
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.cursor.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.pieRenderer.min.js"></script>
  <link rel="stylesheet" type="text/css" href="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.css" />
 	
@@ -77,7 +78,7 @@ $(document).ready(function(){
 				if(filtahun==null) filtahun ="-1";
 				if(filperiode==null) filperiode ="-1";
 				var pieColor = [ "blue","green","orange","red"];
-				
+				$('#chart1<?=$objectId?>').empty();
 /*
 				if (parseInt(filperiode)==12){
 					pieColor = ["green","red"];
@@ -98,7 +99,7 @@ $(document).ready(function(){
 				}
 						
 						 
-						  var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
+						  var plot1<?=$objectId?> = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
 							  gridPadding: {top:0, bottom:38, left:10, right:0},
 							seriesDefaults:{
@@ -133,7 +134,7 @@ $(document).ready(function(){
 							  objArrayData.push([key, parseFloat(value)]);
 						 });
 						// alert(objArrayData);
-						 var plot1 = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
+						 var plot1<?=$objectId?> = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
 							  gridPadding: {top:0, bottom:38, left:10, right:0},
 								seriesDefaults:{
@@ -159,6 +160,8 @@ $(document).ready(function(){
 						//$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
 					}});
+					
+					plot1<?=$objectId?>.replot();
 			}
 
 			

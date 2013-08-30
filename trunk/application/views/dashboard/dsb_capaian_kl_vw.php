@@ -234,7 +234,11 @@ $(document).ready(function(){
 						 //jqplot-table-legend
 						//$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
+						
+						plotchartCapaianKL<?=$objectId?>.replot();
 					}});
+					
+					
 			}
 
 /*

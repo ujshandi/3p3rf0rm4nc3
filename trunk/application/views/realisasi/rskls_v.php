@@ -324,7 +324,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Realisasi Kinerja Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true"  nowrap="false" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian Kinerja Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true"  nowrap="false" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="id_kinerja_kl" sortable="true" hidden="true" width="30px">id_kinerja_kl</th>
@@ -338,8 +338,8 @@
 		<th field="deskripsi_iku_kl" hidden="true">Des IKU</th>
 		<th field="target" sortable="true" width="40px" align="right" formatter="formatPrice">Target</th>
 		<th field="satuan" sortable="true" width="60px">Satuan</th>
-		<th field="realisasi" sortable="true" width="50px" align="right" formatter="formatPrice">Realisasi</th>
-		<th field="realisasi_persen" sortable="true" width="35px" align="right" formatter="formatPrice">Realisasi <br>(%)</th>
+		<th field="realisasi" sortable="true" width="50px" align="right" formatter="formatPrice">Capaian</th>
+		<th field="realisasi_persen" sortable="true" width="35px" align="right" formatter="formatPrice">Capaian <br>(%)</th>
 			<th field="keterangan" sortable="true" width="80px">Keterangan</th>
 			<th field="action_plan" sortable="true" width="80px">Rencana Aksi</th>
 	  </tr>
