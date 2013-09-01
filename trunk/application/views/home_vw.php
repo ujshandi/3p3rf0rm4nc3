@@ -228,7 +228,7 @@
 								//alert(data);
 								if (data==""){
 									
-									window.location.replace(base_url+"security/login");
+									window.location.replace(base_url);//+"security/login"
 								}
 							  },
 							  complete: function(xmlHttp) {
@@ -392,7 +392,7 @@
 								//alert(data);
 								if (data==""){
 									
-									window.location.replace(base_url+"security/login");
+									window.location.replace(base_url);//+"security/login"
 								}
 							  },
 							  complete: function(xmlHttp) {
