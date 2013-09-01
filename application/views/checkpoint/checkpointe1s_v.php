@@ -1,5 +1,5 @@
 	<script  type="text/javascript" >
-				var idCheckpoint;
+				var idCheckpoint<?=$objectId;?>;
 				var rowIndexDetail;
 				
 		$(function(){
@@ -31,6 +31,9 @@
 					prepareUpload<?=$objectId?>();
 					<?}?>
 				}	
+				else {
+					alert("Pilih data Penetapan Kinerja terlebih dahulu");
+				}	
 				//addTab("Add PK Eselon I", "checkpoint/checkpointe1/add");
 			}
 			//end newData 
@@ -40,13 +43,16 @@
 				var tr = jQuery('#dg<?=$objectId;?>').closest('tr.datagrid-row');
 				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");
 				//alert('row index parent'+tr.attr('datagrid-row-index'));
-				//alert(idCheckpoint+"=idcheckpoint") ;
-				if ((idCheckpoint ==null)||(idCheckpoint =='undefined')) return false;
+				
+				if ((idCheckpoint<?=$objectId;?> ==null)||(idCheckpoint<?=$objectId;?> =='undefined')) {						
+					alert("Pilih data Checkpoint terlebih dahulu");
+					return false;
+				}
 			//	$('#dg<?=$objectId;?>').datagrid('options').queryParams.
 				//alert($.url().param("parentIndex")+"Parent");
 				//if (row){
 					$.ajax({
-					url:'<?=base_url()?>checkpoint/checkpointe1/getDataEdit/'+idCheckpoint,
+					url:'<?=base_url()?>checkpoint/checkpointe1/getDataEdit/'+idCheckpoint<?=$objectId;?>,
 					success:function(data){
 						//alert(data);
 						var data = eval('('+data+')');
@@ -79,9 +85,12 @@
 			deleteData<?=$objectId;?> = function (){
 				<? if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					if ((idCheckpoint ==null)||(idCheckpoint =='undefined')) return false;
+					if ((idCheckpoint<?=$objectId;?> ==null)||(idCheckpoint<?=$objectId;?> =='undefined')) {						
+						alert("Pilih data Checkpoint terlebih dahulu");
+						return false;
+					}
 					$.ajax({
-					url:'<?=base_url()?>checkpoint/checkpointe1/getDataEdit/'+idCheckpoint,
+					url:'<?=base_url()?>checkpoint/checkpointe1/getDataEdit/'+idCheckpoint<?=$objectId;?>,
 					success:function(data){
 						var data = eval('('+data+')');
 						if(confirm("Apakah yakin akan menghapus data " + '' + "?")){
@@ -824,7 +833,7 @@
                        onClickCell:function(rowIndex, field, value){
 							 $('#ddv<?=$objectId;?>-'+index).datagrid('selectRow', rowIndex);
 							var row = $('#ddv<?=$objectId;?>-'+index).datagrid('getSelected');
-							idCheckpoint = row.id_checkpoint_e1;
+							idCheckpoint<?=$objectId;?> = row.id_checkpoint_e1;
 							rowIndexDetail = index;
 							//alert(idCheckpoint);
 					   },
@@ -841,7 +850,7 @@
 				onClickCell: function(rowIndex, field, value){
 					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					idCheckpoint = null;
+					idCheckpoint<?=$objectId;?> = null;
 					//alert(row.deskripsi_iku_e1);
 					switch(field){
 						case "kode_e1":

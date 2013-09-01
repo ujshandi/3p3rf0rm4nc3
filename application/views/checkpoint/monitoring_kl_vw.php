@@ -101,6 +101,8 @@ $(document).ready(function(){
 						 
 						  var plot1<?=$objectId?> = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
+							 height: 50	,
+							width: 100,
 							  gridPadding: {top:0, bottom:38, left:10, right:0},
 							seriesDefaults:{
 								renderer:$.jqplot.PieRenderer, 
@@ -136,6 +138,8 @@ $(document).ready(function(){
 						// alert(objArrayData);
 						 var plot1<?=$objectId?> = jQuery.jqplot ('chart1<?=$objectId?>', [objArrayData],
 							{
+								 height: 200,
+							width: 300,
 							  gridPadding: {top:0, bottom:38, left:10, right:0},
 								seriesDefaults:{
 									renderer:$.jqplot.PieRenderer, 

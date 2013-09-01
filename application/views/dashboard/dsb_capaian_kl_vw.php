@@ -49,8 +49,8 @@
 	  </tr>
 	  </table>
 	  
-	
-<div id="chartCapaianKL<?=$objectId?>" style="height:350px;width:350px;float:left"></div> 
+	<!-- style="height:350px;width:350px;float:left"-->
+<div id="chartCapaianKL<?=$objectId?>" style="margin-top:20px; margin-left:20px;" data-height="160px" data-width="280px" ></div> 
 <div  style="width:10px;float:left">&nbsp;</div> 
 <table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian IKU Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  showFooter="true">
 	  <thead>
