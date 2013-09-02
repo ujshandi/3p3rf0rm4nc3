@@ -3,6 +3,7 @@
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.barRenderer.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.enhancedLegendRenderer.js"></script>
 
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasTextRenderer.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
@@ -50,7 +51,7 @@
 	  </table>
 	  
 	<!-- style="height:350px;width:350px;float:left"-->
-<div id="chartCapaianKL<?=$objectId?>" style="margin-top:20px; margin-left:20px;" data-height="160px" data-width="280px" ></div> 
+<div id="chartCapaianKL<?=$objectId?>" style="height:350px;width:350px;float:left" data-height="160px" data-width="280px" ></div> 
 <div  style="width:10px;float:left">&nbsp;</div> 
 <table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian IKU Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  showFooter="true">
 	  <thead>
@@ -170,7 +171,7 @@ $(document).ready(function(){
 //							   animate: !$.jqplot.use_excanvas,
 							  //gridPadding: {top:20, bottom:38, left:10, right:0},
 							  grid:grid,
-							   canvasOverlay: {
+							   /* canvasOverlay: {
 								    show: true,
 									objects: [{verticalLine: {
 										name: 'barney',
@@ -179,7 +180,7 @@ $(document).ready(function(){
 										color: 'orange',
 										shadow: false
 									}}]
-								   },
+								   }, */
 								seriesDefaults:{
 									renderer:$.jqplot.BarRenderer, 
 									pointLabels: { show: true, location: 'e', edgeTolerance: -15 ,stackedValue: true},
@@ -203,8 +204,9 @@ $(document).ready(function(){
 */
 								},
 							 series:[
-								{},
-								{},
+								{label:"Realisasi"},
+								{label:"Target"},
+								
 								{ 
 										 disableStack : true,//otherwise it wil be added to values of previous series
 								renderer: $.jqplot.LineRenderer,
@@ -218,13 +220,14 @@ $(document).ready(function(){
 								
 							],	
 							  legend:{
-									show:false, 
+									renderer: $.jqplot.EnhancedLegendRenderer,
+									show:true, 
 									placement: 'outside', 
 									rendererOptions: {
 										numberRows: 1
 									}, 
 									location:'s',
-									marginTop: '45px'
+									marginTop: '30px'
 								},       
 						//	seriesColors: [ "green","red"]	
 							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]		
