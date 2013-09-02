@@ -3,7 +3,7 @@
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/jquery.jqplot.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.barRenderer.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.categoryAxisRenderer.min.js"></script>
- 
+ <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.enhancedLegendRenderer.js"></script> 
   <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasTextRenderer.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
  <script language="javascript" type="text/javascript" src="<?=base_url()?>/public/admin/js/jqplot.1.0.8/plugins/jqplot.canvasOverlay.min.js"></script>
@@ -171,7 +171,7 @@ $(document).ready(function(){
 						 });
 						// alert(objArrayData);
 						
-						 var plotchartCapaianKL<?=$objectId?> = jQuery.jqplot ('chartCapaianKL<?=$objectId?>', [objArrayData],
+						 var plotchartCapaianKL<?=$objectId?> = jQuery.jqplot ('chartCapaianKL<?=$objectId?>', [objArrayData,objArrayData2],
 							{
 							  title: {
 								text: '',   // title for the plot,
@@ -191,7 +191,7 @@ $(document).ready(function(){
 										}
 									
 								},
-								 canvasOverlay: {
+								/*  canvasOverlay: {
 								    show: true,
 									objects: [{verticalLine: {
 										name: 'barney',
@@ -200,7 +200,7 @@ $(document).ready(function(){
 										color: 'orange',
 										shadow: false
 									}}]
-								   },
+								   }, */
 								axes: { //model horizontal
 									 yaxis: {
 										renderer: $.jqplot.CategoryAxisRenderer
@@ -213,7 +213,9 @@ $(document).ready(function(){
 */
 								},
 							 series:[
-								{label:'Persentase Capaian'},{},
+								{label:"Realisasi"},
+								{label:'Target'},
+								
 								{ 
 										 disableStack : true,//otherwise it wil be added to values of previous series
 								renderer: $.jqplot.LineRenderer,
@@ -229,13 +231,14 @@ $(document).ready(function(){
 								
 							],	
 							  legend:{
-									show:false, 
+									renderer: $.jqplot.EnhancedLegendRenderer,
+									show:true, 
 									placement: 'outside', 
 									rendererOptions: {
-										numberRows: 2
+										numberRows: 1
 									}, 
 									location:'s',
-									marginTop: '15px'
+									marginTop: '30px'
 								},       
 						//	seriesColors: [ "green","red"]	
 							  //series:[{lineWidth:3, markerOptions:{style:'square'}}]		

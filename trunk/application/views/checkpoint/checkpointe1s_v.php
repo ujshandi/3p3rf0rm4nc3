@@ -609,7 +609,7 @@
 	   <table border="0" cellpadding="1" cellspacing="1" width="100%">
 		<tr>
 			<td>
-			<div class="fsearch" <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'style="display:none"')?>>
+			<div class="fsearch" <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'') //style="display:none"?>> 
 				<table border="0" cellpadding="1" cellspacing="1">
 				<tr>
 					<td>Tahun :</td>
