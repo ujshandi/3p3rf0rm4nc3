@@ -14,12 +14,12 @@ class Checkpointe1_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null){
+	public function easyGrid($filtahun=null,$file1=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount($filtahun);
+		$count = $this->GetRecordCount($filtahun,$file1);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
@@ -32,6 +32,10 @@ class Checkpointe1_model extends CI_Model
 			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("tbl_pk_eselon1.tahun",$filtahun);
 			}	
+			
+			if($file1 != '' && $file1 != '-1' && $file1 != null) {
+				$this->db->where("tbl_pk_eselon1.kode_e1",$file1);
+			}
 			
 			$this->db->order_by($sort." ".$order );
 			$this->db->limit($limit,$offset);
@@ -160,10 +164,13 @@ class Checkpointe1_model extends CI_Model
 	}
 	
 	
-	public function GetRecordCount($filtahun=null){
+	public function GetRecordCount($filtahun=null,$file1=null){
 		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 			$this->db->where("tbl_pk_eselon1.tahun",$filtahun);
 		}
+		if($file1 != '' && $file1 != '-1' && $file1 != null) {
+				$this->db->where("tbl_pk_eselon1.kode_e1",$file1);
+			}
 		
 		$this->db->select("distinct tbl_pk_eselon1.*,tbl_iku_eselon1.deskripsi as deskripsi_iku_e1,tbl_iku_eselon1.satuan,tbl_sasaran_eselon1.deskripsi as deskripsi_sasaran_e1, tbl_eselon1.nama_e1",false);
 		$this->db->from('tbl_pk_eselon1 ');
