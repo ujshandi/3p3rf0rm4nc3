@@ -151,7 +151,7 @@
 						</div>
 						<div class="fitem">
 							<label style="width:150px">Target :</label>
-							<input name="target" class="easyui-validatebox" required="true" size="10" value="<?=$result->target?>">
+							<input name="target" class="easyui-validatebox" required="true" size="10" value="<?=($editmode==FALSE?$this->utility->cekNumericFmt($result->target):$result->target)?>">
 							<span id="satuanEdit<?=$objectId?>" style="margin-left:10px;"><?=$result->satuan?></span>
 						</div>
 						<br>

@@ -134,16 +134,21 @@
 			//tipe 1=grid, 2=pdf, 3=excel
 			getUrl<?=$objectId;?> = function (tipe){
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
-				
-				if(filtahun.length==0) filtahun ="-1";
+					<? if ($this->session->userdata('unit_kerja_e1')==-1){?>
+					var file1 = $("#filter_e1<?=$objectId;?>").val();
+				<?} else {?>
+					var file1 = "<?=$this->session->userdata('unit_kerja_e1');?>";
+				<?}?>
+				if (filtahun == null) filtahun = "-1";
+				if (file1 == null) file1 = "-1";
 				
 				if (tipe==1){
-					return "<?=base_url()?>checkpoint/checkpointe1/grid/"+filtahun;
+					return "<?=base_url()?>checkpoint/checkpointe1/grid/"+filtahun+"/"+file1;
 				}
 				else if (tipe==2){
-					return "<?=base_url()?>checkpoint/checkpointe1/pdf/"+filtahun;
+					return "<?=base_url()?>checkpoint/checkpointe1/pdf/"+filtahun+"/"+file1;
 				}else if (tipe==3){
-					return "<?=base_url()?>checkpoint/checkpointe1/excel/"+filtahun;
+					return "<?=base_url()?>checkpoint/checkpointe1/excel/"+filtahun+"/"+file1;
 				}
 				
 			}
@@ -615,6 +620,12 @@
 					<td>Tahun :</td>
 					<td>
 					<?=$this->checkpointe1_model->getListFilterTahun($objectId)?>
+					</td>
+				</tr>
+					<tr>
+					<td>Unit Kerja Eselon I&nbsp</td>
+					<td>
+						<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
 					</td>
 				</tr>
 				<tr style="height:10px">
