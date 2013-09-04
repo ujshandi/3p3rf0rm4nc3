@@ -145,6 +145,7 @@ class Rktkl_model extends CI_Model
 		// id dari tabel
 		$kode_iku = isset($data['kode_iku'])?$data['kode_iku']:'0';
 		$tahun = isset($data['tahun'])?$data['tahun']:'2012';
+		$sasaran = isset($data['kode_sasaran_kl'])?$data['kode_sasaran_kl']:'-1';
 		
 		$id = isset($data['id'])?$data['id']:'0';
 		$name = isset($data['name'])?$data['name']:'kode_iku_kl';
@@ -155,6 +156,7 @@ class Rktkl_model extends CI_Model
 		$this->db->select('kode_iku_kl, deskripsi');
 		$this->db->from('tbl_iku_kl');
 		$this->db->where('tahun', $tahun);
+		//ditutup dulu bahas lebih lanjut $this->db->where('kode_sasaran_klx', $sasaran);
 		$this->db->order_by('kode_iku_kl');
 		$que = $this->db->get();
 		
@@ -178,12 +180,12 @@ class Rktkl_model extends CI_Model
 		return $out;
 	}
 	
-	public function getIKU_kl($objectId, $tahun){
+	public function getIKU_kl($objectId, $tahun,$sasaran){
 		$out = '<tr>
 					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
 					<td>1</td>
 					<td>
-						'.$this->rktkl_model->getListIKU_KL($objectId, array('id'=>'1', 'tahun' => $tahun , 'name'=>'detail[1][kode_iku_kl]', 'onclick'=>'javascript:getSatuan'.$objectId.'(this.value, this.id)')).'
+						'.$this->rktkl_model->getListIKU_KL($objectId, array('id'=>'1', 'tahun' => $tahun ,'kode_sasaran_kl' => $sasaran , 'name'=>'detail[1][kode_iku_kl]', 'onclick'=>'javascript:getSatuan'.$objectId.'(this.value, this.id)')).'
 					</td>
 					<td>
 						<input name="detail[1][target]" size="5">

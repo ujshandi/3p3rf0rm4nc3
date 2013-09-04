@@ -147,16 +147,31 @@
 		
 		$("#tahun<?=$objectId;?>").change(function(){
 				 setSasaranKL<?=$objectId;?>($(this).val(),"","");
-				var tahun = $(this).val();
+				getListIkuKL<?=$objectId?>();
+				/*var tahun = $(this).val();
 				if(tahun.length < 4){
 					$("#tbodyiku<?=$objectId;?>").html('<tr><td colspan="5">Isi Tahun dengan benar</td></tr>');
 				}else{
 					$("#tbodyiku<?=$objectId;?>").load(
 						base_url+"rencana/rktkl/getIKU_kl/"+tahun
 					);
-			}
+				}*/
 			
 			});
+			
+		getListIkuKL<?=$objectId;?> = function(){
+			var tahun = $("#tahun<?=$objectId;?>").val();
+			var kode_sasaran_kl = $("#kode_sasaran_kl<?=$objectId;?>").val();
+			
+			if (kode_sasaran_kl==null) kode_sasaran_kl = "-1";
+				if(tahun.length < 4){
+					$("#tbodyiku<?=$objectId;?>").html('<tr><td colspan="5">Isi Tahun dengan benar</td></tr>');
+				}else{
+					$("#tbodyiku<?=$objectId;?>").load(
+						base_url+"rencana/rktkl/getIKU_kl/"+tahun+"/"+kode_sasaran_kl
+					);
+			}
+		}	
 			
 			
 			
@@ -177,6 +192,7 @@
 						$("#drop<?=$objectId;?> li").click(function(e){
 							var chose = $(this).text();
 							$("#txtkode_sasaran_kl<?=$objectId;?>").text(chose);
+							getListIkuKL<?=$objectId;?>();
 						//	alert($("#txtkode_sasaran_kl<?=$objectId;?>").text());
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						});
@@ -194,6 +210,7 @@
 			function setSasaran<?=$objectId;?>(valu){
 			//alert("here");
 				document.getElementById('kode_sasaran_kl<?=$objectId;?>').value = valu;
+				
 			}
 			
 			// inisialisasi 

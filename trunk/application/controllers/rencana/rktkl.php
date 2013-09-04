@@ -195,9 +195,9 @@ class Rktkl extends CI_Controller {
 		}
 	}
 	
-	function getIKU_kl($tahun=""){
+	function getIKU_kl($tahun="",$sasaran=""){
 		if($tahun != ""){
-			echo $this->rktkl_model->getIKU_kl($this->objectId, $tahun);
+			echo $this->rktkl_model->getIKU_kl($this->objectId, $tahun,$sasaran);
 		}
 	}
 	
