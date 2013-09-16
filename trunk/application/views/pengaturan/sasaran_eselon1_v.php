@@ -456,6 +456,7 @@
 			<? if($this->sys_menu_model->cekAkses('EXCEL;',32,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="toExcel<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-excel" plain="true">Excel</a>
 			<?}?>
+			
 			<? if($this->sys_menu_model->cekAkses('IMPORT;',32,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
 			<?}?>
