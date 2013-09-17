@@ -46,7 +46,7 @@ class Ikk_model extends CI_Model
 			$this->db->from('tbl_ikk a');
 			$this->db->join('tbl_eselon2 b', 'b.kode_e2 = a.kode_e2');
 			$this->db->join('tbl_eselon1 c', 'c.kode_e1 = b.kode_e1');
-			$this->db->join('tbl_iku_eselon1 d', 'd.kode_iku_e1 = a.kode_iku_e1','left');
+			$this->db->join('tbl_iku_eselon1 d', 'd.kode_iku_e1 = a.kode_iku_e1 and a.tahun=d.tahun','left');
 			$this->db->order_by("a.kode_e2 ASC, a.kode_ikk ASC");
 			//$this->db->select("a.kode_e2, a.kode_ikk, b.kode_iku_e1, a.deskripsi, a.satuan",false);
 			//$this->db->from('tbl_ikk a');
@@ -156,7 +156,7 @@ class Ikk_model extends CI_Model
 		$this->db->from('tbl_ikk a');
 		$this->db->join('tbl_eselon2 b', 'b.kode_e2 = a.kode_e2');
 		$this->db->join('tbl_eselon1 c', 'c.kode_e1 = b.kode_e1');
-		$this->db->join('tbl_iku_eselon1 d', 'd.kode_iku_e1 = a.kode_iku_e1','left');
+		$this->db->join('tbl_iku_eselon1 d', 'd.kode_iku_e1 = a.kode_iku_e1  and a.tahun=d.tahun','left');
 
 		//$this->db->select("*",false);
 		//$this->db->from('tbl_ikk');
@@ -246,7 +246,7 @@ class Ikk_model extends CI_Model
 		$this->db->where('tahun',$tahun);
 		
 		$this->db->set('tahun',$data['tahun']);
-		//$this->db->set('kode_e1',$data['kode_e1']);
+$this->db->set('kode_ikk',$data['kode_ikk']);
 		$this->db->set('kode_e2',$data['kode_e2']);
 		//$this->db->set('kode_iku_e1',$data['kode_iku_e1']);
 		$this->db->set('kode_iku_e1',(($data['kode_iku_e1']=="")||($data['kode_iku_e1']==null)||($data['kode_iku_e1']=="-1")?null:$data['kode_iku_e1']));

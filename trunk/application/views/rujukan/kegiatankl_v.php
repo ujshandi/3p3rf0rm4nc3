@@ -2,6 +2,8 @@
 			
 			onchangeKodeE1<?=$objectId;?> = function(){
 					$("#divUnitKerjaAdd<?=$objectId;?>").load(base_url+"rujukan/eselon2/loadE2/"+$("#kode_e1<?=$objectId;?>").val()+"/<?=$objectId;?>");
+					$("#divProgram<?=$objectId;?>").load(base_url+"rujukan/programkl/loadProgram/"+$("#kode_e1<?=$objectId;?>").val()+"/"+$("#tahun<?=$objectId;?>").val()+"/<?=$objectId;?>");
+					
 					//alert($("#kode_e1<?=$objectId;?>").val());
 					//$("#divUnitKerja<?=$objectId;?>").html('tes');
 			}
@@ -10,6 +12,11 @@
 			
 			
 			$("#kode_e1<?=$objectId;?>").change(function(){
+				onchangeKodeE1<?=$objectId;?>();
+			//	alert('tes');
+				
+			});
+			$("#tahun<?=$objectId;?>").change(function(){
 				onchangeKodeE1<?=$objectId;?>();
 			//	alert('tes');
 				
@@ -145,7 +152,7 @@
 					<form id="fm<?=$objectId;?>" method="post">		
 						<div class="fitem">
 							<label style="width:120px">Tahun :</label>
-							<input name="tahun" size="5" class="easyui-validatebox" required="true">
+							<input name="tahun" id="tahun<?=$objectId?>" size="5" class="easyui-validatebox" required="true">
 						</div>					
 						<div class="fitem" >
 							<label style="width:120px">Unit Kerja Eselon I :</label>
@@ -159,7 +166,9 @@
 						</div>
 						<div class="fitem">
 							<label style="width:120px">Nama Program :</label>
-							<?=$this->programkl_model->getListProgramKL()?>
+							<span id="divProgram<?=$objectId;?>">
+							</span>
+							<?='';//$this->programkl_model->getListProgramKL($objectId)?>
 						</div>
 						<div class="fitem">
 							<br>

@@ -45,7 +45,7 @@ class Sasaran_eselon2_model extends CI_Model
 			$this->db->select("tbl_eselon2.kode_e1, tbl_sasaran_eselon2.kode_e2, tbl_eselon2.nama_e2, tbl_sasaran_eselon2.tahun, tbl_sasaran_eselon2.kode_sasaran_e2, tbl_sasaran_eselon2.deskripsi as e2_deskripsi,tbl_sasaran_eselon2.kode_sasaran_e1, tbl_sasaran_eselon1.deskripsi as e1_deskripsi",false);
 			$this->db->from('tbl_sasaran_eselon2');
 			$this->db->join('tbl_eselon2', 'tbl_eselon2.kode_e2 = tbl_sasaran_eselon2.kode_e2');
-			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_sasaran_eselon2.kode_sasaran_e1 tbl_sasaran_eselon1.tahun = tbl_sasaran_eselon2.tahun','left' );
+			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_sasaran_eselon2.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_sasaran_eselon2.tahun','left' );
 			$this->db->order_by("tbl_sasaran_eselon2.kode_e2 ASC,tbl_sasaran_eselon2.kode_sasaran_e2 ASC");
 			$query = $this->db->get();
 			
@@ -135,7 +135,7 @@ class Sasaran_eselon2_model extends CI_Model
 		$this->db->select("tbl_eselon2.kode_e1, tbl_sasaran_eselon2.kode_e2, tbl_eselon2.nama_e2, tbl_sasaran_eselon2.kode_sasaran_e2, tbl_sasaran_eselon2.deskripsi as e2_deskripsi,tbl_sasaran_eselon2.kode_sasaran_e1, tbl_sasaran_eselon1.deskripsi as e1_deskripsi",false);
 		$this->db->from('tbl_sasaran_eselon2');
 		$this->db->join('tbl_eselon2', 'tbl_eselon2.kode_e2 = tbl_sasaran_eselon2.kode_e2');
-		$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_sasaran_eselon2.kode_sasaran_e1','left' );
+		$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_sasaran_eselon2.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_sasaran_eselon2.tahun','left' );
 		$this->db->order_by("tbl_sasaran_eselon2.kode_e2 ASC,tbl_sasaran_eselon2.kode_sasaran_e2 ASC");
 		return $this->db->count_all_results();
 		$this->db->free_result();

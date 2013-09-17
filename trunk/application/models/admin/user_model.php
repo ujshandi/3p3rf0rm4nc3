@@ -115,6 +115,11 @@ class User_model extends CI_Model
 			else if ($app_type=="E1"){
 				$this->db->select('kode_e1 as kode,nama_e1 as nama');
 				$this->db->from('tbl_eselon1');
+				$e1 = $this->session->userdata('unit_kerja_e1');
+				if (($e1!=-1)&&($e1!=null)){
+					$this->db->where('kode_e1',$e1);
+					$value = $e1;
+				}
 				//if (FILTER_E1_LOCKING) $this->db->where('kode_e1 in ('.FILTER_E1_LIST.')');
 				$this->db->order_by('kode_e1');
 			}

@@ -534,7 +534,7 @@
 
 	 <!-- AREA untuk Form Add/EDIT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:750px;height:350px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:350px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
 		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Sasaran Unit Kerja Eselon II</div>
 		

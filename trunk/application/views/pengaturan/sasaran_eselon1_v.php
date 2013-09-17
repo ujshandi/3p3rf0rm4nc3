@@ -188,6 +188,8 @@
 				
 				if (file1 == null) file1 = "-1";
 				if ((filtahun == null)||(filtahun == '')) filtahun = "-1";
+				
+				
 				$.ajax({url:base_url+"pengaturan/sasaran_eselon1/getNewCode/"+file1+"/"+filtahun,
 					success : function(data){
 					$("#kode_sasaran_e1<?=$objectId?>").val(data);

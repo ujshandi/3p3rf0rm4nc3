@@ -44,7 +44,7 @@ class Kegiatankl_model extends CI_Model
 			if($purpose==1){$this->db->limit($limit,$offset);}
 			$this->db->select("kl.*, e2.nama_e2, pr.nama_program",false);
 			$this->db->from('tbl_kegiatan_kl kl left join tbl_eselon2 e2 on kl.kode_e2 = e2.kode_e2',false);
-			$this->db->join('tbl_program_kl pr','pr.kode_program = kl.kode_program');
+			$this->db->join('tbl_program_kl pr','pr.kode_program = kl.kode_program and pr.tahun=kl.tahun');
 			//$this->db->join('tbl_kegiatan','tbl_kegiatan.kode_kegiatan = tbl_kegiatan_kl.kode_kegiatan');
 			$query = $this->db->get();
 			

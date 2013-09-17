@@ -295,7 +295,7 @@
 							</span>
 						</div>
 						<br>
-						<detail id="detail<?=$objectId;?>">
+						<detail id="detail<?=$objectId;?>" >
 							
 						</detail>
 					</form>

@@ -230,7 +230,7 @@
 					setIKUE1<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val(),row.kode_iku_e1,row.deskripsi_e1);
 					url = base_url+'pengaturan/ikk/save/edit/'+row.kode_ikk+"/"+row.tahun;//+row.id;//'update_user.php?id='+row.id;
 					
-					$("#kode_ikk<?=$objectId?>").attr("readonly","readonly");
+					//$("#kode_ikk<?=$objectId?>").attr("readonly","readonly");
 				}
 			}
 			//end editData

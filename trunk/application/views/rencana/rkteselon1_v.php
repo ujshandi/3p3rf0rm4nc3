@@ -47,10 +47,20 @@
 			//end saveData 
 			
 			//chan=================================
-			function setSasaran<?=$objectId;?>(e1, tahun){
+			
+			$("#tahun<?=$objectId;?>").change(function(){
+				var e1 = $("#kode_e1<?=$objectId;?>").val();
+				 setSasaranE1<?=$objectId;?>(e1,$(this).val());
+			
+			});
+			
+			
+			setSasaranE1<?=$objectId;?> = function(e1, tahun){
 				<? if ($this->session->userdata('unit_kerja_e1')!='-1') {?>
 				 e1 = '<?=$this->session->userdata('unit_kerja_e1');?>';
 				<?}?>
+				
+				tahun =  $('#tahun<?=$objectId;?>').val();
 				$("#divSasaranE1<?=$objectId?>").load(
 					base_url+"rencana/rkteselon1/getListSasaranE1/"+"<?=$objectId;?>"+"/"+e1+"/"+tahun,
 					function(){
@@ -65,20 +75,28 @@
 						
 						$("#drop<?=$objectId;?> li").click(function(e){
 							var chose = $(this).text();
+							//alert(chose);
 							$("#txtkode_sasaran_e1<?=$objectId;?>").text(chose);
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						});
+					//	
+					//	if (key!=null)
+						//	$('#kode_sasaran_e2<?=$objectId;?>').val(key);
+						
+						//if ((val!=null)&&(val!=""))
+							//$('#txtkode_sasaran_e1<?=$objectId;?>').val(val);
+							
 					}
 				);
 				//alert("here");
 				
 			}
 			$("#kode_e1<?=$objectId?>").change(function(){
-				setSasaran<?=$objectId;?>($(this).val(), $('#tahun<?=$objectId;?>').val());
+				setSasaranE1<?=$objectId;?>($(this).val(), $('#tahun<?=$objectId;?>').val());
 			});
 			
 			//inisilaisasi;
-			setSasaran<?=$objectId;?>($("#kode_e1<?=$objectId?>").val(), $('#tahun<?=$objectId;?>').val());
+			setSasaranE1<?=$objectId;?>($("#kode_e1<?=$objectId?>").val(), $('#tahun<?=$objectId;?>').val());
 			
 			//--------------------
 		});
@@ -210,6 +228,7 @@
 		
 		//chan-----------
 		function setSasaran<?=$objectId;?>(valu){
+			
 			if(valu != null){
 				document.getElementById('kode_sasaran_e1<?=$objectId;?>').value = valu;
 			}
@@ -221,17 +240,14 @@
 			if(tahun.length < 4){
 				$("#tbodyiku<?=$objectId;?>").html('<tr><td colspan="5">Isi Tahun dengan benar</td></tr>');
 			}else{
+			//	setSasaranE1<?=$objectId;?>(kode_e1, tahun);
 				$("#tbodyiku<?=$objectId;?>").load(
 					base_url+"rencana/rkteselon1/getIKU_e1/"+kode_e1+"/"+tahun
 				);
 			}
 			
 		}
-			/*chan-----------
-		function setSasaran<?=$objectId;?>(valu){
-			document.getElementById('kode_sasaran_e1<?=$objectId;?>').value = valu;
-			getDetail();
-		}*/
+			
 	</script>
 	
 	<style type="text/css">
@@ -313,7 +329,7 @@
 				<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 					<div class="fitem">
 						<label style="width:120px;vertical-align:top">Tahun :</label>
-						<input id="tahun<?=$objectId?>" name="tahun" onkeyup="setIKU<?=$objectId;?>(null);"class="easyui-validatebox" required="true" size="5" maxlength="4">
+						<input id="tahun<?=$objectId?>" name="tahun" class="easyui-validatebox" required="true" size="5" maxlength="4">
 					</div>
 					<div class="fitem" >
 						<label style="width:120px">Unit Kerja Eselon I :</label>

@@ -222,6 +222,14 @@ class Programkl_model extends CI_Model
 		$this->db->from('tbl_program_kl');
 		$this->db->order_by('kode_program');
 		
+		if ($data!=""){
+			$tahun = isset($data['tahun'])?$data['tahun']:'-1';
+			$kode_e1 = isset($data['kode_e1'])?$data['kode_e1']:'-1';
+			$this->db->where('kode_e1',$kode_e1);
+			$this->db->where('tahun',$tahun);
+		}
+			
+		
 		$que = $this->db->get();
 		
 		$out = '<select name="'.$name.'" class="easyui-validatebox" required="true">';

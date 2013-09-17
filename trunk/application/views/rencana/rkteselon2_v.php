@@ -20,7 +20,12 @@
 				setListE2<?=$objectId?>();
 			  });
 			  
-			function setSasaranE2<?=$objectId;?>(e2, tahun){
+			 $("#tahun<?=$objectId;?>").change(function(){
+				var e2 = $("#kode_e2<?=$objectId;?>").val();
+				 setSasaranE2<?=$objectId;?>(e2,$(this).val());
+			
+			});
+			setSasaranE2<?=$objectId;?> = function (e2, tahun){
 				$("#divSasaranE2<?=$objectId?>").load(
 					base_url+"rencana/rkteselon2/getListSasaranE2/"+"<?=$objectId;?>"+"/"+e2+"/"+tahun,
 					//on complete
@@ -119,7 +124,7 @@
 
 		});
 		
-		function setIKK<?=$objectId;?>(valu){
+		function setSasaran<?=$objectId;?>(valu){
 			if(valu != null){
 				document.getElementById('kode_sasaran_e2<?=$objectId;?>').value = valu;
 			}
@@ -131,6 +136,7 @@
 			if(tahun.length < 4){
 				$("#tbodyikk<?=$objectId;?>").html('<tr><td colspan="5">Isi Tahun dengan benar</td></tr>');
 			}else{
+				//setSasaranE2<?=$objectId;?>(kode_e2, tahun);
 				$("#tbodyikk<?=$objectId;?>").load(
 					base_url+"rencana/rkteselon2/getIKK/"+kode_e2+"/"+tahun
 				);
@@ -321,7 +327,7 @@
 				<!-- chan : Jika login superadmin maka tampilkan combo E1 utk nge filter list E2 -->
 					<div class="fitem">
 						<label style="width:120px;vertical-align:top">Tahun :</label>
-						<input id="tahun<?=$objectId?>" name="tahun" onkeyup="setIKK<?=$objectId;?>(null);" class="easyui-validatebox" required="true" size="5" maxlength="4">
+						<input id="tahun<?=$objectId?>" name="tahun"  class="easyui-validatebox" required="true" size="5" maxlength="4">
 					</div>					
 					<?// if ($this->session->userdata('unit_kerja_e1')=='-1'){?>
 					<div class="fitem">							

@@ -166,14 +166,14 @@
 		}
 		
 		function getDetail<?=$objectId;?>(){
-			var tahun 			= document.getElementById('tahun<?=$objectId;?>').value;
+			var tahun 			= $('#tahun<?=$objectId;?>').val();
 			//chan
-			<? if ($this->session->userdata('unit_kerja_e1')=='-1') {?>
-			var kode_e2 		= document.getElementById('kode_e2<?=$objectId;?>').value;
+			<? if ($this->session->userdata('unit_kerja_e2')=='-1') {?>
+			var kode_e2 		= $('#kode_e2<?=$objectId;?>').val();
 			<?} else {?>
 			var kode_e2 		= "<?=$this->session->userdata('unit_kerja_e2')?>";
 			<? }?>
-			var kode_sasaran_e2 = document.getElementById('kode_sasaran_e2<?=$objectId;?>').value;
+			var kode_sasaran_e2 = $('#kode_sasaran_e2<?=$objectId;?>').val();
 			var response = '';
 			
 			$.ajax({ type: "GET",   
@@ -211,7 +211,7 @@
 
 		});
 		
-		function setIKK<?=$objectId;?>(valu){
+		function setSasaran<?=$objectId;?>(valu){
 			document.getElementById('kode_sasaran_e2<?=$objectId;?>').value = valu;
 			getDetail<?=$objectId;?>();
 		}
