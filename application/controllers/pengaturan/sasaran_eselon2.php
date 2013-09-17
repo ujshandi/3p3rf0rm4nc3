@@ -145,8 +145,9 @@ class Sasaran_eselon2 extends CI_Controller {
 		$deskripsi = $this->sasaran_eselon2_model->getDeskripsiSasaran($kode_sasaran_e1);
 		echo $deskripsi;
 	}
+	
 	public function excel($file1=null,$file2=null,$filtahun=null,$filkey=null){
-		echo  $this->sasaran_eselon2_model->easyGrid($file1,$file2,$filtahun,$filkey3);
+		echo  $this->sasaran_eselon2_model->easyGrid($file1,$file2,$filtahun,$filkey,3);
 	}
 	
 	///-/>.....................>>>>>>>>>>>>>>>>>>>>dinon-aktifkan by Chan

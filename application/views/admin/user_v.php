@@ -52,9 +52,20 @@
 					paging = "/"+page+"/"+rows;						
 				}
 			
+				<? if ($this->session->userdata('unit_kerja_e1')==-1){?>
+					var file1 = $("#filter_e1<?=$objectId;?>").val();
+				<?} else {?>
+					var file1 = "<?=$this->session->userdata('unit_kerja_e1');?>";
+				<?}?>
+				<? if ($this->session->userdata('unit_kerja_e2')==-1){?>
+					var file2 = $("#filter_e2<?=$objectId;?>").val();
+				<?} else {?>
+					var file2 = "<?=$this->session->userdata('unit_kerja_e2');?>";
+				<?}?>
+				
 				//ambil nilai-nilai filter
-				var file1 = $("#filter_e1<?=$objectId;?>").val();
-				var file2 = $("#filter_e2<?=$objectId;?>").val();
+			//	var file1 = $("#filter_e1<?=$objectId;?>").val();
+			//	var file2 = $("#filter_e2<?=$objectId;?>").val();
 				var filapptype = $("#filter_apptype<?=$objectId;?>").val();
 				var fillevel = $("#filter_level_id<?=$objectId;?>").val();
 			
@@ -274,7 +285,7 @@
 
 	 <!-- AREA untuk Form Add/EDIT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:700px;height:320px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:750px;height:350px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 	  <div class="ftitle">Add/Edit Pengguna</div>
 	  <form id="fm<?=$objectId;?>" method="post">
 		
@@ -286,7 +297,7 @@
 		</div>
 		<div class="fitem">
 		  <label style="width:120px;vertical-align:top">Nama Pengguna:</label>
-		  <input name="full_name" class="easyui-validatebox" required="true" >
+		  <input name="full_name" class="easyui-validatebox" required="true" size="50">
 		</div>
 		<div class="fitem">
 		  <label style="width:120px;vertical-align:top">Password:</label>

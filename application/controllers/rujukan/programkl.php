@@ -265,5 +265,11 @@ class Programkl extends CI_Controller {
 		echo $this->programkl_model->getListTahun($objectId);
 	}
 
+	public function loadProgram($e1,$tahun,$objectId=null){
+		$data['tahun'] = $tahun;
+		$data['kode_e1'] = $e1;
+		echo $this->programkl_model->getListProgramKL($objectId,$data);
+	}
+
 }
 ?>

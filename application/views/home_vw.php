@@ -585,7 +585,7 @@
 	<script type="text/javascript">
 		setTimeout(function(){
 						//	addTab('Dashboard','dashboard');
-					//	var autotab = <?=$listAutoTab;?>
+					//	var autotab = <=$listAutoTab;?>
 						//alert(autoTab);
 						<? foreach ($listAutoTab as $row){?>
 						//	alert("<?=$row->menu_name?>");
