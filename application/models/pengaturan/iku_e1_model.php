@@ -104,7 +104,7 @@ class Iku_e1_model extends CI_Model
 		}
 		else if($purpose==3){//to excel
 			//tambahkan header kolom
-			$colHeaders = array("Tahun","Kode Eselon 1","Kode IKU","Deskripsi IKU","Satuan","Kode IKU Kementerian Terkait");		
+			$colHeaders = array("Tahun","Kode Eselon I","Kode IKU","Deskripsi IKU","Satuan","Kode IKU Kementerian Terkait");		
 			//var_dump($query->result());die;
 			to_excel($query,"IKUEselon1",$colHeaders);
 		}
@@ -339,7 +339,7 @@ class Iku_e1_model extends CI_Model
 		
 		//chan
 		if ($que->num_rows()==0){
-			$out = "Data IKU untuk tingkat Eselon 1 ini belum tersedia.";
+			$out = "Data IKU untuk tingkat Eselon I ini belum tersedia.";
 		}
 		
 		echo $out;
