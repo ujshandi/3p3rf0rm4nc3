@@ -301,7 +301,7 @@ class Sasaran_eselon1_model extends CI_Model
 		//var_dump($que->num_rows());
 		//chan
 		if ($que->num_rows()==0){
-			$out = "Data Sasaran Eselon 1 untuk tingkat Eselon ini belum tersedia.";
+			$out = "Data Sasaran Eselon I untuk tingkat Eselon ini belum tersedia.";
 		}
 		
 		echo $out;

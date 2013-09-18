@@ -109,7 +109,7 @@ class Sasaran_eselon2_model extends CI_Model
 		}
 		else if($purpose==3){//to excel
 			//tambahkan header kolom
-			$colHeaders = array("Kode Eselon 1 Terkait","Kode Eselon 2","Tahun","Kode Sasaran","Deskripsi Sasaran","Kode Sasaran Eselon 1");		
+			$colHeaders = array("Kode Eselon I Terkait","Kode Eselon 2","Tahun","Kode Sasaran","Deskripsi Sasaran","Kode Sasaran Eselon I");		
 		//	var_dump($query->result());die;
 			to_excel($query,"SasaranEselon2",$colHeaders);
 		}

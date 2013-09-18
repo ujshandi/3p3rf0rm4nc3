@@ -129,7 +129,7 @@ class Ikk_model extends CI_Model
 					//$colHeaders = array("Kode Eselon 2","Kode IKK","Kode IKU Eselon 1","Deskripsi IKK","Satuan");
 			else
 				$colHeaders = array("Tahun","Kode Eselon II","Kode IKK","Deskripsi","Satuan");
-				//$colHeaders = array("Kode Eselon 2","Kode IKK","Kode IKU Eselon 1","Deskripsi IKK","Satuan");
+				//$colHeaders = array("Kode Eselon 2","Kode IKK","Kode IKU Eselon 1`","Deskripsi IKK","Satuan");
 					
 		//	var_dump($query->result());die;
 			to_excel($query,"IKK",$colHeaders);

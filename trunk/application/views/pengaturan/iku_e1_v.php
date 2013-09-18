@@ -563,13 +563,7 @@
 			</div>
 			
 			<div class="fitem">
-				<label style="width:120px;vertical-align:top">IKU Kementerian :</label>
-				<?//=$this->iku_kl_model->getListIKU_KL($objectId,"",false)?>
-				<span id="divIKUKL<?=$objectId?>">
-				</span>
-			</div>
-			<div class="fitem">
-				<label style="width:120px">Sasaran Eselon 1:</label>					
+				<label style="width:120px">Sasaran Eselon I:</label>					
 					<span id="divSasaranE1<?=$objectId?>">
 				</span>
 			</div>
@@ -584,6 +578,13 @@
 			<div class="fitem">
 				<label style="width:120px;vertical-align:top">Satuan :</label>
 				<input name="satuan" size="60" class="easyui-validatebox">
+			</div>
+			
+			<div class="fitem">
+				<label style="width:120px;vertical-align:top">IKU Kementerian :</label>
+				<?//=$this->iku_kl_model->getListIKU_KL($objectId,"",false)?>
+				<span id="divIKUKL<?=$objectId?>">
+				</span>
 			</div>
 			<!--request bos toto 2013.05.30
 			<div class="fitem">							
