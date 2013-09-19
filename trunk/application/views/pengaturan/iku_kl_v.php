@@ -45,6 +45,10 @@
 			}
 			//end newData
 			
+			download<?=$objectId;?>=function(){
+				window.location=base_url+"download/format_excel_import/iku_kl.xls"
+			}
+			
 			import<?=$objectId;?> = function (){  
 				$('#dlgimport<?=$objectId;?>').dialog('open').dialog('setTitle','Import Indikator Kinerja Utama Kementerian');
 				$('#fmimport<?=$objectId;?>').form('clear');  
@@ -138,7 +142,7 @@
 					$('#fm<?=$objectId;?>').form('load',row);
 					url = base_url+'pengaturan/iku_kl/save/edit/'+row.kode_iku_kl+"/"+row.tahun;//+row.id;//'update_user.php?id='+row.id;
 					$("#kode_kl<?=$objectId?>").val(row.kode_kl);
-					$("#kode_iku_kl<?=$objectId?>").attr("readonly","readonly");
+					//$("#kode_iku_kl<?=$objectId?>").attr("readonly","readonly");
 				}
 			}
 			//end editData
@@ -406,7 +410,7 @@
 			<? if($this->sys_menu_model->cekAkses('IMPORT;',34,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
 			<?}?>
-		
+			<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>
 		</div>
 	</div>
 	
@@ -427,7 +431,7 @@
 
 	<!-- Area untuk Form Add/Edit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:350px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:400px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
 		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Indikator Kerja Unit (IKU) Kementerian</div>
 		<form id="fm<?=$objectId;?>" method="post">

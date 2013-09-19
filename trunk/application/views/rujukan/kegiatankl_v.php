@@ -76,7 +76,8 @@
 			var newcell_2 = row.insertCell(1);
 			newcell_2.innerHTML = table.rows[1].cells[1].innerHTML;
 			newcell_2.childNodes[1].value = "";
-			newcell_2.childNodes[1].name = "detail[" + rowCount + "][nama_kegiatan]";
+			
+			newcell_2.childNodes[1].name = "detail[" + rowCount + "][nama_kegiatanxx]";
 			
 			var newcell_3 = row.insertCell(2);
 			newcell_3.innerHTML = table.rows[1].cells[2].innerHTML;
@@ -183,7 +184,7 @@
 										<input name="detail[1][kode_kegiatan]" size="18">
 									</td>
 									<td>
-										<!--<input name="detail[1][nama_kegiatan]" size="120">-->
+										
 										<textarea name="detail[1][nama_kegiatan]" cols="80" rows="0"></textarea>
 									</td>
 									<td>

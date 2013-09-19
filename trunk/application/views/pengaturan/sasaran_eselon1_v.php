@@ -75,7 +75,7 @@
 						// $(elem).attr({readonly:!editmode});
 					// });
 					
-					$("#kode_sasaran_e1<?=$objectId?>").attr("readonly","readonly");
+					//$("#kode_sasaran_e1<?=$objectId?>").attr("readonly","readonly");
 				}
 			}
 			//end editData
@@ -122,6 +122,10 @@
 			}
 			//end toExcel
 		
+		download<?=$objectId;?>=function(){
+				window.location=base_url+"download/format_excel_import/sasaran_e1.xls"
+			}
+			
 			importData<?=$objectId;?>=function(){
 			
 				$('#fmimport<?=$objectId;?>').form('submit',{
@@ -462,6 +466,7 @@
 			<? if($this->sys_menu_model->cekAkses('IMPORT;',32,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
 			<?}?>
+			<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>
 		</div>
 	</div>
 	

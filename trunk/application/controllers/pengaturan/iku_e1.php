@@ -128,7 +128,7 @@ class Iku_e1 extends CI_Controller {
 	
 	function getNewCode($e1,$tahun,$kodesasaran){
 		//fieldName,$tblName,$condition,$prefix,$suffix,$minLength=5
-		$prefix = $this->utility->getValueFromSQL("select prefix_iku as rs from tbl_prefix where kode_e1 = '$e1'","UNSET").$kodesasaran;
+		$prefix = $this->utility->getValueFromSQL("select prefix_iku as rs from tbl_prefix where kode_e1 = '$e1'","-").$kodesasaran;//UNSET
 		//var_dump($prefix); die;
 		echo $this->utility->ourGetNextIDNum("kode_iku_e1","tbl_iku_eselon1"," and tahun = '$tahun'",$prefix.".","",2);
 	}
