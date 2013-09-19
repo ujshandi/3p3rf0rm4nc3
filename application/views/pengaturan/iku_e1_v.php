@@ -221,6 +221,7 @@
 					setIKUKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),row.kode_iku_kl,row.deskripsi_ikukl);
 					setListE2<?=$objectId?>(row.kode_e2);
 					kodeE1Change<?=$objectId?>(true);
+					setSasaranE1<?=$objectId?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val(),row.kode_sasaran_e1,row.deskripsi_sasaran_e1);
 					/* // ajax
 					var response = '';
 					$.ajax({ type: "GET",   
@@ -318,6 +319,9 @@
 							break;
 						case "kode_iku_kl":
 							showPopup('#popdesc<?=$objectId?>', row.kl_deskripsi);
+							break;
+						case "kode_sasaran_e1":
+							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e1);
 							break;
 						default:
 							closePopup('#popdesc<?=$objectId?>');
@@ -538,12 +542,15 @@
 		<th field="tahun" sortable="true" width="15px">Tahun</th>
 		<th field="kode_e1" sortable="true" width="30"  <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'hidden="true"')?>>Kode Eselon I</th>
 		<th field="nama_e1" sortable="true" hidden="true" >Nama</th>
+		<th field="kode_sasaran_e1" sortable="true" width="35">Sasaran Eselon I</th>	
 		<th field="kode_e2" sortable="true" width="30"  hidden="true">Kode Eselon II</th>
 		<th field="kode_iku_e1" sortable="true" width="35">Kode IKU</th>
 		<th field="deskripsi" sortable="true" width="125">Deskripsi IKU</th>
 		<th field="satuan" sortable="true" width="20">Satuan</th>	
 		<th field="kode_iku_kl" sortable="true" width="20">Kode IKU KL</th>	
 		<th field="kl_deskripsi" sortable="true" hidden="true">Kode IKU KL</th>	
+		
+		<th field="deskripsi_sasaran_e1" sortable="true" hidden="true">kode sasaran e1</th>	
 		
 	  </tr>
 	  </thead>  
