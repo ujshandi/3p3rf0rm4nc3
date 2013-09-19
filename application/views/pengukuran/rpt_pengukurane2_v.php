@@ -8,8 +8,13 @@
 			clearFilter<?=$objectId;?> = function (){
 				//ambil nilai-nilai filter
 				$("#filter_tahun<?=$objectId;?>").val('');	
-				$("#filter_e1<?=$objectId;?>").val('');		
-				$("#filter_e2<?=$objectId;?>").empty().append('<option value="-1">Semua</option>');			
+				$("#filter_e1<?=$objectId;?>").val('');	
+				<? if ($this->session->userdata('unit_kerja_e1')!="-1") {?>
+					setListE2<?=$objectId?>();
+					
+				<?} else {?>	
+					$("#filter_e2<?=$objectId;?>").empty().append('<option value="-1">Semua</option>');			
+				<? }?>
 				$("#filter_sasaran<?=$objectId;?>").val('');			
 				$("#kode_sasaran_e2<?=$objectId;?>").val('');			
 				$("#filter_iku<?=$objectId;?>").val('');			
@@ -21,8 +26,10 @@
 					
 				<?}?>
 				if(e2==null) e2="-1";
+				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
+					if (filtahun == null) filtahun = "-1";
 				$("#divSasaranE2<?=$objectId;?>").load(
-					base_url+"pengaturan/sasaran_eselon2/getListSasaranE2/"+"<?=$objectId;?>"+"/"+e2,
+					base_url+"pengaturan/sasaran_eselon2/getListSasaranE2/"+"<?=$objectId;?>"+"/"+e2+"/"+filtahun,
 					//on complete
 					function (){
 						if($("#drop<?=$objectId;?>").is(":visible")){
@@ -51,8 +58,13 @@
 			
 			
 			function setListE2<?=$objectId?>(){
+				<? if ($this->session->userdata('unit_kerja_e1')==-1){?>
+					var file1 = $("#filter_e1<?=$objectId;?>").val();
+				<?} else {?>
+					var file1 = "<?=$this->session->userdata('unit_kerja_e1');?>";
+				<?}?>
 				$("#divEselon2<?=$objectId?>").load(
-					base_url+"rujukan/eselon2/loadFilterE2/"+$("#filter_e1<?=$objectId?>").val()+"/<?=$objectId;?>",
+					base_url+"rujukan/eselon2/loadFilterE2/"+file1+"/<?=$objectId;?>",
 					//on complete
 					function (){
 						//setSasaranE2<?=$objectId?>($("#kode_e2<?=$objectId?>").val());
@@ -101,7 +113,7 @@
 				var filsasaran = $("#kode_sasaran_e2<?=$objectId;?>").val();
 				var filiku = $("#filter_iku<?=$objectId;?>").val();
 				//encode parameter
-				if (filsasaran==null) filsasaran = "-1";
+				if ((filsasaran==null)||(filsasaran=="")) filsasaran = "-1";
 				if(filtahun==null) filtahun ="-1";
 				if (file2==null) file2 = "-1";
 				if (file1==null) file1 = "-1";
@@ -158,6 +170,11 @@
 				} else {
 					return val;
 				} */
+			}
+			
+		 setSasaran<?=$objectId;?> = function(valu){
+				document.getElementById('kode_sasaran_e2<?=$objectId;?>').value = valu;
+				getDetail<?=$objectId;?>();
 			}
 			
 			prepareMerge<?=$objectId;?> = function(data){

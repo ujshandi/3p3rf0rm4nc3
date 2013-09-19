@@ -56,7 +56,7 @@ class Sasaran_eselon2 extends CI_Controller {
 	
 	function getNewCode($e2,$tahun){
 		//fieldName,$tblName,$condition,$prefix,$suffix,$minLength=5
-		$prefix = $this->utility->getValueFromSQL("select prefix as rs from tbl_prefix where kode_e2 = '$e2'","UNSET");
+		$prefix = $this->utility->getValueFromSQL("select prefix as rs from tbl_prefix where kode_e2 = '$e2'","-");//UNSET
 		//var_dump($prefix); die;
 		echo $this->utility->ourGetNextIDNum("kode_sasaran_e2","tbl_sasaran_eselon2"," and tahun = '$tahun'",$prefix.".","",2);
 	}

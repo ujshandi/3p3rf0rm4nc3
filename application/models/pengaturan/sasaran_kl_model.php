@@ -166,6 +166,7 @@ class Sasaran_kl_model extends CI_Model
 		$this->db->where('kode_sasaran_kl',$kode);
 		$this->db->where('tahun',$tahun);
 
+		$this->db->set('kode_sasaran_kl',$data['kode_sasaran_kl']);
 		$this->db->set('tahun',$data['tahun']);
 		$this->db->set('kode_kl',$data['kode_kl']);
 		$this->db->set('deskripsi',$data['deskripsi']);

@@ -199,6 +199,7 @@ class Iku_kl_model extends CI_Model
 		$this->db->where('kode_iku_kl',$kode);
 		$this->db->where('tahun',$tahun);
 		
+		$this->db->set('kode_iku_kl',$data['kode_iku_kl']);
 		$this->db->set('kode_kl',$data['kode_kl']);
 		$this->db->set('deskripsi',$data['deskripsi']);
 		$this->db->set('satuan',$data['satuan']);

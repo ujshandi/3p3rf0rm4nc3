@@ -59,6 +59,7 @@
 			
 			$("#tahun<?=$objectId;?>").change(function(){
 				//alert($(this).val());
+				setSasaranE1<?=$objectId;?>($(this).val(),$("#kode_e1<?=$objectId?>").val(),'','')
 				 setIKUKL<?=$objectId;?>($(this).val(),"","");
 				  setKodeOtomatis<?=$objectId?>();
 			});
@@ -113,7 +114,11 @@
 				$("#kode_iku_e1<?=$objectId?>").removeAttr('readonly');
 			}
 			//end newData 
-			
+
+			download<?=$objectId;?>=function(){
+				window.location=base_url+"download/format_excel_import/iku_e1.xls"
+			}
+				
 			import<?=$objectId;?> = function (){  
 				$('#dlgimport<?=$objectId;?>').dialog('open').dialog('setTitle','Import Indikator Kinerja Utama Eselon 1');
 				$('#fmimport<?=$objectId;?>').form('clear');  
@@ -232,7 +237,7 @@
 					url = base_url+'pengaturan/iku_e1/save/edit/'+row.kode_iku_e1+"/"+row.tahun;//+row.id;//'update_user.php?id='+row.id;
 					//alert(row.kode_e2);
 					
-					$("#kode_iku_e1<?=$objectId?>").attr("readonly","readonly");
+					//$("#kode_iku_e1<?=$objectId?>").attr("readonly","readonly");
 				}
 			}
 			//end editData
@@ -523,6 +528,7 @@
 		<? if($this->sys_menu_model->cekAkses('IMPORT;',35,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
 		<?}?>
+		<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>
 	  </div>
 	</div>
 	
@@ -545,7 +551,7 @@
 
 	 <!-- AREA untuk Form Add/EDIT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	
-	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:400px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
+	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:500px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
 		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Indikator Kinerja Utama (IKU) Eselon I</div>
 		<form id="fm<?=$objectId;?>" method="post">

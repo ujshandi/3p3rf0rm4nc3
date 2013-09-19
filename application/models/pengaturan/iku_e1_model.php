@@ -215,6 +215,7 @@ class Iku_e1_model extends CI_Model
 		$this->db->set('tahun',$data['tahun']);
 		$this->db->set('kode_e1',$data['kode_e1']);
 		$this->db->set('kode_e2',$data['kode_e2']);
+	$this->db->set('kode_iku_e1',$data['kode_iku_e1']);
 		//$this->db->set('kode_iku_kl',$data['kode_iku_kl']);
 		$this->db->set('kode_iku_kl',(($data['kode_iku_kl']=="")||($data['kode_iku_kl']==null)||($data['kode_iku_kl']=="-1")?null:$data['kode_iku_kl']));
 		//$this->db->set('kode_iku_e1',$data['kode_iku_e1']);

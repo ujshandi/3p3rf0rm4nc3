@@ -115,6 +115,9 @@
 				$("#kode_sasaran_e2<?=$objectId?>").removeAttr('readonly');
 			}
 			//end newData
+			download<?=$objectId;?>=function(){
+				window.location=base_url+"download/format_excel_import/sasaran_e2.xls"
+			}
 			
 			import<?=$objectId;?> = function (){  
 				$('#dlgimport<?=$objectId;?>').dialog('open').dialog('setTitle','Import Sasaran Eselon 2');
@@ -240,7 +243,7 @@
 			
 					url = base_url+'pengaturan/sasaran_eselon2/save/edit/'+row.kode_sasaran_e2;//+row.id;//'update_user.php?id='+row.id;
 					
-					$("#kode_sasaran_e2<?=$objectId?>").attr("readonly","readonly");
+					//$("#kode_sasaran_e2<?=$objectId?>").attr("readonly","readonly");
 					
 				}
 			}
@@ -514,6 +517,7 @@
 		<? if($this->sys_menu_model->cekAkses('IMPORT;',33,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
 		<?}?>
+		<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>
 	  </div>
 	</div>
 	

@@ -59,7 +59,7 @@ class Kegiatankl extends CI_Controller {
 		$this->load->library('form_validation');
 		$data = $this->get_form_values();
 		$result = "";
-		
+		//var_dump($data['detail']);die;
 		foreach($data['detail'] as $dt){
 			$data['tahun'] 			= $data['tahun'];
 			$data['kode_program'] 	= $data['kode_program'];

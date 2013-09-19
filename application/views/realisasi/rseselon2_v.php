@@ -226,7 +226,7 @@
 			getDetail();
 		}*/
 		
-		function setIKK<?=$objectId;?>(valu){
+		function setSasaran<?=$objectId;?>(valu){
 			document.getElementById('kode_sasaran_e2<?=$objectId;?>').value = valu;
 			getDetail<?=$objectId;?>();
 		}

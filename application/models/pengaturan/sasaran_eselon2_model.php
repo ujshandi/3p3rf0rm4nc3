@@ -215,6 +215,7 @@ class Sasaran_eselon2_model extends CI_Model
 		
 		$this->db->where('kode_sasaran_e2',$kode);
 		$this->db->set('tahun',$data['tahun']);
+		$this->db->set('kode_sasaran_e2',$data['kode_sasaran_e2']);
 		$this->db->set('kode_e2',$data['kode_e2']);
 		$this->db->set('kode_sasaran_e1',(($data['kode_sasaran_e1']=="")||($data['kode_sasaran_e1']==null)||($data['kode_sasaran_e1']=="-1")?null:$data['kode_sasaran_e1']));
 		$this->db->set('deskripsi',$data['deskripsi']);

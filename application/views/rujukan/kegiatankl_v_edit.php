@@ -5,6 +5,7 @@
 					$("#divUnitKerjaEdit<?=$objectId;?>").load(base_url+"rujukan/eselon2/loadE2/"+$("#kode_e1<?=$objectId;?>").val()+"/<?=$objectId;?>");
 					//alert($("#kode_e1<?=$objectId;?>").val());
 					//$("#divUnitKerja<?=$objectId;?>").html('tes');
+					$("#divProgram<?=$objectId;?>").load(base_url+"rujukan/programkl/loadProgram/"+$("#kode_e1<?=$objectId;?>").val()+"/"+$("#tahun<?=$objectId;?>").val()+"/<?=$objectId;?>");
 			}
 			
 			$("#kode_e1<?=$objectId;?>").change(function(){
@@ -106,7 +107,7 @@
 						</div> 
 						<div class="fitem">
 							<label style="width:120px">Nama Program :</label>
-							<?=$this->programkl_model->getListProgramKL($objectId, array('value'=>$result->kode_program))?>
+							<?=$this->programkl_model->getListProgramKL($objectId, array('value'=>$result->kode_program,'tahun'=>$result->tahun,'kode_e1'=>$result->kode_e1))?>
 						</div>
 						<div class="fitem">
 							<label style="width:120px">Kode Kegiatan :</label>
