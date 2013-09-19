@@ -38,9 +38,10 @@ class Iku_e1_model extends CI_Model
 			if($filkey != '' && $filkey != '-1' && $filkey != null) {
 				$this->db->like("a.deskripsi",$filkey);
 			}
-			$this->db->select("a.tahun,a.kode_e1, a.kode_iku_e1, a.deskripsi, a.satuan, a.kode_iku_kl, a.kode_e2,b.deskripsi as deskripsi_ikukl, c.nama_e1, b.deskripsi AS kl_deskripsi",false);
+			$this->db->select("a.tahun,a.kode_e1, a.kode_iku_e1, a.deskripsi, a.satuan, a.kode_iku_kl, a.kode_e2,b.deskripsi as deskripsi_ikukl, c.nama_e1, b.deskripsi AS kl_deskripsi,a.kode_sasaran_e1,s.deskripsi as deskripsi_sasaran_e1",false);
 			$this->db->from('tbl_iku_eselon1 a left join tbl_iku_kl b on a.tahun=b.tahun and a.kode_iku_kl=b.kode_iku_kl',false);
 			$this->db->join('tbl_eselon1 c', 'c.kode_e1 = a.kode_e1');
+			$this->db->join('tbl_sasaran_eselon1 s', 's.kode_sasaran_e1 = a.kode_sasaran_e1 and s.tahun=a.tahun','left' );			
 	//bug		$this->db->join('tbl_iku_kl d', 'd.kode_iku_kl = a.kode_iku_kl','left' );			
 			$this->db->order_by("a.kode_e1 ASC, a.kode_iku_e1 ASC");
 			$query = $this->db->get();
@@ -61,6 +62,8 @@ class Iku_e1_model extends CI_Model
 				$response->rows[$i]['kode_iku_kl']=$row->kode_iku_kl;
 				$response->rows[$i]['kl_deskripsi']=$row->kl_deskripsi;
 				$response->rows[$i]['tahun']=$row->tahun;
+				$response->rows[$i]['kode_sasaran_e1']=$row->kode_sasaran_e1;
+				$response->rows[$i]['deskripsi_sasaran_e1']=$row->deskripsi_sasaran_e1;
 				
 				//utk kepentingan export excel ==========================
 				// $row->keterangan = str_replace("<br>",", ",$response->rows[$i]['pejabat']);
@@ -69,6 +72,8 @@ class Iku_e1_model extends CI_Model
 				unset($row->deskripsi_ikukl);
 				unset($row->nama_e1);
 				unset($row->kl_deskripsi);
+				unset($row->deskripsi_sasaran_e1);
+				unset($row->kode_sasaran_e1);
 				//============================================================
 				
 				//utk kepentingan export pdf===================
@@ -94,6 +99,8 @@ class Iku_e1_model extends CI_Model
 				$response->rows[$count]['kode_iku_kl']='';
 				$response->rows[$count]['kl_deskripsi']='';
 				$response->rows[$count]['tahun']='';
+				$response->rows[$count]['kode_sasaran_e1']='';
+				$response->rows[$count]['deskripsi_sasaran_e1']='';
 				$response->lastNo = 0;	
 		}
 		
@@ -170,6 +177,7 @@ class Iku_e1_model extends CI_Model
 		$this->db->set('deskripsi',$data['deskripsi']);
 		$this->db->set('satuan',$data['satuan']);
 		$this->db->set('tahun',$data['tahun']);
+		$this->db->set('kode_sasaran_e1',$data['kode_sasaran_e1']);
 		$this->db->set('log_insert', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		try {
 			$result = $this->db->insert('tbl_iku_eselon1');
@@ -184,6 +192,7 @@ class Iku_e1_model extends CI_Model
 			$this->db->set('deskripsi',$data['deskripsi']);
 			$this->db->set('satuan',$data['satuan']);
 			$this->db->set('tahun',$data['tahun']);
+			$this->db->set('kode_sasaran_e1',$data['kode_sasaran_e1']);
 			$this->db->set('log',				'INSERT;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_iku_eselon1_log');
 			
@@ -221,6 +230,7 @@ class Iku_e1_model extends CI_Model
 		//$this->db->set('kode_iku_e1',$data['kode_iku_e1']);
 		$this->db->set('deskripsi',$data['deskripsi']);
 		$this->db->set('satuan',$data['satuan']);
+		$this->db->set('kode_sasaran_e1',$data['kode_sasaran_e1']);
 		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		
 		$result=$this->db->update('tbl_iku_eselon1');
@@ -235,6 +245,7 @@ class Iku_e1_model extends CI_Model
 		$this->db->set('kode_iku_kl',(($data['kode_iku_kl']=="")||($data['kode_iku_kl']==null)||($data['kode_iku_kl']=="-1")?null:$data['kode_iku_kl']));
 		$this->db->set('deskripsi',$data['deskripsi']);
 		$this->db->set('satuan',$data['satuan']);
+		$this->db->set('kode_sasaran_e1',$data['kode_sasaran_e1']);
 		$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->insert('tbl_iku_eselon1_log');
 		

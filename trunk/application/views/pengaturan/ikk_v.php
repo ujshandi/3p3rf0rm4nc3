@@ -320,6 +320,9 @@
 						case "kode_iku_e1":
 							showPopup('#popdesc<?=$objectId?>', row.e1_deskripsi);
 							break;
+						case "kode_sasaran_e2":
+							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e2);
+							break;
 						default:
 							closePopup('#popdesc<?=$objectId?>');
 							break;
@@ -545,13 +548,17 @@
 		<tr>
 			<th field="tahun" sortable="true" width="15px">Tahun</th>
 			<th field="kode_e2" sortable="true" width="25"<?=($this->session->userdata('unit_kerja_e2')=='-1'?'':'hidden="true"')?>>Kode Eselon II</th>
+			
 			<th field="nama_e2" hidden="true">Nama</th>
 			<th field="kode_e1" sortable="true" width="35" hidden="true">Kode E1</th>
+			<th field="kode_sasaran_e2" width="35">Sasaran Eselon II</th>
 			<th field="kode_ikk" sortable="true" width="35">Kode IKK</th>
 			<th field="deskripsi" sortable="true" width="125">Deskripsi</th>
 			<th field="satuan" sortable="true" width="20">Satuan</th>
 			<th field="kode_iku_e1" sortable="true" width="30">Kode IKU Eselon I</th>
 			<th field="e1_deskripsi" hidden="true">desk</th>
+			
+			<th field="deskripsi_sasaran_e2" hidden="true">desk</th>
 		</tr>
 	</thead>  
 	</table>

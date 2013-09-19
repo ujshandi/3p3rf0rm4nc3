@@ -221,6 +221,9 @@
 						case "kode_e1":
 							showPopup('#popdesc<?=$objectId?>', row.nama_e1);
 							break;
+						case "kode_sasaran_kl":
+							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
+							break;
 						default:
 							closePopup('#popdesc<?=$objectId?>');
 							break;
@@ -420,11 +423,14 @@
 			<th field="tahun" sortable="true" width="15px">Tahun</th>
 			<!--<th field="kode_kl" sortable="true" width="20">Kode Kementerian</th>-->
 			<th field="kode_kl" sortable="true" width="15" hidden="true">Kode KL</th>
+			<th field="kode_sasaran_kl" sortable="true" width="35" >Sasaran Strategis</th>
 			<th field="kode_iku_kl" sortable="true" width="30">Kode</th>
 			<th field="deskripsi" sortable="true" width="140">Deskripsi IKU</th>
 			<th field="satuan" sortable="true" width="35">Satuan</th>
 			<th field="kode_e1" sortable="true" width="20" <?=($this->session->userdata('unit_kerja_e1')=='-1'?'hidden="true"':'hidden="true"')?>>Subsektor</th>
 			<th field="nama_e1" sortable="true" hidden="true" >nama</th>
+			
+			<th field="deskripsi_sasaran_kl" sortable="true" hidden="true" >sasaran kl</th>
 	  	</tr>
 		</thead>  
 	</table>

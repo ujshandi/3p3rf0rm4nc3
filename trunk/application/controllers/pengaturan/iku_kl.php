@@ -52,9 +52,10 @@ class Iku_kl extends CI_Controller {
 		$data['satuan'] = $this->input->post("satuan", TRUE);
 		$data['kode_e1'] = $this->input->post("kode_e1", TRUE);
 		$data['tahun'] = $this->input->post("tahun", TRUE);
+		$data['kode_sasaran_kl'] = $this->input->post("kode_sasaran_kl", TRUE);
 		
-		//$data["insert_log"] = $this->session->userdata("userLogin").",".$this->utility->getFullSystemDate();
-		//$data["update_log"] = $this->session->userdata("userLogin").",".$this->utility->getFullSystemDate();
+		$data["insert_log"] = $this->session->userdata("userLogin").",".$this->utility->getFullSystemDate();
+		$data["update_log"] = $this->session->userdata("userLogin").",".$this->utility->getFullSystemDate();
 		return $data;
     }
 	
@@ -71,6 +72,8 @@ class Iku_kl extends CI_Controller {
 		$this->form_validation->set_rules("satuan", 'Satuan', 'trim|required|xss_clean');
 		//$this->form_validation->set_rules("kode_e1", 'Kode E1', 'trim|required|xss_clean');
 		$this->form_validation->set_rules("tahun", 'Tahun', 'trim|required|xss_clean');
+		$this->form_validation->set_rules("kode_sasaran_kl", 'Sasaran Strategis', 'trim|required|xss_clean');
+		
 		
 		# message rules
 		$this->form_validation->set_message('required', 'Field %s harus diisi.');
@@ -83,6 +86,7 @@ class Iku_kl extends CI_Controller {
 			$data["pesan_error"].=(trim(form_error("satuan"," "," "))==""?"":form_error("satuan"," "," ")."<br>");
 			//$data["pesan_error"].=(trim(form_error("kode_e1"," "," "))==""?"":form_error("kode_e1"," "," ")."<br>");
 			$data["pesan_error"].=(trim(form_error("tahun"," "," "))==""?"":form_error("tahun"," "," ")."<br>");
+			$data["pesan_error"].=(trim(form_error("kode_sasaran_kl"," "," "))==""?"":form_error("kode_sasaran_kl"," "," ")."<br>");
 			$status = $data["pesan_error"];
 			
 		}else {

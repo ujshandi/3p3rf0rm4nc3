@@ -58,7 +58,7 @@ class Ikk extends CI_Controller {
 		$data['satuan'] = $this->input->post("satuan", TRUE);
 		$data['kode_iku_e1'] = $this->input->post("kode_iku_e1", TRUE);
 		$data['tahun'] = $this->input->post("tahun", TRUE);
-			
+		$data['kode_sasaran_e2'] = $this->input->post("kode_sasaran_e2", TRUE);	
 		if ($this->session->userdata('unit_kerja_e2')=='-1')
 			$data['kode_e2'] = $this->input->post("kode_e2", TRUE); //id
 		else 
@@ -81,8 +81,9 @@ class Ikk extends CI_Controller {
 		$this->form_validation->set_rules("deskripsi", 'Deskripsi', 'trim|required|xss_clean');
 		$this->form_validation->set_rules("satuan", 'Satuan', 'trim|required|xss_clean');
 		//$this->form_validation->set_rules("kode_iku_e1", 'Kode Indikator Kinerja Utama Eselon 1', 'trim|required|xss_clean');
-		$this->form_validation->set_rules("kode_e2", 'Unit Kerja Eselon 2', 'trim|required|xss_clean');
+		$this->form_validation->set_rules("kode_e2", 'Unit Kerja Eselon II', 'trim|required|xss_clean');
 		$this->form_validation->set_rules("tahun", 'Tahun', 'trim|required|xss_clean');
+		$this->form_validation->set_rules("kode_sasaran_e2", 'Sasaran Eselon II', 'trim|required|xss_clean');
 		
 		# message rules
 		$this->form_validation->set_message('required', 'Field %s harus diisi.');
@@ -95,6 +96,7 @@ class Ikk extends CI_Controller {
 			$data["pesan_error"].=(trim(form_error("deskripsi"," "," "))==""?"":form_error("deskripsi"," "," ")."<br>");
 			$data["pesan_error"].=(trim(form_error("satuan"," "," "))==""?"":form_error("satuan"," "," ")."<br>");
 			$data["pesan_error"].=(trim(form_error("tahun"," "," "))==""?"":form_error("tahun"," "," ")."<br>");
+			$data["pesan_error"].=(trim(form_error("kode_sasaran_e2"," "," "))==""?"":form_error("kode_sasaran_e2"," "," ")."<br>");
 			$status = $data["pesan_error"];
 			
 		}else {
