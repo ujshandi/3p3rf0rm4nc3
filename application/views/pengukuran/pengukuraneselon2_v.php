@@ -214,10 +214,12 @@
 
 		});
 		
+		*/
+		
 		function setSasaran<?=$objectId;?>(valu){
 			document.getElementById('kode_sasaran_e2<?=$objectId;?>').value = valu;
-			getDetail();
-		}*/
+			getDetail<?=$objectId;?>();
+		}
 		
 		function setIKK<?=$objectId;?>(valu){
 			document.getElementById('kode_sasaran_e2<?=$objectId;?>').value = valu;

@@ -631,4 +631,4 @@
     	</div>
 	</div>
 	
-	<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>
+	<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>
