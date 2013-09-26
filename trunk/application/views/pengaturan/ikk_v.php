@@ -225,13 +225,17 @@
 				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 				$('#fm<?=$objectId;?>').form('clear');  
 			//
-				//alert(row.dokter_kode);
+				
 				if (row){
 					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit IKK Eselon II');
 					$('#fm<?=$objectId;?>').form('load',row);
 					//	initCombo();
-					setListE2<?=$objectId?>();
-					setIKUE1<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val(),row.kode_iku_e1,row.deskripsi_e1);
+					setTimeout(function(){
+							setListE2<?=$objectId?>();
+							setIKUE1<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val(),row.kode_iku_e1,row.deskripsi_e1);
+						},1000);
+					
+					setSasaranE2<?=$objectId?>($("#tahun<?=$objectId?>").val(),$("#kode_e2<?=$objectId?>").val(),row.kode_sasaran_e2,row.deskripsi_sasaran_e2);
 					url = base_url+'pengaturan/ikk/save/edit/'+row.kode_ikk+"/"+row.tahun;//+row.id;//'update_user.php?id='+row.id;
 					
 					//$("#kode_ikk<?=$objectId?>").attr("readonly","readonly");
@@ -355,7 +359,7 @@
 							$("#txtkode_sasaran_e2ListSasaran<?=$objectId;?>").val(chose);
 							$("#dropListSasaran<?=$objectId;?>").slideUp("slow");
 						});
-						
+					//	alert(val);
 						if (key!=null)
 							$('#kode_sasaran_e2ListSasaran<?=$objectId;?>').val(key);
 						if (val!=null)
@@ -551,7 +555,7 @@
 			
 			<th field="nama_e2" hidden="true">Nama</th>
 			<th field="kode_e1" sortable="true" width="35" hidden="true">Kode E1</th>
-			<th field="kode_sasaran_e2" width="35">Sasaran Eselon II</th>
+			<th field="kode_sasaran_e2" sortable="true"  width="35">Sasaran Eselon II</th>
 			<th field="kode_ikk" sortable="true" width="35">Kode IKK</th>
 			<th field="deskripsi" sortable="true" width="125">Deskripsi</th>
 			<th field="satuan" sortable="true" width="20">Satuan</th>
@@ -647,4 +651,4 @@
     	</div>
 	</div>
 
-	<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>
+	<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>

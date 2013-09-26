@@ -42,7 +42,7 @@ class Ikk_model extends CI_Model
 			}
 			//$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			$this->db->select("a.tahun,a.kode_e2, a.kode_ikk, a.deskripsi, a.satuan, a.kode_iku_e1, c.kode_e1, b.nama_e2, d.deskripsi AS e1_deskripsi,a.kode_sasaran_e2,e.deskripsi as dekripsi_sasaran_e2",false);
+			$this->db->select("a.tahun,a.kode_e2, a.kode_ikk, a.deskripsi, a.satuan, a.kode_iku_e1, c.kode_e1, b.nama_e2, d.deskripsi AS e1_deskripsi,a.kode_sasaran_e2,e.deskripsi as deskripsi_sasaran_e2",false);
 			$this->db->from('tbl_ikk a');
 			$this->db->join('tbl_eselon2 b', 'b.kode_e2 = a.kode_e2');
 			$this->db->join('tbl_eselon1 c', 'c.kode_e1 = b.kode_e1');
@@ -70,6 +70,8 @@ class Ikk_model extends CI_Model
 				$response->rows[$i]['kode_iku_e1']=$row->kode_iku_e1;
 				$response->rows[$i]['e1_deskripsi']=$row->e1_deskripsi;
 				$response->rows[$i]['tahun']=$row->tahun;
+				$response->rows[$i]['kode_sasaran_e2']=$row->kode_sasaran_e2;
+				$response->rows[$i]['deskripsi_sasaran_e2']=$row->deskripsi_sasaran_e2;
 				
 				//utk kepentingan export excel ==========================
 				// $row->keterangan = str_replace("<br>",", ",$response->rows[$i]['pejabat']);
@@ -224,7 +226,7 @@ class Ikk_model extends CI_Model
 			$this->db->set('satuan',$data['satuan']);
 			$this->db->set('kode_iku_e1',(($data['kode_iku_e1']=="")||($data['kode_iku_e1']==null)||($data['kode_iku_e1']=="-1")?null:$data['kode_iku_e1']));
 			$this->db->set('kode_e2',$data['kode_e2']);
-			$this->db->set('kode_sasaran__e2',$data['kode_sasaran__e2']);
+			$this->db->set('kode_sasaran_e2',$data['kode_sasaran_e2']);
 			$this->db->set('log',				'INSERT;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_ikk_log');
 			
@@ -273,7 +275,7 @@ $this->db->set('kode_ikk',$data['kode_ikk']);
 		$this->db->set('satuan',$data['satuan']);
 		$this->db->set('kode_iku_e1',(($data['kode_iku_e1']=="")||($data['kode_iku_e1']==null)||($data['kode_iku_e1']=="-1")?null:$data['kode_iku_e1']));
 		$this->db->set('kode_e2',$data['kode_e2']);
-		$this->db->set('kode_sasaran__e2',$data['kode_sasaran__e2']);
+		$this->db->set('kode_sasaran_e2',$data['kode_sasaran_e2']);
 		$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->insert('tbl_ikk_log');
 		
