@@ -245,7 +245,7 @@
 	  	</div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Unit Kerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Unit Kerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true" nowrap="false">
 	<thead>
 		<tr>
 			<th field="kode_e1" sortable="true" width="30">Kode Eselon I</th>
@@ -253,10 +253,10 @@
 			<th field="nama_e1" hidden="true">Nama Eselon I</th>
 			<th field="nama_e2" sortable="true" width="90">Nama Unit Kerja</th>
 			<th field="singkatan" sortable="true" width="35">Singkatan</th>
-			<th field="nama_direktur" sortable="true" width="40">Nama Pimpinan</th>
-			<th field="nip" sortable="true" width="15">N I P</th>
+			<th field="nama_direktur" sortable="true" width="60">Nama Pimpinan</th>
+			<th field="nip" sortable="true" width="40">N I P</th>
 			<th field="pangkat" sortable="true" width="30">Pangkat</th>
-			<th field="gol" sortable="true" width="10">Golongan</th>
+			<th field="gol" sortable="true" width="20">Golongan</th>
 		</tr>
 	</thead>  
 	</table>

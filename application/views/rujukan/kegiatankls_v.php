@@ -263,7 +263,7 @@
 	</div>
 </div>
 	
-<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Kegiatan" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Kegiatan" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true" nowrap="false">
 	<thead>
 	<tr>
 		<th field="id_kegiatan_kl" sortable="true" width="5px" hidden="true">No.</th>
