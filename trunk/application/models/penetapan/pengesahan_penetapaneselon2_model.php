@@ -130,6 +130,10 @@ class Pengesahan_penetapaneselon2_model extends CI_Model
 				$this->db->where('a.kode_e2', $kode_e2);
 				$qu = $this->db->get();
 				
+				if ($qu->num_rows()==0) {
+					$out = '-2';//kegiatan belum diset
+					return $out;//get out of here
+				}
 				$out .= '	<div class="fitem">';
 				$out .= '		<label style="width:150px">Nama Kegiatan :</label>';
 				$out .= '		<select name="kode_kegiatan" class="easyui-validatebox" required="true">';
@@ -150,7 +154,7 @@ class Pengesahan_penetapaneselon2_model extends CI_Model
 			$out .= '</fieldset>';
 			
 		}else{
-			$out = '';
+			$out = '-1';//data sasaran belum lengkap
 			//$out = $jml_sasaran.'/'.$jml_sasaran_pk;
 		}
 		
