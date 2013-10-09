@@ -46,8 +46,8 @@ class Rkteselon2_model extends CI_Model
 			$this->db->select("c.deskripsi AS deskripsi_sasaran_e2, b.deskripsi AS deskripsi_ikk, e.nama_e2", false);
 			$this->db->from('tbl_rkt_eselon2 a');
 			$this->db->join('tbl_ikk b','b.kode_ikk = a.kode_ikk and b.tahun = a.tahun', 'left');
-			$this->db->join('tbl_sasaran_eselon2 c','c.kode_sasaran_e2 = a.kode_sasaran_e2', 'left');
-			$this->db->join('tbl_sasaran_eselon1 d', 'd.kode_sasaran_e1 = c.kode_sasaran_e1', 'left');
+			$this->db->join('tbl_sasaran_eselon2 c','c.kode_sasaran_e2 = a.kode_sasaran_e2 and c.tahun=a.tahun', 'left');
+			$this->db->join('tbl_sasaran_eselon1 d', 'd.kode_sasaran_e1 = c.kode_sasaran_e1 and d.tahun=c.tahun', 'left');
 			$this->db->join('tbl_eselon2 e', 'e.kode_e2 = a.kode_e2', 'left');
 			
 			$this->db->order_by("a.tahun DESC, a.kode_sasaran_e2 ASC, a.kode_ikk ASC");
@@ -159,8 +159,8 @@ class Rkteselon2_model extends CI_Model
 		$this->db->select("*, a.kode_e2 as rkt_kode_e2",false);
 		$this->db->from('tbl_rkt_eselon2 a');
 		$this->db->join('tbl_ikk b','b.kode_ikk = a.kode_ikk and b.tahun = a.tahun', 'left');
-		$this->db->join('tbl_sasaran_eselon2 c','c.kode_sasaran_e2 = a.kode_sasaran_e2', 'left');
-		$this->db->join('tbl_sasaran_eselon1 d', 'd.kode_sasaran_e1 = c.kode_sasaran_e1', 'left');
+		$this->db->join('tbl_sasaran_eselon2 c','c.kode_sasaran_e2 = a.kode_sasaran_e2 and c.tahun=a.tahun', 'left');
+		$this->db->join('tbl_sasaran_eselon1 d', 'd.kode_sasaran_e1 = c.kode_sasaran_e1 and d.tahun=c.tahun', 'left');
 		$this->db->join('tbl_eselon2 e', 'e.kode_e2 = a.kode_e2', 'left');	
 		return $this->db->count_all_results();
 		$this->db->free_result();

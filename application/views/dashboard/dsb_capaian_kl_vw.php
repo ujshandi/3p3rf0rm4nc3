@@ -53,7 +53,7 @@
 	<!-- style="height:350px;width:350px;float:left"-->
 <div id="chartCapaianKL<?=$objectId?>" style="height:350px;width:350px;float:left" data-height="160px" data-width="280px" ></div> 
 <div  style="width:10px;float:left">&nbsp;</div> 
-<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian IKU Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  showFooter="true">
+<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Capaian IKU Kementerian"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  showFooter="true" nowrap="false">
 	  <thead>
 	  <tr>
 		<th field="deskripsi"   sortable="false" width="250">Deskripsi</th>
