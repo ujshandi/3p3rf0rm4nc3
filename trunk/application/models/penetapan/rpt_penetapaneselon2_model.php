@@ -66,8 +66,8 @@ class Rpt_penetapaneselon2_model extends CI_Model
 			//$this->db->select("*",false);
 			//$this->db->from('tbl_rkt_eselon2');
 			$this->db->select("distinct rkt.kode_e2, sasaran.deskripsi as sasaran_strategis, ikk.deskripsi as indikator_kinerja, rkt.target, ikk.satuan, kg.nama_kegiatan",false);
-			$this->db->from('tbl_pk_eselon2 rkt inner join tbl_ikk ikk on ikk.kode_ikk = rkt.kode_ikk
-inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sasaran_e2 left join tbl_kegiatan_kl kg on kg.kode_e2 = rkt.kode_e2 ',false);
+			$this->db->from('tbl_pk_eselon2 rkt inner join tbl_ikk ikk on ikk.kode_ikk = rkt.kode_ikk and ikk.tahun = rkt.tahun
+inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sasaran_e2 and sasaran.tahun = rkt.tahun left join tbl_kegiatan_kl kg on kg.kode_e2 = rkt.kode_e2 and kg.tahun = rkt.tahun ',false);
 			$query = $this->db->get();
 			
 			$i=0;
@@ -181,7 +181,7 @@ inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sas
 		if ($where!="")
 			$where = " where ".substr($where,5,strlen($where));
 			
-		$sql = 'select count(*) as num_rows from (select distinct sasaran.deskripsi as sasaran_strategis, ikk.deskripsi as indikator_kinerja, rkt.target,ikk.satuan,kg.nama_kegiatan,rkt.kode_e2 from tbl_pk_eselon2 rkt inner join tbl_ikk ikk on ikk.kode_ikk = rkt.kode_ikk inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sasaran_e2 left join tbl_kegiatan_kl kg on kg.kode_e2 = rkt.kode_e2  '.$where.') as t1';
+		$sql = 'select count(*) as num_rows from (select distinct sasaran.deskripsi as sasaran_strategis, ikk.deskripsi as indikator_kinerja, rkt.target,ikk.satuan,kg.nama_kegiatan,rkt.kode_e2 from tbl_pk_eselon2 rkt inner join tbl_ikk ikk on ikk.kode_ikk = rkt.kode_ikk and ikk.tahun = rkt.tahun inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sasaran_e2 and sasaran.tahun = rkt.tahun left join tbl_kegiatan_kl kg on kg.kode_e2 = rkt.kode_e2 and kg.tahun = rkt.tahun  '.$where.') as t1';
 		$q = $this->db->query($sql);
 		return $q->row()->num_rows; 	
 	}
