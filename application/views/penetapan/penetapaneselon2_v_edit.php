@@ -131,7 +131,7 @@
 						<br>
 						<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Keluar</a>
 						&nbsp;&nbsp;&nbsp;
-						<?php if($editmode==TRUE){?>
+						<?php if($editmode==TRUE){
 							if ($result->status=='0'){
 							?>
 							
