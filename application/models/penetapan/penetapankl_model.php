@@ -345,6 +345,15 @@ class Penetapankl_model extends CI_Model
 		$this->db->set('log',				'DELETE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->insert('tbl_pk_kl_log');
 		
+		// update status tabel RKT
+				$this->db->flush_cache();
+				$this->db->set('status', '0');
+				$this->db->where('tahun', $qt->row()->tahun);
+				$this->db->where('kode_kl', $qt->row()->kode_kl);
+				$this->db->where('kode_sasaran_kl', $qt->row()->kode_sasaran_kl);
+				$this->db->where('kode_iku_kl', $dqt->row()->kode_iku_kl);
+				$this->db->update('tbl_rkt_kl');
+				
 		// proses
 		$this->db->flush_cache();
 		$this->db->where('id_pk_kl', $id);
