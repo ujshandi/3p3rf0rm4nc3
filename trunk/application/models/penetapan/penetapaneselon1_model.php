@@ -355,6 +355,15 @@ class Penetapaneselon1_model extends CI_Model
 		$this->db->set('log',				'DELETE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->insert('tbl_pk_eselon1_log');
 		
+		// update status tabel RKT
+				$this->db->flush_cache();
+				$this->db->set('status', '0');
+				$this->db->where('tahun', $qt->row()->tahun);
+				$this->db->where('kode_e1', $qt->row()->kode_e1);
+				$this->db->where('kode_sasaran_e1', $qt->row()->kode_sasaran_e1);
+				$this->db->where('kode_iku_e1', $qt->row()->kode_iku_e1);
+				$this->db->update('tbl_rkt_eselon1');
+				
 		$this->db->flush_cache();
 		$this->db->where('id_pk_e1', $id);
 		$result = $this->db->delete('tbl_pk_eselon1'); 

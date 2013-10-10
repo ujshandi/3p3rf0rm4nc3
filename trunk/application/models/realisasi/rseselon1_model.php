@@ -347,7 +347,13 @@ class rseselon1_model extends CI_Model
 		
 		if ($result->num_rows() > 0){
 			$dt[0] = $result->row()->realisasi;
-			$dt[1] = ($dt[0]/$result->row()->penetapan)*100;
+			if (is_numeric($result->row()->penetapan)){
+				if ($result->row()->penetapan>0)
+					$dt[1] = ($dt[0]/$result->row()->penetapan)*100;
+			}	
+			else {
+				$dt[1] = 0;
+			}
 		}else{
 			$dt[0] = 0;
 			$dt[1] = 0;
