@@ -4,6 +4,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title><?=$title_page?></title>
+		<style type="text/css">
+		#login #username_id {
+			background-image: url(../../admin/images/login/user_.png);
+		}
+		#login #password {
+			background-image: url(../../admin/images/login/pass_.png);
+		}
+	</style>
 	<link type="image/x-icon" href="<?php echo base_url(); ?>public/images/favicon.ico" rel="shortcut icon">
 	<?php if(count($css) > 0) load_css($css);?>    
 	<?php if(count($js) > 0) load_js($js);?>    
@@ -16,6 +24,7 @@
 		}
 	}
 	</script>
+	
 </head>
 <body>
 
@@ -65,8 +74,8 @@
         <hr/>
         <p>Masukkan username dan password Anda untuk masuk aplikasi e-Performance</p>
         <form class="front" id="formLogin" method="post" action="<?=base_url();?>security/login/login_usr/portal">
-        <input name="username" type="text"  id="username_id" title="Username"/>
-        <input name="password" type="password" id="password" title="Password" onkeypress="runScript(event)"/>
+        <input name="username" type="text"  id="username_id" style="background-image: url(<?=base_url()?>public/admin/images/login/user_.png);background-repeat:no-repeat;text-align:center;" title="Username"/>
+        <input name="password" type="password" id="password" class="login" title="Password" style="background-image: url(<?=base_url()?>public/admin/images/login/pass_.png);background-repeat:no-repeat;text-align:center;" onkeypress="runScript(event)"/>
         <span style="color:#ff3333"><?php echo $this->session->flashdata('err_login'); ?></span>
         <hr/>
         <a href="#" class="more_bgcolor more_rounded centered" onClick="document.getElementById('formLogin').submit();">LOGIN</a>
