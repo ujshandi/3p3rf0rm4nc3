@@ -121,6 +121,9 @@ class Eselon2_model extends CI_Model
 		//	var_dump($query);die;
 			to_excel($query,"Eselon2",$colHeaders);
 		}
+		else if ($purpose==4) { //WEB SERVICE
+			return $response->rows;
+		}
 	
 	}
 	
