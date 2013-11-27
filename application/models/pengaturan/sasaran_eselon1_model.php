@@ -121,7 +121,7 @@ class Sasaran_eselon1_model extends CI_Model
 		}
 		$this->db->from('tbl_sasaran_eselon1 a');
 		$this->db->join('tbl_eselon1 b', 'b.kode_e1 = a.kode_e1');
-		$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl','left' );
+		$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl and c.tahun=a.tahun','left' );
 		return $this->db->count_all_results();
 		$this->db->free_result();
 	}
