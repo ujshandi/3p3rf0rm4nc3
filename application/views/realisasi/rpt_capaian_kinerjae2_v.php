@@ -2,73 +2,21 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
-			setIKK<?=$objectId;?>=function (valu){
-				document.getElementById('kode_sasaran_e2<?=$objectId;?>').value = valu;
-
-			}			
+					
 			clearFilter<?=$objectId;?> = function (){
 				//ambil nilai-nilai filter
 				$("#filter_tahun<?=$objectId;?>").val('');	
 				$("#filter_e1<?=$objectId;?>").val('');		
 				$("#filter_e2<?=$objectId;?>").empty().append('<option value="-1">Semua</option>');			
-				$("#filter_sasaran<?=$objectId;?>").val('');			
-				$("#kode_sasaran_e2<?=$objectId;?>").val('');			
-				$("#filter_iku<?=$objectId;?>").val('');			
-				filterSasaranE2<?=$objectId;?>($("#filter_e2<?=$objectId;?>").val());
+
+			
 			}
-			function filterSasaranE2<?=$objectId;?>(e2){
-				<? if ($this->session->userdata('unit_kerja_e2')!="-1") {?>
-					e2 = "<?=$this->session->userdata('unit_kerja_e2');?>"
-					
-				<?}?>
-				if(e2==null) e2="-1";
-				$("#divSasaranE2<?=$objectId;?>").load(
-					base_url+"pengaturan/sasaran_eselon2/getListSasaranE2/"+"<?=$objectId;?>"+"/"+e2,
-					//on complete
-					function (){
-						if($("#drop<?=$objectId;?>").is(":visible")){
-							$("#drop<?=$objectId;?>").slideUp("slow");
-						}
-						
-						$("#txtkode_sasaran_e2<?=$objectId;?>").click(function(){
-							$("#drop<?=$objectId;?>").slideDown("slow");
-						});
-						
-						$("#drop<?=$objectId;?> li").click(function(e){
-							var chose = $(this).text();
-							$("#txtkode_sasaran_e2<?=$objectId;?>").text(chose);
-							$("#drop<?=$objectId;?>").slideUp("slow");
-						});
-					}
-					);
-				
-			}
+			
 			 $("#filter_e1<?=$objectId?>").change(function(){
-				setListE2<?=$objectId?>();
+				//setListE2<?=$objectId?>();
+				$("#divEselon2<?=$objectId;?>").load(base_url+"rujukan/eselon2/loadFilterE2/"+$(this).val()+"/<?=$objectId;?>");
 			  });
-			$("#filter_e2<?=$objectId;?>").change( function(){
-				filterSasaranE2<?=$objectId;?>($(this).val());
-			});
-			function setListE2<?=$objectId?>(){
-				$("#divEselon2<?=$objectId?>").load(
-					base_url+"rujukan/eselon2/loadFilterE2/"+$("#filter_e1<?=$objectId?>").val()+"/<?=$objectId;?>",
-					//on complete
-					function (){
-						//setSasaranE2<?=$objectId?>($("#kode_e2<?=$objectId?>").val());
-						$("#filter_e2<?=$objectId?>").change(function(){
-							filterSasaranE2<?=$objectId?>($(this).val());
-						});	
-						filterSasaranE2<?=$objectId?>($("#filter_e2<?=$objectId?>").val());
-					}
-				);
-			 }
-			//inisialisasi
-			<? if ($this->session->userdata('unit_kerja_e2')!="-1") {?>
-				filterSasaranE2<?=$objectId;?>('<?=$this->session->userdata('unit_kerja_e2');?>');
-			<?} else {?>
-				setListE2<?=$objectId?>();
-				filterSasaranE2<?=$objectId;?>($("#filter_e2<?=$objectId;?>").val());
-			<?}?>
+			
 			
 			//tipe 1=grid, 2=pdf, 3=excel
 			getUrl<?=$objectId;?> = function (tipe){
@@ -345,18 +293,7 @@
 					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 					</span>
 				</td>
-			</tr>	
-		<!--	<tr>
-				<td>Sasaran :</td>
-				<td>	<span id="divSasaranE2<=$objectId;?>">
-								<?= "";//chan,$this->rseselon1_model->getListSasaranE1($objectId)?>
-							</span></td>
-			</tr>	-->
-		<!--
-			<tr>
-				<td>Kode IKU :</td>
-				<td><input class="easyui-textbox" id="filter_iku<?=$objectId;?>"></td>
-			</tr>-->
+			</tr>		
 			<tr style="height:10px">
 			  <td style="">
 			  </td>
