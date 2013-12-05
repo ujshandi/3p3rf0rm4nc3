@@ -21,27 +21,40 @@ class Rujukan_api extends REST_Controller
 	
 	
 		
-		
+	
+	function kl_list_get(){
+		$this->load->model('/rujukan/kl_model');
+		$this->load->model('/rujukan/eselon1_model');
+		$this->load->library("utility");	
+		$rs= $this->kl_model->easyGrid(4);//$file1,$file2
+		 if($rs){
+            $this->response($rs, 200); // 200 being the HTTP response code
+        }else{
+            $this->response(array('error' => 'Data Eselon 2 tidak ditemukan!'), 404);
+        }	
+	}
+	
+	function eselon1_list_get(){
+		$this->load->model('/rujukan/eselon2_model');
+		$this->load->model('/rujukan/eselon1_model');
+		$this->load->library("utility");	
+		$rs= $this->eselon1_model->easyGrid(4,$this->get('file1'));//$file1,$file2
+		 if($rs){
+            $this->response($rs, 200); // 200 being the HTTP response code
+        }else{
+            $this->response(array('error' => 'Data Eselon 1 tidak ditemukan!'), 404);
+        }	
+	}
 	function eselon2_list_get(){
 		$this->load->model('/rujukan/eselon2_model');
 		$this->load->model('/rujukan/eselon1_model');
-		$this->load->library("utility");
-		/* $file1 = $this->get('file1');
-		$file2 = $this->get('file2'); */
-		
-		
-		
+		$this->load->library("utility");	
 		$rs= $this->eselon2_model->easyGrid(null,null,4);//$file1,$file2
-		 if($rs)
-        {
+		 if($rs){
             $this->response($rs, 200); // 200 being the HTTP response code
-        }
-
-        else
-        {
+        }else{
             $this->response(array('error' => 'Data Eselon 2 tidak ditemukan!'), 404);
-        }
-	
+        }	
 	}
 	
 	function user_get()

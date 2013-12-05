@@ -72,6 +72,9 @@ class Kl_model extends CI_Model
 			//var_dump($query->result());die;
 			to_excel($query,"Kementerian",$colHeaders);
 		}
+		else if ($purpose==4) { //WEB SERVICE
+			return $response;
+		}
 	
 	}
 	

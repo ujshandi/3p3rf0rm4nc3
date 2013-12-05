@@ -15,7 +15,7 @@ class Eselon1_model extends CI_Model
     }
 
 	// purpose : 1=buat grid, 2=buat pdf, 3=buat excel
-	public function easyGrid($purpose=1){
+	public function easyGrid($purpose=1,$file1=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
@@ -35,6 +35,10 @@ class Eselon1_model extends CI_Model
 				$this->db->where('kode_e1',$e1);
 				//$value = $e1;
 			}
+			if ($purpose==4){
+				$this->db->where('kode_e1',$file1);
+			}
+			
 			$this->db->select("kode_e1 as \"kode_e1\", tbl_eselon1.kode_kl as \"kode_kl\", nama_e1 as \"nama_e1\", tbl_eselon1.singkatan as \"singkatan\", nama_dirjen as \"nama_dirjen\", nip as \"nip\", pangkat as \"pangkat\", gol as \"gol\", tbl_kl.nama_kl",false);
 			$this->db->from('tbl_eselon1');
 			$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_eselon1.kode_kl');
@@ -87,6 +91,9 @@ class Eselon1_model extends CI_Model
 			//$query->list_fields();
 		//	var_dump($query);die;
 			to_excel($query,"Eselon1",$colHeaders);
+		}
+		else if ($purpose==4) { //WEB SERVICE
+			return $response;
 		}
 	
 	}
