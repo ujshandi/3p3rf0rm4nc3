@@ -20,7 +20,7 @@
 							
 							// reload and close tab
 							$('#dg<?=$objectId;?>').datagrid('reload');
-							$('#tt').tabs('close', 'Edit Realisasi Kinerja Eselon II');
+							$('#tt').tabs('close', 'Edit Capaian Kinerja Eselon II');
 						} else {
 							$.messager.show({
 								title: 'Error',
@@ -35,7 +35,7 @@
 			closeView<?=$objectId;?>=function(){
 				// reload and close tab
 				$('#dg<?=$objectId;?>').datagrid('reload');
-				$('#tt').tabs('close', 'View Realisasi Kinerja Eselon II');
+				$('#tt').tabs('close', 'View Capaian Kinerja Eselon II');
 			}
 		});
 			//end saveData
@@ -82,7 +82,7 @@
 			
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 				<!------------Edit View-->
-				<div region="center" border="true" title="<?=($editMode=="true")?"Edit":"View"?>  Data Realisasi Kinerja Eselon II">
+				<div region="center" border="true" title="<?=($editMode=="true")?"Edit":"View"?>  Data Capaian Kinerja Eselon II">
 					<form id="fmedit<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 						<input type="hidden" name="id_kinerja_e2" value="<?=$result->id_kinerja_e2?>">
 						<div class="fitem">

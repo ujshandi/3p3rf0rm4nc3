@@ -88,7 +88,22 @@ class rseselon2_model extends CI_Model
 					$response->rows[$i]['realisasi'] = $row->realisasi;
 				}						
 */
+				$realisasi_persen = 0;
+				if(is_numeric($row->realisasi)){
+					if (is_numeric($row->penetapan)){
+						if ($row->penetapan>0){
+							$exc = $this->isException($row->tahun, $row->kode_ikk);
+							if($exc){								
+								$realisasi_persen = round((2 * $row->penetapan - $row->realisasi) / $row->penetapan * 100, 2);
+							}else{
+								$realisasi_persen = round(($row->realisasi/$row->penetapan)*100, 2);
+							}	
+							//$realisasi_persen = ($row->realisasi/$row->penetapan)*100;
+						}
+					}	
+				}
 				$response->rows[$i]['realisasi']=$this->utility->cekNumericFmt($row->realisasi);
+				$response->rows[$i]['realisasi_persen']=$this->utility->cekNumericFmt($realisasi_persen);//$row->realisasi_persen);
 				$i++;
 			} 
 			
@@ -113,6 +128,17 @@ class rseselon2_model extends CI_Model
 		
 	}
 	
+	public function isException($tahun, $kode_ikk){
+		$this->db->flush_cache();
+		$this->db->select('*');
+		$this->db->from('tbl_exception_ikk');
+		$this->db->where('tahun', $tahun);
+		$this->db->where('kode_ikk', $kode_ikk);
+		
+		$q = $this->db->get();
+		
+		return ($q->num_rows() > 0?TRUE:FALSE);
+	}
 	
 	public function GetRecordCount($filtahun,$file1, $file2,$filbulan){
 		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {

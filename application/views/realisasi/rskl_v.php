@@ -28,7 +28,7 @@
 							
 							// reload and close tab
 							$('#dg<?=$objectId;?>').datagrid('reload');
-							$('#tt').tabs('close', 'Add Realisasi Kinerja Kementerian');
+							$('#tt').tabs('close', 'Add Capaian Kinerja Kementerian');
 						} else {
 							$.messager.show({
 								title: 'Error',
@@ -198,7 +198,7 @@
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 
 								
-				<div region="center" border="true" title="Tambah Data Realisasi Kinerja Kementerian">
+				<div region="center" border="true" title="Tambah Data Capaian Kinerja Kementerian">
 					<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">		
 						<div class="fitem">
 						  <label style="width:120px" >Tahun :</label>

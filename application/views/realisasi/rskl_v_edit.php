@@ -20,7 +20,7 @@
 							
 							// reload and close tab
 							$('#dg<?=$objectId;?>').datagrid('reload');
-							$('#tt').tabs('close', 'Edit Realisasi Kinerja Kementerian');
+							$('#tt').tabs('close', 'Edit Capaian Kinerja Kementerian');
 						} else {
 							$.messager.show({
 								title: 'Error',
@@ -36,7 +36,7 @@
 			closeView<?=$objectId;?>=function(){
 				// reload and close tab
 				$('#dg<?=$objectId;?>').datagrid('reload');
-				$('#tt').tabs('close', 'View Realisasi Kinerja Kementerian');
+				$('#tt').tabs('close', 'View Capaian Kinerja Kementerian');
 			}
 		});
 
@@ -83,7 +83,7 @@
 			
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 			<!------------Edit View-->
-				<div region="center" border="true" title="<?=($editMode=="true")?"Edit":"View"?>  Data Realisasi Kinerja Kementerian">	
+				<div region="center" border="true" title="<?=($editMode=="true")?"Edit":"View"?>  Data Capaian Kinerja Kementerian">	
 					<form id="fmedit<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 						<input type="hidden" name="id_kinerja_kl" value="<?=$result->id_kinerja_kl?>">
 						<div class="fitem">
