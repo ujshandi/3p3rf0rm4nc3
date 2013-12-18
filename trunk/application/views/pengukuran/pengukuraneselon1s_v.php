@@ -66,6 +66,7 @@
 			//tipe 1=grid, 2=pdf, 3=excel
 			getUrl<?=$objectId;?> = function (tipe){
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
+				var filbulan = $("#filbulan<?=$objectId;?>").val();
 					<? if ($this->session->userdata('unit_kerja_e1')==-1){?>
 					var file1 = $("#filter_e1<?=$objectId;?>").val();
 				<?} else {?>
@@ -75,7 +76,7 @@
 				if (file1 == null) file1 = "-1";
 			
 				if (tipe==1){
-					return "<?=base_url()?>pengukuran/pengukuraneselon1/grid/"+filtahun+"/"+file1;
+					return "<?=base_url()?>pengukuran/pengukuraneselon1/grid/"+filtahun+"/"+file1+"/"+filbulan;
 				}
 				else if (tipe==2){
 					return "<?=base_url()?>pengukuran/pengukuraneselon1/pdf/"+file1;
@@ -90,6 +91,25 @@
 					url:getUrl<?=$objectId;?>(1),
 					queryParams:{lastNo:'0'},	
 					pageNumber : 1,
+					onClickCell: function(rowIndex, field, value){
+						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
+						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+						//alert(row.deskripsi_iku_kl);
+						switch(field){
+							case "kode_sasaran_e1":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e1);
+								break;
+							case "kode_iku_e1":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_e1);
+								break;
+							/* case "kode_kl":
+								showPopup('#popdesc<?=$objectId?>', row.nama_kl);
+								break; */
+							default:
+								closePopup('#popdesc<?=$objectId?>');
+								break;
+						}
+					},
 					onLoadSuccess:function(data){	
 						$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
@@ -149,29 +169,7 @@
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengukuran/pengukuraneselon1/grid"});
 			},50);
 			
-			// chan
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					//alert(row.deskripsi_iku_kl);
-					switch(field){
-						case "kode_sasaran_e1":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e1);
-							break;
-						case "kode_iku_e1":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_e1);
-							break;
-						/* case "kode_kl":
-							showPopup('#popdesc<?=$objectId?>', row.nama_kl);
-							break; */
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
-			
+						
 			$("#popdesc<?=$objectId?>").click(function(){
 				closePopup('#popdesc<?=$objectId?>');
 			});
@@ -256,6 +254,12 @@
 						<?=$this->pengukuraneselon1_model->getListFilterTahun($objectId)?>
 					</td>
 				</tr>
+				<tr style="margin-bottom: 10px;">
+					<td width="70px">Bulan :</td>
+					<td align="left">
+				  <?= $this->utility->getBulan("","filbulan",true,$objectId)?>
+					</td>
+				</tr>
 				<tr>
 					<td>Unit Kerja Eselon I&nbsp;</td>
 					<td>
@@ -294,11 +298,12 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Pengukuran Kinerja Eselon I" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>"  style="height:auto;width:auto" title="Data Pengukuran Kinerja Eselon I" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="id_pengukuran_e1" sortable="true" hidden="true" width="30px">id_pengukuran_e1</th>
 		<th field="tahun" sortable="true" width="30px">Tahun</th>
+		<th field="triwulan" sortable="true" width="30px">Triwulan</th>
 		<th field="kode_sasaran_e1" sortable="true" width="50px">Kode Sasaran</th>
 		<th field="deskripsi_sasaran_e1" hidden="true">Kode Sasaran</th>
 		<th field="kode_iku_e1" sortable="true" width="50px">Kode IKU</th>

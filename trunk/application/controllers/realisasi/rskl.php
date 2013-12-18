@@ -44,8 +44,8 @@ class rskl extends CI_Controller {
 	  	$this->load->view('realisasi/rskl_v_edit',$data);
 	}
 	
-	function grid($filtahun=null){
-		echo $this->rskl_model->easyGrid($filtahun);
+	function grid($filtahun=null,$filbulan=null){
+		echo $this->rskl_model->easyGrid($filtahun,$filbulan);
 	}
 	
 	

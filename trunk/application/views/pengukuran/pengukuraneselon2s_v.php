@@ -65,6 +65,7 @@
 			
 			searchData<?=$objectId;?> = function (){
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
+				var filbulan = $("#filbulan<?=$objectId;?>").val();
 					<? if ($this->session->userdata('unit_kerja_e1')==-1){?>
 					var file1 = $("#filter_e1<?=$objectId;?>").val();
 				<?} else {?>
@@ -79,7 +80,28 @@
 				if (filtahun == null) filtahun = "-1";
 				if (file1 == null) file1 = "-1";
 				if (file2 == null) file2 = "-1";
-				$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengukuran/pengukuraneselon2/grid/"+filtahun+"/"+file1+"/"+file2});
+				$('#dg<?=$objectId;?>').datagrid({
+					url:"<?=base_url()?>pengukuran/pengukuraneselon2/grid/"+filtahun+"/"+file1+"/"+file2+"/"+filbulan,
+					onClickCell: function(rowIndex, field, value){
+						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
+						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+						//alert(row.deskripsi_iku_kl);
+						switch(field){
+							case "kode_sasaran_e2":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e2);
+								break;
+							case "kode_iku_e2":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_e2);
+								break;
+							/* case "kode_kl":
+								showPopup('#popdesc<?=$objectId?>', row.nama_kl);
+								break; */
+							default:
+								closePopup('#popdesc<?=$objectId?>');
+								break;
+						}
+					}
+				});
 			}
 			//end searhData 
 		
@@ -136,28 +158,7 @@
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengukuran/pengukuraneselon2/grid"});
 			},0);
 			
-			// chan
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					//alert(row.deskripsi_iku_kl);
-					switch(field){
-						case "kode_sasaran_e2":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e2);
-							break;
-						case "kode_iku_e2":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_e2);
-							break;
-						/* case "kode_kl":
-							showPopup('#popdesc<?=$objectId?>', row.nama_kl);
-							break; */
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
+			
 			
 			$("#popdesc<?=$objectId?>").click(function(){
 				closePopup('#popdesc<?=$objectId?>');
@@ -244,6 +245,12 @@
 					<?=$this->pengukuraneselon2_model->getListFilterTahun($objectId)?>
 				</td>
 			</tr>
+			<tr style="margin-bottom: 10px;">
+				<td width="70px">Bulan :</td>
+				<td align="left">
+			  <?= $this->utility->getBulan("","filbulan",true,$objectId)?>
+				</td>
+			</tr>
 			<?// if ($this->session->userdata('unit_kerja_e1')==-1){?>
 			<tr>
 				<td>Unit Kerja Eselon I&nbsp;</td>
@@ -293,11 +300,12 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Pengukuran Kinerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Pengukuran Kinerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="id_pengukuran_e2" sortable="true" hidden="true" width="30px">id_pengukuran_e2</th>
 		<th field="tahun" sortable="true" width="30px">Tahun</th>
+		<th field="triwulan" sortable="true" width="30px">Triwulan</th>
 		<th field="kode_sasaran_e2" sortable="true" width="50px">Kode Sasaran</th>
 		<th field="deskripsi_sasaran_e2" hidden="true">Kode Sasaran</th>
 		<th field="kode_ikk" sortable="true" width="50px">Kode IKK</th>

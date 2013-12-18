@@ -275,6 +275,10 @@
 						  <label style="width:120px" >Tahun :</label>
 						  <?=$this->pengukuraneselon2_model->getListTahun($objectId)?>
 						</div>
+						<div class="fitem">
+						  <label style="width:120px">Bulan :</label>
+						  <?= $this->utility->getBulan("","triwulan",false,$objectId)?>
+						</div>	
 						<!-- chan : Jika login superadmin maka tampilkan combo E1 utk nge filter list E2 -->
 						<? //if ($this->session->userdata('unit_kerja_e1')=='-1'){?>
 						<div class="fitem">							

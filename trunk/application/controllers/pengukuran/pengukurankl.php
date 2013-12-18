@@ -45,8 +45,8 @@ class pengukurankl extends CI_Controller {
 	  	$this->load->view('pengukuran/pengukurankl_v_edit',$data);
 	}	
 	
-	function grid($filtahun=null){
-		echo $this->pengukurankl_model->easyGrid($filtahun);
+	function grid($filtahun=null,$filbulan=null){
+		echo $this->pengukurankl_model->easyGrid($filtahun,$filbulan);
 	}
 	
 	

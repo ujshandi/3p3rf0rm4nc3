@@ -45,10 +45,10 @@ class pengukuraneselon1 extends CI_Controller {
 	  	$this->load->view('pengukuran/pengukuraneselon1_v_edit',$data);
 	}	
 	
-	function grid($filtahun=null, $file1=null){
+	function grid($filtahun=null, $file1=null,$filbulan=null){
 		if (($file1==null)&&($this->session->userdata('unit_kerja_e1'))!=-1)
 			$file1= $this->session->userdata('unit_kerja_e1');
-		echo $this->pengukuraneselon1_model->easyGrid($filtahun, $file1);
+		echo $this->pengukuraneselon1_model->easyGrid($filtahun, $file1,$filbulan);
 	}
 	
 	//chan, get combo sasaran e1

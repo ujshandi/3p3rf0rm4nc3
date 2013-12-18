@@ -92,7 +92,7 @@
 						</div>
 						<div class="fitem">
 						  <label style="width:140px">Bulan :</label>
-						  <?=$result->triwulan?>
+						  <?=$this->utility->getBulanValue($result->triwulan-1)?>
 						</div>
 						<div class="fitem">
 						    <label style="width:140px">Kementerian :</label>

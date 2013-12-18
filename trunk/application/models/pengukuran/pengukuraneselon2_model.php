@@ -14,12 +14,12 @@ class pengukuraneselon2_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null, $file1=null, $file2=null){
+	public function easyGrid($filtahun=null, $file1=null, $file2=null,$filbulan=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount($file1, $file2);
+		$count = $this->GetRecordCount($filtahun,$file1, $file2,$filbulan);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
@@ -29,6 +29,9 @@ class pengukuraneselon2_model extends CI_Model
 		if ($count>0){
 			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("a.tahun",$filtahun);
+			}
+			if($filbulan!= '' && $filbulan!= '-1' && $filbulan!= null) {
+				$this->db->where("a.triwulan",$filbulan);
 			}
 			if($file1 != '' && $file1 != '-1' && $file1 != null) {
 				$this->db->where("e.kode_e1",$file1);
@@ -53,6 +56,7 @@ class pengukuraneselon2_model extends CI_Model
 			{
 				$response->rows[$i]['id_pengukuran_e2']=$row->id_pengukuran_e2;
 				$response->rows[$i]['tahun']=$row->tahun2;
+				$response->rows[$i]['triwulan']=$this->utility->getBulanValue($row->triwulan-1);
 				$response->rows[$i]['kode_sasaran_e2']=$row->kode_sasaran_e2;
 				$response->rows[$i]['kode_ikk']=$row->kode_ikk;
 				if(is_numeric($row->realisasi)){
@@ -76,6 +80,7 @@ class pengukuraneselon2_model extends CI_Model
 		}else {				
 				$response->rows[0]['id_pengukuran_e2']='';
 				$response->rows[0]['tahun']='';
+				$response->rows[0]['triwulan']='';
 				$response->rows[0]['kode_sasaran_e2']='';
 				$response->rows[0]['kode_ikk']='';
 				$response->rows[0]['realisasi']='';
@@ -90,7 +95,13 @@ class pengukuraneselon2_model extends CI_Model
 	}
 	
 	
-	public function GetRecordCount($file1, $file2){
+	public function GetRecordCount($filtahun,$file1, $file2,$filbulan){
+		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+				$this->db->where("a.tahun",$filtahun);
+			}
+		if($filbulan!= '' && $filbulan!= '-1' && $filbulan!= null) {
+			$this->db->where("a.triwulan",$filbulan);
+		}
 		if($file1 != '' && $file1 != '-1' && $file1 != null) {
 				$this->db->where("e.kode_e1",$file1);
 			}
@@ -316,19 +327,19 @@ class pengukuraneselon2_model extends CI_Model
 									</div>
 									<div class="fitem">
 									  <label style="width:170px">Target :</label>
-									  '.$target.'
+									  '.$this->utility->cekNumericFmt($target).'
 									</div>
 									<div class="fitem">
 									  <label style="width:170px">Realisasi Tahun Sekarang :</label>
 									  <input type="hidden" name="detail['.$i.'][realisasi]" value="'.$row[$i]->realisasi.'" size="15">
 									  <input type="hidden" name="detail['.$i.'][persen]" value="'.$persentase.'" size="15">
-									  '.$row[$i]->realisasi.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									  '.$this->utility->cekNumericFmt($row[$i]->realisasi).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									  '.$persentase.'&nbsp;%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									  '.$statusTA.'
 									</div>
 									<div class="fitem">
 									  <label style="width:170px">Realisasi Tahun Lalu :</label>
-									  '.$realisasi[0].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									  '.$this->utility->cekNumericFmt($realisasi[0]).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									  '.$realisasi[1].'&nbsp;%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</div>
 									<div class="fitem">
