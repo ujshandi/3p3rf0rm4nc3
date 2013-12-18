@@ -6,7 +6,7 @@
 				//$('#fm<?=$objectId;?>').form('clear');  
 				//url = base_url+'realisasi/rseselon2/save';  
 				
-				addTab("Add Realisasi Kinerja Eselon II", "realisasi/rseselon2/add");
+				addTab("Add Capaian Kinerja Eselon II", "realisasi/rseselon2/add");
 			}
 			//end newData 
 			
@@ -67,7 +67,7 @@
 			editData<?=$objectId;?> = function (editmode){
 				<? //chan------if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					addTab((editmode?"Edit":"View")+" Realisasi Kinerja Eselon II", "realisasi/rseselon2/edit/"+ row.id_kinerja_e2 + "/" + editmode);
+					addTab((editmode?"Edit":"View")+" Capaian Kinerja Eselon II", "realisasi/rseselon2/edit/"+ row.id_kinerja_e2 + "/" + editmode);
 				<?//} else { ?>	
 					//alert("Silahkan Login sebagai Superadmin");
 				<?//} ?>
@@ -319,6 +319,7 @@
 		<th field="target" sortable="true" width="50px" align="right" formatter="formatPrice">Target</th>
 		<th field="satuan" sortable="true" width="60px">Satuan</th>
 		<th field="realisasi" sortable="true" width="50px" align="right" formatter="formatPrice">Capaian</th>
+		<th field="realisasi_persen" sortable="true" width="35px" align="right" formatter="formatPrice">Capaian<br>(%)</th>
 	  </tr>
 	  </thead>
 	</table>

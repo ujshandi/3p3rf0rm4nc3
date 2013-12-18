@@ -14,6 +14,7 @@ class Rpt_capaian_kinerjae2_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	// purpose : 1=buat grid, 2=buat pdf, 3=buat excel
+	//http://192.168.0.100/e-performance/realisasi/rpt_capaian_kinerjae2/grid/2012/-1/-1/022.02/022.02.04/1/12
 	public function easyGrid($filtahun=null,$filsasaran=null,$filiku=null,$file1=null,$file2=null,$filstart=null,$filend=null,$purpose=1,$pageNumber=null,$pageSize=null){
 		$lastNo = isset($_POST['lastNo']) ? intval($_POST['lastNo']) : 0;  
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
@@ -98,54 +99,54 @@ class Rpt_capaian_kinerjae2_model extends CI_Model
 				$response->rows[$i]['bulan10'] = "";
 				$response->rows[$i]['bulan11'] = "";
 				$response->rows[$i]['bulan12'] = "";
-				
-				if ((1>=intval($filstart)+1)&&(1<=intval($filend)+1)){
+				//var_dump($filstart);
+				if ((1>=intval($filstart))&&(1<=intval($filend))){
 					$row->bulan1 = $this->getRealisasi($filtahun,$row->kode_ikk,"1");
 					$response->rows[$i]['bulan1']= $this->utility->cekNumericFmt($row->bulan1); 
 				}
-				if ((2>=intval($filstart)+1)&&(2<=intval($filend)+1)){
+				if ((2>=intval($filstart))&&(2<=intval($filend))){
 					$row->bulan2 = $this->getRealisasi($filtahun,$row->kode_ikk,"2");
 					$response->rows[$i]['bulan2']=$this->utility->cekNumericFmt($row->bulan2); 
 				}
-				if ((3>=intval($filstart)+1)&&(3<=intval($filend)+1)){
+				if ((3>=intval($filstart))&&(3<=intval($filend))){
 					$row->bulan3 = $this->getRealisasi($filtahun,$row->kode_ikk,"3");
 					$response->rows[$i]['bulan3']=$this->utility->cekNumericFmt($row->bulan3);
 				}
-				if ((4>=intval($filstart)+1)&&(4<=intval($filend)+1)){
+				if ((4>=intval($filstart))&&(4<=intval($filend))){
 					$row->bulan4 = $this->getRealisasi($filtahun,$row->kode_ikk,"4");
 					$response->rows[$i]['bulan4']=$this->utility->cekNumericFmt($row->bulan4);
 				}
 				
-				if ((5>=intval($filstart)+1)&&(5<=intval($filend)+1)){
+				if ((5>=intval($filstart))&&(5<=intval($filend))){
 					$row->bulan5 = $this->getRealisasi($filtahun,$row->kode_ikk,"5");
 					$response->rows[$i]['bulan5']= $this->utility->cekNumericFmt($row->bulan5);
 				}
-				if ((6>=intval($filstart)+1)&&(6<=intval($filend)+1)){
+				if ((6>=intval($filstart))&&(6<=intval($filend))){
 					$row->bulan6 = $this->getRealisasi($filtahun,$row->kode_ikk,"6");
 					$response->rows[$i]['bulan6']= $this->utility->cekNumericFmt($row->bulan6);
 				}
-				if ((7>=intval($filstart)+1)&&(7<=intval($filend)+1)){
+				if ((7>=intval($filstart))&&(7<=intval($filend))){
 					$row->bulan7 = $this->getRealisasi($filtahun,$row->kode_ikk,"7");
 					$response->rows[$i]['bulan7']= $this->utility->cekNumericFmt($row->bulan7);
 				}
-				if ((8>=intval($filstart)+1)&&(8<=intval($filend)+1)){
+				if ((8>=intval($filstart))&&(8<=intval($filend))){
 					$row->bulan8 = $this->getRealisasi($filtahun,$row->kode_ikk,"8");
 					$response->rows[$i]['bulan8']= $this->utility->cekNumericFmt($row->bulan8);
 				}
 				
-				if ((9>=intval($filstart)+1)&&(9<=intval($filend)+1)){
+				if ((9>=intval($filstart))&&(9<=intval($filend))){
 					$row->bulan9 = $this->getRealisasi($filtahun,$row->kode_ikk,"9");
 					$response->rows[$i]['bulan9']= $this->utility->cekNumericFmt($row->bulan9);
 				}
-				if ((10>=intval($filstart)+1)&&(10<=intval($filend)+1)){
+				if ((10>=intval($filstart))&&(10<=intval($filend))){
 					$row->bulan10 = $this->getRealisasi($filtahun,$row->kode_ikk,"10");
 					$response->rows[$i]['bulan10']= $this->utility->cekNumericFmt($row->bulan10);
 				}
-				if ((11>=intval($filstart)+1)&&(11<=intval($filend)+1)){
+				if ((11>=intval($filstart))&&(11<=intval($filend))){
 					$row->bulan11 = $this->getRealisasi($filtahun,$row->kode_ikk,"11");
 					$response->rows[$i]['bulan11']= $this->utility->cekNumericFmt($row->bulan11);
 				}
-				if ((12>=intval($filstart)+1)&&(12<=intval($filend)+1)){
+				if ((12>=intval($filstart))&&(12<=intval($filend))){
 					$row->bulan12 = $this->getRealisasi($filtahun,$row->kode_ikk,"12");
 					$response->rows[$i]['bulan12']= $this->utility->cekNumericFmt($row->bulan12);
 				}

@@ -63,7 +63,7 @@
 							
 							// reload and close tab
 							$('#dg<?=$objectId;?>').datagrid('reload');
-							$('#tt').tabs('close', 'Add Realisasi Kinerja Eselon I');
+							$('#tt').tabs('close', 'Add Capaian Kinerja Eselon I');
 							
 						} else {
 							$.messager.show({
