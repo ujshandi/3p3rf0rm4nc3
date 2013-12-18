@@ -14,12 +14,12 @@ class pengukurankl_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null){
+	public function easyGrid($filtahun=null,$filbulan=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount();
+		$count = $this->GetRecordCount($filtahun,$filbulan);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
@@ -30,6 +30,9 @@ class pengukurankl_model extends CI_Model
 		if ($count>0){
 			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("a.tahun",$filtahun);
+			}
+			if($filbulan!= '' && $filbulan!= '-1' && $filbulan!= null) {
+				$this->db->where("a.triwulan",$filbulan);
 			}
 			$this->db->order_by('a.'.$sort." ".$order );
 			$this->db->limit($limit,$offset);
@@ -43,6 +46,7 @@ class pengukurankl_model extends CI_Model
 			{
 				$response->rows[$i]['id_pengukuran_kl']=$row->id_pengukuran_kl;
 				$response->rows[$i]['tahun']=$row->tahun2;
+				$response->rows[$i]['triwulan']=$this->utility->getBulanValue($row->triwulan-1);
 				$response->rows[$i]['kode_sasaran_kl']=$row->kode_sasaran_kl;
 				$response->rows[$i]['deskripsi_sasaran_kl']=$row->deskripsi_sasaran_kl;
 				$response->rows[$i]['kode_iku_kl']=$row->kode_iku_kl;
@@ -70,6 +74,7 @@ class pengukurankl_model extends CI_Model
 			$query->free_result();
 		}else {
 				$response->rows[$i]['id_pengukuran_kl']='';
+				$response->rows[$i]['triwulan']='';
 				$response->rows[$i]['tahun']='';
 				$response->rows[$i]['kode_sasaran_kl']='';
 				$response->rows[$i]['deskripsi_sasaran_kl']='';
@@ -86,7 +91,13 @@ class pengukurankl_model extends CI_Model
 		
 	}
 	
-	public function GetRecordCount(){
+	public function GetRecordCount($filtahun,$filbulan){
+		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+				$this->db->where("a.tahun",$filtahun);
+			}
+			if($filbulan!= '' && $filbulan!= '-1' && $filbulan!= null) {
+				$this->db->where("a.triwulan",$filbulan);
+			}
 		$this->db->select("*, b.satuan, a.tahun as tahun2, b.deskripsi AS deskripsi_iku_kl, c.deskripsi AS deskripsi_sasaran_kl");
 		$this->db->from('tbl_pengukuran_kl a');
 		$this->db->join('tbl_iku_kl b', 'b.kode_iku_kl = a.kode_iku_kl and b.tahun = a.tahun');
@@ -254,19 +265,19 @@ class pengukurankl_model extends CI_Model
 									</div>
 									<div class="fitem">
 									  <label style="width:170px">Target :</label>
-									  '.$target.'
+									  '.$this->utility->cekNumericFmt($target).'
 									</div>
 									<div class="fitem">
 									  <label style="width:170px">Realisasi Tahun Sekarang :</label>
 									  <input type="hidden" name="detail['.$i.'][realisasi]" value="'.$row[$i]->realisasi.'" size="15">
 									  <input type="hidden" name="detail['.$i.'][persen]" value="'.$persentase.'" size="15">
-									  '.$row[$i]->realisasi.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									  '.$this->utility->cekNumericFmt($row[$i]->realisasi).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									  '.$persentase.'&nbsp;%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									  '.$statusTA.'
 									</div>
 									<div class="fitem">
 									  <label style="width:170px">Realisasi Tahun Lalu :</label>
-									  '.$realisasi[0].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									  '.$this->utility->cekNumericFmt($realisasi[0]).'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									  '.$realisasi[1].'&nbsp;%
 									</div>
 									<div class="fitem">

@@ -262,6 +262,10 @@
 						  <?=$this->pengukuraneselon1_model->getListTahun($objectId)?>
 						</div>
 						<div class="fitem">
+						  <label style="width:120px">Bulan :</label>
+						  <?= $this->utility->getBulan("","triwulan",false,$objectId)?>
+						</div>	
+						<div class="fitem">
 						    <label style="width:120px">Unit Kerja Eselon I :</label>
 							<?=$this->pengukuraneselon1_model->getListEselon1($objectId)?>
 						</div>

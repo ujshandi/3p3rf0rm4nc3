@@ -14,12 +14,12 @@ class rseselon2_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null, $file1=null, $file2=null){
+	public function easyGrid($filtahun=null, $file1=null, $file2=null,$filbulan=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount($file1, $file2);
+		$count = $this->GetRecordCount($filtahun,$file1, $file2,$filbulan);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
@@ -29,6 +29,9 @@ class rseselon2_model extends CI_Model
 		if ($count>0){
 			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("tbl_pk_eselon2.tahun",$filtahun);
+			}
+			if($filbulan != '' && $filbulan != '-1' && $filbulan != null) {
+				$this->db->where("tbl_kinerja_eselon2.triwulan",$filbulan);
 			}
 			if($file1 != '' && $file1 != '-1' && $file1 != null) {
 				$this->db->where("tbl_eselon2.kode_e1",$file1);
@@ -41,7 +44,7 @@ class rseselon2_model extends CI_Model
 			$this->db->limit($limit,$offset);
 			$this->db->select("tbl_kinerja_eselon2.id_kinerja_e2, tbl_kinerja_eselon2.tahun, tbl_kinerja_eselon2.triwulan, tbl_kinerja_eselon2.kode_e2, tbl_kinerja_eselon2.kode_sasaran_e2, tbl_kinerja_eselon2.kode_ikk, tbl_pk_eselon2.penetapan, tbl_ikk.satuan, tbl_kinerja_eselon2.realisasi, tbl_eselon2.nama_e2, tbl_sasaran_eselon2.deskripsi AS deskripsi_sasaran_e2, tbl_ikk.deskripsi AS deskripsi_ikk");
 			$this->db->from('tbl_kinerja_eselon2');
-			$this->db->join('tbl_pk_eselon2', 'tbl_kinerja_eselon2.kode_ikk = tbl_pk_eselon2.kode_ikk');
+			$this->db->join('tbl_pk_eselon2', 'tbl_kinerja_eselon2.kode_ikk = tbl_pk_eselon2.kode_ikk and tbl_kinerja_eselon2.tahun = tbl_pk_eselon2.tahun');
 			$this->db->join('tbl_ikk', 'tbl_ikk.kode_ikk = tbl_kinerja_eselon2.kode_ikk and tbl_ikk.tahun = tbl_kinerja_eselon2.tahun');
 			$this->db->join('tbl_sasaran_eselon2','tbl_sasaran_eselon2.kode_sasaran_e2 = tbl_kinerja_eselon2.kode_sasaran_e2 and tbl_sasaran_eselon2.tahun = tbl_kinerja_eselon2.tahun', 'left');
 			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_sasaran_eselon2.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_sasaran_eselon2.tahun', 'left');
@@ -111,17 +114,23 @@ class rseselon2_model extends CI_Model
 	}
 	
 	
-	public function GetRecordCount($file1, $file2){
-	if($file1 != '' && $file1 != '-1' && $file1 != null) {
+	public function GetRecordCount($filtahun,$file1, $file2,$filbulan){
+		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+				$this->db->where("tbl_pk_eselon2.tahun",$filtahun);
+			}
+		if($file1 != '' && $file1 != '-1' && $file1 != null) {
 			$this->db->where("tbl_eselon2.kode_e1",$file1);
 		}
 		if($file2 != '' && $file2 != '-1' && $file2 != null) {
 			$this->db->where("tbl_pk_eselon2.kode_e2",$file2);
 		}
+		if($filbulan != '' && $filbulan != '-1' && $filbulan != null) {
+			$this->db->where("tbl_kinerja_eselon2.triwulan",$filbulan);
+		}
 		
 		$this->db->select("tbl_kinerja_eselon2.id_kinerja_e2, tbl_kinerja_eselon2.tahun, tbl_kinerja_eselon2.triwulan, tbl_kinerja_eselon2.kode_e2, tbl_kinerja_eselon2.kode_sasaran_e2, tbl_kinerja_eselon2.kode_ikk, tbl_pk_eselon2.penetapan, tbl_ikk.satuan, tbl_kinerja_eselon2.realisasi, tbl_eselon2.nama_e2, tbl_sasaran_eselon2.deskripsi AS deskripsi_sasaran_e2, tbl_ikk.deskripsi AS deskripsi_ikk");
 			$this->db->from('tbl_kinerja_eselon2');
-			$this->db->join('tbl_pk_eselon2', 'tbl_kinerja_eselon2.kode_ikk = tbl_pk_eselon2.kode_ikk');
+			$this->db->join('tbl_pk_eselon2', 'tbl_kinerja_eselon2.kode_ikk = tbl_pk_eselon2.kode_ikk and tbl_kinerja_eselon2.tahun= tbl_pk_eselon2.tahun');
 			$this->db->join('tbl_ikk', 'tbl_ikk.kode_ikk = tbl_kinerja_eselon2.kode_ikk and tbl_ikk.tahun = tbl_kinerja_eselon2.tahun');
 			$this->db->join('tbl_sasaran_eselon2','tbl_sasaran_eselon2.kode_sasaran_e2 = tbl_kinerja_eselon2.kode_sasaran_e2 and tbl_sasaran_eselon2.tahun = tbl_kinerja_eselon2.tahun', 'left');
 			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_sasaran_eselon2.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_sasaran_eselon2.tahun', 'left');

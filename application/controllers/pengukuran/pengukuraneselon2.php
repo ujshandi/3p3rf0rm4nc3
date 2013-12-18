@@ -46,7 +46,7 @@ class pengukuraneselon2 extends CI_Controller {
 	  	$this->load->view('pengukuran/pengukuraneselon2_v_edit',$data);
 	}	
 	
-	function grid($filtahun=null, $file1=null, $file2=null){
+	function grid($filtahun=null, $file1=null, $file2=null,$filbulan){
 		if (($file1==null)&&($this->session->userdata('unit_kerja_e1'))!=-1)
 			$file1= $this->session->userdata('unit_kerja_e1');
 		if (($file2==null)&&($this->session->userdata('unit_kerja_e2'))!=-1)
@@ -55,7 +55,7 @@ class pengukuraneselon2 extends CI_Controller {
 		$file1 = $file1 == null?'-1':$file1;
 		$file2 = $file2 == null?'-1':$file2;
 		
-		echo $this->pengukuraneselon2_model->easyGrid($filtahun, $file1, $file2);
+		echo $this->pengukuraneselon2_model->easyGrid($filtahun, $file1, $file2,$filbulan);
 	}
 	
 	//chan, get combo sasaran e2

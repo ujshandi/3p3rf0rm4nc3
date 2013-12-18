@@ -92,6 +92,10 @@
 						  <label style="width:150px" >Tahun :</label>
 						  <?=$result->tahun?>
 						</div>
+						<div class="fitem">
+						  <label style="width:150px" >Bulan :</label>
+						  <?=$this->utility->getBulanValue($result->triwulan-1)?>
+						</div>
 						<div class="fitem">							
 						    <label style="width:150px">Kementerian:</label>
 							<?=$result->nama_kl;//'Kementerian Perhubungan';?>

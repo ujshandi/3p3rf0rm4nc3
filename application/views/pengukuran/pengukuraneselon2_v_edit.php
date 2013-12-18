@@ -93,6 +93,10 @@
 						  <label style="width:150px" >Tahun :</label>
 						  <?=$result->tahun?>
 						</div>
+						<div class="fitem">
+						  <label style="width:150px" >Bulan :</label>
+						  <?=$this->utility->getBulanValue($result->triwulan-1)?>
+						</div>
 						<div class="fitem">							
 						    <label style="width:150px">Unit Kerja Eselon I :</label>
 							<?=$result->nama_e1?>

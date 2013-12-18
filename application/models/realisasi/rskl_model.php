@@ -14,12 +14,12 @@ class rskl_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null){
+	public function easyGrid($filtahun=null,$filbulan=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount($filtahun);
+		$count = $this->GetRecordCount($filtahun,$filbulan);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
@@ -29,6 +29,9 @@ class rskl_model extends CI_Model
 		if ($count>0){
 			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("tbl_pk_kl.tahun",$filtahun);
+			}
+			if($filbulan != '' && $filbulan != '-1' && $filbulan != null) {
+				$this->db->where("tbl_kinerja_kl.triwulan",$filbulan);
 			}
 			$this->db->order_by($sort." ".$order );
 			$this->db->limit($limit,$offset);
@@ -108,9 +111,12 @@ class rskl_model extends CI_Model
 		
 	}
 	
-	public function GetRecordCount($filtahun=""){
+	public function GetRecordCount($filtahun="",$filbulan=""){
 		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 			$this->db->where("tbl_pk_kl.tahun",$filtahun);
+		}
+		if($filbulan != '' && $filbulan != '-1' && $filbulan != null) {
+			$this->db->where("tbl_kinerja_kl.triwulan",$filbulan);
 		}
 		$this->db->select("tbl_kinerja_kl.id_kinerja_kl, tbl_kinerja_kl.tahun, tbl_kinerja_kl.triwulan, tbl_kinerja_kl.kode_kl, tbl_kinerja_kl.kode_sasaran_kl, tbl_kinerja_kl.kode_iku_kl, tbl_kinerja_kl.realisasi, tbl_iku_kl.satuan, tbl_pk_kl.penetapan, tbl_kl.nama_kl, tbl_sasaran_kl.deskripsi AS deskripsi_sasaran_kl, tbl_iku_kl.deskripsi AS deskripsi_iku_kl");
 		$this->db->from('tbl_kinerja_kl');

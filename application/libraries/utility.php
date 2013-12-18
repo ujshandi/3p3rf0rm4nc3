@@ -290,15 +290,18 @@ function getValueMinggu($value){
 	return "Week_".($value+1);
 }
 
-function getBulan($value="",$Compname=""){
+function getBulan($value="",$Compname="",$withAll=false,$objectId=""){
   $tempBulan = array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
   if (empty($Compname))
 	$name ="cmbBulan";
   else 
     $name =$Compname;
-   $rs = '<select name="'.$name.'" id="'.$name.'">';
+   $rs = '<select name="'.$name.'" id="'.$name.$objectId.'">';
+   if ($withAll){
+		$rs .= '<option value="-1">Semua</option>';
+   }
          for($i=0; $i<count($tempBulan); $i++){
-            $rs .= '<option value='.($i).' '.$this->getSelected(($i),$value).'>'.$tempBulan[$i].'</option>';
+            $rs .= '<option value='.($i+1).' '.$this->getSelected(($i),$value).'>'.$tempBulan[$i].'</option>';
 		 }
    $rs .="</select>";   
    return $rs;

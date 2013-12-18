@@ -14,12 +14,12 @@ class rseselon1_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null,$file1=null){
+	public function easyGrid($filtahun=null,$file1=null,$filbulan=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount($file1);
+		$count = $this->GetRecordCount($filtahun,$file1,$filbulan);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
@@ -30,6 +30,9 @@ class rseselon1_model extends CI_Model
 			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("tbl_pk_eselon1.tahun",$filtahun);
 			}
+			if($filbulan != '' && $filbulan != '-1' && $filbulan != null) {
+				$this->db->where("tbl_kinerja_eselon1.triwulan",$filbulan);
+			}	
 			if($file1 != '' && $file1 != '-1' && $file1 != null) {
 				$this->db->where("tbl_pk_eselon1.kode_e1",$file1);
 			}
@@ -114,10 +117,16 @@ class rseselon1_model extends CI_Model
 	}
 	
 	
-	public function GetRecordCount($file1){
-		if($file1 != '' && $file1 != '-1' && $file1 != null) {
-			$this->db->where("tbl_pk_eselon1.kode_e1",$file1);
-		}
+	public function GetRecordCount($filtahun,$file1,$filbulan){
+		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+				$this->db->where("tbl_pk_eselon1.tahun",$filtahun);
+			}
+			if($filbulan != '' && $filbulan != '-1' && $filbulan != null) {
+				$this->db->where("tbl_kinerja_eselon1.triwulan",$filbulan);
+			}	
+			if($file1 != '' && $file1 != '-1' && $file1 != null) {
+				$this->db->where("tbl_pk_eselon1.kode_e1",$file1);
+			}
 		$this->db->select("tbl_kinerja_eselon1.id_kinerja_e1, tbl_kinerja_eselon1.tahun, tbl_kinerja_eselon1.triwulan, tbl_kinerja_eselon1.kode_e1,tbl_kinerja_eselon1.kode_sasaran_e1,tbl_kinerja_eselon1.kode_iku_e1,tbl_iku_eselon1.satuan,tbl_pk_eselon1.penetapan,tbl_kinerja_eselon1.realisasi, tbl_eselon1.nama_e1, tbl_sasaran_eselon1.deskripsi AS deskripsi_sasaran_e1, tbl_iku_eselon1.deskripsi AS deskripsi_iku_e1");
 		$this->db->from('tbl_pk_eselon1');
 		$this->db->join('tbl_kinerja_eselon1', 'tbl_kinerja_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1');

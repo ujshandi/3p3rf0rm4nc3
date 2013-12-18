@@ -50,12 +50,12 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '';
-$db['default']['database'] = 'db_kinerja_2013';
+$db['default']['password'] = 'admin';
+$db['default']['database'] = 'pelatihan_eperformance';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = false;//chan TRUE;
-$db['default']['db_debug'] = FALSE;//chan TRUE;
+$db['default']['db_debug'] = TRUE;//chan falsel
 $db['default']['cache_on'] = FALSE;
 $db['default']['cachedir'] = '';
 $db['default']['char_set'] = 'utf8';

@@ -271,6 +271,10 @@
 						  <?=$this->pengukurankl_model->getListTahun($objectId)?>
 						</div>
 						<div class="fitem">
+						  <label style="width:120px">Bulan :</label>
+						  <?= $this->utility->getBulan("","triwulan",false,$objectId)?>
+						</div>	
+						<div class="fitem">
 						    <label style="width:120px">Kementerian :</label>
 							<?=$this->pengukurankl_model->getListKementerian($objectId)?>
 						</div>
