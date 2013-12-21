@@ -752,16 +752,16 @@ return ok;
 
 
 
-function cekNumericFmt($val){
+function cekNumericFmt($val,$decimalDigit=null){
 	if(is_numeric($val)){
 		if(strpos($val, '.') || strpos($val, ',')){
 			if($val<1){
-			return  number_format($val, 4, ',', '.');
+			return  number_format($val, ($decimalDigit!=null?$decimalDigit:4), ',', '.');
 			} else {
-			return  number_format($val, 2, ',', '.');
+			return  number_format($val, ($decimalDigit!=null?$decimalDigit:2), ',', '.');
 			}
 		}else{
-			return  number_format($val, 0, ',', '.');
+			return  number_format($val, ($decimalDigit!=null?$decimalDigit:0), ',', '.');
 		}
 	}else{
 		return  $val;
