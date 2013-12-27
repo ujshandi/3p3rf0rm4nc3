@@ -65,7 +65,7 @@ class Rpt_capaian_kinerjae2 extends CI_Controller {
 		if (($filStart != null)&&($filStart != "-1")){
 			$posY += 5;
 			$this->our_pdf->setXY($posX,$posY);
-			$this->our_pdf->text($posX,$posY,'Bulan '.$this->utility->getBulanValue($filStart)." s/d ".$this->utility->getBulanValue($filEnd));
+			$this->our_pdf->text($posX,$posY,'Bulan '.$this->utility->getBulanValue($filStart-1)." s/d ".$this->utility->getBulanValue($filEnd-1));
 			
 		}
 					
