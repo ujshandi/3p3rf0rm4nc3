@@ -1,6 +1,6 @@
 	<script  type="text/javascript" >
 		$(function(){
-		
+			$('textarea').autosize();   
 			var url;
 			//chan=============================================
 			function setListE2<?=$objectId?>(e2){
@@ -71,7 +71,7 @@
 				 $("#divSasaranE1<?=$objectId?>").load(
 					base_url+"pengaturan/sasaran_eselon2/getListSasaranE1/"+"<?=$objectId;?>"+"/"+e1+"/"+tahun,
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						
 						$("#txtkode_sasaran_e1<?=$objectId;?>").click(function(){
 							$("#drop<?=$objectId;?>").slideDown("slow");
@@ -193,6 +193,22 @@
 					url:getUrl<?=$objectId;?>(1),
 					queryParams:{lastNo:'0'},	
 					pageNumber : 1,
+					onClickCell: function(rowIndex, field, value){
+						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
+						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+						
+						switch(field){
+							case "kode_e2":
+								showPopup('#popdesc<?=$objectId?>', row.nama_e2);
+								break;
+							case "kode_sasaran_e1":
+								showPopup('#popdesc<?=$objectId?>', row.e1_deskripsi);
+								break;
+							default:
+								closePopup('#popdesc<?=$objectId?>');
+								break;
+						}
+					},
 					onLoadSuccess:function(data){	
 						$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
@@ -317,40 +333,17 @@
 				searchData<?=$objectId;?> ();
 			},50);
 			
-			// yanto
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					
-					switch(field){
-						case "kode_e2":
-							showPopup('#popdesc<?=$objectId?>', row.nama_e2);
-							break;
-						case "kode_sasaran_e1":
-							showPopup('#popdesc<?=$objectId?>', row.e1_deskripsi);
-							break;
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
+			submitEnter<?=$objectId;?> = function(e) {
+			if (e.keyCode == 13) {
+				searchData<?=$objectId;?>();
+			}
+		}
 			
 			$("#popdesc<?=$objectId?>").click(function(){
 				closePopup('#popdesc<?=$objectId?>');
 			});
 			
 		 });
-	</script>
-	
-	<script>
-		<!--Enter-->
-		function submitEnter<?=$objectId;?>(e) {
-			if (e.keyCode == 13) {
-				searchData<?=$objectId;?>();
-			}
-		}
 	</script>
 	
 	<!-- Dari Stef -->
@@ -521,7 +514,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Sasaran Unit Kerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true" nowrap="false">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Sasaran Unit Kerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true" nowrap="false">
 	  <thead>
 	  <tr>
 		<th field="kode_e1" sortable="true" hidden="true" width="30" <?=($this->session->userdata('unit_kerja_e2')=='-1'?'':'hidden="true"')?>>Kode Eselon II </th>
@@ -548,7 +541,7 @@
 			<?// if ($this->session->userdata('unit_kerja_e1')=='-1'){?>
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Tahun :</label>
-				<input name="tahun" id="tahun<?=$objectId?>" class="easyui-validatebox" size="4" required="true">
+				<input name="tahun" id="tahun<?=$objectId?>" class="easyui-validatebox year" size="4" required="true">
 			</div>		
 			<div class="fitem">							
 				<label style="width:150px">Unit Kerja Eselon I :</label>
@@ -614,4 +607,4 @@
     	</div>
 	</div>
 	
-	<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>
+	<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>

@@ -361,6 +361,8 @@
 					href :base_url+aHref,
 						onLoad : function(){
 						//	alert('on Load');
+								$('.year').autoNumeric('init',{aSep: '', aDec: ',',vMin:'0',aPad:"false",vMax:"9999"});
+								$('.money').autoNumeric('init',{aSep: '.', aDec: ',',vMin:'0',aPad:"false",vMax:"999999999999999"});
 						},
 						onBeforeClose : function(){
 							//alert('ga bisa ditutup');
@@ -420,7 +422,19 @@
 							//alert('onBeforeOpen'+data);
 							//return false;
 						},
-						closable:true,/* 
+						closable:true,
+						toolPosition : "left",
+						tools:[{
+							iconCls:'icon-mini-refresh',
+							handler:function(){
+								//alert('refresh');
+								// call 'refresh' method for tab panel to update its content
+								var tab = $('#tt').tabs('getSelected');  // get selected panel
+								tab.panel('refresh', base_url+aHref);
+
+							}
+						}]
+						/* 
 						 
 						extractor:function(data){
 							 alert(data.redirect);

@@ -152,7 +152,7 @@ class Programkl_model extends CI_Model
 		$this->db->set('tahun', $data['tahun']);
 		$this->db->set('kode_program',$data['kode_program']);
 		$this->db->set('nama_program',$data['nama_program']);
-		$this->db->set('total',$data['total']);
+		$this->db->set('total',$this->utility->ourDeFormatNumber2($data['total']));
 		$this->db->set('kode_e1',$data['kode_e1']);
 		$this->db->set('log_insert', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		
@@ -175,7 +175,7 @@ class Programkl_model extends CI_Model
 		$this->db->set('tahun', $data['tahun']);
 		$this->db->set('kode_program',$data['kode_program']);
 		$this->db->set('nama_program',$data['nama_program']);
-		$this->db->set('total',$data['total']);
+		$this->db->set('total',$this->utility->ourDeFormatNumber2($data['total']));
 		$this->db->set('kode_e1',$data['kode_e1']);
 		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		

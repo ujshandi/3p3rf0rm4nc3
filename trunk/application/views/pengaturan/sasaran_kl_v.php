@@ -2,6 +2,7 @@
 		$(function(){
 			var url;
 			
+			
 			saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: url,
@@ -147,6 +148,7 @@
 			}
 			//end getUrl
 			
+			
 			setKodeOtomatis<?=$objectId?> = function(){
 				var filkl ="-1";
 				var filtahun = $("#tahun<?=$objectId;?>").val();
@@ -180,6 +182,12 @@
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/kl/grid/"+filnip+"/"+filnama+"/"+filalamat});
 			}
 			
+			submitEnter<?=$objectId;?> =function (e){
+				if (e.keyCode == 13) {
+					searchData<?=$objectId;?>();
+				}
+			}
+			
 			searchData<?=$objectId;?> = function (){
 				//ambil nilai-nilai filter
 				// var filnip = $("#filter_nip").val();
@@ -203,17 +211,12 @@
 			setTimeout(function(){
 				searchData<?=$objectId;?> ();//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/sasaran_kl/grid"});
 			},0);
+			
+			
+			
 		 });
 	</script>
 
-	<script>
-		<!--Enter-->
-		function submitEnter<?=$objectId;?>(e) {
-			if (e.keyCode == 13) {
-				searchData<?=$objectId;?>();
-			}
-		}
-	</script>
 	<style type="text/css">
 		
 		#fm<?=$objectId;?>{
@@ -335,7 +338,7 @@
 		</div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Sasaran Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true" nowrap="false">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Sasaran Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true" nowrap="false">
 		<thead>
 			<tr>
 				<th field="kode_kl" sortable="true" width="15" hidden="true">Kode KL</th>

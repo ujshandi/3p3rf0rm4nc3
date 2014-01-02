@@ -1,6 +1,6 @@
 	<script  type="text/javascript" >
 		$(function(){
-		
+			$('textarea').autosize();   
 			loadTahun<?=$objectId;?> = function (){
 				$('#divTahun<?=$objectId;?>').load(
 					base_url+"pengaturan/iku_e1/getListTahun/"+"<?=$objectId;?>"
@@ -34,7 +34,7 @@
 					base_url+"pengaturan/iku_e1/getListIKU_KL/"+"<?=$objectId;?>"+"/"+tahun,
 					//on complete
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						if($("#drop<?=$objectId;?>").is(":visible")){
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						}
@@ -564,7 +564,7 @@
 		<form id="fm<?=$objectId;?>" method="post">
 			<div class="fitem">
 				<label style="width:120px">Tahun :</label>
-				<input name="tahun" id="tahun<?=$objectId;?>" class="easyui-validatebox" required="true" size="5" >
+				<input name="tahun" id="tahun<?=$objectId;?>" class="easyui-validatebox year" required="true" size="5" >
 			</div>	
 			<div class="fitem">
 				<label style="width:120px;vertical-align:top">Unit Kerja Eselon I :</label>

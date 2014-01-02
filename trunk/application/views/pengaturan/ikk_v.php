@@ -1,6 +1,7 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
+			$('textarea').autosize();   
 			loadTahun<?=$objectId;?> = function (){
 				$('#divTahun<?=$objectId;?>').load(
 					base_url+"pengaturan/ikk/getListTahun/"+"<?=$objectId;?>"
@@ -77,7 +78,7 @@
 					base_url+"pengaturan/ikk/getListIKU_E1/"+"<?=$objectId;?>"+"/"+e1+"/"+tahun,
 					//on complete
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						
 						$("#txtkode_iku_e1<?=$objectId;?>").click(function(){
 							$("#drop<?=$objectId;?>").slideDown("slow");
@@ -203,6 +204,25 @@
 					url:getUrl<?=$objectId;?>(1),
 					queryParams:{lastNo:'0'},	
 					pageNumber : 1,
+					onClickCell: function(rowIndex, field, value){
+						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
+						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+						
+						switch(field){
+							case "kode_e2":
+								showPopup('#popdesc<?=$objectId?>', row.nama_e2);
+								break;
+							case "kode_iku_e1":
+								showPopup('#popdesc<?=$objectId?>', row.e1_deskripsi);
+								break;
+							case "kode_sasaran_e2":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e2);
+								break;
+							default:
+								closePopup('#popdesc<?=$objectId?>');
+								break;
+						}
+					},
 					onLoadSuccess:function(data){	
 						$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
@@ -311,28 +331,12 @@
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/ikk/grid"});
 			},50);
 			
-			// yanto
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					
-					switch(field){
-						case "kode_e2":
-							showPopup('#popdesc<?=$objectId?>', row.nama_e2);
-							break;
-						case "kode_iku_e1":
-							showPopup('#popdesc<?=$objectId?>', row.e1_deskripsi);
-							break;
-						case "kode_sasaran_e2":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e2);
-							break;
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
+			
+			 submitEnter<?=$objectId;?> = function(e) {
+					if (e.keyCode == 13) {
+						searchData<?=$objectId;?>();
 					}
 				}
-			});
 			
 			$("#popdesc<?=$objectId?>").click(function(){
 				closePopup('#popdesc<?=$objectId?>');
@@ -372,14 +376,6 @@
 		 });
 	</script>
 	
-	<script>
-		<!--Enter-->
-		function submitEnter<?=$objectId;?>(e) {
-			if (e.keyCode == 13) {
-				searchData<?=$objectId;?>();
-			}
-		}
-	</script>
 	
 	<!-- Dari Stef -->
 	<script type="text/javascript">
@@ -547,7 +543,7 @@
 		</div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Indikator Kinerja Kegiatan (IKK) Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Indikator Kinerja Kegiatan (IKK) Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
 	<thead>
 		<tr>
 			<th field="tahun" sortable="true" width="15px">Tahun</th>
@@ -575,7 +571,7 @@
 		<form id="fm<?=$objectId;?>" method="post">
 			<div class="fitem">
 				<label style="width:120px">Tahun :</label>
-				<input name="tahun" id="tahun<?=$objectId;?>" class="easyui-validatebox" required="true" size="5" >
+				<input name="tahun" id="tahun<?=$objectId;?>" class="easyui-validatebox year" required="true" size="5" >
 			</div>	
 			<!-- chan : Jika login superadmin maka tampilkan combo E1 utk nge filter list E2 -->
 			<? //if ($this->session->userdata('unit_kerja_e1')=='-1'){?>
