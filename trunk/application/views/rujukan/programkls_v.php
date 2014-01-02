@@ -1,3 +1,4 @@
+
 <script  type="text/javascript" >
 	$(function(){
 		var url;
@@ -21,7 +22,7 @@
 		editData<?=$objectId;?> = function (){
 			var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 			if (row){
-				addTab("Edit Program", "rujukan/programkl/edit/"+row.id_program_kl);
+				addTab("Edit Program", "rujukan/programkl/edit/"+row.tahun+"/"+row.kode_program);
 			}
 		}
 		//end editData
@@ -255,4 +256,4 @@
 	</thead>  
 </table>
 
-<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>
+<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>
