@@ -290,7 +290,7 @@
 			</div>
 			<div class="fitem">
 				<label style="width:120px;vertical-align:top">N I P :</label>
-				<input name="nip" class="easyui-validatebox" size="20" required="false">
+				<input name="nip" class="easyui-validatebox" size="20" maxlength="25" required="false">
 			</div>
 			<div class="fitem">
 				<label style="width:120px;vertical-align:top">Pangkat :</label>

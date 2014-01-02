@@ -31,10 +31,10 @@ class Programkl extends CI_Controller {
 	  	$this->load->view('rujukan/programkl_v',$data);
 	}
 	
-	public function edit($id){
+	public function edit($tahun,$kode_program){
 		$data['title'] = 'Edit Program';	
 		$data['objectId'] = 'programkl';
-		$data['result'] = $this->programkl_model->getDataEdit($id);
+		$data['result'] = $this->programkl_model->getDataEdit($tahun,$kode_program);
 	  	$this->load->view('rujukan/programkl_v_edit',$data);
 	}
 
@@ -78,7 +78,7 @@ class Programkl extends CI_Controller {
 		$this->load->library('form_validation');
 		$result = "";
 		
-		$data['id_program_kl'] = $this->input->post('id_program_kl');
+		//$data['id_program_kl'] = $this->input->post('id_program_kl');
 		$data['tahun'] = $this->input->post('tahun');
 		$data['kode_e1'] = $this->input->post('kode_e1');
 		$data['kode_program'] = $this->input->post('kode_program');
@@ -95,9 +95,9 @@ class Programkl extends CI_Controller {
 		}
 	}
 	
-	function delete($id=''){
-		if($id != ''){
-			$result = $this->programkl_model->DeleteOnDb($id);
+	function delete($tahun='',$kode_program=''){
+		if($tahun != ''){
+			$result = $this->programkl_model->DeleteOnDb($tahun,$kode_program);
 			if ($result){
 				echo json_encode(array('success'=>true, 'haha'=>''));
 			} else {
