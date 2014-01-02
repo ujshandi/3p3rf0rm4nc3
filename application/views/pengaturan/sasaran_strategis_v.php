@@ -1,7 +1,7 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
-			
+			$('textarea').autosize();   
 			saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: url,
@@ -183,6 +183,12 @@
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/kl/grid/"+filnip+"/"+filnama+"/"+filalamat});
 			}
 			
+			submitEnter<?=$objectId;?> =function (e){
+				if (e.keyCode == 13) {
+					searchData<?=$objectId;?>();
+				}
+			}
+			
 			searchData<?=$objectId;?> = function (){
 				//ambil nilai-nilai filter
 				// var filnip = $("#filter_nip").val();
@@ -209,14 +215,7 @@
 		 });
 	</script>
 
-	<script>
-		<!--Enter-->
-		function submitEnter<?=$objectId;?>(e) {
-			if (e.keyCode == 13) {
-				searchData<?=$objectId;?>();
-			}
-		}
-	</script>
+	
 	<style type="text/css">
 		
 		#fm<?=$objectId;?>{
@@ -338,7 +337,7 @@
 		</div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Sasaran Strategis" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Sasaran Strategis" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 		<thead>
 			<tr>
 				<th field="kode_kl" sortable="true" width="15" hidden="true">Kode KL</th>
@@ -356,7 +355,7 @@
 		<form id="fm<?=$objectId;?>" method="post">		
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Tahun :</label>
-				<input name="tahun" id="tahun<?=$objectId?>" class="easyui-validatebox" size="4" required="true">
+				<input name="tahun" id="tahun<?=$objectId?>" class="easyui-validatebox year" size="4" required="true">
 			</div>		
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Nama Kementerian :</label>

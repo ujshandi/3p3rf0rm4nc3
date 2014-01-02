@@ -1,5 +1,8 @@
+<script  type="text/javascript" src="<?=base_url()?>public/js/autoNumeric.js"></script>
 	<script  type="text/javascript" >
 		$(function(){
+			$('.year').autoNumeric('init',{aSep: '', aDec: ',',vMin:'0',aPad:"false",vMax:"9999"});
+			$('.money').autoNumeric('init',{aSep: '.', aDec: ',',vMin:'0',aPad:"false",vMax:"999999999999999"});
 		 	saveDataEdit<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: base_url+'rujukan/programkl/save_edit',
@@ -75,7 +78,7 @@
 						<input name="id_program_kl" type="hidden" value="<?=$result->id_program_kl?>" >
 						<div class="fitem">
 							<label style="width:120px">Tahun :</label>
-							<input name="tahun" class="easyui-validatebox" size="5" required="true" value="<?=$result->tahun?>" >
+							<input name="tahun" class="easyui-validatebox year" size="5" required="true" value="<?=$result->tahun?>" >
 						</div>
 						<div class="fitem" >
 							<label style="width:120px">Unit Kerja Eselon I :</label>
@@ -91,7 +94,7 @@
 						</div>
 						<div class="fitem" >
 							<label style="width:120px">Total Anggaran (Rp) :</label>
-							<input name="total" class="easyui-validatebox" required="true" value="<?=$result->total?>" >
+							<input name="total" class="easyui-validatebox money" required="true" value="<?=$result->total?>" >
 						</div>
 						<br>
 						<div class="fitem" >

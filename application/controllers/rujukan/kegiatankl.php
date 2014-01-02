@@ -32,10 +32,10 @@ class Kegiatankl extends CI_Controller {
 	  	$this->load->view('rujukan/kegiatankl_v',$data);
 	}
 	
-	public function edit($id){
+	public function edit($tahun,$kode_kegiatan){
 		$data['title'] = 'Edit Data Kegiatan';	
 		$data['objectId'] = 'kegiatankl';
-		$data['result'] = $this->kegiatankl_model->getDataEdit($id);
+		$data['result'] = $this->kegiatankl_model->getDataEdit($tahun,$kode_kegiatan);
 	  	$this->load->view('rujukan/kegiatankl_v_edit',$data);
 	}
 	
@@ -80,7 +80,7 @@ class Kegiatankl extends CI_Controller {
 	function save_edit(){
 		$this->load->library('form_validation');
 		
-		$data['id_kegiatan_kl'] = $this->input->post('id_kegiatan_kl');
+		//$data['id_kegiatan_kl'] = $this->input->post('id_kegiatan_kl');
 		$data['tahun'] = $this->input->post('tahun');
 		$data['kode_kegiatan'] = $this->input->post('kode_kegiatan');
 		$data['nama_kegiatan'] = $this->input->post('nama_kegiatan');
@@ -99,9 +99,9 @@ class Kegiatankl extends CI_Controller {
 		}
 	}
 	
-	function delete($id=''){
-		if($id != ''){
-			$result = $this->kegiatankl_model->DeleteOnDb($id);
+	function delete($tahun='',$kode_kegiatan=''){
+		if($tahun != ''){
+			$result = $this->kegiatankl_model->DeleteOnDb($tahun,$kode_kegiatan);
 			if ($result){
 				echo json_encode(array('success'=>true, 'haha'=>''));
 			} else {

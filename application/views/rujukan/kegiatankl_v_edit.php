@@ -1,6 +1,9 @@
+	<script  type="text/javascript" src="<?=base_url()?>public/js/autoNumeric.js"></script>
 	<script  type="text/javascript" >
 				
 		$(function(){
+			$('.year').autoNumeric('init',{aSep: '', aDec: ',',vMin:'0',aPad:"false",vMax:"9999"});
+			$('.money').autoNumeric('init',{aSep: '.', aDec: ',',vMin:'0',aPad:"false",vMax:"999999999999999"});
 			onchangeKodeE1<?=$objectId;?> = function(){
 					$("#divUnitKerjaEdit<?=$objectId;?>").load(base_url+"rujukan/eselon2/loadE2/"+$("#kode_e1<?=$objectId;?>").val()+"/<?=$objectId;?>");
 					//alert($("#kode_e1<?=$objectId;?>").val());
@@ -90,10 +93,10 @@
 		<div region="north" split="true" title="Edit Data Kegiatan" style="height:450px;">
 				<div region="center" border="true" title="">	
 					<form id="fm<?=$objectId;?>" method="post">
-						<input name="id_kegiatan_kl" type="hidden" value="<?=$result->id_kegiatan_kl?>">
+						
 						<div class="fitem">
 							<label style="width:120px">Tahun :</label>
-							<input name="tahun" class="easyui-validatebox" required="true" value="<?=$result->tahun?>" size="5">
+							<input name="tahun" class="easyui-validatebox year" required="true" value="<?=$result->tahun?>" size="5">
 						</div>					
 						<div class="fitem" >
 							<label style="width:120px">Unit Kerja Eselon I :</label>
@@ -119,7 +122,7 @@
 						</div>
 						<div class="fitem" >
 							<label style="width:120px">Total Anggaran (Rp) :</label>
-							<input name="total" class="easyui-validatebox" required="true" value="<?=$result->total?>" >
+							<input name="total" class="easyui-validatebox money" required="true" value="<?=$result->total?>" >
 						</div>
 						<br>
 						<div class="fitem">
