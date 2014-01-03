@@ -220,8 +220,8 @@
 		<label style="width:120px;vertical-align:top">Tipe Aplikasi:</label>
 		  <select name="app_type">
 		  <option value="KL">Kementrian Lembaga</option>
-		  <option value="E1">Eselon 1</option>
-		  <option value="E2">Eselon 2</option>
+		  <option value="E1">Eselon I</option>
+		  <option value="E2">Eselon II</option>
 		  </select>
 		</div>
 		

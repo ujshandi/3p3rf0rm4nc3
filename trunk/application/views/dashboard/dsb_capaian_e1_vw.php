@@ -99,7 +99,7 @@ $(document).ready(function(){
 				$("#divSasaranKL<?=$objectId?>").load(
 					base_url+"pengaturan/sasaran_eselon1/getListSasaranE1/"+"<?=$objectId;?>"+"/"+e1+"/"+tahun,
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						if($("#drop<?=$objectId;?>").is(":visible")){
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						}

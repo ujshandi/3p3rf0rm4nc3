@@ -352,7 +352,7 @@
 				 $("#divSasaranE2<?=$objectId?>").load(
 					base_url+"pengaturan/sasaran_eselon2/getListSasaranE2/ListSasaran"+"<?=$objectId;?>"+"/"+e2+"/"+tahun,
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						
 						$("#txtkode_sasaran_e2ListSasaran<?=$objectId;?>").click(function(){
 							$("#dropListSasaran<?=$objectId;?>").slideDown("slow");
@@ -487,14 +487,14 @@
 					</tr>
 					<? //if ($this->session->userdata('unit_kerja_e1')==-1){?>
 					<tr>
-						<td>Unit Kerja Eselon I &nbsp</td>
+						<td>Unit Kerja Eselon I :</td>
 						<td>
 							<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>				
 						</td>
 					</tr>
 					<?//}?>
 					<tr>
-						<td>Unit Kerja Eselon II &nbsp</td>
+						<td>Unit Kerja Eselon II :</td>
 						<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
 							<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 						</span>
@@ -597,7 +597,7 @@
 				</span>
 			</div>
 			<div class="fitem">
-				<label style="width:120px">Sasaran Eselon 2:</label>					
+				<label style="width:120px">Sasaran Eselon II :</label>					
 					<span id="divSasaranE2<?=$objectId?>">
 				</span>
 			</div>

@@ -1,7 +1,7 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
-			
+			$('textarea').autosize();   	
 			//chan=============================================
 			function setListE2<?=$objectId?>(){
 				$("#divEselon2<?=$objectId?>").load(
@@ -184,7 +184,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			initCombo<?=$objectId;?> = function(){
-				$("textarea").autogrow();
+				$('textarea').autosize();   
 				
 				$("#txtkode_kegiatan<?=$objectId;?>").click(function(){
 					$("#drop<?=$objectId;?>").slideDown("slow");

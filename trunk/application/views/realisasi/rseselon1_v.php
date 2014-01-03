@@ -2,7 +2,7 @@
 				
 		$(function(){
 			//chan---------------------------------------		
-			
+			$('textarea').autosize();   	
 			//chan=================================
 			function setSasaran<?=$objectId;?>(e1, tahun){
 				<? if ($this->session->userdata('unit_kerja_e1')!='-1') {?>
@@ -11,7 +11,7 @@
 				$("#divSasaranE1<?=$objectId?>").load(
 					base_url+"rencana/rkteselon1/getListSasaranE1/"+"<?=$objectId;?>"+"/"+e1+"/"+tahun,
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						if($("#drop<?=$objectId;?>").is(":visible")){
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						}
@@ -256,7 +256,7 @@
 			
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 					
-				<div region="center" border="true" title="Tambah Data Realisasi Eselon I" fit="true">	
+				<div region="center" border="true" title="Tambah Data Capaian Kinerja Eselon I" fit="true">	
 					<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">		
 						<div class="fitem">
 						  <label style="width:120px" >Tahun :</label>

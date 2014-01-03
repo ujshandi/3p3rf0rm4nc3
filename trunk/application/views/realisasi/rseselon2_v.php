@@ -1,7 +1,7 @@
 	<script  type="text/javascript" >
 				
 		$(function(){
-			
+				$('textarea').autosize();   
 			//chan---------------------------------------		
 			function setListE2<?=$objectId?>(){
 				$("#divEselon2<?=$objectId?>").load(
@@ -26,7 +26,7 @@
 					base_url+"rencana/rkteselon2/getListSasaranE2/"+"<?=$objectId;?>"+"/"+e2+"/"+tahun,
 					//on complete
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 								
 						
 						if($("#drop<?=$objectId;?>").is(":visible")){
@@ -83,7 +83,7 @@
 							
 							// reload and close tab
 							$('#dg<?=$objectId;?>').datagrid('reload');
-							$('#tt').tabs('close', 'Add Realisasi Kinerja Eselon II');
+							$('#tt').tabs('close', 'Add Capaian Kinerja Eselon II');
 							
 						} else {
 							$.messager.show({
@@ -281,7 +281,7 @@
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 
 	
-				<div region="center" border="true" title="Tambah Data Realisasi Kinerja Eselon II">	
+				<div region="center" border="true" title="Tambah Data Capaian Kinerja Eselon II">	
 					<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">		
 						<div class="fitem">
 						  <label style="width:120px" >Tahun :</label>

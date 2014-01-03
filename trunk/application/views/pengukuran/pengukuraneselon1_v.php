@@ -1,5 +1,5 @@
 	<script  type="text/javascript" >
-				
+		$('textarea').autosize();   			
 		$(function(){
 			//chan---------------------------------------		
 			function setSasaran<?=$objectId;?>(e1, tahun){
@@ -9,7 +9,7 @@
 				$("#divSasaranE1<?=$objectId?>").load(
 					base_url+"rencana/rkteselon1/getListSasaranE1/"+"<?=$objectId;?>"+"/"+e1+"/"+tahun,
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						if($("#drop<?=$objectId;?>").is(":visible")){
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						}

@@ -2,7 +2,7 @@
 	<script  type="text/javascript" >
 				
 		$(function(){
-		
+			$('textarea').autosize();   
 		 	saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: base_url+'pengukuran/pengukurankl/save',
@@ -158,7 +158,7 @@
 				$("#divSasaranKL<?=$objectId?>").load(
 					base_url+"pengaturan/sasaran_eselon1/getListSasaranKL/"+"<?=$objectId;?>"+"/"+tahun,
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						if($("#drop<?=$objectId;?>").is(":visible")){
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						}

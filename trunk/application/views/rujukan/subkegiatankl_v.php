@@ -1,5 +1,5 @@
 	<script  type="text/javascript" >
-				
+		$('textarea').autosize();   			
 		$(function(){
 		//chan=============================================
 			 function setListE2<?=$objectId?>(){
@@ -25,7 +25,7 @@
 					base_url+"rujukan/subkegiatankl/getListKegiatan/"+"<?=$objectId;?>"+"/"+e2,
 					//on complete
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 								
 						
 						if($("#drop<?=$objectId;?>").is(":visible")){

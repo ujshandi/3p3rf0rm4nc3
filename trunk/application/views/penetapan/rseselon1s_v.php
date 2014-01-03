@@ -6,7 +6,7 @@
 				//$('#fm<?=$objectId;?>').form('clear');  
 				//url = base_url+'realisasi/rseselon1/save';  
 				
-				addTab("Tambah Realisasi Kinerja Tingkat Eselon 1", "realisasi/rseselon1/add");
+				addTab("Tambah Realisasi Kinerja Tingkat Eselon I", "realisasi/rseselon1/add");
 			}
 			//end newData 
 			

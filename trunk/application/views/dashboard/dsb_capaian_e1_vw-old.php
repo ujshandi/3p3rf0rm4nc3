@@ -42,8 +42,8 @@
 	  <thead>
 	  <tr>
 		<th field="tahun" sortable="false" width="60">Tahun</th>
-		<th field="kode_e1"   sortable="false" width="50">Kode E1</th>
-		<th field="nama_e1" align="left" sortable="false" width="200">Nama Eselon 1</th>
+		<th field="kode_e1"   sortable="false" width="50">Kode Eselon I</th>
+		<th field="nama_e1" align="left" sortable="false" width="200">Nama Eselon I</th>
 		<th field="jml_iku" align="right"  sortable="false" width="70">Jml.Iku</th>	
 		<th field="tercapai" align="right"  sortable="false" width="70">Tercapai</th>	
 		<th field="tdk_tercapai" align="right"  sortable="false" width="70">Tdk. Tercapai</th>	

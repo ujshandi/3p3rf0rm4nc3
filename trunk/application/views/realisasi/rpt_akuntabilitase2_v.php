@@ -271,13 +271,13 @@
 				<td><?=$this->rpt_akuntabilitase2_model->getListTahun($objectId)?></td>
 			</tr>			 
 			<tr>
-				<td>Eselon 1 :</td>
+				<td>Eselon I :</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
 				</td>
 			</tr>
 			<tr>
-				<td>Eselon 2 :</td>
+				<td>Eselon II :</td>
 				<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
 					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 					</span>

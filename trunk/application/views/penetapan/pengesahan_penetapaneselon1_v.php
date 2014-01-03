@@ -38,7 +38,7 @@
 			//end---------------------------------------
 
 			cancel<?=$objectId;?>=function(){
-				$('#tt').tabs('close', 'Pengesahan PK Eselon 1');
+				$('#tt').tabs('close', 'Pengesahan PK Eselon I');
 			}
 			
 		 	saveData<?=$objectId;?>=function(){
@@ -58,7 +58,7 @@
 							
 							// reload and close tab
 							$('#dg<?=$objectId;?>').datagrid('reload');
-							$('#tt').tabs('close', 'Pengesahan PK Eselon 1');
+							$('#tt').tabs('close', 'Pengesahan PK Eselon I');
 							
 						} else {
 							$.messager.show({
@@ -242,7 +242,7 @@
 			
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 					
-				<div region="center" border="true" title="Pengesahan Data Penetapan Kinerja Eselon 1" fit="true">	
+				<div region="center" border="true" title="Pengesahan Data Penetapan Kinerja Eselon I" fit="true">	
 					<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">		
 						<div class="fitem">
 						  <label style="width:120px" >Tahun :</label>

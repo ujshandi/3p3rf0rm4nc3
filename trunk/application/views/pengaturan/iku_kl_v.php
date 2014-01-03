@@ -230,10 +230,10 @@
 			
 						
 			submitEnter<?=$objectId;?> = function (e) {
-			if (e.keyCode == 13) {
-				searchData<?=$objectId;?>();
+				if (e.keyCode == 13) {
+					searchData<?=$objectId;?>();
+				}
 			}
-		}
 			
 			$("#popdesc<?=$objectId?>").click(function(){
 				closePopup('#popdesc<?=$objectId?>');

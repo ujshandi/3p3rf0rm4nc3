@@ -1,6 +1,7 @@
 	<script  type="text/javascript" >
 				
 		$(function(){
+			$('textarea').autosize();   
 			//chan=============================================
 			 function setListE2<?=$objectId?>(){
 				$("#divEselon2<?=$objectId?>").load(
@@ -25,7 +26,7 @@
 					base_url+"rencana/rkteselon2/getListSasaranE2/"+"<?=$objectId;?>"+"/"+e2+"/"+tahun,
 					//on complete
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 								
 						
 						if($("#drop<?=$objectId;?>").is(":visible")){

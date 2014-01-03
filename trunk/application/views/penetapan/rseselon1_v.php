@@ -215,11 +215,11 @@
 							</select>
 						</div>					
 						<div class="fitem">
-						    <label style="width:120px">Eselon 1 :</label>
+						    <label style="width:120px">Eselon I :</label>
 							<?=$this->rseselon1_model->getListEselon1($objectId)?>
 						</div>
 						<div class="fitem">
-							<label style="width:120px">Sasaran Eselon 1 :</label>
+							<label style="width:120px">Sasaran Eselon I :</label>
 							<?=$this->rseselon1_model->getListSasaranE1($objectId)?>
 						</div>
 						
