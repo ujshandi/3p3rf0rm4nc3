@@ -282,8 +282,8 @@
 						<td width="130px">
 							<select id="unit<?=$objectId?>" name="unit">
 								<option value="KL">Kementerian</option>
-								<option value="E1">Eselon 1</option>
-								<option value="E2">Eselon 2</option>
+								<option value="E1">Eselon I</option>
+								<option value="E2">Eselon II</option>
 							</select>
 						</td>
 						<td width="130px";>Unit Kerja Eselon II : </td>

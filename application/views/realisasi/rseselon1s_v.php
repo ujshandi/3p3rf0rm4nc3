@@ -260,13 +260,13 @@
 					</td>
 				</tr>
 				<tr style="margin-bottom: 10px;">
-					<td width="70px">Bulan :</td>
+					<td width="120px">Bulan :</td>
 					<td align="left">
 				  <?= $this->utility->getBulan("","filbulan",true,$objectId)?>
 					</td>
 				</tr>
 				<tr>
-					<td>Unit Kerja Eselon I&nbsp</td>
+					<td>Unit Kerja Eselon I :</td>
 					<td>
 						<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
 					</td>

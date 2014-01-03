@@ -6,7 +6,7 @@
 				//$('#fm<?=$objectId;?>').form('clear');  
 				//url = base_url+'realisasi/rseselon2/save';  
 				
-				addTab("Tambah realisasi Kinerja Tingkat Eselon 2", "realisasi/rseselon2/add");
+				addTab("Tambah Capaian Kinerja Tingkat Eselon II", "realisasi/rseselon2/add");
 			}
 			//end newData 
 			
@@ -210,7 +210,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Realisasi Kinerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Capaian Kinerja Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="tahun" sortable="true" width="30px">Tahun</th>
@@ -220,7 +220,7 @@
 		<th field="kode_ikk" sortable="true" width="50px">Kode IKU Eselon II</th>
 		<th field="target" sortable="true" width="50px" formatter="formatPrice">Target</th>
 		<th field="satuan" sortable="true" width="50px">Satuan</th>
-		<th field="realisasi" sortable="true" width="50px" formatter="formatPrice">realisasi</th>
+		<th field="realisasi" sortable="true" width="50px" formatter="formatPrice">Realisasi</th>
 	  </tr>
 	  </thead>
 	</table>

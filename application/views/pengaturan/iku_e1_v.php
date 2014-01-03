@@ -120,7 +120,7 @@
 			}
 				
 			import<?=$objectId;?> = function (){  
-				$('#dlgimport<?=$objectId;?>').dialog('open').dialog('setTitle','Import Indikator Kinerja Utama Eselon 1');
+				$('#dlgimport<?=$objectId;?>').dialog('open').dialog('setTitle','Import Indikator Kinerja Utama Eselon I');
 				$('#fmimport<?=$objectId;?>').form('clear');  
 				url = base_url+'pengaturan/iku_e1/import'; 
 			}
@@ -334,6 +334,11 @@
 				closePopup('#popdesc<?=$objectId?>');
 			});
 			
+			submitEnter<?=$objectId;?> = function (e) {
+				if (e.keyCode == 13) {
+					searchData<?=$objectId;?>();
+				}
+			}			
 			//chan
 			function setSasaranE1<?=$objectId;?>(tahun,e1,key,val){
 				<? if ($this->session->userdata('unit_kerja_e1')!='-1') {?>
@@ -344,7 +349,7 @@
 				 $("#divSasaranE1<?=$objectId?>").load(
 					base_url+"pengaturan/sasaran_eselon2/getListSasaranE1/ListSasaran"+"<?=$objectId;?>"+"/"+e1+"/"+tahun,
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						
 						$("#txtkode_sasaran_e1ListSasaran<?=$objectId;?>").click(function(){
 							$("#dropListSasaran<?=$objectId;?>").slideDown("slow");
@@ -369,14 +374,6 @@
 		 });
 	</script>
 	
-	<script>
-		<!--Enter-->
-		function submitEnter<?=$objectId;?>(e) {
-			if (e.keyCode == 13) {
-				searchData<?=$objectId;?>();
-			}
-		}
-	</script>
 	
 	<!-- Dari Stef -->
 	<script type="text/javascript">
@@ -487,7 +484,7 @@
 					<td><span id="divTahun<?=$objectId?>"></span></td>
 				</tr>
 			<tr <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'style="display:none"')?>>
-				<td>Unit Kerja Eselon I &nbsp</td>
+				<td>Unit Kerja Eselon I :</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
 				</td>

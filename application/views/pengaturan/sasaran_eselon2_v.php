@@ -120,7 +120,7 @@
 			}
 			
 			import<?=$objectId;?> = function (){  
-				$('#dlgimport<?=$objectId;?>').dialog('open').dialog('setTitle','Import Sasaran Eselon 2');
+				$('#dlgimport<?=$objectId;?>').dialog('open').dialog('setTitle','Import Sasaran Eselon II');
 				$('#fmimport<?=$objectId;?>').form('clear');  
 				url = base_url+'pengaturan/sasaran_eselon2/import'; 
 			}

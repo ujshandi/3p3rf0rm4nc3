@@ -60,7 +60,7 @@
 			//end---------------------------------------		
 			
 			cancel<?=$objectId;?>=function(){
-				$('#tt').tabs('close', 'Pengesahan PK Eselon 2');
+				$('#tt').tabs('close', 'Pengesahan PK Eselon II');
 			}
 			
 		 	saveData<?=$objectId;?>=function(){
@@ -80,7 +80,7 @@
 							
 							// reload and close tab
 							$('#dg<?=$objectId;?>').datagrid('reload');
-							$('#tt').tabs('close', 'Pengesahan PK Eselon 2');
+							$('#tt').tabs('close', 'Pengesahan PK Eselon II');
 							
 						} else {
 							$.messager.show({

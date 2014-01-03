@@ -1,7 +1,7 @@
 	<script  type="text/javascript" >
 				
 		$(function(){
-		
+			$('textarea').autosize();   
 		 	saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: base_url+'penetapan/penetapaneselon1/save',
@@ -56,7 +56,7 @@
 				$("#divSasaranE1<?=$objectId?>").load(
 					base_url+"rencana/rkteselon1/getListSasaranE1/"+"<?=$objectId;?>"+"/"+e1+"/"+tahun,
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						if($("#drop<?=$objectId;?>").is(":visible")){
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						}

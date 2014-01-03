@@ -4,7 +4,7 @@
 	<script  type="text/javascript" >
 				
 		$(function(){
-		
+			$('textarea').autosize();   
 		 	saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: base_url+'penetapan/penetapankl/save',
@@ -177,7 +177,7 @@
 			$("#divSasaran<?=$objectId?>").load(
 				base_url+"pengaturan/sasaran_eselon1/getListSasaranKL/"+"<?=$objectId;?>"+"/"+$('#tahun<?=$objectId;?>').val(),
 				function(){
-					$("textarea").autogrow();
+					$('textarea').autosize();   
 					if($("#drop<?=$objectId;?>").is(":visible")){
 						$("#drop<?=$objectId;?>").slideUp("slow");
 					}

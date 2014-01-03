@@ -261,13 +261,13 @@
 				<td><input class="easyui-textbox" id="filter_e1<?=$objectId;?>"></td>
 			</tr>-->
 			<tr>
-				<td>Eselon 1 :</td>
+				<td>Eselon I :</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
 				</td>
 			</tr>
 			<tr>
-				<td>Eselon 2 :</td>
+				<td>Eselon II :</td>
 				<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
 					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 					</span>
@@ -306,7 +306,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Laporan Rencana Kinerja Tahunan Eselon 2" toolbar="#tb<?=$objectId;?>" fitColumns="false" singleSelect="true" rownumbers="false" pagination="true"  nowrap="false">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Laporan Rencana Kinerja Tahunan Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="false" singleSelect="true" rownumbers="false" pagination="true"  nowrap="false">
 	  <thead>
 	  <tr>
 		

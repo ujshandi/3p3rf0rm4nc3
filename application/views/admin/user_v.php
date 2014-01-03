@@ -277,8 +277,8 @@
 		<th field="full_name" sortable="true" width="50">Nama</th>
 		<th field="group_name" sortable="true" width="50">Grup</th>
 		<th field="level_name" sortable="true" width="50">Level</th>
-		<th field="unit_kerja_E1" sortable="true" width="50">Unit Kerja Eselon 1</th>
-		<th field="unit_kerja_E2" sortable="true" width="50">Unit Kerja Eselon 2</th>
+		<th field="unit_kerja_E1" sortable="true" width="50">Unit Kerja Eselon I</th>
+		<th field="unit_kerja_E2" sortable="true" width="50">Unit Kerja Eselon II</th>
 	  </tr>
 	  </thead>  
 	</table>
@@ -312,13 +312,13 @@
 		  <?$this->user_model->getListGrup(null,$this->session->userdata('level'))?>
 		</div>
 		<div class="fitem" >
-		  <label style="width:120px;vertical-align:top">Unit Kerja Eselon 1:</label>
+		  <label style="width:120px;vertical-align:top">Unit Kerja Eselon I :</label>
 		  
 		  <?=$this->user_model->getListUnitKerja("E1")?>
 		  
 		</div>
 		<div class="fitem" id="divUnitKerja<?=$objectId;?>">
-		  <label style="width:120px;vertical-align:top">Unit Kerja Eselon 2:</label>
+		  <label style="width:120px;vertical-align:top">Unit Kerja Eselon II :</label>
 		  
 		  <?=$this->user_model->getListUnitKerja("E2")?>
 		  

@@ -62,7 +62,7 @@
 												{field:'tahun',title:'Tahun',width:100},
 												//{field:'kode_sasaran_e1',title:'Kode Sasaran',width:100},
 												//{field:'deskripsi_sasaran_e1',title:'Deskripsi Sasaran',width:100},
-												{field:'kode_sasaran_e2',title:'Kode Sasaran Eselon 2',width:100},
+												{field:'kode_sasaran_e2',title:'Kode Sasaran Eselon II',width:100},
 												{field:'deskripsi_sasaran_e2',title:'Deskripsi Sasaran',width:100},
 												{field:'log_status',title:'Status',width:100},
 												{field:'log_user',title:'User',width:100},
@@ -85,11 +85,11 @@
 											]]
 							break;
 						case "E1":	return 	[[
-												{field:'kode_e1',title:'Kode Eselon 1',width:100}, 
+												{field:'kode_e1',title:'Kode Eselon I',width:100}, 
 												{field:'tahun',title:'Tahun',width:100},  
 												{field:'kode_iku_e1',title:'Kode',width:100},  
 												{field:'satuan',title:'Satuan',width:100},
-												{field:'kode_e2',title:'Kode Eselon 2',width:100},
+												{field:'kode_e2',title:'Kode Eselon II',width:100},
 												{field:'log_status',title:'Status',width:100},
 												{field:'log_user',title:'User',width:100},
 												{field:'log_date',title:'Waktu',width:100}
@@ -100,8 +100,8 @@
 												{field:'kode_ikk',title:'Kode',width:100},  
 												{field:'deskripsi',title:'Deskripsi IKK',width:100},
 												{field:'satuan',title:'Satuan',width:100},
-												{field:'kode_iku_e1',title:'Kode IKU Eselon 1',width:100},
-												{field:'kode_e2',title:'Kode Eselon 2',width:100},
+												{field:'kode_iku_e1',title:'Kode IKU Eselon I',width:100},
+												{field:'kode_e2',title:'Kode Eselon II',width:100},
 												{field:'log_status',title:'Status',width:100},
 												{field:'log_user',title:'User',width:100},
 												{field:'log_date',title:'Waktu',width:100}
@@ -276,8 +276,8 @@
 						<td width="130px">
 							<select id="unit<?=$objectId?>" name="unit">
 								<option value="KL">Kementerian</option>
-								<option value="E1">Eselon 1</option>
-								<option value="E2">Eselon 2</option>
+								<option value="E1">Eselon I</option>
+								<option value="E2">Eselon II</option>
 							</select>
 						</td>
 						<td width="130px";>Unit Kerja Eselon II : </td>

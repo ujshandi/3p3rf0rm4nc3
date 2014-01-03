@@ -1,7 +1,7 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
-		
+			$('textarea').autosize();   
 			
 			$("#filter_tahun<?=$objectId;?>").change(function(){				
 				  getListSasaran<?=$objectId;?>($(this).val());
@@ -13,7 +13,7 @@
 				$("#divSasaranKL<?=$objectId?>").load(
 					base_url+"pengaturan/sasaran_eselon1/getListSasaranKL/"+"<?=$objectId;?>"+"/"+tahun,
 					function(){
-						$("textarea").autogrow();
+						$('textarea').autosize();   
 						if($("#drop<?=$objectId;?>").is(":visible")){
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						}

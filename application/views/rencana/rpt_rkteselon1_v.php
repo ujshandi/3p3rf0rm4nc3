@@ -242,7 +242,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Eselon 1 :</td>
+				<td>Eselon I :</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
 				</td>
@@ -280,7 +280,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Laporan Rencana Kinerja Tahunan Eselon 1" toolbar="#tb<?=$objectId;?>" fitColumns="false" singleSelect="true" rownumbers="false" pagination="true"  nowrap="false">
+	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Laporan Rencana Kinerja Tahunan Eselon I" toolbar="#tb<?=$objectId;?>" fitColumns="false" singleSelect="true" rownumbers="false" pagination="true"  nowrap="false">
 	  <thead>
 	  <tr>
 		

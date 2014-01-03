@@ -250,21 +250,21 @@
 				</td>
 			</tr>
 			<tr style="margin-bottom: 10px;">
-				<td width="70px">Bulan :</td>
+				<td width="120px">Bulan :</td>
 				<td align="left">
 			  <?= $this->utility->getBulan("","filbulan",true,$objectId)?>
 				</td>
 			</tr>
 			<? //if ($this->session->userdata('unit_kerja_e1')==-1){?>
 			<tr>
-				<td>Unit Kerja Eselon I&nbsp;</td>
+				<td>Unit Kerja Eselon I :</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>				
 				</td>
 			</tr>
 			<?//}?>
 			<tr>
-				<td>Unit Kerja Eselon II&nbsp;</td>
+				<td>Unit Kerja Eselon II :</td>
 				<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
 					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 					</span>

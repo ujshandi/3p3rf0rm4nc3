@@ -220,7 +220,7 @@
 							<?=$this->rseselon2_model->getListsatker($objectId)?>
 						</div>
 						<div class="fitem">
-							<label style="width:120px">Sasaran Eselon 2 :</label>
+							<label style="width:120px">Sasaran Eselon II :</label>
 							<?=$this->rseselon2_model->getListSasaranE2($objectId)?>
 						</div>
 						
