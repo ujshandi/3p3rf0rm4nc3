@@ -111,6 +111,30 @@ class Eselon1_model extends CI_Model
 		return ($rs>0);
 	}
 	
+	public function isSaveDelete($kode){	
+		
+		$this->db->where('kode_e1',$kode); //buat validasi		
+		$this->db->select('*');
+		$this->db->from('tbl_sasaran_eselon1');
+						
+		$query = $this->db->get();
+		$rs = $query->num_rows() ;		
+		$query->free_result();
+		$isSave = ($rs==0);
+		if ($isSave){
+			$this->db->flush_cache();
+			$this->db->where('kode_e1',$kode); //buat validasi		
+			$this->db->select('*');
+			$this->db->from('tbl_iku_eselon1');
+							
+			$query = $this->db->get();
+			$rs = $query->num_rows() ;		
+			$query->free_result();
+			$isSave = ($rs==0);
+		}
+		return $isSave;
+	}
+	
 	//insert data
 	public function InsertOnDb($data,& $error) {
 		//query insert data		
