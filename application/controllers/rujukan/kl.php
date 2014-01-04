@@ -83,11 +83,14 @@ class Kl extends CI_Controller {
 	
 	function delete($id=''){
 		if($id != ''){
-			$result = $this->kl_model->DeleteOnDb($id);
+			if ($this->kl_model->isSaveDelete($id))
+				$result = $this->kl_model->DeleteOnDb($id);
+			else
+				$result = false;
 			if ($result){
 				echo json_encode(array('success'=>true, 'haha'=>''));
 			} else {
-				echo json_encode(array('msg'=>'Some errors occured uy.', 'data'=> ''));
+				echo json_encode(array('msg'=>'Data tidak bisa dihapus karena sudah digunakan sebagai referensi data lainnya.', 'data'=> ''));
 			}
 		}
 	}

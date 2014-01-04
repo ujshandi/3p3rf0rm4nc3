@@ -8,7 +8,7 @@
 		}
 		
 	}
-	$("input[class='chkAutoTab']").live("click",function(){
+	$("input[class='chkAutoTab']").on("click",function(){
 		var b = $('.chkAutoTab');
 						//alert($b.filter(':checked').length);
 						var jmlCheck = b.filter(':checked').length;

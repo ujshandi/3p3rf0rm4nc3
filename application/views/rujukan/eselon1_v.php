@@ -89,6 +89,38 @@
 			}
 			//end saveData
 			
+			deleteData<?=$objectId;?> = function (){
+				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+				if(row){
+					if(confirm("Apakah yakin akan menghapus data '" + row.kode_e1 + "'?")){
+						var response = '';
+						$.ajax({ type: "GET",
+								 url: base_url+'rujukan/eselon1/delete/' + row.kode_e1 ,
+								 async: false,
+								 success : function(response)
+								 {
+									var response = eval('('+response+')');
+									if (response.success){
+										$.messager.show({
+											title: 'Success',
+											msg: 'Data Berhasil Dihapus'
+										});
+										
+										// reload and close tab
+										$('#dg<?=$objectId;?>').datagrid('reload');
+									} else {
+										$.messager.show({
+											title: 'Error',
+											msg: response.msg
+										});
+									}
+								 }
+						});
+					}
+				}
+			}
+			//end deleteData 
+			
 			setTimeout(function(){
 				$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>rujukan/eselon1/grid"});
 			},0);
@@ -186,6 +218,9 @@
 		<?}?>
 		<? if($this->sys_menu_model->cekAkses('EDIT;',3,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="editData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-edit" plain="true">Edit</a>
+		<?}?>
+		<? if($this->sys_menu_model->cekAkses('DELETE;',3,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+			<a href="#" onclick="deleteData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-remove" plain="true">Delete</a>
 		<?}?>
 		<? if($this->sys_menu_model->cekAkses('PRINT;',3,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="printData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-print" plain="true">Print</a>
