@@ -70,6 +70,8 @@ class rseselon2 extends CI_Controller {
 		$dt['kode_e2'] 		= $this->input->post("kode_e2", TRUE); 
 		$dt['kode_sasaran_e2'] = $this->input->post("kode_sasaran_e2", TRUE); 
 		$dt['detail'] 		= $this->input->post("detail", TRUE); 
+		$dt['action_plan'] = $this->input->post('action_plan');
+		$dt['keterangan'] = $this->input->post('keterangan');
 		
 		return $dt;
     }
@@ -155,6 +157,8 @@ class rseselon2 extends CI_Controller {
 		
 		$data['id_kinerja_e2'] = $this->input->post('id_kinerja_e2');
 		$data['realisasi'] = $this->input->post('realisasi');
+		$data['keterangan'] = $this->input->post('keterangan');
+		$data['action_plan'] = $this->input->post('action_plan');
 		
 		// validation
 		

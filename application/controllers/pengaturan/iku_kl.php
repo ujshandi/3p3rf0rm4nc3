@@ -50,7 +50,7 @@ class Iku_kl extends CI_Controller {
 		$data['kode_iku_kl'] = $this->input->post("kode_iku_kl", TRUE); //id
 		$data['deskripsi'] = $this->input->post("deskripsi", TRUE);
 		$data['satuan'] = $this->input->post("satuan", TRUE);
-		$data['kode_e1'] = $this->input->post("kode_e1", TRUE);
+		//$data['kode_e1'] = $this->input->post("kode_e1", TRUE);
 		$data['tahun'] = $this->input->post("tahun", TRUE);
 		$data['kode_sasaran_kl'] = $this->input->post("kode_sasaran_kl", TRUE);
 		
@@ -219,7 +219,7 @@ class Iku_kl extends CI_Controller {
 		for ($i=0;$i<count($pdfdata);$i++){
 			$this->our_pdf->setFont('arial','',8);	
 			//tambah group
-			if($file1 != '' && $file1 != '-1' && $file1 != null) {
+			/* if($file1 != '' && $file1 != '-1' && $file1 != null) {
 					$this->our_pdf->Row(array($pdfdata[$i][0],$pdfdata[$i][1],$pdfdata[$i][2],$pdfdata[$i][3],$pdfdata[$i][4])); 
 			}
 			else {
@@ -231,8 +231,8 @@ class Iku_kl extends CI_Controller {
 					$this->our_pdf->setFont('arial','',8);	
 					
 				}
-				$this->our_pdf->Row(array($pdfdata[$i][0],$pdfdata[$i][1],$pdfdata[$i][2],$pdfdata[$i][3],$pdfdata[$i][4])); 
-			}
+ */				$this->our_pdf->Row(array($pdfdata[$i][0],$pdfdata[$i][1],$pdfdata[$i][2],$pdfdata[$i][3],$pdfdata[$i][4])); 
+//			}
 			
 		}
 		$this->our_pdf->AliasNbPages();
@@ -372,7 +372,7 @@ class Iku_kl extends CI_Controller {
 						$data['kode_iku_kl'] 		= $this->excel->val($i, 3);
 						$data['deskripsi'] 			= $this->excel->val($i, 4);
 						$data['satuan'] 			= $this->excel->val($i, 5);
-						$data['kode_e1'] 			= $this->excel->val($i, 6);
+						//$data['kode_e1'] 			= $this->excel->val($i, 6);
 						
 						# proses
 						$result = $this->iku_kl_model->importData($data);

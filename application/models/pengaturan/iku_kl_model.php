@@ -27,9 +27,9 @@ class Iku_kl_model extends CI_Model
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
-			if($file1 != '' && $file1 != '-1' && $file1 != null) {
+			/* if($file1 != '' && $file1 != '-1' && $file1 != null) {
 				$this->db->where("tbl_eselon1.kode_e1",$file1);
-			}
+			} */
 			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("tbl_iku_kl.tahun",$filtahun);
 			}
@@ -38,13 +38,13 @@ class Iku_kl_model extends CI_Model
 			}
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			$this->db->select("tbl_iku_kl.tahun, tbl_iku_kl.kode_kl, tbl_iku_kl.kode_iku_kl, tbl_iku_kl.deskripsi, tbl_iku_kl.satuan, tbl_iku_kl.kode_e1, tbl_eselon1.nama_e1,tbl_iku_kl.kode_sasaran_kl,tbl_sasaran_kl.deskripsi as deskripsi_sasaran_kl",false);
+			$this->db->select("tbl_iku_kl.tahun, tbl_iku_kl.kode_kl, tbl_iku_kl.kode_iku_kl, tbl_iku_kl.deskripsi, tbl_iku_kl.satuan, tbl_iku_kl.kode_sasaran_kl,tbl_sasaran_kl.deskripsi as deskripsi_sasaran_kl",false);
 			$this->db->from('tbl_iku_kl');
-			$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_iku_kl.kode_e1','left' );
+			//$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_iku_kl.kode_e1','left' );
 			$this->db->join('tbl_sasaran_kl', 'tbl_sasaran_kl.kode_sasaran_kl = tbl_iku_kl.kode_sasaran_kl and tbl_iku_kl.tahun=tbl_sasaran_kl.tahun','left' );
 			//chan 
 			if ($purpose==2)  //buat pdf
-				$this->db->order_by("tbl_iku_kl.kode_e1 ASC,tbl_iku_kl.kode_iku_kl ASC");
+				$this->db->order_by("tbl_iku_kl.tahun,tbl_iku_kl.kode_iku_kl ASC");
 			else
 				$this->db->order_by("tbl_iku_kl.kode_kl ASC,tbl_iku_kl.kode_iku_kl ASC");
 			$query = $this->db->get();
@@ -59,8 +59,8 @@ class Iku_kl_model extends CI_Model
 				$response->rows[$i]['kode_iku_kl']=$row->kode_iku_kl;
 				$response->rows[$i]['deskripsi']=$row->deskripsi;
 				$response->rows[$i]['satuan']=$row->satuan;
-				$response->rows[$i]['kode_e1']=$row->kode_e1;
-				$response->rows[$i]['nama_e1']=$row->nama_e1;
+				//$response->rows[$i]['kode_e1']=$row->kode_e1;
+				//$response->rows[$i]['nama_e1']=$row->nama_e1;
 				$response->rows[$i]['tahun']=$row->tahun;
 				$response->rows[$i]['kode_sasaran_kl']=$row->kode_sasaran_kl;
 				$response->rows[$i]['deskripsi_sasaran_kl']=$row->deskripsi_sasaran_kl;
@@ -69,7 +69,7 @@ class Iku_kl_model extends CI_Model
 				// $row->keterangan = str_replace("<br>",", ",$response->rows[$i]['pejabat']);
 				// $row->indikator_kinerja=$response->rows[$i]['indikator_kinerja'];
 				unset($row->kode_kl);
-				unset($row->nama_e1);
+				//unset($row->nama_e1);
 				unset($row->kode_sasaran_kl);
 				unset($row->deskripsi_sasaran_kl);
 				//============================================================
@@ -78,7 +78,7 @@ class Iku_kl_model extends CI_Model
 				if($file1 != '' && $file1 != '-1' && $file1 != null) 
 					$pdfdata[] = array($no,$response->rows[$i]['tahun'],$response->rows[$i]['kode_iku_kl'],$response->rows[$i]['deskripsi'],$response->rows[$i]['satuan']);
 				else
-					$pdfdata[] = array($no,$response->rows[$i]['tahun'],$response->rows[$i]['kode_iku_kl'],$response->rows[$i]['deskripsi'],$response->rows[$i]['satuan'],$response->rows[$i]['kode_e1']);
+					$pdfdata[] = array($no,$response->rows[$i]['tahun'],$response->rows[$i]['kode_iku_kl'],$response->rows[$i]['deskripsi'],$response->rows[$i]['satuan']);
 					
 				//============================================================
 				$i++;
@@ -92,8 +92,8 @@ class Iku_kl_model extends CI_Model
 				$response->rows[$count]['kode_iku_kl']='';
 				$response->rows[$count]['deskripsi']='';
 				$response->rows[$count]['satuan']='';
-				$response->rows[$count]['kode_e1']='';
-				$response->rows[$count]['nama_e1']='';
+				//$response->rows[$count]['kode_e1']='';
+				//$response->rows[$count]['nama_e1']='';
 				$response->rows[$count]['tahun']='';
 				$response->rows[$count]['kode_sasaran_kl']='';
 				$response->rows[$count]['deskripsi_sasaran_kl']='';
@@ -107,7 +107,7 @@ class Iku_kl_model extends CI_Model
 		}
 		else if($purpose==3){//to excel
 			//tambahkan header kolom
-			$colHeaders = array("Tahun","Kode IKU","Deskripsi IKU","Satuan","Subsektor");		
+			$colHeaders = array("Tahun","Kode IKU","Deskripsi IKU","Satuan");		
 			//var_dump($query->result());die;
 			to_excel($query,"IKUKementerian",$colHeaders);
 		}
@@ -116,18 +116,19 @@ class Iku_kl_model extends CI_Model
 	
 	//jumlah data record buat paging
 	public function GetRecordCount($file1=null,$filtahun=null,$filkey=null){
-		if($file1 != '' && $file1 != '-1' && $file1 != null) {
+		/* if($file1 != '' && $file1 != '-1' && $file1 != null) {
 			$this->db->where("tbl_eselon1.kode_e1",$file1);
-		}
+		} */
 		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("tbl_iku_kl.tahun",$filtahun);
 			}
 		if($filkey != '' && $filkey != '-1' && $filkey != null) {
 			$this->db->like("deskripsi",$filkey);
 		}
-		$this->db->select("tbl_iku_kl.tahun, tbl_iku_kl.kode_kl, tbl_iku_kl.kode_iku_kl, tbl_iku_kl.deskripsi, tbl_iku_kl.satuan, tbl_iku_kl.kode_e1, tbl_eselon1.nama_e1",false);
+		$this->db->select("tbl_iku_kl.tahun, tbl_iku_kl.kode_kl, tbl_iku_kl.kode_iku_kl, tbl_iku_kl.deskripsi, tbl_iku_kl.satuan",false);
 		$this->db->from('tbl_iku_kl');
-		$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_iku_kl.kode_e1','left' );
+		$this->db->join('tbl_sasaran_kl', 'tbl_sasaran_kl.kode_sasaran_kl = tbl_iku_kl.kode_sasaran_kl and tbl_iku_kl.tahun=tbl_sasaran_kl.tahun','left' );
+		//$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_iku_kl.kode_e1','left' );
 		return $this->db->count_all_results();
 		$this->db->free_result();
 	}
@@ -169,7 +170,7 @@ class Iku_kl_model extends CI_Model
 		$this->db->set('deskripsi',$data['deskripsi']);
 		$this->db->set('satuan',$data['satuan']);
 		//$this->db->set('kode_e1',$data['kode_e1']);
-		$this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($data['kode_e1']=="-1")?null:$data['kode_e1']));
+		//$this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($data['kode_e1']=="-1")?null:$data['kode_e1']));
 		$this->db->set('tahun',$data['tahun']);
 		$this->db->set('kode_sasaran_kl',$data['kode_sasaran_kl']);
 		$this->db->set('log_insert', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
@@ -183,7 +184,7 @@ class Iku_kl_model extends CI_Model
 		$this->db->set('deskripsi',$data['deskripsi']);
 		$this->db->set('satuan',$data['satuan']);
 		//$this->db->set('kode_e1',$data['kode_e1']);
-		$this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($data['kode_e1']=="-1")?null:$data['kode_e1']));
+		//$this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($data['kode_e1']=="-1")?null:$data['kode_e1']));
 		$this->db->set('tahun',$data['tahun']);
 		$this->db->set('kode_sasaran_kl',$data['kode_sasaran_kl']);
 		$this->db->set('log',				'INSERT;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
@@ -214,7 +215,7 @@ class Iku_kl_model extends CI_Model
 		$this->db->set('satuan',$data['satuan']);
 		$this->db->set('kode_sasaran_kl',$data['kode_sasaran_kl']);
 //		$this->db->set('kode_e1',$data['kode_e1']);
-$this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($data['kode_e1']=="-1")?null:$data['kode_e1']));
+//$this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($data['kode_e1']=="-1")?null:$data['kode_e1']));
 		$this->db->set('tahun',$data['tahun']);
 		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		
@@ -229,7 +230,7 @@ $this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($da
 		$this->db->set('satuan',$data['satuan']);
 		$this->db->set('kode_sasaran_kl',$data['kode_sasaran_kl']);
 		//$this->db->set('kode_e1',$data['kode_e1']);
-		$this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($data['kode_e1']=="-1")?null:$data['kode_e1']));
+	//	$this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($data['kode_e1']=="-1")?null:$data['kode_e1']));
 		$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->insert('tbl_iku_kl_log');
 		
@@ -361,7 +362,7 @@ $this->db->set('kode_e1',(($data['kode_e1']=="")||($data['kode_e1']==null)||($da
 		$this->db->set('kode_iku_kl',		$data['kode_iku_kl']);		
 		$this->db->set('deskripsi',			$data['deskripsi']);		
 		$this->db->set('satuan',			$data['satuan']);		
-		$this->db->set('kode_e1',			$data['kode_e1']);		
+		//$this->db->set('kode_e1',			$data['kode_e1']);		
 		
 		$result = $this->db->insert('tbl_iku_kl');
 		

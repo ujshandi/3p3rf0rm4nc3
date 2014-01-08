@@ -86,7 +86,7 @@ class Eselon1_model extends CI_Model
 		}
 		else if($purpose==3){//to excel
 			//tambahkan header kolom
-			$colHeaders = array("Kode E1","Kode KL","Nama","Singkatan","Nama Dirjen","NIP","Pangkat","Golongan");
+			$colHeaders = array("Kode E1","Kode KL","Nama","Singkatan","Nama Pimpinan","NIP","Pangkat","Golongan");
 		//	$query =$this->db->list_fields('tbl_eselon1');
 			//$query->list_fields();
 		//	var_dump($query);die;
