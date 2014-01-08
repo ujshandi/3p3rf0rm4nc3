@@ -60,9 +60,9 @@ class Eselon2_model extends CI_Model
 				unset($row->nama_e1);
 				if($file1 != '' && $file1 != '-1' && $file1 != null){
 					unset($row->kode_e1);
-					$colHeaders = array("Kode E2","Nama","Singkatan","Nama Direktur","NIP","Pangkat","Golongan");
+					$colHeaders = array("Kode E2","Nama","Singkatan","Nama Pimpinan","NIP","Pangkat","Golongan");
 				}
-				else {$colHeaders = array("Kode E2","Kode E1","Nama","Singkatan","Nama Direktur","NIP","Pangkat","Golongan");}
+				else {$colHeaders = array("Kode E2","Kode E1","Nama","Singkatan","Nama Pimpinan","NIP","Pangkat","Golongan");}
 					
 				//===========================================================
 					

@@ -92,7 +92,7 @@
 			getUrl<?=$objectId;?> = function (tipe){
 				var file1 = $("#filter_e1<?=$objectId;?>").val();
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
-				var filkey = $("#key<?=$objectId;?>").val();
+				var filkey = '-1';//$("#key<?=$objectId;?>").val();
 				
 				if (file1 == null) file1 = "-1";
 				if (filtahun == null) filtahun = "-1";
@@ -120,9 +120,9 @@
 						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 						
 						switch(field){
-							case "kode_e1":
+							/* case "kode_e1":
 								showPopup('#popdesc<?=$objectId?>', row.nama_e1);
-								break;
+								break; */
 							case "kode_sasaran_kl":
 								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
 								break;
@@ -371,10 +371,10 @@
 						<=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
 					</td>
 				</tr> -->
-				<tr>
+				<!--<tr>
 					<td>Kata Kunci :</td>
 					<td><input id="key<?=$objectId;?>" name="key<?=$objectId;?>" type="text" onkeypress="submitEnter<?=$objectId;?>(event)"/></td>
-				</tr>
+				</tr>-->
 				<tr>
 					<td align="right" colspan="2" valign="top">
 						<a href="#" class="easyui-linkbutton" onclick="clearFilter<?=$objectId;?>();" iconCls="icon-reset">Reset</a>
@@ -395,9 +395,9 @@
 			<? if($this->sys_menu_model->cekAkses('EDIT;',34,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="editData<?=$objectId;?>(true);" class="easyui-linkbutton" iconCls="icon-edit" plain="true">Edit</a>
 			<?}?>
-			<? if($this->sys_menu_model->cekAkses('VIEW;',34,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+			<!--<? if($this->sys_menu_model->cekAkses('VIEW;',34,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="editData<?=$objectId;?>(false);" class="easyui-linkbutton" iconCls="icon-view" plain="true">View</a>
-			<?}?>
+			<?}?>-->
 			<? if($this->sys_menu_model->cekAkses('DELETE;',34,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="deleteData<?=$objectId;?>(false);" class="easyui-linkbutton" iconCls="icon-remove" plain="true">Delete</a>
 			<?}?>
@@ -410,7 +410,7 @@
 			<? if($this->sys_menu_model->cekAkses('IMPORT;',34,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
 			<?}?>
-			<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>
+		<!--	<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a> -->
 		</div>
 	</div>
 	
@@ -424,8 +424,8 @@
 			<th field="kode_iku_kl" sortable="true" width="30">Kode</th>
 			<th field="deskripsi" sortable="true" width="140">Deskripsi IKU</th>
 			<th field="satuan" sortable="true" width="35">Satuan</th>
-			<th field="kode_e1" sortable="true" width="20" <?=($this->session->userdata('unit_kerja_e1')=='-1'?'hidden="true"':'hidden="true"')?>>Subsektor</th>
-			<th field="nama_e1" sortable="true" hidden="true" >nama</th>
+			<!--<th field="	" sortable="true" width="20" <?=($this->session->userdata('unit_kerja_e1')=='-1'?'hidden="true"':'hidden="true"')?>>Subsektor</th> 
+			<th field="nama_e1" sortable="true" hidden="true" >nama</th>-->
 			
 			<th field="deskripsi_sasaran_kl" sortable="true" hidden="true" >sasaran kl</th>
 	  	</tr>

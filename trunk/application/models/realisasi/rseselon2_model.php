@@ -42,7 +42,7 @@ class rseselon2_model extends CI_Model
 			
 			$this->db->order_by($sort." ".$order );
 			$this->db->limit($limit,$offset);
-			$this->db->select("tbl_kinerja_eselon2.id_kinerja_e2, tbl_kinerja_eselon2.tahun, tbl_kinerja_eselon2.triwulan, tbl_kinerja_eselon2.kode_e2, tbl_kinerja_eselon2.kode_sasaran_e2, tbl_kinerja_eselon2.kode_ikk, tbl_pk_eselon2.penetapan, tbl_ikk.satuan, tbl_kinerja_eselon2.realisasi, tbl_eselon2.nama_e2, tbl_sasaran_eselon2.deskripsi AS deskripsi_sasaran_e2, tbl_ikk.deskripsi AS deskripsi_ikk");
+			$this->db->select("tbl_kinerja_eselon2.id_kinerja_e2, tbl_kinerja_eselon2.tahun, tbl_kinerja_eselon2.triwulan, tbl_kinerja_eselon2.kode_e2, tbl_kinerja_eselon2.kode_sasaran_e2, tbl_kinerja_eselon2.kode_ikk, tbl_pk_eselon2.penetapan, tbl_ikk.satuan, tbl_kinerja_eselon2.realisasi, tbl_kinerja_eselon2.keterangan,tbl_kinerja_eselon2.action_plan, tbl_eselon2.nama_e2, tbl_sasaran_eselon2.deskripsi AS deskripsi_sasaran_e2, tbl_ikk.deskripsi AS deskripsi_ikk");
 			$this->db->from('tbl_kinerja_eselon2');
 			$this->db->join('tbl_pk_eselon2', 'tbl_kinerja_eselon2.kode_ikk = tbl_pk_eselon2.kode_ikk and tbl_kinerja_eselon2.tahun = tbl_pk_eselon2.tahun');
 			$this->db->join('tbl_ikk', 'tbl_ikk.kode_ikk = tbl_kinerja_eselon2.kode_ikk and tbl_ikk.tahun = tbl_kinerja_eselon2.tahun');
@@ -64,6 +64,8 @@ class rseselon2_model extends CI_Model
 				$response->rows[$i]['deskripsi_sasaran_e2']=$row->deskripsi_sasaran_e2;
 				$response->rows[$i]['kode_ikk']=$row->kode_ikk;
 				$response->rows[$i]['deskripsi_ikk']=$row->deskripsi_ikk;
+				$response->rows[$i]['keterangan']=$row->keterangan;
+				$response->rows[$i]['action_plan']=$row->action_plan;
 /*
 				if(is_numeric($row->penetapan)){
 					if(strpos($row->penetapan, '.') || strpos($row->penetapan, ',')){
@@ -121,6 +123,8 @@ class rseselon2_model extends CI_Model
 				$response->rows[$count]['target']='';
 				$response->rows[$count]['satuan']='';
 				$response->rows[$count]['realisasi']='';
+				$response->rows[$count]['keterangan']='';
+				$response->rows[$count]['action_plan']='';
 				
 		}
 		
@@ -351,14 +355,22 @@ class rseselon2_model extends CI_Model
 								  <label style="text-align:right; width:10px">('.round($capaian[1], 2).'%)</label>
 								</div>
 								<div class="fitem">
-								  <label style="width:150px">Realisasi Bulan Ini :</label>
+								  <label style="width:150px">Capaian Bulan Ini :</label>
 								  <input name=detail['.$i.'][realisasi] value="" size="15">
+								</div>
+								<div class="fitem">
+								  <label style="width:150px">Keterangan :</label>
+								  <textarea name=detail['.$i.'][keterangan] cols="60"></textarea>
+								</div>
+								<div class="fitem">
+								  <label style="width:150px">Rencana Aksi :</label>
+								  <textarea name=detail['.$i.'][action_plan] cols="60"></textarea>
 								</div>';
-			//if($i == $akhir){
+			if($i == $akhir){
 				$out .='<br><div class="fitem">';
 				$out .= '<label style="width:150px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Simpan" />';
 				$out .='</div>';
-			//}
+			}
 			
 			//$out .=  $this->getPendukung($tahun, $kode_e2, $kode_sasaran_e2, $row[$i]->kode_ikk);
 			
@@ -370,7 +382,7 @@ class rseselon2_model extends CI_Model
 	
 	private function getCapaian($tahun, $triwulan, $kode_sasaran_e2, $kode_ikk){
 		$q = '';
-		$q .= ' SELECT tbl_kinerja_eselon2.id_kinerja_e2, tbl_kinerja_eselon2.tahun, tbl_kinerja_eselon2.triwulan, tbl_kinerja_eselon2.kode_e2, tbl_kinerja_eselon2.kode_sasaran_e2, tbl_kinerja_eselon2.kode_ikk, tbl_kinerja_eselon2.realisasi, tbl_pk_eselon2.penetapan';
+		$q .= ' SELECT tbl_kinerja_eselon2.id_kinerja_e2, tbl_kinerja_eselon2.tahun, tbl_kinerja_eselon2.triwulan, tbl_kinerja_eselon2.kode_e2, tbl_kinerja_eselon2.kode_sasaran_e2, tbl_kinerja_eselon2.kode_ikk, tbl_kinerja_eselon2.realisasi,tbl_kinerja_eselon2.keterangan,tbl_kinerja_eselon2.action_plan, tbl_pk_eselon2.penetapan';
 		$q .= ' FROM `tbl_kinerja_eselon2` ';
 		$q .= ' left join tbl_pk_eselon2 on tbl_kinerja_eselon2.kode_sasaran_e2 = tbl_pk_eselon2.kode_sasaran_e2 and tbl_kinerja_eselon2.kode_ikk = tbl_pk_eselon2.kode_ikk and tbl_kinerja_eselon2.tahun = tbl_pk_eselon2.tahun';
 		$q .= " WHERE tbl_kinerja_eselon2.tahun = '$tahun' AND";
@@ -485,6 +497,8 @@ class rseselon2_model extends CI_Model
 			// $this->db->set('target',$data['target']);
 			// $this->db->set('satuan',$data['satuan']);
 			$this->db->set('realisasi',$dt['realisasi']);
+			$this->db->set('keterangan',$dt['keterangan']);
+			$this->db->set('action_plan',$dt['action_plan']);
 			$this->db->set('log_insert', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			
 			$result = $this->db->insert('tbl_kinerja_eselon2');
@@ -497,6 +511,8 @@ class rseselon2_model extends CI_Model
 			$this->db->set('kode_sasaran_e2',$data['kode_sasaran_e2']);
 			$this->db->set('kode_ikk',$dt['kode_ikk']);
 			$this->db->set('realisasi',$dt['realisasi']);
+			$this->db->set('keterangan',$dt['keterangan']);
+			$this->db->set('action_plan',$dt['action_plan']);
 			$this->db->set('log',				'INSERT;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_kinerja_eselon2_log');
 			
@@ -517,6 +533,8 @@ class rseselon2_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->where('id_kinerja_e2', $data['id_kinerja_e2']);
 		$this->db->set('realisasi', $data['realisasi']);
+		$this->db->set('keterangan', $data['keterangan']);
+		$this->db->set('action_plan', $data['action_plan']);
 		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->update('tbl_kinerja_eselon2', $data);
 		
@@ -534,6 +552,8 @@ class rseselon2_model extends CI_Model
 			$this->db->set('kode_sasaran_e2',	$qt->row()->kode_sasaran_e2);
 			$this->db->set('kode_ikk',			$qt->row()->kode_ikk);
 			$this->db->set('realisasi',			$qt->row()->realisasi);
+			$this->db->set('keterangan',			$qt->row()->keterangan);
+			$this->db->set('action_plan',			$qt->row()->action_plan);
 			$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_kinerja_eselon2_log');
 		
@@ -568,6 +588,8 @@ class rseselon2_model extends CI_Model
 			$this->db->set('kode_sasaran_e2',	$qt->row()->kode_sasaran_e2);
 			$this->db->set('kode_ikk',			$qt->row()->kode_ikk);
 			$this->db->set('realisasi',			$qt->row()->realisasi);
+			$this->db->set('keterangan',			$qt->row()->keterangan);
+			$this->db->set('action_plan',			$qt->row()->action_plan);
 			$this->db->set('log',				'DELETE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_kinerja_eselon2_log');
 		

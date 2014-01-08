@@ -38,12 +38,12 @@ class Iku_e1_model extends CI_Model
 			if($filkey != '' && $filkey != '-1' && $filkey != null) {
 				$this->db->like("a.deskripsi",$filkey);
 			}
-			$this->db->select("a.tahun,a.kode_e1, a.kode_iku_e1, a.deskripsi, a.satuan, a.kode_iku_kl, a.kode_e2,b.deskripsi as deskripsi_ikukl, c.nama_e1, b.deskripsi AS kl_deskripsi,a.kode_sasaran_e1,s.deskripsi as deskripsi_sasaran_e1",false);
+			$this->db->select("a.tahun,a.kode_e1, a.kode_iku_e1, a.deskripsi, a.satuan, a.kode_iku_kl, b.deskripsi as deskripsi_ikukl, c.nama_e1, b.deskripsi AS kl_deskripsi,a.kode_sasaran_e1,s.deskripsi as deskripsi_sasaran_e1",false);
 			$this->db->from('tbl_iku_eselon1 a left join tbl_iku_kl b on a.tahun=b.tahun and a.kode_iku_kl=b.kode_iku_kl',false);
 			$this->db->join('tbl_eselon1 c', 'c.kode_e1 = a.kode_e1');
 			$this->db->join('tbl_sasaran_eselon1 s', 's.kode_sasaran_e1 = a.kode_sasaran_e1 and s.tahun=a.tahun','left' );			
 	//bug		$this->db->join('tbl_iku_kl d', 'd.kode_iku_kl = a.kode_iku_kl','left' );			
-			$this->db->order_by("a.kode_e1 ASC, a.kode_iku_e1 ASC");
+			$this->db->order_by("a.tahun,a.kode_e1 ASC, a.kode_iku_e1 ASC");
 			$query = $this->db->get();
 			
 			$i=0;
@@ -54,7 +54,7 @@ class Iku_e1_model extends CI_Model
 				$response->rows[$i]['no']= $no;
 				$response->rows[$i]['kode_e1']=$row->kode_e1;
 				$response->rows[$i]['nama_e1']=$row->nama_e1;
-				$response->rows[$i]['kode_e2']=$row->kode_e2;
+				//$response->rows[$i]['kode_e2']=$row->kode_e2;
 				$response->rows[$i]['kode_iku_e1']=$row->kode_iku_e1;
 				$response->rows[$i]['deskripsi']=$row->deskripsi;
 				$response->rows[$i]['deskripsi_ikukl']=$row->deskripsi_ikukl;
@@ -68,7 +68,7 @@ class Iku_e1_model extends CI_Model
 				//utk kepentingan export excel ==========================
 				// $row->keterangan = str_replace("<br>",", ",$response->rows[$i]['pejabat']);
 				// $row->indikator_kinerja=$response->rows[$i]['indikator_kinerja'];
-				unset($row->kode_e2);
+			//	unset($row->kode_e2);
 				unset($row->deskripsi_ikukl);
 				unset($row->nama_e1);
 				unset($row->kl_deskripsi);
@@ -92,7 +92,7 @@ class Iku_e1_model extends CI_Model
 				$response->rows[$count]['no']= '';
 				$response->rows[$count]['kode_e1']='';
 				$response->rows[$count]['nama_e1']='';
-				$response->rows[$count]['kode_e2']='';
+				//$response->rows[$count]['kode_e2']='';
 				$response->rows[$count]['kode_iku_e1']='';
 				$response->rows[$count]['deskripsi']='';
 				$response->rows[$count]['satuan']='';
@@ -129,7 +129,7 @@ class Iku_e1_model extends CI_Model
 		if($filkey != '' && $filkey != '-1' && $filkey != null) {
 			$this->db->like("a.deskripsi",$filkey);
 		}
-		//$this->db->select("a.tahun,a.kode_e1, a.kode_iku_e1, a.deskripsi, a.satuan, a.kode_iku_kl, a.kode_e2,b.deskripsi as deskripsi_ikukl, b.nama_e1, c.deskripsi AS kl_deskripsi",false);
+		//$this->db->select("a.tahun,a.kode_e1, a.kode_iku_e1, a.deskripsi, a.satuan, a.kode_iku_kl,b.deskripsi as deskripsi_ikukl, b.nama_e1, c.deskripsi AS kl_deskripsi",false);
 		$this->db->from('tbl_iku_eselon1 a left join tbl_iku_kl b on a.tahun=b.tahun and a.kode_iku_kl=b.kode_iku_kl',false);
 		$this->db->join('tbl_eselon1 c', 'c.kode_e1 = a.kode_e1');
 		//bug $this->db->join('tbl_iku_kl d', 'd.kode_iku_kl = a.kode_iku_kl','left' );			
@@ -170,7 +170,7 @@ class Iku_e1_model extends CI_Model
 	public function InsertOnDb($data,& $error) {
 		//query insert data		
 		$this->db->set('kode_e1',$data['kode_e1']);
-		$this->db->set('kode_e2',$data['kode_e2']);
+		//$this->db->set('kode_e2',$data['kode_e2']);
 		//$this->db->set('kode_iku_kl',$data['kode_iku_kl']);
 		$this->db->set('kode_iku_kl',(($data['kode_iku_kl']=="")||($data['kode_iku_kl']==null)||($data['kode_iku_kl']=="-1")?null:$data['kode_iku_kl']));
 		$this->db->set('kode_iku_e1',$data['kode_iku_e1']);
@@ -185,7 +185,7 @@ class Iku_e1_model extends CI_Model
 			# insert to log
 			$this->db->flush_cache();
 			$this->db->set('kode_e1',$data['kode_e1']);
-			$this->db->set('kode_e2',$data['kode_e2']);
+			//$this->db->set('kode_e2',$data['kode_e2']);
 			//$this->db->set('kode_iku_kl',$data['kode_iku_kl']);
 			$this->db->set('kode_iku_kl',(($data['kode_iku_kl']=="")||($data['kode_iku_kl']==null)||($data['kode_iku_kl']=="-1")?null:$data['kode_iku_kl']));
 			$this->db->set('kode_iku_e1',$data['kode_iku_e1']);
@@ -223,7 +223,7 @@ class Iku_e1_model extends CI_Model
 		
 		$this->db->set('tahun',$data['tahun']);
 		$this->db->set('kode_e1',$data['kode_e1']);
-		$this->db->set('kode_e2',$data['kode_e2']);
+		//$this->db->set('kode_e2',$data['kode_e2']);
 	$this->db->set('kode_iku_e1',$data['kode_iku_e1']);
 		//$this->db->set('kode_iku_kl',$data['kode_iku_kl']);
 		$this->db->set('kode_iku_kl',(($data['kode_iku_kl']=="")||($data['kode_iku_kl']==null)||($data['kode_iku_kl']=="-1")?null:$data['kode_iku_kl']));
@@ -241,7 +241,7 @@ class Iku_e1_model extends CI_Model
 		$this->db->set('kode_iku_e1',$kode);
 		$this->db->set('tahun',$data['tahun']);
 		$this->db->set('kode_e1',$data['kode_e1']);
-		$this->db->set('kode_e2',$data['kode_e2']);
+		//$this->db->set('kode_e2',$data['kode_e2']);
 		$this->db->set('kode_iku_kl',(($data['kode_iku_kl']=="")||($data['kode_iku_kl']==null)||($data['kode_iku_kl']=="-1")?null:$data['kode_iku_kl']));
 		$this->db->set('deskripsi',$data['deskripsi']);
 		$this->db->set('satuan',$data['satuan']);
@@ -381,7 +381,7 @@ class Iku_e1_model extends CI_Model
 		$this->db->set('kode_iku_kl',		$data['kode_iku_kl']);		
 		$this->db->set('deskripsi',			$data['deskripsi']);		
 		$this->db->set('satuan',			$data['satuan']);		
-		$this->db->set('kode_e2',			$data['kode_e2']);		
+		//$this->db->set('kode_e2',			$data['kode_e2']);		
 		//var_dump($data['kode_e2']);die;
 		$result = $this->db->insert('tbl_iku_eselon1');
 		

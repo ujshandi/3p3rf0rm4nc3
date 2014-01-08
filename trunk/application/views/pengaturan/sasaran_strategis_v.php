@@ -138,7 +138,8 @@
 			//tipe 1=grid, 2=pdf, 3=excel
 			getUrl<?=$objectId;?> = function (tipe){
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
-				var filkey = $("#key<?=$objectId;?>").val();
+				var filkey = '-1';//$("#key<?=$objectId;?>").val();
+				
 				if (tipe==1){
 					return "<?=base_url()?>pengaturan/sasaran_strategis/grid/"+filtahun+"/"+filkey;
 				}
@@ -292,10 +293,10 @@
 						<td width="90px">Tahun :</td>
 						<td><?=$this->sasaran_kl_model->getListFilterTahun($objectId);?></span></td>
 					</tr>
-					<tr>
+					<!--<tr>
 						<td>Kata Kunci :</td>
 						<td><input id="key<?=$objectId;?>" name="key<?=$objectId;?>" type="text" onkeypress="submitEnter<?=$objectId;?>(event)"/></td>
-					</tr>
+					</tr> -->
 					<tr>
 						<td>&nbsp;</td>
 					</tr>
@@ -318,9 +319,9 @@
 			<? if($this->sys_menu_model->cekAkses('EDIT;',31,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="editData<?=$objectId;?>(true);" class="easyui-linkbutton" iconCls="icon-edit" plain="true">Edit</a>
 			<?}?>
-			<? if($this->sys_menu_model->cekAkses('VIEW;',31,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+			<!--<? if($this->sys_menu_model->cekAkses('VIEW;',31,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="editData<?=$objectId;?>(false);" class="easyui-linkbutton" iconCls="icon-view" plain="true">View</a>
-			<?}?>
+			<?}?>-->
 			<? if($this->sys_menu_model->cekAkses('DELETE;',31,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="deleteData<?=$objectId;?>(false);" class="easyui-linkbutton" iconCls="icon-remove" plain="true">Delete</a>
 			<?}?>
@@ -333,7 +334,7 @@
 			<? if($this->sys_menu_model->cekAkses('IMPORT;',31,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
 			<?}?>
-			<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>
+		<!--	<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>-->
 		</div>
 	</div>
 	

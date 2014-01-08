@@ -42,7 +42,7 @@ class Iku_e1 extends CI_Controller {
 			$data['kode_e1'] = $this->input->post("kode_e1", TRUE); //id
 		else 
 			$data['kode_e1'] = $this->session->userdata('unit_kerja_e1');
-		$data['kode_e2'] = $this->input->post("kode_e2", TRUE);
+		//$data['kode_e2'] = $this->input->post("kode_e2", TRUE);
 		$data['kode_iku_kl'] = $this->input->post("kode_iku_kl", TRUE); //id
 		$data['kode_iku_e1'] = $this->input->post("kode_iku_e1", TRUE); //id
 		$data['deskripsi'] = $this->input->post("deskripsi", TRUE);
@@ -380,7 +380,7 @@ class Iku_e1 extends CI_Controller {
 						$data['kode_iku_kl'] 		= $this->excel->val($i, 4);
 						$data['deskripsi'] 			= $this->excel->val($i, 5);
 						$data['satuan'] 			= $this->excel->val($i, 6);
-						$data['kode_e2'] 			= $this->excel->val($i, 7);
+						//$data['kode_e2'] 			= $this->excel->val($i, 7);
 						
 						# proses
 						$result = $this->iku_e1_model->importData($data);
