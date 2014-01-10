@@ -316,7 +316,7 @@ class pengukuraneselon1_model extends CI_Model
 								'.$realisasi[1].'&nbsp;%
 							</div>
 							<div class="fitem">
-								<label style="width:170px">Opini :</label>
+								<label style="width:170px">Analisis :</label>
 								<textarea name="detail['.$i.'][opini]" cols="85" class="easyui-validatebox" ></textarea>
 							</div>
 							<div class="fitem">
@@ -327,7 +327,7 @@ class pengukuraneselon1_model extends CI_Model
 									
 				//if($i == $akhir){
 					$out .='<br><div class="fitem">';
-					$out .= '<label style="width:170px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Simpan" />';
+					$out .= '<label style="width:170px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Save" /><label style="width:170px"></label><input type="button" onclick="cancel'.$objectId.'()" value="Cancel" />';
 					$out .='</div>';
 				//}
 				

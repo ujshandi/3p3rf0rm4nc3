@@ -35,7 +35,12 @@
 			closeView<?=$objectId;?>=function(){
 				// reload and close tab
 				$('#dg<?=$objectId;?>').datagrid('reload');
-				$('#tt').tabs('close', 'View Capaian Kinerja Eselon I');
+				
+				<?if($editMode=="true"){?>
+					$('#tt').tabs('close', 'Edit Capaian Kinerja Eselon I');
+					<?}{?>
+						$('#tt').tabs('close', 'View Capaian Kinerja Eselon I');
+					<?}?>
 			}
 		});
 			//end saveData
@@ -128,7 +133,8 @@
 						<br>
 						<!------------Edit View-->
 						<?if($editMode=="true"){?>
-							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Simpan</a>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Save</a>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="closeView<?=$objectId;?>()">Cancel</a>
 						<?}else{?>
 							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="closeView<?=$objectId;?>()">Close</a>
 						<?}?>

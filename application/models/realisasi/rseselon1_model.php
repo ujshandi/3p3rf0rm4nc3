@@ -154,10 +154,10 @@ class rseselon1_model extends CI_Model
 			}
 		$this->db->select("tbl_kinerja_eselon1.id_kinerja_e1, tbl_kinerja_eselon1.tahun, tbl_kinerja_eselon1.triwulan, tbl_kinerja_eselon1.kode_e1,tbl_kinerja_eselon1.kode_sasaran_e1,tbl_kinerja_eselon1.kode_iku_e1,tbl_iku_eselon1.satuan,tbl_pk_eselon1.penetapan,tbl_kinerja_eselon1.realisasi, tbl_eselon1.nama_e1, tbl_sasaran_eselon1.deskripsi AS deskripsi_sasaran_e1, tbl_iku_eselon1.deskripsi AS deskripsi_iku_e1");
 		$this->db->from('tbl_pk_eselon1');
-		$this->db->join('tbl_kinerja_eselon1', 'tbl_kinerja_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1');
-		$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_kinerja_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_kinerja_eselon1.tahun');
-		$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_kinerja_eselon1.kode_sasaran_e1 ');
-		$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_kinerja_eselon1.kode_e1 ');
+			$this->db->join('tbl_kinerja_eselon1', 'tbl_kinerja_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_kinerja_eselon1.tahun = tbl_pk_eselon1.tahun');
+			$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_kinerja_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_kinerja_eselon1.tahun');
+			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_kinerja_eselon1.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_kinerja_eselon1.tahun');
+			$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_kinerja_eselon1.kode_e1 ');
 		
 		return $this->db->count_all_results();
 		$this->db->free_result();
@@ -334,7 +334,7 @@ class rseselon1_model extends CI_Model
 								  <label style="text-align:right; width:10px">('.$this->utility->cekNumericFmt(round($capaian[1], 2)).'%)</label>
 								</div>
 								<div class="fitem">
-								  <label style="width:150px">Capaian Bulan Ini :</label>
+								  <label style="width:150px">Capaian s.d Bulan Ini :</label>
 								  <input name=detail['.$i.'][realisasi] value="" size="15">
 								</div>
 								<div class="fitem">
@@ -352,11 +352,16 @@ class rseselon1_model extends CI_Model
 			// dibuka dl request p.Toto 2013.08.16
 			if($i == $akhir){
 				$out .='<br><div class="fitem">';
-				$out .= '<label style="width:150px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Simpan" />';
+				$out .= '<label style="width:150px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Save" /><input type="button" onclick="cancel'.$objectId.'()" value="Cancel" />';
+				$out .='</div>';
+			}else{
+				$out .='<br><div class="fitem">';
+				$out .= '<label style="width:170px"></label><input type="button" onclick="cancel'.$objectId.'()" value="Cancel" />';
 				$out .='</div>';
 			}
 			
-		//ditutup coz data eselon 2 semua di hide	$out .=  $this->getPendukung($tahun, $triwulan, $kode_sasaran_e1, $row[$i]->kode_iku_e1);
+		//ditutup coz data eselon 2 semua di hide	dibuka lagi 2014.01.10
+		$out .=  $this->getPendukung($tahun, $triwulan, $kode_sasaran_e1, $row[$i]->kode_iku_e1);
 			
 			$out .=				'</fieldset>';
 		}

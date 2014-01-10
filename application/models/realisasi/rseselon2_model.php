@@ -148,19 +148,19 @@ class rseselon2_model extends CI_Model
 		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("tbl_pk_eselon2.tahun",$filtahun);
 			}
-		if($file1 != '' && $file1 != '-1' && $file1 != null) {
-			$this->db->where("tbl_eselon2.kode_e1",$file1);
-		}
-		if($file2 != '' && $file2 != '-1' && $file2 != null) {
-			$this->db->where("tbl_pk_eselon2.kode_e2",$file2);
-		}
-		if($filbulan != '' && $filbulan != '-1' && $filbulan != null) {
-			$this->db->where("tbl_kinerja_eselon2.triwulan",$filbulan);
-		}
+			if($filbulan != '' && $filbulan != '-1' && $filbulan != null) {
+				$this->db->where("tbl_kinerja_eselon2.triwulan",$filbulan);
+			}
+			if($file1 != '' && $file1 != '-1' && $file1 != null) {
+				$this->db->where("tbl_eselon2.kode_e1",$file1);
+			}
+			if($file2 != '' && $file2 != '-1' && $file2 != null) {
+				$this->db->where("tbl_kinerja_eselon2.kode_e2",$file2);
+			}
 		
-		$this->db->select("tbl_kinerja_eselon2.id_kinerja_e2, tbl_kinerja_eselon2.tahun, tbl_kinerja_eselon2.triwulan, tbl_kinerja_eselon2.kode_e2, tbl_kinerja_eselon2.kode_sasaran_e2, tbl_kinerja_eselon2.kode_ikk, tbl_pk_eselon2.penetapan, tbl_ikk.satuan, tbl_kinerja_eselon2.realisasi, tbl_eselon2.nama_e2, tbl_sasaran_eselon2.deskripsi AS deskripsi_sasaran_e2, tbl_ikk.deskripsi AS deskripsi_ikk");
+		$this->db->select("tbl_kinerja_eselon2.id_kinerja_e2, tbl_kinerja_eselon2.tahun, tbl_kinerja_eselon2.triwulan, tbl_kinerja_eselon2.kode_e2, tbl_kinerja_eselon2.kode_sasaran_e2, tbl_kinerja_eselon2.kode_ikk, tbl_pk_eselon2.penetapan, tbl_ikk.satuan, tbl_kinerja_eselon2.realisasi, tbl_eselon2.nama_e2, tbl_sasaran_eselon2.deskripsi AS deskripsi_sasaran_e2, tbl_ikk.deskripsi AS deskripsi_ikk");			
 			$this->db->from('tbl_kinerja_eselon2');
-			$this->db->join('tbl_pk_eselon2', 'tbl_kinerja_eselon2.kode_ikk = tbl_pk_eselon2.kode_ikk and tbl_kinerja_eselon2.tahun= tbl_pk_eselon2.tahun');
+			$this->db->join('tbl_pk_eselon2', 'tbl_kinerja_eselon2.kode_ikk = tbl_pk_eselon2.kode_ikk and tbl_kinerja_eselon2.tahun = tbl_pk_eselon2.tahun');
 			$this->db->join('tbl_ikk', 'tbl_ikk.kode_ikk = tbl_kinerja_eselon2.kode_ikk and tbl_ikk.tahun = tbl_kinerja_eselon2.tahun');
 			$this->db->join('tbl_sasaran_eselon2','tbl_sasaran_eselon2.kode_sasaran_e2 = tbl_kinerja_eselon2.kode_sasaran_e2 and tbl_sasaran_eselon2.tahun = tbl_kinerja_eselon2.tahun', 'left');
 			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_sasaran_eselon2.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_sasaran_eselon2.tahun', 'left');
@@ -355,7 +355,7 @@ class rseselon2_model extends CI_Model
 								  <label style="text-align:right; width:10px">('.round($capaian[1], 2).'%)</label>
 								</div>
 								<div class="fitem">
-								  <label style="width:150px">Capaian Bulan Ini :</label>
+								  <label style="width:150px">Capaian s.d. Bulan Ini :</label>
 								  <input name=detail['.$i.'][realisasi] value="" size="15">
 								</div>
 								<div class="fitem">
@@ -368,7 +368,11 @@ class rseselon2_model extends CI_Model
 								</div>';
 			if($i == $akhir){
 				$out .='<br><div class="fitem">';
-				$out .= '<label style="width:150px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Simpan" />';
+				$out .= '<label style="width:150px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Save" /><label style="width:170px"></label><input type="button" onclick="cancel'.$objectId.'()" value="Cancel" />';
+				$out .='</div>';
+			}else{
+				$out .='<br><div class="fitem">';
+				$out .= '<label style="width:170px"></label><input type="button" onclick="cancel'.$objectId.'()" value="Cancel" />';
 				$out .='</div>';
 			}
 			

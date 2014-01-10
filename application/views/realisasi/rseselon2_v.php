@@ -2,6 +2,11 @@
 				
 		$(function(){
 				$('textarea').autosize();   
+				
+				cancel<?=$objectId;?>=function(){
+				
+				$('#tt').tabs('close', 'Add Capaian Kinerja Eselon II');
+			}
 			//chan---------------------------------------		
 			function setListE2<?=$objectId?>(){
 				$("#divEselon2<?=$objectId?>").load(
@@ -19,6 +24,7 @@
 			 
 			 $("#kode_e1<?=$objectId?>").change(function(){
 				setListE2<?=$objectId?>();
+				document.getElementById('detail<?=$objectId;?>').innerHTML = '';
 			  });
 			  
 			function setSasaranE2<?=$objectId;?>(e2, tahun){
@@ -48,6 +54,7 @@
 			
 			$("#kode_e2<?=$objectId;?>").change( function(){
 				filterSasaranE2<?=$objectId;?>($(this).val());
+				document.getElementById('detail<?=$objectId;?>').innerHTML = '';
 			});
 			
 			//inisialisasi
@@ -281,7 +288,7 @@
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 
 	
-				<div region="center" border="true" title="Tambah Data Capaian Kinerja Eselon II">	
+				<div region="center" border="true" title="Add Data Capaian Kinerja Eselon II">	
 					<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">		
 						<div class="fitem">
 						  <label style="width:120px" >Tahun :</label>

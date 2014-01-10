@@ -3,6 +3,11 @@
 				
 		$(function(){
 			$('textarea').autosize();   
+			cancel<?=$objectId;?>=function(){
+				
+				$('#tt').tabs('close', 'Add Pengukuran Kinerja Kementerian');
+			}
+			
 		 	saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: base_url+'pengukuran/pengukurankl/save',
@@ -28,7 +33,7 @@
 							
 							// reload and close tab
 							$('#dg<?=$objectId;?>').datagrid('reload');
-							$('#tt').tabs('close', 'Tambah Kinerja Kementerian');
+							$('#tt').tabs('close', 'Add Pengukuran Kinerja Kementerian');
 						} else {
 							$.messager.show({
 								title: 'Error',
@@ -264,7 +269,7 @@
 			
 			<div class="easyui-layout" fit="true">  
 								
-				<div region="center" border="true" title="Tambah Data Pengukuran Kinerja Kementerian">	
+				<div region="center" border="true" title="Add Data Pengukuran Kinerja Kementerian">	
 					<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">		
 						<div class="fitem">
 						  <label style="width:120px" >Tahun :</label>
