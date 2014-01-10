@@ -3,6 +3,10 @@
 				
 		$(function(){
 			$('textarea').autosize();   
+			cancel<?=$objectId;?>=function(){
+				
+				$('#tt').tabs('close', 'Add Capaian Kinerja Kementerian');
+			}	
 		 	saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: base_url+'realisasi/rskl/save',
@@ -198,7 +202,7 @@
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 
 								
-				<div region="center" border="true" title="Tambah Data Capaian Kinerja Kementerian">
+				<div region="center" border="true" title="Add Data Capaian Kinerja Kementerian">
 					<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">		
 						<div class="fitem">
 						  <label style="width:120px" >Tahun :</label>

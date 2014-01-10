@@ -128,15 +128,22 @@ class Pengesahan_penetapaneselon1_model extends CI_Model
 				$this->db->where('a.kode_e1', $kode_e1);
 				$qu = $this->db->get();
 				
-				$out .= '	<div class="fitem">';
-				$out .= '		<label style="width:150px">Nama Program :</label>';
-				$out .= '		<select name="kode_program" class="easyui-validatebox" required="true">';
-				$out .= '			<option value="'.$qu->row()->kode_program.'">'.$qu->row()->nama_program.'</option>';
-				$out .= '		</select>';
-				$out .= '	</div>';
-				$out .= '	<div class="fitem">';
-				$out .= '		<label style="width:150px">Total Anggaran (Rp.) :</label>'.(number_format($qu->row()->total, 0, ',', '.'));
-				$out .= '	</div>';
+				if ($qu->num_rows==0){
+					$out .= '	<div class="fitem">Data Progam belum diinputkan';
+					$out .= '	</div>';
+				}
+				else {
+					$out .= '	<div class="fitem">';
+					$out .= '		<label style="width:150px">Nama Program :</label>';
+					$out .= '		<select name="kode_program" class="easyui-validatebox" required="true">';
+					$out .= '			<option value="'.$qu->row()->kode_program.'">'.$qu->row()->nama_program.'</option>';
+					$out .= '		</select>';
+					$out .= '	</div>';
+					$out .= '	<div class="fitem">';
+					$out .= '		<label style="width:150px">Total Anggaran (Rp.) :</label>'.(number_format($qu->row()->total, 0, ',', '.'));
+					$out .= '	</div>';
+				}	
+				
 			}
 			
 			$out .= '	<br>';

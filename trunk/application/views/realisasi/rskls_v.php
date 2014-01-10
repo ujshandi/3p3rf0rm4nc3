@@ -13,6 +13,7 @@
 			editData<?=$objectId;?> = function (editmode){
 				<? //chan if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+					if (row==null) return;
 					addTab((editmode?"Edit":"View")+" Capaian Kinerja Kementerian", "realisasi/rskl/edit/"+ row.id_kinerja_kl + "/" + editmode);
 				<?//} else { ?>	
 					//alert("Silahkan Login sebagai Superadmin");
@@ -105,6 +106,7 @@
 					onClickCell: function(rowIndex, field, value){
 						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
 						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+						if (row==null) return;
 						//alert(row.deskripsi_iku_kl);
 						switch(field){
 							case "kode_kl":
@@ -356,5 +358,5 @@
 	  </thead>
 	</table>
 	
-	<div class="popdesc" id="popdesc<?=$objectId?>">pops</div>
+	<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>
 	

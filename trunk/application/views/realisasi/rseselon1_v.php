@@ -2,7 +2,11 @@
 				
 		$(function(){
 			//chan---------------------------------------		
-			$('textarea').autosize();   	
+			$('textarea').autosize();   
+			cancel<?=$objectId;?>=function(){
+				
+				$('#tt').tabs('close', 'Add Capaian Kinerja Eselon I');
+			}			
 			//chan=================================
 			function setSasaran<?=$objectId;?>(e1, tahun){
 				<? if ($this->session->userdata('unit_kerja_e1')!='-1') {?>
@@ -32,6 +36,7 @@
 			}
 			$("#kode_e1<?=$objectId?>").change(function(){
 				setSasaran<?=$objectId;?>($(this).val(), $('#tahun<?=$objectId;?>').val());
+				document.getElementById('detail<?=$objectId;?>').innerHTML = '';
 			});
 			
 			//inisilaisasi;
@@ -256,7 +261,7 @@
 			
 	<div id="cc<?=$objectId;?>" class="easyui-layout" fit="true">  
 					
-				<div region="center" border="true" title="Tambah Data Capaian Kinerja Eselon I" fit="true">	
+				<div region="center" border="true" title="Add Data Capaian Kinerja Eselon I" fit="true">	
 					<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">		
 						<div class="fitem">
 						  <label style="width:120px" >Tahun :</label>

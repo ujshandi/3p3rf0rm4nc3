@@ -59,7 +59,9 @@ class pengukuraneselon2_model extends CI_Model
 				$response->rows[$i]['triwulan']=$this->utility->getBulanValue($row->triwulan-1);
 				$response->rows[$i]['kode_sasaran_e2']=$row->kode_sasaran_e2;
 				$response->rows[$i]['kode_ikk']=$row->kode_ikk;
-				if(is_numeric($row->realisasi)){
+				$response->rows[$i]['deskripsi_sasaran_e2']=$row->deskripsi_sasaran_e2;
+				$response->rows[$i]['deskripsi_ikk']=$row->deskripsi_ikk;
+				/* if(is_numeric($row->realisasi)){
 					if(strpos($row->realisasi, '.') || strpos($row->realisasi, ',')){
 						$response->rows[$i]['realisasi'] = number_format($row->realisasi, 4, ',', '.');
 					}else{
@@ -67,7 +69,8 @@ class pengukuraneselon2_model extends CI_Model
 					}
 				}else{
 					$response->rows[$i]['realisasi'] = $row->realisasi;
-				}		
+				}		 */
+				$response->rows[$i]['realisasi'] = $this->utility->cekNumericFmt($row->realisasi);
 				$response->rows[$i]['satuan']=$row->satuan;
 				$response->rows[$i]['persen']=$row->persen;
 				$response->rows[$i]['opini']=$row->opini;
@@ -343,7 +346,7 @@ class pengukuraneselon2_model extends CI_Model
 									  '.$realisasi[1].'&nbsp;%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</div>
 									<div class="fitem">
-									  <label style="width:170px">Opini :</label>
+									  <label style="width:170px">Analisis :</label>
 									  <textarea name="detail['.$i.'][opini]" cols="85" class="easyui-validatebox" ></textarea>
 									</div>
 									<div class="fitem">
@@ -354,7 +357,7 @@ class pengukuraneselon2_model extends CI_Model
 									
 				//if($i == $akhir){
 					$out .='<br><div class="fitem">';
-					$out .= '<label style="width:170px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Simpan" />';
+					$out .= '<label style="width:170px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Save" /><label style="width:170px"></label><input type="button" onclick="cancel'.$objectId.'()" value="Cancel" />';
 					$out .='</div>';
 				//}
 				

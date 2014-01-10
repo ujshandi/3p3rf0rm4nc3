@@ -6,14 +6,15 @@
 				//$('#fm<?=$objectId;?>').form('clear');  
 				//url = base_url+'pengukuran/pengukurankl/save';  
 				
-				addTab("Tambah Kinerja Kementerian", "pengukuran/pengukurankl/add");
+				addTab("Add Pengukuran Kinerja Kementerian", "pengukuran/pengukurankl/add");
 			}
 			//end newData 
 			 
 			editData<?=$objectId;?> = function (editmode){
 				<? //chan if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					addTab((editmode?"Edit":"View")+" Kinerja Kementerian", "pengukuran/pengukurankl/edit/"+ row.id_pengukuran_kl + "/" + editmode);
+					if (row==null) return;
+					addTab((editmode?"Edit":"View")+" Pengukuran Kinerja Kementerian", "pengukuran/pengukurankl/edit/"+ row.id_pengukuran_kl + "/" + editmode);
 				<?//} else { ?>	
 					//alert("Silahkan Login sebagai Superadmin");
 				<?//} ?>

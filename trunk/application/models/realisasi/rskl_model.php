@@ -161,10 +161,10 @@ class rskl_model extends CI_Model
 		}
 		$this->db->select("tbl_kinerja_kl.id_kinerja_kl, tbl_kinerja_kl.tahun, tbl_kinerja_kl.triwulan, tbl_kinerja_kl.kode_kl, tbl_kinerja_kl.kode_sasaran_kl, tbl_kinerja_kl.kode_iku_kl, tbl_kinerja_kl.realisasi, tbl_iku_kl.satuan, tbl_pk_kl.penetapan, tbl_kl.nama_kl, tbl_sasaran_kl.deskripsi AS deskripsi_sasaran_kl, tbl_iku_kl.deskripsi AS deskripsi_iku_kl");
 		$this->db->from('tbl_kinerja_kl');
-		$this->db->join('tbl_pk_kl', 'tbl_pk_kl.kode_iku_kl = tbl_kinerja_kl.kode_iku_kl and tbl_pk_kl.tahun = tbl_kinerja_kl.tahun and tbl_pk_kl.kode_kl = tbl_kinerja_kl.kode_kl');
-		$this->db->join('tbl_iku_kl', 'tbl_iku_kl.kode_iku_kl = tbl_kinerja_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_kinerja_kl.tahun');
-		$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_kinerja_kl.kode_kl');
-		$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_kinerja_kl.kode_sasaran_kl');
+			$this->db->join('tbl_pk_kl', 'tbl_pk_kl.kode_iku_kl = tbl_kinerja_kl.kode_iku_kl and tbl_pk_kl.tahun = tbl_kinerja_kl.tahun and tbl_pk_kl.kode_kl = tbl_kinerja_kl.kode_kl');
+			$this->db->join('tbl_iku_kl', 'tbl_iku_kl.kode_iku_kl = tbl_kinerja_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_kinerja_kl.tahun');
+			$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_kinerja_kl.kode_kl');
+			$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_kinerja_kl.kode_sasaran_kl and tbl_sasaran_kl.tahun = tbl_kinerja_kl.tahun');
 
 		return $this->db->count_all_results();
 		$this->db->free_result();
@@ -317,7 +317,7 @@ class rskl_model extends CI_Model
 								  <label style="text-align:right; width:10px">('.$this->utility->cekNumericFmt($capaian[1]).'%)</label>
 								</div>
 								<div class="fitem">
-								  <label style="width:150px">Capaian Bulan Ini :</label>
+								  <label style="width:150px">Capaian s.d Bulan Ini :</label>
 								  <input name=detail['.$i.'][realisasi] value="" size="15">								  
 								</div>
 								<div class="fitem">
@@ -335,7 +335,11 @@ class rskl_model extends CI_Model
 		// dibuka dl request p.Toto 2013.08.16						
 			if($i == $akhir){
 				$out .='<br><div class="fitem">';
-				$out .= '<label style="width:150px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Simpan" />';
+				$out .= '<label style="width:150px"></label><input type="button" onclick="saveData'.$objectId.'()" value="Save" /><input type="button" onclick="cancel'.$objectId.'()" value="Cancel" />';
+				$out .='</div>';
+			}else{
+				$out .='<br><div class="fitem">';
+				$out .= '<label style="width:170px"></label><input type="button" onclick="cancel'.$objectId.'()" value="Cancel" />';
 				$out .='</div>';
 			}
 			

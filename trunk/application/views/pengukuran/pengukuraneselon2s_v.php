@@ -6,13 +6,14 @@
 				//$('#fm<?=$objectId;?>').form('clear');  
 				//url = base_url+'pengukuran/pengukuraneselon2/save';  
 				
-				addTab("Add Kinerja Eselon II", "pengukuran/pengukuraneselon2/add");
+				addTab("Add Pengukuran Kinerja Eselon II", "pengukuran/pengukuraneselon2/add");
 			}
 			//end newData 
 			
 			editData<?=$objectId;?> = function (editmode){
 				<? //chan if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+					if (row==null) return;
 					addTab((editmode?"Edit":"View")+" Pengukuran Kinerja Eselon II", "pengukuran/pengukuraneselon2/edit/"+ row.id_pengukuran_e2 + "/" + editmode);
 				<?//} else { ?>	
 					//alert("Silahkan Login sebagai Superadmin");
@@ -90,8 +91,8 @@
 							case "kode_sasaran_e2":
 								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e2);
 								break;
-							case "kode_iku_e2":
-								showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_e2);
+							case "kode_ikk":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_ikk);
 								break;
 							/* case "kode_kl":
 								showPopup('#popdesc<?=$objectId?>', row.nama_kl);
@@ -319,4 +320,4 @@
 	  </thead>
 	</table>
 
-	<div class="popdesc" id="popdesc<?=$objectId?>">pops</div>
+	<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>
