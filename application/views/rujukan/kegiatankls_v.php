@@ -16,7 +16,7 @@
 		
 		editData<?=$objectId;?> = function (){
 			var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-			
+			if (row==null) return;
 			if (row&&(row.tahun!="")){
 				addTab("Edit Kegiatan", "rujukan/kegiatankl/edit/"+row.tahun+"/"+row.kode_kegiatan);
 			}
@@ -32,12 +32,16 @@
 
 		//tipe 1=grid, 2=pdf, 3=excel
 		getUrl<?=$objectId;?> = function (tipe){
-			<? if (($this->session->userdata('unit_kerja_e1')!=null)&&($this->session->userdata('unit_kerja_e1')!=-1)) {?>	
-				var file1 = '<?=$this->session->userdata('unit_kerja_e1')?>'
-			<?} else {?>	
-				var file1 = $("#filter_e1<?=$objectId;?>").val();
-			<? }?>	
-				var file2 = $("#filter_e2<?=$objectId;?>").val();
+			<? if ($this->session->userdata('unit_kerja_e1')==-1){?>
+					var file1 = $("#filter_e1<?=$objectId;?>").val();
+				<?} else {?>
+					var file1 = "<?=$this->session->userdata('unit_kerja_e1');?>";
+				<?}?>
+				<? if ($this->session->userdata('unit_kerja_e2')==-1){?>
+					var file2 = $("#filter_e2<?=$objectId;?>").val();
+				<?} else {?>
+					var file2 = "<?=$this->session->userdata('unit_kerja_e2');?>";
+				<?}?>
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
 				if (filtahun == null) filtahun = "-1";
 			if (file1 == null) file1 = "-1";
@@ -62,7 +66,7 @@
 				onClickCell: function(rowIndex, field, value){
 					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					
+					if (row==null) return;
 					switch(field){
 						case "kode_e2":
 							showPopup('#popdesc<?=$objectId?>', row.nama_e2);
@@ -90,6 +94,37 @@
 			window.open(getUrl<?=$objectId;?>(3));;
 		}
 
+		deleteData<?=$objectId;?> = function (){
+				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+				if(row){
+					if(confirm("Apakah yakin akan menghapus data '" + row.kode_kegiatan + "'?")){
+						var response = '';
+						$.ajax({ type: "GET",
+								 url: base_url+'rujukan/kegiatankl/delete/' + row.tahun+'/'+row.kode_kegiatan ,
+								 async: false,
+								 success : function(response)
+								 {
+									var response = eval('('+response+')');
+									if (response.success){
+										$.messager.show({
+											title: 'Success',
+											msg: 'Data Berhasil Dihapus'
+										});
+										
+										// reload and close tab
+										$('#dg<?=$objectId;?>').datagrid('reload');
+									} else {
+										$.messager.show({
+											title: 'Error',
+											msg: response.msg
+										});
+									}
+								 }
+						});
+					}
+				}
+			}
+			//end deleteData 
 		
 		/*
 		saveData<?=$objectId;?>=function(){
@@ -212,24 +247,25 @@
 	<table border="0" cellpadding="1" cellspacing="1" width="100%">
 		<tr>
 			<td>
-			<div class="fsearch" <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'style="display:none"')?>>
+			<div class="fsearch" >
 				<table border="0" cellpadding="1" cellspacing="1">
 				<tr>
 					<td>Tahun :</td>
 					<td><span id="divTahun<?=$objectId;?>"></span></td>
 				</tr>	
-					<? if (($this->session->userdata('unit_kerja_e1')==-1)||($this->session->userdata('unit_kerja_e1')!=null)){?>
-			<tr>
-				<td>Unit Kerja Eselon I&nbsp</td>
+				<tr>
+				<td>Unit Kerja Eselon I&nbsp;</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>				
 				</td>
 			</tr>
-			<?}?>
+			<?//}
+		//	var_dump($this->session->userdata('unit_kerja_e2'));
+			?>
 			<tr>
-				<td>Unit Kerja Eselon II&nbsp</td>
+				<td>Unit Kerja Eselon II&nbsp;</td>
 				<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
-					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e2'),$this->session->userdata('unit_kerja_e1'))?>
+					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 					</span>
 				</td>
 			</tr>
@@ -250,6 +286,9 @@
 		<?}?>
 		<? if($this->sys_menu_model->cekAkses('EDIT;',7,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="editData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-edit" plain="true">Edit</a>
+		<?}?>
+		<? if($this->sys_menu_model->cekAkses('DELETE;',7,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+			<a href="#" onclick="deleteData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-remove" plain="true">Delete</a>
 		<?}?>
 		<? if($this->sys_menu_model->cekAkses('PRINT;',7,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="printData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-print" plain="true">Print</a>

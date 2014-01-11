@@ -10,11 +10,7 @@ class Rkteselon2 extends CI_Controller {
 		
 		//$this->output->enable_profiler(true);
 		
-		$userdata = array ('logged_in' => TRUE);
-				//
-		$this->session->set_userdata($userdata);
-				
-		if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');
+		
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/rencana/rkteselon2_model');
 		$this->load->model('/rencana/rpt_rkteselon2_model');

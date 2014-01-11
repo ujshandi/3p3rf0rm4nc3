@@ -60,7 +60,7 @@ class Eselon1_model extends CI_Model
 				
 
 				//$pdfdata[] = array($i+1,$response->rows[$i]['kode_e1'],$response->rows[$i]['kode_kl'],$response->rows[$i]['nama_e1'],$response->rows[$i]['singkatan'],$response->rows[$i]['nama_dirjen'],$response->rows[$i]['nip'],$response->rows[$i]['pangkat'],$response->rows[$i]['gol']);
-				$pdfdata[] = array($i+1,$response->rows[$i]['nama_e1'],$response->rows[$i]['singkatan'],$response->rows[$i]['nama_dirjen'],$response->rows[$i]['nip'],$response->rows[$i]['pangkat'],$response->rows[$i]['gol'],$response->rows[$i]['kode_e1']);
+				$pdfdata[] = array($i+1,$response->rows[$i]['kode_e1'],$response->rows[$i]['nama_e1'],$response->rows[$i]['singkatan'],$response->rows[$i]['nama_dirjen'],$response->rows[$i]['nip'],$response->rows[$i]['pangkat'],$response->rows[$i]['gol']);
 				unset($row->nama_kl);
 				
 				$i++;
@@ -115,7 +115,7 @@ class Eselon1_model extends CI_Model
 		
 		$this->db->where('kode_e1',$kode); //buat validasi		
 		$this->db->select('*');
-		$this->db->from('tbl_sasaran_eselon1');
+		$this->db->from('tbl_program_kl');
 						
 		$query = $this->db->get();
 		$rs = $query->num_rows() ;		
@@ -125,12 +125,23 @@ class Eselon1_model extends CI_Model
 			$this->db->flush_cache();
 			$this->db->where('kode_e1',$kode); //buat validasi		
 			$this->db->select('*');
-			$this->db->from('tbl_iku_eselon1');
+			$this->db->from('tbl_sasaran_eselon1');
 							
 			$query = $this->db->get();
 			$rs = $query->num_rows() ;		
 			$query->free_result();
 			$isSave = ($rs==0);
+			if ($isSave){
+				$this->db->flush_cache();
+				$this->db->where('kode_e1',$kode); //buat validasi		
+				$this->db->select('*');
+				$this->db->from('tbl_iku_eselon1');
+								
+				$query = $this->db->get();
+				$rs = $query->num_rows() ;		
+				$query->free_result();
+				$isSave = ($rs==0);
+			}
 		}
 		return $isSave;
 	}

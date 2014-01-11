@@ -6,11 +6,7 @@ class Rpt_pengukurane2 extends CI_Controller {
 	{
 		parent::__construct();			
 
-		//$userdata = array ('logged_in' => TRUE);
-				//
-		//$this->session->set_userdata($userdata);
-				
-		//if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
+						
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/pengukuran/rpt_pengukurane2_model');
 		$this->load->model('/rujukan/eselon2_model');

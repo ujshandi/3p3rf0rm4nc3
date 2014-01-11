@@ -192,8 +192,8 @@
 						$("#drop<?=$objectId;?> li").click(function(e){
 							var chose = $(this).text();
 							$("#txtkode_sasaran_kl<?=$objectId;?>").text(chose);
-							getListIkuKL<?=$objectId;?>();
-						//	alert($("#txtkode_sasaran_kl<?=$objectId;?>").text());
+							//getListIkuKL<?=$objectId;?>();
+							//alert(val);
 							$("#drop<?=$objectId;?>").slideUp("slow");
 						});
 						if (key!=null)
@@ -210,11 +210,20 @@
 			function setSasaran<?=$objectId;?>(valu){
 			//alert("here");
 				document.getElementById('kode_sasaran_kl<?=$objectId;?>').value = valu;
-				
+				getListIkuKL<?=$objectId;?>();
+			}
+			
+			function setIku<?=$objectId;?>(idx,valu){
+			//alert("here");
+				document.getElementById('kode_iku_kl<?=$objectId;?>'+idx).value = valu;
+				//getListIkuKL<?=$objectId;?>();
 			}
 			
 			// inisialisasi 
 			setSasaranKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),"","")
+			cancel<?=$objectId?> = function(){
+				$('#tt').tabs('close', 'Add RKT Kementerian');
+			}
     </script>
 	
 	<!-- Dari Stef -->
@@ -378,7 +387,7 @@
 							<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="addRow<?=$objectId;?>('tbl<?=$objectId;?>')">Tambah IKU</a>
 							<a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="deleteRow<?=$objectId;?>('tbl<?=$objectId;?>')">Hapus IKU</a>
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData<?=$objectId;?>()">Simpan</a>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData<?=$objectId;?>()">Save</a>&nbsp;<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Cancel</a>
 						</div>
 					</form>
 				</div>

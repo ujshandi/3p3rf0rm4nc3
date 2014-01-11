@@ -2,6 +2,11 @@
 				
 		$(function(){
 			$('textarea').autosize();   
+			
+		 	cancel<?=$objectId;?>=function(){
+				$('#tt').tabs('close', 'Add RKT Eselon I');
+			}
+			
 		 	saveData<?=$objectId;?>=function(){
 			
 				$('#fm<?=$objectId;?>').form('submit',{
@@ -368,7 +373,7 @@
 						<br>
 						<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="addRow<?=$objectId;?>('tbl<?=$objectId;?>')">Tambah IKU</a>
 						<a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="deleteRow<?=$objectId;?>('tbl<?=$objectId;?>')">Hapus IKU</a>
-						<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData<?=$objectId;?>()">Simpan</a>
+						<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData<?=$objectId;?>()">Save</a>&nbsp;<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Cancel</a>
 					</div>
 				</form>
 				</div>

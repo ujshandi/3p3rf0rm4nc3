@@ -7,11 +7,7 @@ class Group_user extends CI_Controller {
 		parent::__construct();			
 		
 	//	$userdata = array ('userLogin' => $userLogin,'logged_in' => TRUE,'groupId'=>$this->sys_login_model->groupId,'fullName'=>$this->sys_login_model->fullName,'userId'=>$this->sys_login_model->userId,'groupLevel'=>$this->sys_login_model->level);
-		$userdata = array ('logged_in' => TRUE);
-				//
-		$this->session->set_userdata($userdata);
-				
-		if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
+		
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/admin/group_user_model');
 		$this->load->library("utility");

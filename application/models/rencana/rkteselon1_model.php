@@ -136,9 +136,9 @@ class Rkteselon1_model extends CI_Model
 			$this->db->where("a.kode_e1",$file1);
 		}		
 		$this->db->from('tbl_rkt_eselon1 a');
-		$this->db->join('tbl_iku_eselon1 b', 'b.kode_iku_e1 = a.kode_iku_e1 and b.tahun = a.tahun');
-		$this->db->join('tbl_sasaran_eselon1 c', 'c.kode_sasaran_e1 = a.kode_sasaran_e1');
-		$this->db->join('tbl_eselon1 d', 'd.kode_e1 = a.kode_e1');
+			$this->db->join('tbl_iku_eselon1 b', 'b.kode_iku_e1 = a.kode_iku_e1 and b.tahun = a.tahun');
+			$this->db->join('tbl_sasaran_eselon1 c', 'c.kode_sasaran_e1 = a.kode_sasaran_e1 and c.tahun = a.tahun');
+			$this->db->join('tbl_eselon1 d', 'd.kode_e1 = a.kode_e1');
 		$this->db->order_by("a.tahun DESC, a.kode_sasaran_e1 ASC, a.kode_iku_e1 ASC");
 			
 		return $this->db->count_all_results();
