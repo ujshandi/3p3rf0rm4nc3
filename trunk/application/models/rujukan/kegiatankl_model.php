@@ -42,7 +42,7 @@ class Kegiatankl_model extends CI_Model
 			else
 				$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			$this->db->select("kl.*, e2.nama_e2, pr.nama_program",false);
+			$this->db->select("distinct kl.*, e2.nama_e2, pr.nama_program",false);
 			$this->db->from('tbl_kegiatan_kl kl left join tbl_eselon2 e2 on kl.kode_e2 = e2.kode_e2',false);
 			$this->db->join('tbl_program_kl pr','pr.kode_program = kl.kode_program and pr.tahun=kl.tahun');
 			//$this->db->join('tbl_kegiatan','tbl_kegiatan.kode_kegiatan = tbl_kegiatan_kl.kode_kegiatan');
@@ -144,7 +144,7 @@ class Kegiatankl_model extends CI_Model
 			$this->db->where("e2.kode_e1",$file1);
 		}
 		$this->db->flush_cache();
-		$this->db->select("*",false);
+		$this->db->select("distinct *",false);
 		$this->db->from('tbl_kegiatan_kl kl left join tbl_eselon2 e2 on kl.kode_e2 = e2.kode_e2',false);
 		//$this->db->join('tbl_kegiatan','tbl_kegiatan.kode_kegiatan = tbl_kegiatan_kl.kode_kegiatan');
 		
@@ -173,6 +173,39 @@ class Kegiatankl_model extends CI_Model
 		$this->db->where('a.kode_kegiatan', $kode_kegiatan);
 		
 		return $this->db->get()->row();
+	}
+	
+	public function isExist($tahun,$kode,$oldtahun=null,$oldkode=null){	
+		if ($kode!=null)//utk update
+			$this->db->where('kode_kegiatan',$kode); //buat validasi
+		if ($tahun!=null)//utk update
+			$this->db->where('tahun',$tahun); //buat validasi
+		if ($oldtahun!=null)
+			$this->db->where('tahun !=',$oldtahun); //buat validasi
+		if ($oldkode!=null)//utk update
+			$this->db->where('kode_kegiatan !=',$oldkode); //buat validasi	
+		$this->db->select('*');
+		$this->db->from('tbl_kegiatan_kl');
+						
+		$query = $this->db->get();
+		$rs = $query->num_rows() ;		
+		$query->free_result();
+		return ($rs>0);
+	}
+	
+	public function isSaveDelete($kode,$tahun){	
+		
+		$this->db->where('kode_kegiatan',$kode); //buat validasi		
+		$this->db->where('tahun',$tahun); //buat validasi		
+		$this->db->select('*');
+		$this->db->from('tbl_masterpk_eselon2');
+						
+		$query = $this->db->get();
+		$rs = $query->num_rows() ;		
+		$query->free_result();
+		$isSave = ($rs==0);
+		
+		return $isSave;
 	}
 	
 	public function InsertOnDB_kegiatanKL($data){

@@ -131,9 +131,9 @@ class Rktkl_model extends CI_Model
 		}	
 		
 		$this->db->from('tbl_rkt_kl a');
-		$this->db->join('tbl_iku_kl b', 'b.kode_iku_kl = a.kode_iku_kl and b.tahun = a.tahun');
-		$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl');
-		$this->db->join('tbl_kl d', 'd.kode_kl = a.kode_kl');
+			$this->db->join('tbl_iku_kl b', 'b.kode_iku_kl = a.kode_iku_kl and b.tahun = a.tahun');
+			$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl and c.tahun = a.tahun');
+			$this->db->join('tbl_kl d', 'd.kode_kl = a.kode_kl');
 			
 		return $this->db->count_all_results();
 		$this->db->free_result();
@@ -156,13 +156,14 @@ class Rktkl_model extends CI_Model
 		$this->db->select('kode_iku_kl, deskripsi');
 		$this->db->from('tbl_iku_kl');
 		$this->db->where('tahun', $tahun);
-		//ditutup dulu bahas lebih lanjut $this->db->where('kode_sasaran_klx', $sasaran);
+		//ditutup dulu bahas lebih lanjut 
+		$this->db->where('kode_sasaran_kl', $sasaran);
 		$this->db->order_by('kode_iku_kl');
 		$que = $this->db->get();
 		
 		if($que->num_rows() > 0){
-			//$out = '<select id="1" name="detail[1][kode_iku_kl]" onclick="javascript:getSatuan'.$objectId.'(this.value, this.id)" style=width:750px;>';
-			$out = '<select id="'.$id.'" name="'.$name.'" onclick="'.$onclick.'" style=width:100%;>';
+			
+			/* $out = '<select id="'.$id.'" name="'.$name.'" onclick="'.$onclick.'" style=width:100%;>';
 			$out .= '<option value="0">-- Pilih --</option>';
 			foreach($que->result() as $r){
 				if($r->kode_iku_kl == $kode_iku){
@@ -172,7 +173,23 @@ class Rktkl_model extends CI_Model
 				}
 			}
 			
-			$out .= '</select>';
+			$out .= '</select>'; */
+			$out = '<div id="tcContainer"><input id="'.$id.'" name="'.$name.'" type="hidden" class="h_code" value="0">';
+			$out .= '<textarea name="txtkode_iku_kl'.$objectId.'" id="txtkode_iku_kl'.$objectId.'" class="textdown" required="true" readonly>-- Pilih --</textarea>';
+			$out .= '<ul id="drop'.$objectId.'" class="dropdown">';
+			$out .= '<li value="0" onclick="setIku'.$objectId.'(\'\')">-- Pilih --</li>';
+			
+			foreach($que->result() as $r){
+				$out .= '<li onclick="setIku'.$objectId.'(\''.$r->kode_iku_kl.'\')">'.$r->deskripsi.'</li>';
+			}
+			$out .= '</ul></div>';
+			
+			//chan
+			if ($que->num_rows()==0){
+				$out = "Data IKU untuk tingkat Eselon 1 ini belum tersedia.";
+			}
+			
+			
 		}else{
 			$out = 'Tidak terdapat IKU pada tahun '.$tahun;
 		}
@@ -181,7 +198,7 @@ class Rktkl_model extends CI_Model
 	}
 	
 	public function getIKU_kl($objectId, $tahun,$sasaran){
-		$out = '<tr>
+		$outOld = '<tr>
 					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
 					<td>1</td>
 					<td>
@@ -194,6 +211,19 @@ class Rktkl_model extends CI_Model
 						<input name="detail[1][satuan]" id="satuan1'.$objectId.'" type="text" value="" readonly="true">
 					</td>
 				</tr>';
+		$out = '<tr>
+					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
+					<td>1</td>
+					<td><span id="divIkuKL1'.$objectId.'">
+								</span>
+					</td>
+					<td>
+						<input name="detail[1][target]" size="5">
+					</td>
+					<td>
+						<input name="detail[1][satuan]" id="satuan1'.$objectId.'" type="text" value="" readonly="true">
+					</td>
+				</tr>';		
 		
 		return $out;
 	}

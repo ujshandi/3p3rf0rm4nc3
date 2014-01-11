@@ -5,12 +5,7 @@ class Subkegiatankl extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();			
-		$userdata = array ('logged_in' => TRUE);
-		$this->session->set_userdata($userdata);
-		
-		//$this->output->enable_profiler(true);
-				
-		if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
+						
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/rujukan/subkegiatankl_model');
 		$this->load->model('/rencana/rpt_rkteselon1_model');

@@ -157,7 +157,8 @@
 				if ((filtahun == null)||(filtahun == '')) filtahun = "-1";
 				$.ajax({url:base_url+"pengaturan/sasaran_kl/getNewCode/"+filkl+"/"+filtahun,
 					success : function(data){
-					$("#kode_sasaran_kl<?=$objectId?>").val(data);
+						$("#kode_sasaran_kl<?=$objectId?>").val(data);
+						alert(data);
 					}					
 					})
 				

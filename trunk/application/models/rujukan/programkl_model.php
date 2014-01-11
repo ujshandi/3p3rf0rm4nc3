@@ -147,6 +147,62 @@ class Programkl_model extends CI_Model
 		return $this->db->get()->row();
 	}
 	
+	public function isExist($tahun,$kode,$oldtahun=null,$oldkode=null){	
+		if ($kode!=null)//utk update
+			$this->db->where('kode_program',$kode); //buat validasi
+		if ($tahun!=null)//utk update
+			$this->db->where('tahun',$tahun); //buat validasi
+		if ($oldtahun!=null)
+			$this->db->where('tahun !=',$oldtahun); //buat validasi
+		if ($oldkode!=null)//utk update
+			$this->db->where('kode_program !=',$oldkode); //buat validasi	
+		$this->db->select('*');
+		$this->db->from('tbl_program_kl');
+						
+		$query = $this->db->get();
+		$rs = $query->num_rows() ;		
+		$query->free_result();
+		return ($rs>0);
+	}
+	
+	public function isSaveDelete($kode,$tahun){	
+		
+		$this->db->where('kode_program',$kode); //buat validasi		
+		$this->db->where('tahun',$tahun); //buat validasi		
+		$this->db->select('*');
+		$this->db->from('tbl_kegiatan_kl');
+						
+		$query = $this->db->get();
+		$rs = $query->num_rows() ;		
+		$query->free_result();
+		$isSave = ($rs==0);
+		if ($isSave){
+			$this->db->flush_cache();
+			$this->db->where('kode_program',$kode); //buat validasi		
+			$this->db->where('tahun',$tahun); //buat validasi		
+			$this->db->select('*');
+			$this->db->from('tbl_masterpk_kl');
+							
+			$query = $this->db->get();
+			$rs = $query->num_rows() ;		
+			$query->free_result();
+			$isSave = ($rs==0);
+			if ($isSave){
+				$this->db->flush_cache();
+				$this->db->where('kode_program',$kode); //buat validasi		
+				$this->db->where('tahun',$tahun); //buat validasi		
+				$this->db->select('*');
+				$this->db->from('tbl_masterpk_eselon1');
+								
+				$query = $this->db->get();
+				$rs = $query->num_rows() ;		
+				$query->free_result();
+				$isSave = ($rs==0);
+			}
+		}
+		return $isSave;
+	}
+	
 	public function InsertOnDB_programKL($data){
 		//query insert data		
 		$this->db->set('tahun', $data['tahun']);
@@ -180,8 +236,8 @@ class Programkl_model extends CI_Model
 		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		
 		//$this->db->where('id_program_kl', $data['id_program_kl']);
-		$this->db->where('tahun', $data['tahun']);
-		$this->db->where('kode_program', $data['kode_program']);
+		$this->db->where('tahun', $data['tahun_old']);
+		$this->db->where('kode_program', $data['kode_program_old']);
 		
 		$result = $this->db->update('tbl_program_kl');
 		

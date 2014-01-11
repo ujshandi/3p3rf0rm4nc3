@@ -156,7 +156,7 @@ class Eselon2_model extends CI_Model
 		
 		$this->db->where('kode_e2',$kode); //buat validasi		
 		$this->db->select('*');
-		$this->db->from('tbl_sasaran_eselon2');
+		$this->db->from('tbl_kegiatan_kl');
 						
 		$query = $this->db->get();
 		$rs = $query->num_rows() ;		
@@ -166,12 +166,23 @@ class Eselon2_model extends CI_Model
 			$this->db->flush_cache();
 			$this->db->where('kode_e2',$kode); //buat validasi		
 			$this->db->select('*');
-			$this->db->from('tbl_ikk');
+			$this->db->from('tbl_sasaran_eselon2');
 							
 			$query = $this->db->get();
 			$rs = $query->num_rows() ;		
 			$query->free_result();
 			$isSave = ($rs==0);
+			if ($isSave){
+				$this->db->flush_cache();
+				$this->db->where('kode_e2',$kode); //buat validasi		
+				$this->db->select('*');
+				$this->db->from('tbl_ikk');
+								
+				$query = $this->db->get();
+				$rs = $query->num_rows() ;		
+				$query->free_result();
+				$isSave = ($rs==0);
+			}
 		}
 		return $isSave;
 	}
@@ -332,6 +343,7 @@ class Eselon2_model extends CI_Model
 		$this->db->select('nama_e2');
 		$this->db->from('tbl_eselon2');
 		$this->db->where('kode_e2', $id);
+		//var_dump($id);die;
 		$query = $this->db->get();
 		
 		return $query->row()->nama_e2;

@@ -11,6 +11,10 @@
 					$("#divProgram<?=$objectId;?>").load(base_url+"rujukan/programkl/loadProgram/"+$("#kode_e1<?=$objectId;?>").val()+"/"+$("#tahun<?=$objectId;?>").val()+"/<?=$objectId;?>");
 			}
 			
+			$("#tahun<?=$objectId;?>").change(function(){
+				onchangeKodeE1<?=$objectId;?>();
+				
+			});
 			$("#kode_e1<?=$objectId;?>").change(function(){
 				onchangeKodeE1<?=$objectId;?>();
 				
@@ -33,7 +37,7 @@
 							
 							$('#dg<?=$objectId;?>').datagrid('reload');	// reload the user data
 							loadTahun<?=$objectId;?>();
-							$('#tt').tabs('close', 'Edit Kegiatan');
+							$('#tt').tabs('close', '<?=($editMode?'Edit':'Add')?> Kegiatan');
 						} else {
 							$.messager.show({
 								title: 'Error',
@@ -44,8 +48,14 @@
 				});
 			}
 			//end saveData
-			
-			//onchangeKodeE1<?=$objectId;?>();
+			cancel<?=$objectId;?>=function(){
+				// reload and close tab
+				$('#dg<?=$objectId;?>').datagrid('reload');
+				$('#tt').tabs('close', 'Edit Kegiatan');					
+			}
+			<?if (!$editMode) {?>
+				onchangeKodeE1<?=$objectId;?>();
+			<?}?>
 		});
 
 	</script>
@@ -93,10 +103,11 @@
 		<div region="north" split="true" title="Edit Data Kegiatan" style="height:450px;">
 				<div region="center" border="true" title="">	
 					<form id="fm<?=$objectId;?>" method="post">
-						
+						<input type="hidden" name="tahun_old" value="<?=$result->tahun?>"/>
+						<input type="hidden" name="kegiatan_old" value="<?=$result->kode_kegiatan?>"/>
 						<div class="fitem">
 							<label style="width:120px">Tahun :</label>
-							<input name="tahun" class="easyui-validatebox year" required="true" value="<?=$result->tahun?>" size="5">
+							<input name="tahun" id="tahun<?=$objectId?>" class="easyui-validatebox year" required="true" value="<?=$result->tahun?>" size="5">
 						</div>					
 						<div class="fitem" >
 							<label style="width:120px">Unit Kerja Eselon I :</label>
@@ -110,7 +121,15 @@
 						</div> 
 						<div class="fitem">
 							<label style="width:120px">Nama Program :</label>
-							<?=$this->programkl_model->getListProgramKL($objectId, array('value'=>$result->kode_program,'tahun'=>$result->tahun,'kode_e1'=>$result->kode_e1))?>
+							<? if (!$editMode){?>
+							<span id="divProgram<?=$objectId;?>">
+							</span>
+							
+							<? }
+							else {
+							 echo $this->programkl_model->getListProgramKL($objectId, array('value'=>$result->kode_program,'tahun'=>$result->tahun,'kode_e1'=>$result->kode_e1));
+							 
+							 }?>
 						</div>
 						<div class="fitem">
 							<label style="width:120px">Kode Kegiatan :</label>
@@ -127,7 +146,9 @@
 						<br>
 						<div class="fitem">
 							<label style="width:120px"></label>
-							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Simpan</a>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Save</a>
+							<label style="width:120px"></label>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Cancel</a>
 						</div>
 					</form>
 				</div>

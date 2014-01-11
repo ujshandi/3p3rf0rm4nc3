@@ -6,12 +6,7 @@ class Programkl extends CI_Controller {
 	{
 		parent::__construct();			
 		
-		//	$userdata = array ('userLogin' => $userLogin,'logged_in' => TRUE,'groupId'=>$this->sys_login_model->groupId,'fullName'=>$this->sys_login_model->fullName,'userId'=>$this->sys_login_model->userId,'groupLevel'=>$this->sys_login_model->level);
-		$userdata = array ('logged_in' => TRUE);
-				//
-		$this->session->set_userdata($userdata);
 				
-		if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/rujukan/programkl_model');
 		$this->load->model('/rujukan/eselon1_model');
@@ -28,12 +23,24 @@ class Programkl extends CI_Controller {
 	public function add(){
 		$data['title'] = 'Add Program';
 		$data['objectId'] = 'programkl';
-	  	$this->load->view('rujukan/programkl_v',$data);
+	  	//$this->load->view('rujukan/programkl_v',$data);
+		$result = new stdClass();
+		
+		$result->tahun = '';
+		$result->kode_e1 = '';
+		$result->kode_program = '';
+		$result->total = '';
+		$result->nama_program = '';
+		
+		$data['result'] = $result;
+		$data['editMode'] = false;
+	  	$this->load->view('rujukan/programkl_v_edit',$data);
 	}
 	
 	public function edit($tahun,$kode_program){
 		$data['title'] = 'Edit Program';	
 		$data['objectId'] = 'programkl';
+		$data['editMode'] = true;
 		$data['result'] = $this->programkl_model->getDataEdit($tahun,$kode_program);
 	  	$this->load->view('rujukan/programkl_v_edit',$data);
 	}
@@ -80,28 +87,47 @@ class Programkl extends CI_Controller {
 		
 		//$data['id_program_kl'] = $this->input->post('id_program_kl');
 		$data['tahun'] = $this->input->post('tahun');
+		$data['tahun_old'] = $this->input->post('tahun_old');
+		
 		$data['kode_e1'] = $this->input->post('kode_e1');
+		$data['kode_program_old'] = $this->input->post('kode_program_old');
 		$data['kode_program'] = $this->input->post('kode_program');
 		$data['nama_program'] = $this->input->post('nama_program');
 		$data['total'] = $this->input->post('total');
 		
 		# insert to tbl_program_kl
-		$result = $this->programkl_model->UpdateOnDB_programKL($data);
+		if ($data['tahun_old']==''||$data['kode_program']=='') {
+			if ($this->programkl_model->isExist($data['tahun'],$data['kode_program'])){
+				$result = false;
+				$msg = 'Kode Program '.$data['kode_program'].'untuk tahun '.$data['tahun'].' sudah ada.';
+			}				
+			else $result = $this->programkl_model->InsertOnDB_programKL($data);
+				
+		}else {
+			if ($this->programkl_model->isExist($data['tahun'],$data['kode_program'],$data['tahun_old'],$data['kode_program_old'])){
+				$result = false;
+				$msg = 'Kode Program '.$data['kode_program'].'untuk tahun '.$data['tahun'].' sudah ada.';
+			}				
+			else $result = $this->programkl_model->UpdateOnDB_programKL($data);
+		}
 		
 		if ($result){
 			echo json_encode(array('success'=>true));
 		} else {
-			echo json_encode(array('msg'=>'Some errors occured!'));
+			echo json_encode(array('msg'=>$msg));
 		}
 	}
 	
-	function delete($tahun='',$kode_program=''){
+	function delete($kode_program='',$tahun=''){
 		if($tahun != ''){
-			$result = $this->programkl_model->DeleteOnDb($tahun,$kode_program);
+			if ($this->programkl_model->isSaveDelete($kode_program,$tahun))
+				$result = $this->programkl_model->DeleteOnDb($tahun,$kode_program);
+			else
+				$result = false;
 			if ($result){
 				echo json_encode(array('success'=>true, 'haha'=>''));
 			} else {
-				echo json_encode(array('msg'=>'Some errors occured uy.', 'data'=> ''));
+				echo json_encode(array('msg'=>'Data tidak bisa dihapus karena sudah digunakan sebagai referensi data lainnya.', 'data'=> ''));
 			}
 		}
 	}

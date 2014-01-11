@@ -51,12 +51,18 @@ class Rpt_rktkl extends CI_Controller {
 		$posY = 11;
 		$posX = 10;
 		
-		 $this->our_pdf->text($posX,$posY,'Rencana Kinerja Kementerian');
+
+
+		 $this->our_pdf->text($posX,$posY,'FORMULIR RENCANA KINERJA TAHUNAN');
+		 $posY += 5;
+		 $this->our_pdf->text($posX,$posY,'TINGKAT KEMENTERIAN/LEMBAGA');
+		 $posY += 10;
+			$this->our_pdf->text($posX,$posY,'Kementerian/Lembaga :	Kementerian Perhubungan');
 		//$this->fpdf->Line(10, 12, 280, 12);
 		if (($filtahun != null)&&($filtahun != "-1")){
 			$posY += 5;
 			$this->our_pdf->setXY($posX,$posY);
-			$this->our_pdf->text($posX,$posY,'Tahun '.$filtahun);
+			$this->our_pdf->text($posX,$posY,'Tahun Anggaran : '.$filtahun);
 		}
 		
 					
@@ -86,7 +92,7 @@ class Rpt_rktkl extends CI_Controller {
 		
 			
 		//$yi = 18;
-		$posY = 34;//44;
+		$posY = 49;//34;//44;
 		$posX = 10;
 		$row = 0;
 		

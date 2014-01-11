@@ -196,7 +196,7 @@
 					onClickCell: function(rowIndex, field, value){
 						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
 						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-						
+						if (row==null) return;
 						switch(field){
 							case "kode_e2":
 								showPopup('#popdesc<?=$objectId?>', row.nama_e2);
@@ -229,6 +229,7 @@
 				$('#ftitle<?=$objectId;?>').html((editmode?"Edit Data ":"View Data ")+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");
 				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+				if (row==null) return;
 				$('#fm<?=$objectId;?>').form('clear');  
 				//alert(row.dokter_kode);
 				if (row){

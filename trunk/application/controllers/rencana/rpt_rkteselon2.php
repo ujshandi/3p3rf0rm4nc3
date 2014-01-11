@@ -51,14 +51,23 @@ class Rpt_rkteselon2 extends CI_Controller {
 		$posX = 10;
 		
 		$e2='';
-		if (($file2 != null)&&($file2 != "-1"))
+		 $this->our_pdf->text($posX,$posY,'FORMULIR RENCANA KINERJA TAHUNAN');
+		 $posY += 5;
+		 $this->our_pdf->text($posX,$posY,'TINGKAT UNIT ORGANISASI ESELON II');
+		 $posY += 10;
+		 
+		if (($file2 != null)&&($file2 != "-1")){
 			$e2=$this->eselon2_model->getNamaE2($file2);
-		 $this->our_pdf->text($posX,$posY,'Rencana Kinerja  '.($e2!=""?$e2:"Eselon II"));
+		 $this->our_pdf->text($posX,$posY,'Unit Organisasi Eselon II : '.$e2);
+		}
+		else{
+			$this->our_pdf->text($posX,$posY,'Unit Organisasi Eselon II : Seluruh Unit Organisasi');
+		}
 		//$this->fpdf->Line(10, 12, 280, 12);
 		if (($filtahun != null)&&($filtahun != "-1")){
 			$posY += 5;
 			$this->our_pdf->setXY($posX,$posY);
-			$this->our_pdf->text($posX,$posY,'Tahun '.$filtahun);
+			$this->our_pdf->text($posX,$posY,'Tahun Anggaran : '.$filtahun);
 		}
 		
 					
@@ -87,7 +96,7 @@ class Rpt_rkteselon2 extends CI_Controller {
 		
 			
 		//$yi = 18;
-		$posY = 34;//44;
+		$posY = 49;//34;//44;
 		$posX = 10;
 		$row = 0;
 		

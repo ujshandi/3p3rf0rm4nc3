@@ -42,6 +42,7 @@
 				$('#ftitle<?=$objectId;?>').html((editmode?"Edit Data ":"View Data ")+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");
 				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+				if (row==null) return;
 				$('#fm<?=$objectId;?>').form('clear');  
 				//alert(row.dokter_kode);
 				if (row){
@@ -159,7 +160,7 @@
 				if ((filtahun == null)||(filtahun == '')) filtahun = "-1";
 				$.ajax({url:base_url+"pengaturan/sasaran_strategis/getNewCode/"+filkl+"/"+filtahun,
 					success : function(data){
-					$("#kode_sasaran_strategis<?=$objectId?>").val(data);
+					$("#kode_sasaran_kl<?=$objectId?>").val(data);
 					}					
 					})
 				

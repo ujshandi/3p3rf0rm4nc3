@@ -7,11 +7,7 @@ class Eselon1 extends CI_Controller {
 		parent::__construct();			
 		
 	//	$userdata = array ('userLogin' => $userLogin,'logged_in' => TRUE,'groupId'=>$this->sys_login_model->groupId,'fullName'=>$this->sys_login_model->fullName,'userId'=>$this->sys_login_model->userId,'groupLevel'=>$this->sys_login_model->level);
-		$userdata = array ('logged_in' => TRUE);
-				//
-		$this->session->set_userdata($userdata);
-				
-		if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
+						
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/rujukan/eselon1_model');
 		$this->load->model('/rujukan/kl_model');
@@ -123,7 +119,7 @@ class Eselon1 extends CI_Controller {
 			}
 		//$pdfdata = $pdfdata->rows;
 		//$pdfhead = array('No.','Kode Eselon I','Kode Kementerian','Nama Unit Kerja','Singkatan','Nama Pimpinan','N I P','Pangkat','Golongan');
-		$pdfhead = array('No.','Nama Unit Kerja','Singkatan','Nama Pimpinan','N I P','Pangkat','Golongan');
+		$pdfhead = array('No.','Kode Unit Kerja','Nama Unit Kerja','Singkatan','Nama Pimpinan','N I P','Pangkat','Golongan');
 		$pdf = new $this->cezpdf($paper='A4',$orientation='landscape');
 		$pdf->ezSetCmMargins(1,1,1,1);
 		$pdf->selectFont( APPPATH."libraries/fonts/Helvetica.afm" );
@@ -149,12 +145,13 @@ class Eselon1 extends CI_Controller {
                  0=>array('justification'=>'center','width'=>25),
 				 //1=>array('width'=>40),
 				 //2=>array('width'=>70),
-				 1=>array('width'=>220),
-				 2=>array('width'=>100),
-				 3=>array('width'=>120),
-				 4=>array('width'=>100),
-				 5=>array('width'=>110),
-				 6=>array('width'=>60),
+				 1=>array('width'=>60),
+				 2=>array('width'=>220),
+				 3=>array('width'=>100),
+				 4=>array('width'=>120),
+				 5=>array('width'=>100),
+				 6=>array('width'=>110),
+				 7=>array('width'=>60),
 				 ),
 			'width'=>'700'
 		);
