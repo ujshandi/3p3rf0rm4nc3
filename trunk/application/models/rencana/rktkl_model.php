@@ -197,6 +197,43 @@ class Rktkl_model extends CI_Model
 		return $out;
 	}
 	
+	public function getListIKU_KL_new($idx,$name,$objectId, $tahun, $sasaran){
+		
+		
+		
+		$this->db->flush_cache();
+		$this->db->select('kode_iku_kl, deskripsi');
+		$this->db->from('tbl_iku_kl');
+		$this->db->where('tahun', $tahun);
+		//ditutup dulu bahas lebih lanjut 
+		$this->db->where('kode_sasaran_kl', $sasaran);
+		$this->db->order_by('kode_iku_kl');
+		$que = $this->db->get();
+		
+		if($que->num_rows() > 0){		
+			$out = '<div id="tcContainer"><input id="kode_iku_kl'.$objectId.$idx.'" name="'.$name.'" type="hidden" class="h_code" value="0">';
+			$out .= '<textarea name="txtkode_iku_kl'.$idx.'" id="txtkode_iku_kl'.$objectId.$idx.'" class="textdown" required="true" readonly>-- Pilih --</textarea>';
+			$out .= '<ul id="drop'.$objectId.$idx.'" class="dropdown">';
+			$out .= '<li value="0" onclick="setIku'.$objectId.'('.$idx.',\'\',\'\')">-- Pilih --</li>';
+			
+			foreach($que->result() as $r){
+				$out .= '<li onclick="setIku'.$objectId.'('.$idx.',\''.$name.'\',\''.$r->kode_iku_kl.'\')">'.$r->deskripsi.'</li>';
+			}
+			$out .= '</ul></div>';
+			
+			//chan
+			if ($que->num_rows()==0){
+				$out = "Data IKU untuk tingkat Eselon 1 ini belum tersedia.";
+			}
+			
+			
+		}else{
+			$out = 'Tidak terdapat IKU pada tahun '.$tahun;
+		}
+		
+		return $out;
+	}
+	
 	public function getIKU_kl($objectId, $tahun,$sasaran){
 		$outOld = '<tr>
 					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
@@ -214,7 +251,7 @@ class Rktkl_model extends CI_Model
 		$out = '<tr>
 					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
 					<td>1</td>
-					<td><span id="divIkuKL1'.$objectId.'">
+					<td><span id="divIKUKL'.$objectId.'_1">
 								</span>
 					</td>
 					<td>

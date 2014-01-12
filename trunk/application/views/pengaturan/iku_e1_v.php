@@ -191,6 +191,25 @@
 					url:getUrl<?=$objectId;?>(1),
 					queryParams:{lastNo:'0'},	
 					pageNumber : 1,
+					onClickCell: function(rowIndex, field, value){
+						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
+						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+						if (row==null) return;	
+						switch(field){
+							case "kode_e1":
+								showPopup('#popdesc<?=$objectId?>', row.nama_e1);
+								break;
+							case "kode_iku_kl":
+								showPopup('#popdesc<?=$objectId?>', row.kl_deskripsi);
+								break;
+							case "kode_sasaran_e1":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e1);
+								break;
+							default:
+								closePopup('#popdesc<?=$objectId?>');
+								break;
+						}
+					},
 					onLoadSuccess:function(data){	
 						$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
@@ -307,28 +326,7 @@
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/iku_e1/grid"});
 			},50);
 			
-			// yanto
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					
-					switch(field){
-						case "kode_e1":
-							showPopup('#popdesc<?=$objectId?>', row.nama_e1);
-							break;
-						case "kode_iku_kl":
-							showPopup('#popdesc<?=$objectId?>', row.kl_deskripsi);
-							break;
-						case "kode_sasaran_e1":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e1);
-							break;
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
+		
 			
 			$("#popdesc<?=$objectId?>").click(function(){
 				closePopup('#popdesc<?=$objectId?>');
@@ -533,7 +531,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Indikator Kinerja Utama (IKU) Eselon I" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Indikator Kinerja Utama (IKU) Eselon I" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
 	  <thead>
 	  <tr>
 		<th field="tahun" sortable="true" width="15px">Tahun</th>

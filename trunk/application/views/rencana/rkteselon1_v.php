@@ -334,7 +334,7 @@
 				<form id="fm<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">
 					<div class="fitem">
 						<label style="width:120px;vertical-align:top">Tahun :</label>
-						<input id="tahun<?=$objectId?>" name="tahun" class="easyui-validatebox" required="true" size="5" maxlength="4">
+						<input id="tahun<?=$objectId?>" name="tahun" class="easyui-validatebox year" required="true" size="5" maxlength="4">
 					</div>
 					<div class="fitem" >
 						<label style="width:120px">Unit Kerja Eselon I :</label>

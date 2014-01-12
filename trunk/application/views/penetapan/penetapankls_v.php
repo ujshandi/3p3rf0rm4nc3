@@ -83,6 +83,29 @@
 					url:getUrl<?=$objectId;?>(1),
 					queryParams:{lastNo:'0'},	
 					pageNumber : 1,
+					onClickCell: function(rowIndex, field, value){
+						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
+						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+						if (row==null) return;
+						//alert(row.deskripsi_iku_kl);
+						switch(field){
+							case "kode_kl":
+								showPopup('#popdesc<?=$objectId?>', row.nama_kl);
+								break;
+							case "kode_sasaran_kl":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
+								break;
+							case "kode_iku_kl":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_kl);
+								break;
+							/* case "kode_kl":
+								showPopup('#popdesc<?=$objectId?>', row.nama_kl);
+								break; */
+							default:
+								closePopup('#popdesc<?=$objectId?>');
+								break;
+						}
+					},
 					onLoadSuccess:function(data){	
 						$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
@@ -142,32 +165,7 @@
 				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>penetapan/penetapankl/grid"});
 			},0);
 			
-			// chan
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					//alert(row.deskripsi_iku_kl);
-					switch(field){
-						case "kode_kl":
-							showPopup('#popdesc<?=$objectId?>', row.nama_kl);
-							break;
-						case "kode_sasaran_kl":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
-							break;
-						case "kode_iku_kl":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_kl);
-							break;
-						/* case "kode_kl":
-							showPopup('#popdesc<?=$objectId?>', row.nama_kl);
-							break; */
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
-			
+						
 			$("#popdesc<?=$objectId?>").click(function(){
 				closePopup('#popdesc<?=$objectId?>');
 			});
@@ -288,7 +286,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Penetapan Kinerja (PK) Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Penetapan Kinerja (PK) Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="id_pk_kl" hidden="true" sortable="true" width="50px">Kode</th>
@@ -306,4 +304,4 @@
 	  </thead>  
 	</table>
 	
-	<div class="popdesc" id="popdesc<?=$objectId?>">pops</div>
+	<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>

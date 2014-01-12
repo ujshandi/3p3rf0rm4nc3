@@ -207,7 +207,7 @@
 					onClickCell: function(rowIndex, field, value){
 						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
 						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-						
+						if (row==null) return;
 						switch(field){
 							case "kode_e2":
 								showPopup('#popdesc<?=$objectId?>', row.nama_e2);
