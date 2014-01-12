@@ -119,13 +119,14 @@
 							<?=$result->satuan?>
 						</div>
 						<br>
-						<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Keluar</a>
+						<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Close</a>
 						&nbsp;&nbsp;&nbsp;
 						<?php if($editmode==TRUE){
 							if ($result->status=='0'){
 							?>
 							
-							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Simpan</a>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Save</a>&nbsp;
+							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Cancel</a>
 							<?}
 							else {
 								echo 'Sudah disahkan';

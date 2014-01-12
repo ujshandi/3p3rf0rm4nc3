@@ -42,7 +42,7 @@ class Ikk extends CI_Controller {
 	
 	function getNewCode($e2,$tahun,$kodesasaran){
 		//fieldName,$tblName,$condition,$prefix,$suffix,$minLength=5
-		$prefix = $this->utility->getValueFromSQL("select prefix_iku as rs from tbl_prefix where kode_e2 = '$e2'","-").$kodesasaran;//UNSET
+		$prefix = $this->utility->getValueFromSQL("select prefix_iku as rs from tbl_prefix where kode_e2 = '$e2'","-").str_replace(".","",$kodesasaran);//UNSET
 		//var_dump($prefix); die;
 		echo $this->utility->ourGetNextIDNum("kode_ikk","tbl_ikk"," and tahun = '$tahun'",$prefix.".","",2);
 	}

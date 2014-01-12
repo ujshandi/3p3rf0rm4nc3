@@ -39,7 +39,7 @@ class User extends CI_Controller {
 	
 	
 	function loadE2($e1){
-		echo $this->user_model->getListUnitKerja("E2",$e1,'<label style="width:120px;vertical-align:top">Unit Kerja Eselon 2:</label>');
+		echo $this->user_model->getListUnitKerja("E2",$e1,'<label style="width:120px;vertical-align:top">Unit Kerja Eselon II:</label>');
 	}
 	
 	//utk auto complete

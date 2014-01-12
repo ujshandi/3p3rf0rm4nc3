@@ -115,8 +115,9 @@ class Penetapaneselon1_model extends CI_Model
 		}		
 		//$this->db->select('distinct tbl_pk_eselon1.*, tbl_iku_eselon1.kode_e1 as pk_kode_e1');
 		$this->db->from('tbl_pk_eselon1');
-		$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_pk_eselon1.tahun','left');
-		$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_pk_eselon1.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_pk_eselon1.tahun','left');
+			$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_pk_eselon1.tahun','left');
+			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_pk_eselon1.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_pk_eselon1.tahun','left');
+			$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_pk_eselon1.kode_e1 ');
 			
 		//$this->db->order_by("tbl_pk_eselon1.tahun DESC, kode_sasaran_e1 ASC, tbl_pk_eselon1.kode_iku_e1 ASC");
 	

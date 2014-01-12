@@ -328,7 +328,7 @@
 				<!-- chan : Jika login superadmin maka tampilkan combo E1 utk nge filter list E2 -->
 					<div class="fitem">
 						<label style="width:120px;vertical-align:top">Tahun :</label>
-						<input id="tahun<?=$objectId?>" name="tahun"  class="easyui-validatebox" required="true" size="5" maxlength="4">
+						<input id="tahun<?=$objectId?>" name="tahun"  class="easyui-validatebox year" required="true" size="5" maxlength="4">
 					</div>					
 					<?// if ($this->session->userdata('unit_kerja_e1')=='-1'){?>
 					<div class="fitem">							

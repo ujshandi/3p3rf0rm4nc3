@@ -118,7 +118,7 @@
 					onClickCell: function(rowIndex, field, value){
 					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
 						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-						
+						if (row==null) return;
 						switch(field){
 							/* case "kode_e1":
 								showPopup('#popdesc<?=$objectId?>', row.nama_e1);
@@ -440,7 +440,7 @@
 		<form id="fm<?=$objectId;?>" method="post">
 			<div class="fitem">
 				<label style="width:120px">Tahun :</label>
-				<input name="tahun" id="tahun<?=$objectId?>" class="easyui-validatebox" required="true" size="5" >
+				<input name="tahun" id="tahun<?=$objectId?>" class="easyui-validatebox year" required="true" size="5" >
 			</div>	
 			<div class="fitem">
 				<label style="width:120px;vertical-align:top">Kementerian :</label>

@@ -107,9 +107,9 @@ class Penetapankl_model extends CI_Model
 		
 		$this->db->select("distinct tbl_pk_kl.*,tbl_iku_kl.deskripsi as deskripsi_iku_kl,tbl_iku_kl.satuan,tbl_sasaran_kl.deskripsi as deskripsi_sasaran_kl, tbl_kl.nama_kl",false);
 		$this->db->from('tbl_pk_kl ');
-		$this->db->join('tbl_iku_kl','tbl_iku_kl.kode_iku_kl = tbl_pk_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_pk_kl.tahun');
-		$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_pk_kl.kode_sasaran_kl');
-		$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_pk_kl.kode_kl');
+			$this->db->join('tbl_iku_kl','tbl_iku_kl.kode_iku_kl = tbl_pk_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_pk_kl.tahun');
+			$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_pk_kl.kode_sasaran_kl and tbl_sasaran_kl.tahun = tbl_pk_kl.tahun');
+			$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_pk_kl.kode_kl');
 		
 		return $this->db->count_all_results();
 		$this->db->free_result();
@@ -151,11 +151,11 @@ class Penetapankl_model extends CI_Model
 					$out .= '</td>';
 				
 					$out .= '<td>';
-						$out .= '<input name="detail['.$i.'][target]" value="'.$row->target.'" readonly="readonly" size="15">';
+						$out .= '<input name="detail['.$i.'][target]" value="'.$this->utility->cekNumericFmt($row->target).'" readonly="readonly" size="15">';
 					$out .= '</td>';
 				
 					$out .= '<td>';
-						$out .= '<input name="detail['.$i.'][penetapan]" value="'.$row->penetapan.'" size="15" '.($row->status=='1'?'readonly="readonly"':'').'>';
+						$out .= '<input name="detail['.$i.'][penetapan]" value="'.$this->utility->cekNumericFmt($row->penetapan).'" size="15" '.($row->status=='1'?'readonly="readonly"':'').'>';
 					$out .= '</td>';
 				
 					$out .= '<td>';
@@ -194,7 +194,7 @@ class Penetapankl_model extends CI_Model
 				$out .= '</td>';
 			
 				$out .= '<td>';
-					$out .= '<input name=detail['.$i.'][target] value="'.$row->target.'" readonly="readonly" size="15">';
+					$out .= '<input name=detail['.$i.'][target] value="'.$this->utility->cekNumericFmt($row->target).'" readonly="readonly" size="15">';
 				$out .= '</td>';
 			
 				$out .= '<td>';
