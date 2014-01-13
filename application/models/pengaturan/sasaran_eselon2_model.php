@@ -266,6 +266,39 @@ class Sasaran_eselon2_model extends CI_Model
 		}
 	}
 	
+	public function copy($data,& $error) {
+		//query insert data	
+		$result = false;		
+		
+		try {
+			$sql = "insert into tbl_sasaran_eselon2(tahun, kode_e2, kode_sasaran_e2, deskripsi, kode_sasaran_e1, 
+	log_insert) select ".$data['tahun_tujuan'].", kode_e2, kode_sasaran_e2, deskripsi, kode_sasaran_e1, '".$this->session->userdata('user_id').';'.date('Y-m-d H:i:s')."'"
+			." from tbl_sasaran_eselon2 "
+			." where tahun = ".$data['tahun']
+			." and kode_e2 = '".$data['kode_e2']."'";
+		//
+			//var_dump($sql);
+			$result = $this->db->query($sql);
+			
+		}
+		catch(Exception $e){
+			$errNo   = $this->db->_error_number();
+			$errMess = $e->getMessage();//$this->db->_error_message();
+			$error = $errMess;
+			log_message("error", "Problem Inserting to : ".$errMess." (".$errNo.")"); 
+		}
+		
+		//var_dump();die;
+		//$result = $this->db->insert('tbl_sasaran_eselon1');
+		
+		//return
+		if($result) {
+			return TRUE;
+		}else {
+			return FALSE;
+		}
+	}
+	
 	public function getListSasaranE2($objectId="",$e2="-1",$data=""){
 		
 		$this->db->flush_cache();
@@ -377,7 +410,7 @@ class Sasaran_eselon2_model extends CI_Model
 		}
 	}
 	
-	public function getListFilterTahun($objectId){
+	public function getListFilterTahun($objectId,$withAll=true){
 		$e2 = $this->session->userdata('unit_kerja_e2');
 		if (($e2!="-1")&&($e2!=null)){
 			$this->db->where('kode_e2',$e2);
@@ -392,7 +425,8 @@ class Sasaran_eselon2_model extends CI_Model
 		$que = $this->db->get();
 		
 		$out = '<select name="filter_tahun'.$objectId.'" id="filter_tahun'.$objectId.'">';
-		$out .= '<option value="-1">Semua</option>';
+		if ($withAll)
+			$out .= '<option value="-1">Semua</option>';
 		foreach($que->result() as $r){
 			$out .= '<option value="'.$r->tahun.'">'.$r->tahun.'</option>';
 		}

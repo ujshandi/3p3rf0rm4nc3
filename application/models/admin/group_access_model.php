@@ -67,6 +67,7 @@ class Group_access_model extends CI_Model
 		  if($data['chkExcel'][$i] != null) $policy .= 'EXCEL;';
 		  if($data['chkImport'][$i] != null) $policy .= 'IMPORT;';
 		  if($data['chkProses'][$i] != null) $policy .= 'PROSES;';
+		  if($data['chkCopy'][$i] != null) $policy .= 'COPY;';
 		  if($data['chkAuto'][$i] != null) $policy .= 'AUTOTAB;';
 		  
 		  $this->db->set('policy',$policy);		  
@@ -132,6 +133,7 @@ class Group_access_model extends CI_Model
 				  <td bgcolor="#F4F4F4" >&nbsp;Excel&nbsp;</td>
 				  <td bgcolor="#F4F4F4" >&nbsp;Import&nbsp;</td>
 				  <td bgcolor="#F4F4F4" >&nbsp;Proses&nbsp;</td>	
+				  <td bgcolor="#F4F4F4" >&nbsp;Copy&nbsp;</td>	
 				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Auto Tab&nbsp;</td>		
 				</tr>';
 		//chan
@@ -147,6 +149,7 @@ class Group_access_model extends CI_Model
 				  <td>&nbsp;</td>
 				  <td>&nbsp;</td>
 				  <td>&nbsp;</td>
+				  <td>&nbsp;</td>			
 				  <td>&nbsp;</td>			
 				  <td>&nbsp;</td>			
 				</tr>';
@@ -176,7 +179,8 @@ class Group_access_model extends CI_Model
 					  <td align="center"><input type="checkbox" id="chkPrint'.$r->menu_group.'" name="chkPrint'.$i.'" >&nbsp;</td>				  
 					  <td align="center"><input type="checkbox" id="chkExcel'.$r->menu_group.'" name="chkExcel'.$i.'" >&nbsp;</td>				  
 					  <td align="center"><input type="checkbox" id="chkImport'.$r->menu_group.'" name="chkImport'.$i.'" >&nbsp;</td>				  
-					  <td align="center"><input type="checkbox" id="chkProses'.$r->menu_group.'" name="chkProses'.$i.'">&nbsp;</td>';				  
+					  <td align="center"><input type="checkbox" id="chkProses'.$r->menu_group.'" name="chkProses'.$i.'">&nbsp;</td>				  
+					  <td align="center"><input type="checkbox" id="chkCopy'.$r->menu_group.'" name="chkCopy'.$i.'">&nbsp;</td>';				  
 				}
 				else {
 				  $tmp .= '<td align="center">'.(strpos($r->policy,'VIEW;')=== false?'':'<input type="checkbox" id="chkView'.$r->menu_group.$i.'" name="chkView'.$i.'" '.(strpos($r->group_policy,'VIEW;')=== false?'':'checked="checked"').'>').'&nbsp;</td>				  
@@ -187,6 +191,7 @@ class Group_access_model extends CI_Model
 				  <td align="center">'.(strpos($r->policy,'EXCEL;')===false?'':'<input type="checkbox" id="chkExcel'.$r->menu_group.$i.'" name="chkExcel'.$i.'" '.(strpos($r->group_policy,'EXCEL;')=== false?'':'checked="checked"').'>').'&nbsp;</td>				  
 				  <td align="center">'.(strpos($r->policy,'IMPORT;')===false?'':'<input type="checkbox" id="chkImport'.$r->menu_group.$i.'" name="chkImport'.$i.'" '.(strpos($r->group_policy,'IMPORT;')=== false?'':'checked="checked"').'>').'&nbsp;</td>				  
 				  <td align="center">'.(strpos($r->policy,'PROSES;')===false?'':'<input type="checkbox" id="chkProses'.$r->menu_group.$i.'" name="chkProses'.$i.'"'.(strpos($r->group_policy,'PROSES;')=== false?'':'checked="checked"').'>').'&nbsp;</td>				  
+				  <td align="center">'.(strpos($r->policy,'COPY;')===false?'':'<input type="checkbox" id="chkCopy'.$r->menu_group.$i.'" name="chkCopy'.$i.'"'.(strpos($r->group_policy,'COPY;')=== false?'':'checked="checked"').'>').'&nbsp;</td>				  
 				  <td align="center">'.(strpos($r->policy,'AUTOTAB;')===false?'':'<input type="checkbox" id="chkAuto'.$r->menu_group.$i.'" class="chkAutoTab" name="chkAuto'.$i.'"'.(strpos($r->group_policy,'AUTOTAB;')=== false?'':'checked="checked"').'>').'&nbsp;</td>';				  
 				}
 				$tmp .= '</tr>';

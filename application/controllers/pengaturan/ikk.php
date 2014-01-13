@@ -27,6 +27,13 @@ class Ikk extends CI_Controller {
 		//$this->load->view('footer_vw',$data);
 	}
 	
+	public function copy(){
+		$data['title'] = 'Copy Data IKK';	
+		$data['objectId'] = 'copyikk';
+		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
+	  	$this->load->view('pengaturan/ikk_copy_v',$data);
+	}
+	
 	function grid($file1=null, $file2=null,$filtahun=null,$filkey=null){
 		if (($file1==null)&&($this->session->userdata('unit_kerja_e1'))!=-1)
 			$file1= $this->session->userdata('unit_kerja_e1');
