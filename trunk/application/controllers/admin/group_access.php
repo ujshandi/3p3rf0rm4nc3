@@ -89,6 +89,7 @@ class Group_access extends CI_Controller{
 			$data["chkExcel"][$i] = $this->input->post('chkExcel'.($i+1), true);
 			$data["chkImport"][$i] = $this->input->post('chkImport'.($i+1), true);
 			$data["chkProses"][$i] = $this->input->post('chkProses'.($i+1), true);				
+			$data["chkCopy"][$i] = $this->input->post('chkCopy'.($i+1), true);				
 			$data["chkAuto"][$i] = $this->input->post('chkAuto'.($i+1), true);				
 		}		
 		return $data;

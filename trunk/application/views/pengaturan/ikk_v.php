@@ -131,6 +131,10 @@
 				url = base_url+'pengaturan/ikk/import'; 
 			}
 			
+			copyData<?=$objectId;?> = function (){
+				addTab("Copy Data IKK", "pengaturan/ikk/copy");
+			}
+			
 			importData<?=$objectId;?>=function(){
 				$('#fmimport<?=$objectId;?>').form('submit',{
 					url: url,
@@ -538,6 +542,9 @@
 			<?}?>
 			<? if($this->sys_menu_model->cekAkses('IMPORT;',36,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
+			<?}?>
+				<? if($this->sys_menu_model->cekAkses('COPY;',36,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+				<a href="#" onclick="copyData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-copy" plain="true">Copy</a>
 			<?}?>
 			<!--<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>-->
 		</div>

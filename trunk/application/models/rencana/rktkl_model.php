@@ -234,7 +234,7 @@ class Rktkl_model extends CI_Model
 		return $out;
 	}
 	
-	public function getIKU_kl($objectId, $tahun,$sasaran){
+	public function getIKU_kl($objectId, $kode_kl,$tahun,$sasaran){
 		$outOld = '<tr>
 					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
 					<td>1</td>
@@ -248,21 +248,63 @@ class Rktkl_model extends CI_Model
 						<input name="detail[1][satuan]" id="satuan1'.$objectId.'" type="text" value="" readonly="true">
 					</td>
 				</tr>';
-		$out = '<tr>
+		$data = $this->getDataExist($kode_kl,$tahun,$sasaran);
+		$out ='';
+		$i=1;
+		if ($data->num_rows()>0) {
+			
+			foreach ($data->result() as $r){
+				$out .= '<tr>
 					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
-					<td>1</td>
-					<td><span id="divIKUKL'.$objectId.'_1">
+					<td>'.$i.'</td>
+					<td><span id="divIKUKL'.$objectId.'_'.$i.'">
 								</span>
 					</td>
 					<td>
-						<input name="detail[1][target]" size="5">
+						<input name="detail['.$i.'][target]" size="10" value="'.$this->utility->cekNumericFmt($r->target).'">
 					</td>
 					<td>
-						<input name="detail[1][satuan]" id="satuan1'.$objectId.'" type="text" value="" readonly="true">
+						<input name="detail['.$i.'][satuan]" id="satuan'.$i.$objectId.'" type="text" value="" readonly="true">
+					</td>
+				</tr>';		
+				$i++;
+			}
+		}
+		
+		$out .= '<tr>
+					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
+					<td>'.$i.'</td>
+					<td><span id="divIKUKL'.$objectId.'_'.$i.'">
+								</span>
+					</td>
+					<td>
+						<input name="detail['.$i.'][target]" size="5">
+					</td>
+					<td>
+						<input name="detail['.$i.'][satuan]" id="satuan'.$i.''.$objectId.'" type="text" value="" readonly="true">
 					</td>
 				</tr>';		
 		
 		return $out;
+	}
+	
+	private function getDataExist($kode_kl,$tahun,$kode_sasaran_kl){		
+		
+		$this->db->flush_cache();
+		$this->db->select("a.id_rkt_kl, a.tahun, a.kode_kl, a.kode_iku_kl, a.kode_sasaran_kl, b.deskripsi, a.target, b.satuan, a.status",false);
+			$this->db->select("c.deskripsi as deskripsi_sasaran_kl, b.deskripsi AS deskripsi_iku_kl, d.nama_kl",false);
+			$this->db->from('tbl_rkt_kl a');
+			$this->db->join('tbl_iku_kl b', 'b.kode_iku_kl = a.kode_iku_kl and b.tahun = a.tahun');
+			$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl and c.tahun = a.tahun');
+			$this->db->join('tbl_kl d', 'd.kode_kl = a.kode_kl');
+			$this->db->order_by("a.tahun DESC, a.kode_sasaran_kl ASC, a.kode_iku_kl ASC");
+		$this->db->where('a.kode_sasaran_kl', $kode_sasaran_kl);		
+		$this->db->where('a.tahun', $tahun);		
+		
+		$query = $this->db->get();
+		
+			
+		return $query;
 	}
 	
 	public function getDataEdit($id){

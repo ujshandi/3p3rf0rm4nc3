@@ -339,7 +339,7 @@ $this->db->set('kode_ikk',$data['kode_ikk']);
 	}
 	
 	
-	public function getListTahun($objectId){
+	public function getListTahun($objectId,$withAll=true){
 		
 		$this->db->flush_cache();
 		$this->db->select('distinct tahun',false);
@@ -354,12 +354,17 @@ $this->db->set('kode_ikk',$data['kode_ikk']);
 		$que = $this->db->get();
 		
 		$out = '<select name="filter_tahun'.$objectId.'" id="filter_tahun'.$objectId.'">';
-		$out .= '<option value="-1">Semua</option>';
+		if ($withAll)
+			$out .= '<option value="-1">Semua</option>';
 		foreach($que->result() as $r){
 			$out .= '<option value="'.$r->tahun.'">'.$r->tahun.'</option>';
 		}
 		
 		$out .= '</select>';
+		
+		if ($que->num_rows()==0){
+			$out = 'Data IKK belum ada.';
+		}
 		
 		echo $out;
 	}

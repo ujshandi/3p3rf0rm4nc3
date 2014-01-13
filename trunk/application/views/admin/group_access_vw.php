@@ -267,9 +267,11 @@
 				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Excel&nbsp;</td>
 				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Import&nbsp;</td>
 				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Proses&nbsp;</td>			  			  
+				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Copy&nbsp;</td>			  			  
 				  <td bgcolor="#F4F4F4" width="10px">&nbsp;Auto Tab&nbsp;</td>			  			  
 				</tr>
 				<tr>
+				  <td>&nbsp;</td>
 				  <td>&nbsp;</td>
 				  <td>&nbsp;</td>
 				  <td>&nbsp;</td>

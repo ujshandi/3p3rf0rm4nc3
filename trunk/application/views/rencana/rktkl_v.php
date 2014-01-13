@@ -172,14 +172,16 @@
 			
 		getListIkuKL<?=$objectId;?> = function(){
 			var tahun = $("#tahun<?=$objectId;?>").val();
+			var kode_kl = $("#kode_kl<?=$objectId;?>").val();
 			var kode_sasaran_kl = $("#kode_sasaran_kl<?=$objectId;?>").val();
 			
+			if (kode_kl==null) kode_kl = "-1";
 			if (kode_sasaran_kl==null) kode_sasaran_kl = "-1";
 				if(tahun.length < 4){
 					$("#tbodyiku<?=$objectId;?>").html('<tr><td colspan="5">Isi Tahun dengan benar</td></tr>');
 				}else{
 					$("#tbodyiku<?=$objectId;?>").load(
-						base_url+"rencana/rktkl/getIKU_kl/"+tahun+"/"+kode_sasaran_kl,function(){
+						base_url+"rencana/rktkl/getIKU_kl/"+kode_kl+"/"+tahun+"/"+kode_sasaran_kl,function(){
 							setIKUKL<?=$objectId;?>(1,tahun,kode_sasaran_kl,"","");
 						}
 					);
