@@ -16,9 +16,16 @@ class Sasaran_strategis extends CI_Controller {
 	}
 	
 	function index(){
-		$data['title'] = 'Sasaran Strategis';		
+		$data['title'] = 'Sasaran Kementerian';		
 		$data['objectId'] = 'SasaranStrategis';
 	  	$this->load->view('pengaturan/sasaran_strategis_v',$data);
+	}
+	
+	public function copy(){
+		$data['title'] = 'Copy Data Sasaran Kementerian';	
+		$data['objectId'] = 'copySasaranStrategis';
+		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
+	  	$this->load->view('pengaturan/sasaran_strategis_copy_v',$data);
 	}
 	
 	function grid($filtahun=null,$filkey=null){
@@ -80,6 +87,29 @@ class Sasaran_strategis extends CI_Controller {
 		
 		if ($result){
 			echo json_encode(array('success'=>true, 'kode'=>$kode));
+		} else {
+			echo json_encode(array('msg'=>$data['pesan_error']));
+		}
+		//echo $status;
+	}
+	
+	function saveCopy($tahun,$tahun_tujuan,$kode_kl){		
+		$status = "";
+		$result = false;		
+		$data['pesan_error'] = '';
+		
+		# validasi
+		# message rules
+		//if ($result){
+			$data['tahun'] = $tahun;
+			$data['tahun_tujuan'] = $tahun_tujuan;
+			$data['kode_kl'] = $kode_kl;
+			
+			$result = $this->sasaran_kl_model->copy($data,$status);
+			$data['pesan_error'] = $status;
+	//	}		
+		if ($result){
+			echo json_encode(array('success'=>true, 'msg'=>"Data Berhasil di copy"));
 		} else {
 			echo json_encode(array('msg'=>$data['pesan_error']));
 		}

@@ -28,7 +28,7 @@
 			newData<?=$objectId;?> = function (){  
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
-				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Sasaran Strategis');
+				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Sasaran Kementerian');
 				$('#fm<?=$objectId;?>').form('clear');  
 
 				url = base_url+'pengaturan/sasaran_strategis/save/add'; 
@@ -46,7 +46,7 @@
 				$('#fm<?=$objectId;?>').form('clear');  
 				//alert(row.dokter_kode);
 				if (row){
-					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Sasaran Strategis');
+					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit Sasaran Kementerian');
 					$('#fm<?=$objectId;?>').form('load',row);
 					$("#kode_strategis<?=$objectId?>").val(row.kode_kl);
 					url = base_url+'pengaturan/sasaran_strategis/save/edit/'+row.kode_sasaran_kl+"/"+row.tahun;//+row.id;//'update_user.php?id='+row.id;
@@ -102,6 +102,11 @@
 			download<?=$objectId;?>=function(){
 				window.location=base_url+"download/format_excel_import/sasaran_kl.xls"
 			}
+			
+			copyData<?=$objectId;?> = function (){
+				addTab("Copy Sasaran Kementerian", "pengaturan/sasaran_strategis/copy");
+			}
+			
 			importData<?=$objectId;?>=function(){
 				$('#fmimport<?=$objectId;?>').form('submit',{
 					url: url,
@@ -130,7 +135,7 @@
 			//end importData
 
 			import<?=$objectId;?> = function (){  
-				$('#dlgimport<?=$objectId;?>').dialog('open').dialog('setTitle','Import Data Sasaran Strategis');
+				$('#dlgimport<?=$objectId;?>').dialog('open').dialog('setTitle','Import Data Sasaran Kementerian');
 				$('#fmimport<?=$objectId;?>').form('clear');  
 				url = base_url+'pengaturan/sasaran_strategis/import'; 
 			}
@@ -335,11 +340,14 @@
 			<? if($this->sys_menu_model->cekAkses('IMPORT;',31,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
 			<?}?>
+			<? if($this->sys_menu_model->cekAkses('COPY;',31,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+				<a href="#" onclick="copyData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-copy" plain="true">Copy</a>
+			<?}?>
 		<!--	<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>-->
 		</div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Sasaran Strategis" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Sasaran Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 		<thead>
 			<tr>
 				<th field="kode_kl" sortable="true" width="15" hidden="true">Kode KL</th>
@@ -353,7 +361,7 @@
 	 <!-- AREA untuk Form Add/Edit >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  -->
 	<div id="dlg<?=$objectId;?>" class="easyui-dialog" style="width:800px;height:350px;padding:10px 20px" closed="true" buttons="#dlg-buttons">
 		<!----------------Edit title-->
-		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Sasaran Strategis</div>
+		<div id="ftitle<?=$objectId?>" class="ftitle">Add/Edit/View Data Sasaran Kementerian</div>
 		<form id="fm<?=$objectId;?>" method="post">		
 			<div class="fitem">
 				<label style="width:150px;vertical-align:top">Tahun :</label>

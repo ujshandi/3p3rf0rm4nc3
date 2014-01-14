@@ -267,6 +267,39 @@ class Sasaran_eselon1_model extends CI_Model
 		}
 	}
 	
+	public function copy($data,& $error) {
+		//query insert data	
+		$result = false;		
+		
+		try {
+			$sql = "insert into tbl_sasaran_eselon1(tahun, kode_e1, kode_sasaran_e1, deskripsi, kode_sasaran_kl, 
+	log_insert) select ".$data['tahun_tujuan'].", kode_e1, kode_sasaran_e1, deskripsi, kode_sasaran_kl, '".$this->session->userdata('user_id').';'.date('Y-m-d H:i:s')."'"
+			." from tbl_sasaran_eselon1 "
+			." where tahun = ".$data['tahun']
+			." and kode_e1 = '".$data['kode_e1']."'";
+		//
+			//var_dump($sql);
+			$result = $this->db->query($sql);
+			
+		}
+		catch(Exception $e){
+			$errNo   = $this->db->_error_number();
+			$errMess = $e->getMessage();//$this->db->_error_message();
+			$error = $errMess;
+			log_message("error", "Problem Inserting to : ".$errMess." (".$errNo.")"); 
+		}
+		
+		//var_dump();die;
+		//$result = $this->db->insert('tbl_sasaran_eselon1');
+		
+		//return
+		if($result) {
+			return TRUE;
+		}else {
+			return FALSE;
+		}
+	}
+	
 	public function getListSasaranE1($objectId="",$e1="-1", $data=""){
 		
 		$this->db->flush_cache();

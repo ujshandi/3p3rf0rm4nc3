@@ -132,29 +132,20 @@ class Sasaran_eselon2 extends CI_Controller {
 		//echo $status;
 	}
 	
-	function saveCopy($tahun, $kode_e1, $kode_e2,$tahun_tujuan){
-		
-		
+	function saveCopy($tahun, $kode_e1, $kode_e2,$tahun_tujuan){		
 		$status = "";
-		$result = false;
-		
+		$result = false;		
 		$data['pesan_error'] = '';
 		
 		# validasi
-		
-		
 		# message rules
-		
-		
 		//if ($result){
 			$data['tahun'] = $tahun;
 			$data['tahun_tujuan'] = $tahun_tujuan;
 			$data['kode_e2'] = $kode_e2;
 			$result = $this->sasaran_eselon2_model->copy($data,$status);
 			$data['pesan_error'] = $status;
-	//	}
-		
-		
+	//	}		
 		if ($result){
 			echo json_encode(array('success'=>true, 'msg'=>"Data Berhasil di copy"));
 		} else {
