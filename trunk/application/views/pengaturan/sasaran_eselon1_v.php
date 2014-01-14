@@ -126,6 +126,10 @@
 				window.location=base_url+"download/format_excel_import/sasaran_e1.xls"
 			}
 			
+			copyData<?=$objectId;?> = function (){
+				addTab("Copy Sasaran Eselon I", "pengaturan/sasaran_eselon1/copy");
+			}
+			
 			importData<?=$objectId;?>=function(){
 			
 				$('#fmimport<?=$objectId;?>').form('submit',{
@@ -438,6 +442,9 @@
 			
 			<? if($this->sys_menu_model->cekAkses('IMPORT;',32,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
+			<?}?>
+			<? if($this->sys_menu_model->cekAkses('COPY;',32,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+				<a href="#" onclick="copyData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-copy" plain="true">Copy</a>
 			<?}?>
 			<!--<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a>-->
 		</div>

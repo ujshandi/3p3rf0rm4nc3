@@ -141,8 +141,10 @@ class Ikk extends CI_Controller {
 		
 	}
 	
-	public function getListTahun($objectId=null){
-		echo $this->ikk_model->getListTahun($objectId);
+	public function getListTahun($objectId=null,$withAll=true){
+		if ($withAll=="false")
+			$withAll = false;
+		echo $this->ikk_model->getListTahun($objectId,$withAll);
 	}
 
 	public function excel($file1=null,$file2=null,$filtahun=null,$filkey=null){

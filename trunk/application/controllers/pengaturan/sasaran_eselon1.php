@@ -27,6 +27,13 @@ class Sasaran_eselon1 extends CI_Controller {
 		//$this->load->view('footer_vw',$data);
 	}
 	
+	public function copy(){
+		$data['title'] = 'Copy Data Sasaran Eselon I';	
+		$data['objectId'] = 'copySasaranEselon';
+		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
+	  	$this->load->view('pengaturan/sasaran_eselon1_copy_v',$data);
+	}
+	
 	function grid($file1=null,$filtahun=null,$filkey=null){
 		if (($file1==null)&&($this->session->userdata('unit_kerja_e1'))!=-1)
 			$file1= $this->session->userdata('unit_kerja_e1');
@@ -115,6 +122,28 @@ class Sasaran_eselon1 extends CI_Controller {
 			echo json_encode(array('msg'=>$data['pesan_error']));
 		}
 		
+	}
+	
+	function saveCopy($tahun, $kode_e1,$tahun_tujuan){		
+		$status = "";
+		$result = false;		
+		$data['pesan_error'] = '';
+		
+		# validasi
+		# message rules
+		//if ($result){
+			$data['tahun'] = $tahun;
+			$data['tahun_tujuan'] = $tahun_tujuan;
+			$data['kode_e1'] = $kode_e1;
+			$result = $this->sasaran_eselon1_model->copy($data,$status);
+			$data['pesan_error'] = $status;
+	//	}		
+		if ($result){
+			echo json_encode(array('success'=>true, 'msg'=>"Data Berhasil di copy"));
+		} else {
+			echo json_encode(array('msg'=>$data['pesan_error']));
+		}
+		//echo $status;
 	}
 		
 	function delete($tahun, $kode_sasaran_e1){
