@@ -147,6 +147,10 @@
 				window.open(getUrl<?=$objectId;?>(3));;
 			}
 			
+			copyData<?=$objectId;?> = function (){
+				addTab("Copy IKU Kementerian", "pengaturan/iku_kl/copy");
+			}
+			
 			editData<?=$objectId;?> = function (editmode){
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html((editmode?"Edit Data ":"View Data ")+"<?=$title?>");
@@ -409,6 +413,9 @@
 			<?}?>
 			<? if($this->sys_menu_model->cekAkses('IMPORT;',34,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
+			<?}?>
+			<? if($this->sys_menu_model->cekAkses('COPY;',34,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+				<a href="#" onclick="copyData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-copy" plain="true">Copy</a>
 			<?}?>
 		<!--	<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a> -->
 		</div>

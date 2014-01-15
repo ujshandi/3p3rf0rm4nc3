@@ -266,7 +266,39 @@ class Iku_kl_model extends CI_Model
 		}
 	}
 	
-	public function getListTahun($objectId){
+	function copy($data,& $error) {
+		//query insert data	
+		$result = false;		
+		
+		try {
+			$sql = "insert into tbl_iku_kl(tahun,kode_kl,  kode_iku_kl, deskripsi, satuan,kode_sasaran_kl, log_insert) select ".$data['tahun_tujuan'].", kode_kl,  kode_iku_kl, deskripsi, satuan,kode_sasaran_kl,  '".$this->session->userdata('user_id').';'.date('Y-m-d H:i:s')."'"
+			." from tbl_iku_kl"
+			." where tahun = ".$data['tahun']
+			." and kode_kl = '".$data['kode_kl']."'";
+		//
+			//var_dump($sql);
+			$result = $this->db->query($sql);
+			
+		}
+		catch(Exception $e){
+			$errNo   = $this->db->_error_number();
+			$errMess = $e->getMessage();//$this->db->_error_message();
+			$error = $errMess;
+			log_message("error", "Problem Inserting to : ".$errMess." (".$errNo.")"); 
+		}
+		
+		//var_dump();die;
+		//$result = $this->db->insert('tbl_sasaran_eselon1');
+		
+		//return
+		if($result) {
+			return TRUE;
+		}else {
+			return FALSE;
+		}
+	}
+	
+	public function getListTahun($objectId,$withAll=true){
 		
 		$this->db->flush_cache();
 		$this->db->select('distinct tahun',false);
@@ -277,7 +309,8 @@ class Iku_kl_model extends CI_Model
 		$que = $this->db->get();
 		
 		$out = '<select name="filter_tahun'.$objectId.'" id="filter_tahun'.$objectId.'">';
-		$out .= '<option value="-1">Semua</option>';
+		if ($withAll)
+			$out .= '<option value="-1">Semua</option>';
 		foreach($que->result() as $r){
 			$out .= '<option value="'.$r->tahun.'">'.$r->tahun.'</option>';
 		}

@@ -125,6 +125,10 @@
 				url = base_url+'pengaturan/iku_e1/import'; 
 			}
 			
+			copyData<?=$objectId;?> = function (){
+				addTab("Copy IKU Eselon I", "pengaturan/iku_e1/copy");
+			}
+			
 			importData<?=$objectId;?>=function(){
 				$('#fmimport<?=$objectId;?>').form('submit',{
 					url: url,
@@ -526,6 +530,9 @@
 		<?}?>
 		<? if($this->sys_menu_model->cekAkses('IMPORT;',35,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="import<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-import" plain="true">Import</a>
+		<?}?>
+		<? if($this->sys_menu_model->cekAkses('COPY;',35,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+			<a href="#" onclick="copyData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-copy" plain="true">Copy</a>
 		<?}?>
 		<!--<a href="#" onclick="download<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-download" plain="true">Download Format Excel</a> -->
 	  </div>

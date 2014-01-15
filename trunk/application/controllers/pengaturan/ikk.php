@@ -123,7 +123,29 @@ class Ikk extends CI_Controller {
 		}
 //		echo $status;
 		
+	}
+	
+	function saveCopy($tahun, $kode_e1, $kode_e2,$tahun_tujuan){		
+		$status = "";
+		$result = false;		
+		$data['pesan_error'] = '';
+		
+		# validasi
+		# message rules
+		//if ($result){
+			$data['tahun'] = $tahun;
+			$data['tahun_tujuan'] = $tahun_tujuan;
+			$data['kode_e2'] = $kode_e2;
+			$result = $this->ikk_model->copy($data,$status);
+			$data['pesan_error'] = $status;
+	//	}		
+		if ($result){
+			echo json_encode(array('success'=>true, 'msg'=>"Data Berhasil di copy"));
+		} else {
+			echo json_encode(array('msg'=>$data['pesan_error']));
 		}
+		//echo $status;
+	}
 		
 	function delete($tahun, $kode_ikk){
 		# cek keberadaan di RKT
