@@ -311,6 +311,41 @@ $this->db->set('kode_ikk',$data['kode_ikk']);
 			return FALSE;
 		}
 	}
+	
+	
+	function copy($data,& $error) {
+		//query insert data	
+		$result = false;		
+		
+		try {
+			$sql = "insert into tbl_ikk(tahun, kode_ikk, deskripsi, satuan, kode_iku_e1, kode_e2, kode_sasaran_e2, 
+	log_insert) select ".$data['tahun_tujuan'].", kode_ikk, deskripsi, satuan, kode_iku_e1,kode_e2, kode_sasaran_e2,  '".$this->session->userdata('user_id').';'.date('Y-m-d H:i:s')."'"
+			." from tbl_ikk"
+			." where tahun = ".$data['tahun']
+			." and kode_e2 = '".$data['kode_e2']."'";
+		//
+			//var_dump($sql);
+			$result = $this->db->query($sql);
+			
+		}
+		catch(Exception $e){
+			$errNo   = $this->db->_error_number();
+			$errMess = $e->getMessage();//$this->db->_error_message();
+			$error = $errMess;
+			log_message("error", "Problem Inserting to : ".$errMess." (".$errNo.")"); 
+		}
+		
+		//var_dump();die;
+		//$result = $this->db->insert('tbl_sasaran_eselon1');
+		
+		//return
+		if($result) {
+			return TRUE;
+		}else {
+			return FALSE;
+		}
+	}
+	
 
 	public function getListIKK($objectId=""){
 		

@@ -282,6 +282,38 @@ class Iku_e1_model extends CI_Model
 	}
 	
 	
+	function copy($data,& $error) {
+		//query insert data	
+		$result = false;		
+		
+		try {
+			$sql = "insert into tbl_iku_eselon1(tahun, kode_e1, kode_iku_e1, kode_iku_kl, deskripsi, satuan, kode_sasaran_e1, log_insert) select ".$data['tahun_tujuan'].", kode_e1, kode_iku_e1, kode_iku_kl, deskripsi, satuan, kode_sasaran_e1,  '".$this->session->userdata('user_id').';'.date('Y-m-d H:i:s')."'"
+			." from tbl_iku_eselon1"
+			." where tahun = ".$data['tahun']
+			." and kode_e1 = '".$data['kode_e1']."'";
+		//
+			//var_dump($sql);
+			$result = $this->db->query($sql);
+			
+		}
+		catch(Exception $e){
+			$errNo   = $this->db->_error_number();
+			$errMess = $e->getMessage();//$this->db->_error_message();
+			$error = $errMess;
+			log_message("error", "Problem Inserting to : ".$errMess." (".$errNo.")"); 
+		}
+		
+		//var_dump();die;
+		//$result = $this->db->insert('tbl_sasaran_eselon1');
+		
+		//return
+		if($result) {
+			return TRUE;
+		}else {
+			return FALSE;
+		}
+	}
+	
 	
 	public function getListTahun($objectId){
 		

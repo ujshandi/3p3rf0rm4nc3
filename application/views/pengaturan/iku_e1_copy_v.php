@@ -4,40 +4,13 @@
 			$('textarea').autosize();   
 			loadTahun<?=$objectId;?> = function (){
 				$('#divTahun<?=$objectId;?>').load(
-					base_url+"pengaturan/ikk/getListTahun/<?=$objectId;?>"+"/false"
+					base_url+"pengaturan/iku_e1/getListTahun/<?=$objectId;?>"+"/false"
 				);
 			}
 			
 			loadTahun<?=$objectId;?>();
 			
 			
-			
-			//chan=============================================
-			 function setListE2<?=$objectId?>(){
-				$("#divEselon2<?=$objectId?>").load(
-					base_url+"rujukan/eselon2/loadE2/"+$("#kode_e1<?=$objectId?>").val()+"/<?=$objectId;?>",
-					//on complete
-					function (){
-						//setSasaranE2<?=$objectId?>($("#kode_e2<?=$objectId?>").val());
-						/* $("#kode_e2<?=$objectId?>").change(function(){
-							setSasaranE2<?=$objectId?>($(this).val());
-						});	
-						setSasaranE2<?=$objectId?>($("#kode_e2<?=$objectId?>").val()); */
-						
-						 $("#kode_e2<?=$objectId?>").change(function(){
-							setSasaranE2<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e2<?=$objectId?>").val(),"");
-							setKodeOtomatis<?=$objectId?>();
-							
-						 });
-						 
-						$('#kode_e2<?=$objectId;?>').val('<?=$this->session->userdata('unit_kerja_e2');?>');
-						setSasaranE2<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e2<?=$objectId?>").val(),"");
-						 setKodeOtomatis<?=$objectId?>();
-					}
-				);
-				
-			//	setIKUE1<?=$objectId;?>($("#kode_e1<?=$objectId?>").val());
-			 }
 			 
 			 
 			 $("#tahun<?=$objectId;?>").change(function(){
@@ -45,12 +18,12 @@
 			});
 			  
 			cancel<?=$objectId?> = function(){
-				$('#tt').tabs('close', 'Copy Data IKK');	
+				$('#tt').tabs('close', 'Copy IKU Eselon I');	
 			}
 			
 			
 			copyData<?=$objectId;?> = function (){
-				addTab("Copy Data IKK", "pengaturan/ikk/copy");
+				addTab("Copy IKU Eselon I", "pengaturan/iku_e1/copy");
 			}
 			
 			
@@ -58,11 +31,6 @@
 			
 			clearFilter<?=$objectId;?> = function (){
 				$("#filter_e1<?=$objectId;?>").val('-1');
-				<? if ($this->session->userdata('unit_kerja_e1')==-1) {?>
-				$("#filter_e2<?=$objectId;?>").empty().append('<option value="-1">Semua</option>');		
-				<?} else if (($this->session->userdata('unit_kerja_e1')!=null)&&($this->session->userdata('unit_kerja_e1')!=-1)) {?>
-				$("#filter_e2<?=$objectId;?>").val('-1');
-				<?}?>
 				$("#filter_tahun<?=$objectId;?>").val('');	
 				searchData<?=$objectId;?>();
 			}
@@ -73,11 +41,6 @@
 				<?} else {?>
 					var file1 = "<?=$this->session->userdata('unit_kerja_e1');?>";
 				<?}?>
-				<? if ($this->session->userdata('unit_kerja_e2')==-1){?>
-					var file2 = $("#filter_e2<?=$objectId;?>").val();
-				<?} else {?>
-					var file2 = "<?=$this->session->userdata('unit_kerja_e2');?>";
-				<?}?>
 				if (tipe==4)
 					var filtahun = $("#filter_tahun_tujuan<?=$objectId;?>").val();
 				else	
@@ -85,20 +48,20 @@
 				var filkey = '-1';//$("#key<?=$objectId;?>").val();
 				
 				if (file1 == "-1") file1 = "-2";
-				if ((file2 == null)||(file2 == "-1")) file2 = "-2";
+				
 				if ((filtahun == null)||(filtahun == "")) filtahun = "-2";
 				
 				if (filkey == null) filkey = "-1";
 				
 				if (tipe==1){
-					return "<?=base_url()?>pengaturan/ikk/grid/"+file1+"/"+file2+"/"+filtahun+"/"+filkey;
+					return "<?=base_url()?>pengaturan/iku_e1/grid/"+file1+"/"+filtahun+"/"+filkey;
 				}
 				else if (tipe==2){
-					return "<?=base_url()?>pengaturan/ikk/pdf/"+file1+"/"+file2+"/"+filtahun+"/"+filkey;
+					return "<?=base_url()?>pengaturan/iku_e1/pdf/"+file1+"/"+filtahun+"/"+filkey;
 				}else if (tipe==3){
-					return "<?=base_url()?>pengaturan/ikk/excel/"+file1+"/"+file2+"/"+filtahun+"/"+filkey;
+					return "<?=base_url()?>pengaturan/iku_e1/excel/"+file1+"/"+filtahun+"/"+filkey;
 				}else if (tipe==4){
-					return "<?=base_url()?>pengaturan/ikk/grid/"+file1+"/"+file2+"/"+filtahun+"/"+filkey;
+					return "<?=base_url()?>pengaturan/iku_e1/grid/"+file1+"/"+filtahun+"/"+filkey;
 				}
 			}
 			
@@ -113,14 +76,14 @@
 						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 						if (row==null) return;
 						switch(field){
-							case "kode_e2":
-								showPopup('#popdesc<?=$objectId?>', row.nama_e2);
+							case "kode_e1":
+								showPopup('#popdesc<?=$objectId?>', row.nama_e1);
 								break;
-							case "kode_iku_e1":
+							case "kode_iku_kl":
 								showPopup('#popdesc<?=$objectId?>', row.e1_deskripsi);
 								break;
-							case "kode_sasaran_e2":
-								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e2);
+							case "kode_sasaran_e1":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e1);
 								break;
 							default:
 								closePopup('#popdesc<?=$objectId?>');
@@ -145,14 +108,14 @@
 						var row = $('#dgCopy<?=$objectId;?>').datagrid('getSelected');
 						if (row==null) return;
 						switch(field){
-							case "kode_e2":
-								showPopup('#popdesc2<?=$objectId?>', row.nama_e2);
+							case "kode_e1":
+								showPopup('#popdesc2<?=$objectId?>', row.nama_e1);
 								break;
-							case "kode_iku_e1":
+							case "kode_iku_kl":
 								showPopup('#popdesc2<?=$objectId?>', row.e1_deskripsi);
 								break;
-							case "kode_sasaran_e2":
-								showPopup('#popdesc2<?=$objectId?>', row.deskripsi_sasaran_e2);
+							case "kode_sasaran_e1":
+								showPopup('#popdesc2<?=$objectId?>', row.deskripsi_sasaran_e1);
 								break;
 							default:
 								closePopup('#popdesc2<?=$objectId?>');
@@ -173,17 +136,13 @@
 				<?} else {?>
 					var file1 = "<?=$this->session->userdata('unit_kerja_e1');?>";
 				<?}?>
-				<? if ($this->session->userdata('unit_kerja_e2')==-1){?>
-					var file2 = $("#filter_e2<?=$objectId;?>").val();
-				<?} else {?>
-					var file2 = "<?=$this->session->userdata('unit_kerja_e2');?>";
-				<?}?>
+				
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();				
 				var filtahuntujuan = $("#filter_tahun_tujuan<?=$objectId;?>").val();				
 				if (filtahun == null) filtahun = "-1";				
 				if ((filtahuntujuan == null)||(filtahuntujuan == "")) filtahuntujuan = "-1";				
 				if (file1 == null) file1 = "-1";
-				if (file2 == null) file2 = "-1";
+				
 				
 				var result = false;
 				var pesan = '';
@@ -201,9 +160,7 @@
 					$("#filter_tahun_tujuan<?=$objectId?>").focus();
 				}
 				else if (file1=="-1")
-					pesan = 'Unit kerja Eselon I belum ditentukan.';
-				else if (file2=="-1")
-					pesan = 'Unit kerja Eselon II belum ditentukan.';	
+					pesan = 'Unit kerja Eselon I belum ditentukan.';				
 				else
 				  result = true;
 				
@@ -215,7 +172,7 @@
 							return;
 				}
 				$('#fm<?=$objectId;?>').form('submit',{
-					url: base_url+'pengaturan/ikk/saveCopy/'+filtahun+'/'+file1+'/'+file2+'/'+filtahuntujuan,
+					url: base_url+'pengaturan/iku_e1/saveCopy/'+filtahun+'/'+file1+'/'+filtahuntujuan,
 					onSubmit: function(){
 						return $(this).form('validate');
 					},
@@ -246,19 +203,12 @@
 			}
 			
 			
-			setFilterE2<?=$objectId?> = function(){
-					
-				$("#divUnitKerja<?=$objectId;?>").load(base_url+"rujukan/eselon2/loadFilterE2/"+$("#filter_e1<?=$objectId;?>").val()+"/<?=$objectId;?>");
-			}
-			$("#filter_e1<?=$objectId;?>").change(function(){
-				setFilterE2<?=$objectId?>();
 			
-			});
 			setTimeout(function(){
-				setFilterE2<?=$objectId?>();
+			
 				searchData<?=$objectId;?> ();
 				searchDataCopy<?=$objectId;?> ();
-				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/ikk/grid"});
+				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>pengaturan/iku_e1/grid"});
 			},50);
 			
 			
@@ -355,21 +305,14 @@
 						<td>Tahun Tujuan :</td>
 						<td><input name="filter_tahun_tujuan" id="filter_tahun_tujuan<?=$objectId?>"  class="easyui-validatebox year" required="true" size="5" maxlength="4"></td>
 					</tr>
-					<? //if ($this->session->userdata('unit_kerja_e1')==-1){?>
+					
 					<tr>
 						<td>Unit Kerja Eselon I :</td>
 						<td>
 							<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'),false)?>				
 						</td>
 					</tr>
-					<?//}?>
-					<tr>
-						<td>Unit Kerja Eselon II :</td>
-						<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
-							<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
-						</span>
-						</td>
-					</tr>
+					
 				
 					<tr>
 						<td align="right" colspan="2" valign="top">
@@ -389,10 +332,10 @@
 	
 	
 	<div id="tab<?=$objectId?>" class="easyui-tabs" style="width:auto;height:auto;">
-		<div title="Data IKK" style="padding:10px;">
+		<div title="Data IKU Eselon I" style="padding:10px;">
 			<div id="tb<?=$objectId;?>" style="margin-bottom:5px">  
 			
-				<? if($this->sys_menu_model->cekAkses('COPY;',36,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+				<? if($this->sys_menu_model->cekAkses('COPY;',35,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="saveCopy<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-copy" plain="true">Copy</a>
 				<a href="#" onclick="cancel<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-cancel" plain="true">Cancel</a>
 			<?}?>
@@ -402,40 +345,38 @@
 			<thead>
 				<tr>
 					<th field="tahun" sortable="true" width="15px">Tahun</th>
-					<th field="kode_e2" sortable="true" width="25"<?=($this->session->userdata('unit_kerja_e2')=='-1'?'':'hidden="true"')?>>Kode Eselon II</th>
+					<th field="kode_e1" sortable="true" width="30"  <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'hidden="true"')?>>Kode Eselon I</th>
+					<th field="nama_e1" sortable="true" hidden="true" >Nama</th>
+					<th field="kode_sasaran_e1" sortable="true" width="35">Sasaran Eselon I</th>	
+					<!--<th field="kode_e2" sortable="true" width="30"  hidden="true">Kode Eselon II</th> -->
+					<th field="kode_iku_e1" sortable="true" width="35">Kode IKU</th>
+					<th field="deskripsi" sortable="true" width="125">Deskripsi IKU</th>
+					<th field="satuan" sortable="true" width="20">Satuan</th>	
+					<th field="kode_iku_kl" sortable="true" width="20">Kode IKU KL</th>	
+					<th field="kl_deskripsi" sortable="true" hidden="true">Kode IKU KL</th>	
 					
-					<th field="nama_e2" hidden="true">Nama</th>
-					<th field="kode_e1" sortable="true" width="35" hidden="true">Kode E1</th>
-					<th field="kode_sasaran_e2" sortable="true"  width="35">Sasaran Eselon II</th>
-					<th field="kode_ikk" sortable="true" width="35">Kode IKK</th>
-					<th field="deskripsi" sortable="true" width="125">Deskripsi</th>
-					<th field="satuan" sortable="true" width="20">Satuan</th>
-					<th field="kode_iku_e1" sortable="true" width="30">Kode IKU Eselon I</th>
-					<th field="e1_deskripsi" hidden="true">desk</th>
-					
-					<th field="deskripsi_sasaran_e2" hidden="true">desk</th>
+					<th field="deskripsi_sasaran_e1" sortable="true" hidden="true">kode sasaran e1</th>	
 				</tr>
 			</thead>  
 			</table>
 			<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>
 		</div>
-		<div title="Data IKK Hasil Copy atau Data Tahun Tujuan" style="padding:10px;">
+		<div title="Data IKU Eselon I Hasil Copy atau Data Tahun Tujuan" style="padding:10px;">
 			<table id="dgCopy<?=$objectId;?>" style="height:auto;width:auto"  fitColumns="true" singleSelect="true" rownumbers="true" pagination="true"  nowrap="false">
 			<thead>
 				<tr>
 					<th field="tahun" sortable="true" width="15px">Tahun</th>
-					<th field="kode_e2" sortable="true" width="25"<?=($this->session->userdata('unit_kerja_e2')=='-1'?'':'hidden="true"')?>>Kode Eselon II</th>
+					<th field="kode_e1" sortable="true" width="30"  <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'hidden="true"')?>>Kode Eselon I</th>
+					<th field="nama_e1" sortable="true" hidden="true" >Nama</th>
+					<th field="kode_sasaran_e1" sortable="true" width="35">Sasaran Eselon I</th>	
+					<!--<th field="kode_e2" sortable="true" width="30"  hidden="true">Kode Eselon II</th> -->
+					<th field="kode_iku_e1" sortable="true" width="35">Kode IKU</th>
+					<th field="deskripsi" sortable="true" width="125">Deskripsi IKU</th>
+					<th field="satuan" sortable="true" width="20">Satuan</th>	
+					<th field="kode_iku_kl" sortable="true" width="20">Kode IKU KL</th>	
+					<th field="kl_deskripsi" sortable="true" hidden="true">Kode IKU KL</th>	
 					
-					<th field="nama_e2" hidden="true">Nama</th>
-					<th field="kode_e1" sortable="true" width="35" hidden="true">Kode E1</th>
-					<th field="kode_sasaran_e2" sortable="true"  width="35">Sasaran Eselon II</th>
-					<th field="kode_ikk" sortable="true" width="35">Kode IKK</th>
-					<th field="deskripsi" sortable="true" width="125">Deskripsi</th>
-					<th field="satuan" sortable="true" width="20">Satuan</th>
-					<th field="kode_iku_e1" sortable="true" width="30">Kode IKU Eselon I</th>
-					<th field="e1_deskripsi" hidden="true">desk</th>
-					
-					<th field="deskripsi_sasaran_e2" hidden="true">desk</th>
+					<th field="deskripsi_sasaran_e1" sortable="true" hidden="true">kode sasaran e1</th>	
 				</tr>
 			</thead>  
 			</table>

@@ -25,6 +25,13 @@ class Iku_kl extends CI_Controller {
 		//$this->load->view('footer_vw',$data);
 	}
 	
+	public function copy(){
+		$data['title'] = 'Copy Data IKU Kementerian';	
+		$data['objectId'] = 'copyiku_kl';
+		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
+	  	$this->load->view('pengaturan/iku_kl_copy_v',$data);
+	}
+	
 	function grid($file1=null,$filtahun=null,$filkey=null){
 		/*
 		//decode filter
@@ -109,6 +116,28 @@ class Iku_kl extends CI_Controller {
 		
 	}
 	
+	function saveCopy($tahun,$tahun_tujuan, $kode_kl){		
+		$status = "";
+		$result = false;		
+		$data['pesan_error'] = '';
+		
+		# validasi
+		# message rules
+		//if ($result){
+			$data['tahun'] = $tahun;
+			$data['tahun_tujuan'] = $tahun_tujuan;
+			$data['kode_kl'] = $kode_kl;
+			$result = $this->iku_kl_model->copy($data,$status);
+			$data['pesan_error'] = $status;
+	//	}		
+		if ($result){
+			echo json_encode(array('success'=>true, 'msg'=>"Data Berhasil di copy"));
+		} else {
+			echo json_encode(array('msg'=>$data['pesan_error']));
+		}
+		//echo $status;
+	}
+	
 	function delete($tahun, $kode_iku_kl){
 		# cek keberadaan di RKT
 		// jika ada di RKT
@@ -133,8 +162,10 @@ class Iku_kl extends CI_Controller {
 		echo $this->utility->ourGetNextIDNum("kode_iku_kl","tbl_iku_kl"," and tahun = '$tahun'",$prefix.".","",2);
 	}
 	
-	public function getListTahun($objectId=null){
-		echo $this->iku_kl_model->getListTahun($objectId);
+	public function getListTahun($objectId=null,$withAll=true){
+		if ($withAll=="false")
+		   $withAll = false;
+		echo $this->iku_kl_model->getListTahun($objectId,$withAll);
 	}
 		
 	public function excel($file1=null,$filtahun=null,$filkey=null){
