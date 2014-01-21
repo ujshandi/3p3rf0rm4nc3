@@ -38,7 +38,7 @@ class Penetapankl_model extends CI_Model
 			$this->db->select("distinct tbl_pk_kl.*,tbl_iku_kl.deskripsi as deskripsi_iku_kl,tbl_iku_kl.satuan,tbl_sasaran_kl.deskripsi as deskripsi_sasaran_kl, tbl_kl.nama_kl",false);
 			$this->db->from('tbl_pk_kl ');
 			$this->db->join('tbl_iku_kl','tbl_iku_kl.kode_iku_kl = tbl_pk_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_pk_kl.tahun');
-			$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_pk_kl.kode_sasaran_kl');
+			$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_pk_kl.kode_sasaran_kl and tbl_sasaran_kl.tahun = tbl_pk_kl.tahun');
 			$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_pk_kl.kode_kl');
 			$this->db->order_by("tbl_pk_kl.tahun DESC, kode_sasaran_kl ASC, tbl_pk_kl.kode_iku_kl ASC");
 			$query = $this->db->get();

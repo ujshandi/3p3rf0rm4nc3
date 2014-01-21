@@ -86,6 +86,10 @@
 				getDetail<?=$objectId;?>();
 			});
 			
+			$("#triwulan<?=$objectId?>").change(function(){
+				getDetail<?=$objectId;?>();
+			});
+			
 		});
 
 	</script>
