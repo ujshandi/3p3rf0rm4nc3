@@ -113,12 +113,12 @@ class rskl extends CI_Controller {
 			}
 			
 			// cek capaian bulan lalu
-/*	dicomment dl request p.Toto 2013.08.16
+/*	dicomment dl request p.Toto 2013.08.16   dibuka lagi tgl 2014.01.21 */
 			if($r['realisasi'] < $r['capaian']){
 				$pesan = 'Realisasi pada no. '.$i.' nilai tidak boleh lebih kecil dari nilai capaian bulan lalu.';
 				return FALSE;
 			}
-*/
+/**/
 			
 			// cek ke database
 			if($this->rskl_model->data_exist($data['tahun'], $data['triwulan'], $data['kode_kl'], $data['kode_sasaran_kl'], $r['kode_iku_kl'])){ 

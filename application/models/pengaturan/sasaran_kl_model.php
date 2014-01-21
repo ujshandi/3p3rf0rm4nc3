@@ -322,18 +322,27 @@ class Sasaran_kl_model extends CI_Model
 		//query insert data
 		$this->db->flush_cache();
 		
-		$this->db->set('tahun',				$data['tahun']);
-		$this->db->set('kode_kl',			$data['kode_kl']);
-		$this->db->set('kode_sasaran_kl',	$data['kode_sasaran_kl']);
-		$this->db->set('deskripsi',			$data['deskripsi']);		
 		
-		$result = $this->db->insert('tbl_sasaran_kl');
+		try {
+			$this->db->set('tahun',				$data['tahun']);
+			$this->db->set('kode_kl',			$data['kode_kl']);
+			$this->db->set('kode_sasaran_kl',	$data['kode_sasaran_kl']);
+			$this->db->set('deskripsi',			$data['deskripsi']);		
+			
+			$result = $this->db->insert('tbl_sasaran_kl');
+			//var_dump($result);die;
+			if (!$result){
+				throw new Exception("Import Data Gagal");
+			}
+		}
+		catch(Exception $e){
+			$errNo   = $this->db->_error_number();
+			$errMess = $this->db->_error_message();
+			$error = $errMess;
+			//var_dump($errMess);die;
+			log_message("error", "Problem import Inserting to : ".$errMess." (".$errNo.")"); 
+		}
 		
-		$errNo   = $this->db->_error_number();
-	    $errMess = $this->db->_error_message();
-		$error = $errMess;
-		//var_dump($errMess);die;
-	    log_message("error", "Problem import Inserting to : ".$errMess." (".$errNo.")"); 
 		//return
 		if($result) {
 			return TRUE;
