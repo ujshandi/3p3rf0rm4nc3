@@ -1,6 +1,7 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
+			var _changekode=false;
 			$('textarea').autosize();   
 			loadTahun<?=$objectId;?> = function (){
 				$('#divTahun<?=$objectId;?>').load(
@@ -11,6 +12,7 @@
 			loadTahun<?=$objectId;?>();
 			
 			setKodeOtomatis<?=$objectId?> = function(){
+				if (!_changekode) return;
 				<? if ($this->session->userdata('unit_kerja_e2')==-1){?>
 					var file2 = $("#kode_e2<?=$objectId;?>").val();
 				<?} else {?>
@@ -30,7 +32,7 @@
 			}
 			
 			//chan=============================================
-			 function setListE2<?=$objectId?>(){
+			 function setListE2<?=$objectId?>(e2,keysasaran,valuesasaran){
 				$("#divEselon2<?=$objectId?>").load(
 					base_url+"rujukan/eselon2/loadE2/"+$("#kode_e1<?=$objectId?>").val()+"/<?=$objectId;?>",
 					//on complete
@@ -47,8 +49,8 @@
 							
 						 });
 						 
-						$('#kode_e2<?=$objectId;?>').val('<?=$this->session->userdata('unit_kerja_e2');?>');
-						setSasaranE2<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e2<?=$objectId?>").val(),"");
+						$('#kode_e2<?=$objectId;?>').val(e2);
+						setSasaranE2<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e2<?=$objectId?>").val(),keysasaran,valuesasaran);
 						 setKodeOtomatis<?=$objectId?>();
 					}
 				);
@@ -108,6 +110,7 @@
 			 
 			//end-------------------------------------
 			newData<?=$objectId;?> = function (){  
+				_changekode = true;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
@@ -244,6 +247,7 @@
 			
 			editData<?=$objectId;?> = function (editmode){
 				//----------------Edit title
+				_changekode = false;
 				$('#ftitle<?=$objectId;?>').html((editmode?"Edit Data ":"View Data ")+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");
 				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
@@ -255,11 +259,15 @@
 					$('#fm<?=$objectId;?>').form('load',row);
 					//	initCombo();
 					setTimeout(function(){
-							setListE2<?=$objectId?>();
+							setListE2<?=$objectId?>(row.kode_e2,row.kode_sasaran_e2,row.deskripsi_sasaran_e2);
 							setIKUE1<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val(),row.kode_iku_e1,row.deskripsi_e1);
+							
 						},1000);
+						
+				
+				//	setSasaranE2<?=$objectId?>($("#tahun<?=$objectId?>").val(),$("#kode_e2<?=$objectId?>").val(),row.kode_sasaran_e2,row.deskripsi_sasaran_e2);
+				
 					
-					setSasaranE2<?=$objectId?>($("#tahun<?=$objectId?>").val(),$("#kode_e2<?=$objectId?>").val(),row.kode_sasaran_e2,row.deskripsi_sasaran_e2);
 					url = base_url+'pengaturan/ikk/save/edit/'+row.kode_ikk+"/"+row.tahun;//+row.id;//'update_user.php?id='+row.id;
 					
 					//$("#kode_ikk<?=$objectId?>").attr("readonly","readonly");

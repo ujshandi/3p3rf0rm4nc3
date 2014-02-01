@@ -104,7 +104,7 @@ class Rkteselon1 extends CI_Controller {
 		}else{
 			// validasi detail
 			if($this->check_detail($data, $pesan)){
-				$result = $this->rkteselon1_model->InsertOnDb($data);
+				$result = $this->rkteselon1_model->saveToDb($data);
 			}else{
 				$data['pesan_error'].= $pesan;
 			}
@@ -130,12 +130,12 @@ class Rkteselon1 extends CI_Controller {
 				return FALSE;
 			}
 			
-			// cek ke database
-			if($this->rkteselon1_model->data_exist($data['tahun'], $data['kode_e1'], $data['kode_sasaran_e1'], $r['kode_iku_e1'])){ 
+			// cek ke database  ga perlu coz cek if id sudah ada update aja jika belum ada maka insert
+			/* if($this->rkteselon1_model->data_exist($data['tahun'], $data['kode_e1'], $data['kode_sasaran_e1'], $r['kode_iku_e1'])){ 
 				$pesan = 'Kode IKU pada no. '.$i.' sudah terdapat di dalam database.';
 				//$pesan = 'Kode IKU '.$r['kode_iku_kl'].' sudah terdapat di database';
 				return FALSE;
-			}
+			} */
 			
 			$i++;
 		}
@@ -163,7 +163,7 @@ class Rkteselon1 extends CI_Controller {
 		$data['tahun'] 				= $this->input->post('tahun');
 		$data['kode_e1']			= $this->input->post('kode_e1');
 		$data['kode_sasaran_e1'] 	= $this->input->post('kode_sasaran_e1');
-		$data['kode_iku_e1'] 		= $this->input->post('kode_iku_e1');
+		$data['kode_iku_e1'] 		= $this->input->post('old_kode_iku_e1');
 		$data['old_kode_iku_e1'] 	= $this->input->post('old_kode_iku_e1');
 		$data['target'] 			= $this->input->post('target');
 		
@@ -208,9 +208,9 @@ class Rkteselon1 extends CI_Controller {
 		}
 	}
 	
-	function getIKU_e1($kode, $tahun=""){
+	function getIKU_e1($kode, $tahun="",$sasaran=""){
 		if($kode != '0' && $tahun != ""){
-			echo $this->rkteselon1_model->getIKU_e1($this->objectId, $kode, $tahun);
+			echo $this->rkteselon1_model->getIKU_e1($this->objectId, $kode, $tahun,$sasaran);
 		}
 	}
 	

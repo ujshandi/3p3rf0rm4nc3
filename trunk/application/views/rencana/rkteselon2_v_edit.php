@@ -249,7 +249,7 @@
 						<div class="fitem">
 							<label style="width:150px">Indikator Kinerja Kegiatan :</label>
 							<span style="display:block;margin-left: 150px;">
-							<?=$this->rkteselon2_model->getListIKK($objectId, array('kode_ikk'=>$result->kode_ikk, 'tahun' => $result->tahun , 'name'=>'kode_ikk'))?>
+							<?=$result->ikk;//$this->rkteselon2_model->getListIKK($objectId, array('kode_ikk'=>$result->kode_ikk, 'tahun' => $result->tahun , 'name'=>'kode_ikk'))?>
 							</span>
 							<input type="hidden" name="old_kode_ikk" value="<?=$result->kode_ikk?>">
 						</div>
@@ -259,11 +259,14 @@
 							<span id="satuanEdit<?=$objectId?>" style="margin-left:10px;"><?=$result->satuan?></span>
 						</div>
 						<br>
-						<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Keluar</a>
-						&nbsp;&nbsp;&nbsp;
+						
 						<?php if($editmode==TRUE){?>
-							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Simpan</a>
-						<?php }?>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Save</a>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Cancel</a>
+						<?php } else {							 ?>
+							
+							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Close</a>	
+					<?}?>
 					</form>
 				</div>
 			</div>	
