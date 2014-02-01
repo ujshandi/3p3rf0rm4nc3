@@ -90,7 +90,7 @@ class Rktkl extends CI_Controller {
 		}else{
 			// validasi detail
 			if($this->check_detail($data, $pesan)){
-				$result = $this->rktkl_model->InsertOnDb($data);
+				$result = $this->rktkl_model->saveToDb($data);
 			}else{
 				$data['pesan_error'].= $pesan;
 			}
@@ -117,12 +117,12 @@ class Rktkl extends CI_Controller {
 				return FALSE;
 			}
 			
-			// cek ke database
-			if($this->rktkl_model->data_exist($data['tahun'], $data['kode_kl'], $data['kode_sasaran_kl'], $r['kode_iku_kl'])){ 
+			// cek ke database  ga perlu coz cek if id sudah ada update aja jika belum ada maka insert
+		/* 	if($this->rktkl_model->data_exist($data['tahun'], $data['kode_kl'], $data['kode_sasaran_kl'], $r['kode_iku_kl'])){ 
 				$pesan = 'Kode IKU pada no. '.$i.' sudah terdapat di dalam database.';
 				//$pesan = 'Kode IKU '.$r['kode_iku_kl'].' sudah terdapat di database';
 				return FALSE;
-			}
+			} */
 			
 			$i++;
 		}
@@ -150,7 +150,7 @@ class Rktkl extends CI_Controller {
 		$data['tahun'] 				= $this->input->post('tahun');
 		$data['kode_kl']			= $this->input->post('kode_kl');
 		$data['kode_sasaran_kl'] 	= $this->input->post('kode_sasaran_kl');
-		$data['kode_iku_kl'] 		= $this->input->post('kode_iku_kl');
+		$data['kode_iku_kl'] 		= $this->input->post('old_kode_iku_kl');
 		$data['old_kode_iku_kl'] 	= $this->input->post('old_kode_iku_kl');
 		$data['target'] 			= $this->input->post('target');
 		

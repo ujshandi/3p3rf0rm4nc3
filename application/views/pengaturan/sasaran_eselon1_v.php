@@ -1,6 +1,7 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
+			var _changekode = false;
 			$('textarea').autosize();   
 			saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
@@ -9,7 +10,7 @@
 						return $(this).form('validate');
 					},
 					success: function(result){
-						//alert(result);
+					//	alert(result);
 						var result = eval('('+result+')');
 						if (result.success){
 							$.messager.show({
@@ -30,6 +31,7 @@
 			//end saveData
 			
 			newData<?=$objectId;?> = function (){  
+				_changekode = true;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
@@ -43,6 +45,7 @@
 			//end newData 
 			
 			editData<?=$objectId;?> = function (editmode){
+				_changekode = false;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html((editmode?"Edit Data ":"View Data ")+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");
@@ -187,6 +190,7 @@
 			}
 			
 			setKodeOtomatis<?=$objectId?> = function(){
+				if (!_changekode) return;
 				<? if ($this->session->userdata('unit_kerja_e1')==-1){?>
 					var file1 = $("#kode_e1<?=$objectId;?>").val();
 				<?} else {?>

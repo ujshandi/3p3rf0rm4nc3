@@ -182,7 +182,7 @@
 				}else{
 					$("#tbodyiku<?=$objectId;?>").load(
 						base_url+"rencana/rktkl/getIKU_kl/"+kode_kl+"/"+tahun+"/"+kode_sasaran_kl,function(){
-							setIKUKL<?=$objectId;?>(1,tahun,kode_sasaran_kl,"","");
+						//	setIKUKL<?=$objectId;?>(1,tahun,kode_sasaran_kl,"","");
 						}
 					);
 			}
@@ -388,7 +388,7 @@
 						</div>					
 						<div class="fitem">
 							<label style="width:120px">Kementerian :</label>
-							<?=$this->kl_model->getListKL()?>
+							<?=$this->kl_model->getListKL($objectId)?>
 						</div>
 						<div class="fitem">
 							<label style="width:120px">Sasaran :</label>
@@ -401,7 +401,7 @@
 							<table id="tbl<?=$objectId;?>">
 								<thead>
 									<tr>
-										<th></th>
+										<!--<th></th> -->
 										<th width="20px" bgcolor="#F4F4F4">No.</th>
 										<th width="100%" bgcolor="#F4F4F4">Indikator Kerja Utama</th>
 										<th bgcolor="#F4F4F4">Target</th>
@@ -413,9 +413,9 @@
 								</tbody>
 							</table>
 							<br>
-							<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="addRow<?=$objectId;?>('tbl<?=$objectId;?>')">Tambah IKU</a>
+						<!--	<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="addRow<?=$objectId;?>('tbl<?=$objectId;?>')">Tambah IKU</a>
 							<a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="deleteRow<?=$objectId;?>('tbl<?=$objectId;?>')">Hapus IKU</a>
-							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;-->
 							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveData<?=$objectId;?>()">Save</a>&nbsp;<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Cancel</a>
 						</div>
 					</form>

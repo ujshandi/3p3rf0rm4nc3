@@ -1,6 +1,7 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
+			var _changekode;
 			$('textarea').autosize();   
 			loadTahun<?=$objectId;?> = function (){
 				$('#divTahun<?=$objectId;?>').load(
@@ -11,6 +12,7 @@
 			loadTahun<?=$objectId;?>();
 			
 			setKodeOtomatis<?=$objectId?> = function(){
+				if (!_changekode) return;
 				var filkl ="-1";
 				var filtahun = $("#tahun<?=$objectId;?>").val();
 				var kodesasaran = $("#kode_sasaran_kl<?=$objectId;?>").val();				
@@ -31,10 +33,12 @@
 			
 			$("#kode_kl<?=$objectId;?>").change(function(){				
 				  setKodeOtomatis<?=$objectId?>();
+				  setSasaranKL<?=$objectId;?>($("#tahun<?=$objectId;?>").val(),"","");
 			});
 			
 			
 			newData<?=$objectId;?> = function (){  
+				_changekode = true;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
@@ -152,6 +156,7 @@
 			}
 			
 			editData<?=$objectId;?> = function (editmode){
+				_changekode = false;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html((editmode?"Edit Data ":"View Data ")+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");				
@@ -164,6 +169,7 @@
 					url = base_url+'pengaturan/iku_kl/save/edit/'+row.kode_iku_kl+"/"+row.tahun;//+row.id;//'update_user.php?id='+row.id;
 					$("#kode_kl<?=$objectId?>").val(row.kode_kl);
 					//$("#kode_iku_kl<?=$objectId?>").attr("readonly","readonly");
+					setSasaranKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),row.kode_sasaran_kl,row.deskripsi_sasaran_kl);
 				}
 			}
 			//end editData

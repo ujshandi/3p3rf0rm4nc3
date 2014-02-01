@@ -126,10 +126,11 @@ class Sasaran_eselon1_model extends CI_Model
 		$this->db->free_result();
 	}
 	
-	public function isExistKode($kode=null){	
+	public function isExistKode($kode=null,$tahun=null){	
 		if ($kode!=null)//utk update
 			$this->db->where('kode_sasaran_e1',$kode); //buat validasi
-		
+		if ($tahun!=null)//utk update
+			$this->db->where('tahun',$tahun); //buat validasi
 		$this->db->select('*');
 		$this->db->from('tbl_sasaran_eselon1');
 						
@@ -195,13 +196,14 @@ class Sasaran_eselon1_model extends CI_Model
 	}
 
 	//update data
-	public function UpdateOnDb($data, $kode) {
+	public function UpdateOnDb($data, $kode,$tahun) {
 		
 		$this->db->where('kode_sasaran_e1',$kode);		
+		$this->db->where('tahun',$tahun);		
 		$this->db->set('tahun',$data['tahun']);
 		$this->db->set('kode_sasaran_e1',$data['kode_sasaran_e1']);
 		$this->db->set('kode_e1',$data['kode_e1']);
-		$this->db->set('kode_sasaran_kl',(($data['kode_sasaran_kl']=="")||($data['kode_sasaran_kl']==null)||($data['kode_sasaran_kl']=="-1")?null:$data['kode_sasaran_kl']));
+		$this->db->set('kode_sasaran_kl',(($data['kode_sasaran_kl']=="")||($data['kode_sasaran_kl']==null)||($data['kode_sasaran_kl']=="-1")||($data['kode_sasaran_kl']=="0")?null:$data['kode_sasaran_kl']));
 		$this->db->set('deskripsi',$data['deskripsi']);
 		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		

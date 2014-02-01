@@ -84,7 +84,7 @@ class Sasaran_eselon2 extends CI_Controller {
 		return $data;
     }
 	
-	function save($aksi="", $kode=""){
+	function save($aksi="", $kode="",$tahun=''){
 		$this->load->library('form_validation');
 		$data = $this->get_form_values();
 		$status = "";
@@ -111,14 +111,14 @@ class Sasaran_eselon2 extends CI_Controller {
 			
 		}else {
 			if($aksi=="add"){ // add
-				$result = !$this->sasaran_eselon2_model->isExistKode($data['kode_sasaran_e2']);
+				$result = !$this->sasaran_eselon2_model->isExistKode($data['kode_sasaran_e2'],$data['tahun']);
 				if ($result)
 					$result = $this->sasaran_eselon2_model->InsertOnDb($data,$status);
 					
 					else
 						$data['pesan_error'] .= 'Kode sudah ada';
 			}else { // edit
-				$result=$this->sasaran_eselon2_model->UpdateOnDb($data,$kode);
+				$result=$this->sasaran_eselon2_model->UpdateOnDb($data,$kode,$tahun);
 				
 			}
 			//$data['pesan_error'] .= $status;	

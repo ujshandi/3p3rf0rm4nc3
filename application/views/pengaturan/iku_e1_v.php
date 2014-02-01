@@ -1,5 +1,6 @@
 	<script  type="text/javascript" >
 		$(function(){
+			var _changekode = false;
 			$('textarea').autosize();   
 			loadTahun<?=$objectId;?> = function (){
 				$('#divTahun<?=$objectId;?>').load(
@@ -10,6 +11,7 @@
 			loadTahun<?=$objectId;?>();
 			
 			setKodeOtomatis<?=$objectId?> = function(){
+				if (!_changekode) return;
 				<? if ($this->session->userdata('unit_kerja_e1')==-1){?>
 					var file1 = $("#kode_e1<?=$objectId;?>").val();
 				<?} else {?>
@@ -83,7 +85,7 @@
 			function kodeE1Change<?=$objectId?>(editmode){
 				setListE2<?=$objectId?>();
 				setSasaranE1<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val(),"");
-				setIKUKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val());
+				setIKUKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),"","");
 				if (!editmode)
 				 setKodeOtomatis<?=$objectId?>();
 			}
@@ -97,12 +99,13 @@
 			 function initCombo<?=$objectId?>(){
 				 setListE2<?=$objectId?>();
 				 setSasaranE1<?=$objectId;?>($("#tahun<?=$objectId?>").val(),"","");
-				 setIKUKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),$("#kode_e1<?=$objectId?>").val());
+				 setIKUKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),"","");
 			 }
 			
 			
 			var url;
 			newData<?=$objectId;?> = function (){  
+				_changekode = true;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
@@ -231,6 +234,7 @@
 			}
 			
 			editData<?=$objectId;?> = function (editmode){
+				_changekode = false;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html((editmode?"Edit Data ":"View Data ")+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");

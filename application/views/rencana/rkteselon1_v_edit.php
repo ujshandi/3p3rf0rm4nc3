@@ -180,7 +180,7 @@
 						<div class="fitem">
 							<label style="width:150px">Indikator Kerja Utama :</label>
 							<span style="display:block;margin-left: 150px;">
-							<?=$this->rkteselon1_model->getListIKU_E1($objectId, array('kode_iku'=>$result->kode_iku_e1, 'tahun' => $result->tahun , 'name'=>'kode_iku_e1'))?>
+							<?=$result->iku_e1 //$this->rkteselon1_model->getListIKU_E1($objectId, array('kode_iku'=>$result->kode_iku_e1, 'tahun' => $result->tahun , 'name'=>'kode_iku_e1'))?>
 							</span>
 							<input type="hidden" name="old_kode_iku_e1" value="<?=$result->kode_iku_e1?>">
 						</div>
@@ -190,12 +190,15 @@
 							<span id="satuanEdit<?=$objectId?>" style="margin-left:10px;"><?=$result->satuan?></span>
 						</div>
 						<br>
-						<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Close</a>
-						&nbsp;&nbsp;&nbsp;
+						
+						
 						<?php if($editmode==TRUE){?>
 							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Save</a>
 							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Cancel</a>
-						<?php }?>
+						<?php } else {?>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Close</a>
+						<?}?>
+						
 					</form>
 				</div>
 			</div>	

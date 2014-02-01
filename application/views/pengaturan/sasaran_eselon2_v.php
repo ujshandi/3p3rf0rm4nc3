@@ -1,4 +1,5 @@
 	<script  type="text/javascript" >
+		var _changekode = false;
 		$(function(){
 			$('textarea').autosize();   
 			var url;
@@ -33,6 +34,7 @@
 			}
 			
 			setKodeOtomatis<?=$objectId?> = function(){
+				if (!_changekode) return;
 				<? if ($this->session->userdata('unit_kerja_e2')==-1){?>
 					var file2 = $("#kode_e2<?=$objectId;?>").val();
 				<?} else {?>
@@ -52,7 +54,7 @@
 			 
 			$("#kode_e1<?=$objectId?>").change(function(){
 				setListE2<?=$objectId?>();
-				setSasaranE1<?=$objectId?>($("#tahun").val(),$(this).val(),"","");
+				setSasaranE1<?=$objectId?>($("#tahun<?=$objectId?>").val(),$(this).val(),"","");
 			});
 			
 			 $("#tahun<?=$objectId;?>").change(function(){
@@ -102,6 +104,7 @@
 			
 			//--------------------
 			newData<?=$objectId;?> = function (){  
+				_changekode = true;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
@@ -229,6 +232,7 @@
 			}
 			
 			editData<?=$objectId;?> = function (editmode){
+				_changekode = false;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html((editmode?"Edit Data ":"View Data ")+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");
@@ -262,7 +266,7 @@
 						$('#txtkode_sasaran_e1<?=$objectId;?>').val(row.deskripsi_e1);
 					},150); */
 			
-					url = base_url+'pengaturan/sasaran_eselon2/save/edit/'+row.kode_sasaran_e2;//+row.id;//'update_user.php?id='+row.id;
+					url = base_url+'pengaturan/sasaran_eselon2/save/edit/'+row.kode_sasaran_e2+'/'+row.tahun;//+row.id;//'update_user.php?id='+row.id;
 					
 					//$("#kode_sasaran_e2<?=$objectId?>").attr("readonly","readonly");
 					
@@ -372,7 +376,7 @@
 		
 		function setSasaran<?=$objectId;?>(valu){
 			document.getElementById('kode_sasaran_e1<?=$objectId;?>').value = valu;
-			getDetail();
+			//getDetail();
 		}
 	</script>
 	

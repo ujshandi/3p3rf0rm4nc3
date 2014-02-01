@@ -254,52 +254,36 @@ class Rktkl_model extends CI_Model
 		if ($data->num_rows()>0) {
 			
 			foreach ($data->result() as $r){
-				$out .= '<tr>
-					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
-					<td>'.$i.'</td>
-					<td><span id="divIKUKL'.$objectId.'_'.$i.'">
-								</span>
+				$out .= '<tr>'
+					//<td><input type="checkbox" checked="checked" name="chk'.$objectId.'[]"/></td>
+					.'<td>'.$i.'<input type="hidden" value="'.$r->id_rkt_kl.'" name="detail['.$i.'][id_rkt_kl]"></td>
+					<td>'.$r->deskripsi.'<input type="hidden" name="detail['.$i.'][kode_iku_kl]" value="'.$r->kode_iku_kl.'">
 					</td>
 					<td>
-						<input name="detail['.$i.'][target]" size="10" value="'.$this->utility->cekNumericFmt($r->target).'">
+						<input name="detail['.$i.'][target]" size="20" value="'.$this->utility->cekNumericFmt($r->target).'">
 					</td>
-					<td>
-						<input name="detail['.$i.'][satuan]" id="satuan'.$i.$objectId.'" type="text" value="" readonly="true">
+					<td width="30px"><input name="detail['.$i.'][satuan]" id="satuan1'.$objectId.'" type="hidden" value="'.$r->satuan.'" readonly="true">
+						'.$r->satuan.'
 					</td>
 				</tr>';		
 				$i++;
 			}
 		}
-		
-		$out .= '<tr>
-					<td><input type="checkbox" name="chk'.$objectId.'[]"/></td>
-					<td>'.$i.'</td>
-					<td><span id="divIKUKL'.$objectId.'_'.$i.'">
-								</span>
-					</td>
-					<td>
-						<input name="detail['.$i.'][target]" size="5">
-					</td>
-					<td>
-						<input name="detail['.$i.'][satuan]" id="satuan'.$i.''.$objectId.'" type="text" value="" readonly="true">
-					</td>
-				</tr>';		
-		
 		return $out;
 	}
 	
 	private function getDataExist($kode_kl,$tahun,$kode_sasaran_kl){		
 		
 		$this->db->flush_cache();
-		$this->db->select("a.id_rkt_kl, a.tahun, a.kode_kl, a.kode_iku_kl, a.kode_sasaran_kl, b.deskripsi, a.target, b.satuan, a.status",false);
+		$this->db->select("a.id_rkt_kl, b.tahun, b.kode_kl, b.kode_iku_kl, b.kode_sasaran_kl, b.deskripsi, a.target, b.satuan, a.status",false);
 			$this->db->select("c.deskripsi as deskripsi_sasaran_kl, b.deskripsi AS deskripsi_iku_kl, d.nama_kl",false);
-			$this->db->from('tbl_rkt_kl a');
-			$this->db->join('tbl_iku_kl b', 'b.kode_iku_kl = a.kode_iku_kl and b.tahun = a.tahun');
-			$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl and c.tahun = a.tahun');
-			$this->db->join('tbl_kl d', 'd.kode_kl = a.kode_kl');
-			$this->db->order_by("a.tahun DESC, a.kode_sasaran_kl ASC, a.kode_iku_kl ASC");
-		$this->db->where('a.kode_sasaran_kl', $kode_sasaran_kl);		
-		$this->db->where('a.tahun', $tahun);		
+			$this->db->from('tbl_iku_kl b');
+			$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = b.kode_sasaran_kl and c.tahun = b.tahun');
+			$this->db->join('tbl_kl d', 'd.kode_kl = b.kode_kl');
+			$this->db->join('tbl_rkt_kl a', 'b.kode_iku_kl = a.kode_iku_kl and b.tahun = a.tahun','left');
+			$this->db->order_by("b.tahun DESC, b.kode_sasaran_kl ASC, b.kode_iku_kl ASC");
+		$this->db->where('c.kode_sasaran_kl', $kode_sasaran_kl);		
+		$this->db->where('b.tahun', $tahun);		
 		
 		$query = $this->db->get();
 		
@@ -319,24 +303,45 @@ class Rktkl_model extends CI_Model
 		return $this->db->get()->row();
 	}
 	
-	public function InsertOnDB($data) {
+	
+	public function saveToDb($data){
 		$this->db->trans_start();
-		
 		foreach($data['detail'] as $dt){
+			$dt['tahun'] = $data['tahun'];
+			$dt['kode_kl'] = $data['kode_kl'];
+			$dt['kode_sasaran_kl'] = $data['kode_sasaran_kl'];
+			if (($dt['id_rkt_kl']=="")||($dt['id_rkt_kl']==null)){				
+				$this->InsertOnDB($dt);
+			}
+			else {
+				$this->UpdateOnDb($dt);
+			}
+		}
+		
+		$this->db->trans_complete();
+	    return $this->db->trans_status();
+	}
+	
+	
+	public function InsertOnDB($data) {
+		//$this->db->trans_start();
+		$this->db->flush_cache();
+		
+		//foreach($data['detail'] as $dt){
 			//query insert data		
 			$this->db->set('tahun',				$data['tahun']);
 			$this->db->set('kode_kl',			$data['kode_kl']);
 			$this->db->set('kode_sasaran_kl',	$data['kode_sasaran_kl']);
-			$this->db->set('kode_iku_kl',		$dt['kode_iku_kl']);
-			$this->db->set('target',			$dt['target']);
+			$this->db->set('kode_iku_kl',		$data['kode_iku_kl']);
+			$this->db->set('target',			$data['target']);
 			$this->db->set('status',			'0');
 			$this->db->set('log_insert', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			//$this->db->set('satuan',$data['satuan']);
 			
-			$this->db->insert('tbl_rkt_kl');
+			$result = $this->db->insert('tbl_rkt_kl');
 			
 			# insert to log
-			$this->db->flush_cache();
+			/* $this->db->flush_cache();
 			$this->db->set('tahun',				$data['tahun']);
 			$this->db->set('kode_kl',			$data['kode_kl']);
 			$this->db->set('kode_sasaran_kl',	$data['kode_sasaran_kl']);
@@ -344,23 +349,28 @@ class Rktkl_model extends CI_Model
 			$this->db->set('target',			$dt['target']);
 			$this->db->set('status',			'0');
 			$this->db->set('log',				'INSERT;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
-			$this->db->insert('tbl_rkt_kl_log');
+			$this->db->insert('tbl_rkt_kl_log'); */
 			
+		//}
+		$errNo   = $this->db->_error_number();
+	    $errMess = $this->db->_error_message();
+		$error = $errMess;
+		//var_dump($errMess);die;
+	    log_message("error", "Problem Update to : ".$errMess." (".$errNo.")"); 
+		//return
+		if($result) {
+			return TRUE;
+		}else {
+			return FALSE;
 		}
 		
-		$this->db->trans_complete();
-	    return $this->db->trans_status();
+		//$this->db->trans_complete();
+	    //return $this->db->trans_status();
 	}
 	
 	public function UpdateOnDb($data){
 		$this->db->flush_cache();
-		$this->db->where('id_rkt_kl', $data['id_rkt_kl']);
 		
-		$this->db->set('kode_iku_kl', $data['kode_iku_kl']);
-		$this->db->set('target', $data['target']);
-		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
-		
-		$result = $this->db->update('tbl_rkt_kl');
 		
 		# insert to log
 		$this->db->flush_cache();
@@ -378,6 +388,14 @@ class Rktkl_model extends CI_Model
 		$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$this->db->insert('tbl_rkt_kl_log');
 		
+		
+		$this->db->flush_cache();
+		$this->db->where('id_rkt_kl', $data['id_rkt_kl']);		
+		$this->db->set('kode_iku_kl', $data['kode_iku_kl']);
+		$this->db->set('target', $data['target']);
+		$this->db->set('log_update', 		$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
+		
+		$result = $this->db->update('tbl_rkt_kl');
 		
 		$errNo   = $this->db->_error_number();
 	    $errMess = $this->db->_error_message();

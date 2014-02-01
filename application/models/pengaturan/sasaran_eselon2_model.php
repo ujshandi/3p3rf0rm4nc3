@@ -141,10 +141,11 @@ class Sasaran_eselon2_model extends CI_Model
 		$this->db->free_result();
 	}
 	
-	public function isExistKode($kode=null){	
+	public function isExistKode($kode=null,$tahun=null){	
 		if ($kode!=null)//utk update
 			$this->db->where('kode_sasaran_e2',$kode); //buat validasi
-		
+		if ($tahun!=null)//utk update
+			$this->db->where('tahun',$tahun); //buat validasi
 		$this->db->select('*');
 		$this->db->from('tbl_sasaran_eselon2');
 						
@@ -211,9 +212,10 @@ class Sasaran_eselon2_model extends CI_Model
 	}
 
 	//update data
-	public function UpdateOnDb($data, $kode) {
+	public function UpdateOnDb($data, $kode,$tahun) {
 		
 		$this->db->where('kode_sasaran_e2',$kode);
+		$this->db->where('tahun',$tahun);
 		$this->db->set('tahun',$data['tahun']);
 		$this->db->set('kode_sasaran_e2',$data['kode_sasaran_e2']);
 		$this->db->set('kode_e2',$data['kode_e2']);

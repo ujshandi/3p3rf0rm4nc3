@@ -1,7 +1,7 @@
 	<script  type="text/javascript" >
 		$(function(){
 			var url;
-			
+			var _changekode = false;
 			
 			saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
@@ -27,6 +27,7 @@
 			//end saveData
 
 			newData<?=$objectId;?> = function (){  
+				_changekode = true;
 				$('#ftitle<?=$objectId;?>').html("Add Data "+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display","");
 				$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add Sasaran Kementerian');
@@ -39,6 +40,7 @@
 			//end newData 
 			
 			editData<?=$objectId;?> = function (editmode){
+				_changekode = false;
 				//----------------Edit title
 				$('#ftitle<?=$objectId;?>').html((editmode?"Edit Data ":"View Data ")+"<?=$title?>");
 				$('#saveBtn<?=$objectId;?>').css("display",(editmode)?"":"none");
@@ -150,6 +152,7 @@
 			
 			
 			setKodeOtomatis<?=$objectId?> = function(){
+				if (!_changekode) return;
 				var filkl ="-1";
 				var filtahun = $("#tahun<?=$objectId;?>").val();
 				

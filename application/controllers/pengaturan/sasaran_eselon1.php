@@ -78,7 +78,7 @@ class Sasaran_eselon1 extends CI_Controller {
 		echo $this->sasaran_kl_model->getListSasaranKL($objectId,$data);
 	}
 	
-	function save($aksi="", $kode=""){
+	function save($aksi="", $kode="",$tahun=""){
 		$this->load->library('form_validation');
 		$data = $this->get_form_values();
 		$status = "";
@@ -103,14 +103,14 @@ class Sasaran_eselon1 extends CI_Controller {
 			
 		}else {
 			if($aksi=="add"){ // add
-				$result = !$this->sasaran_eselon1_model->isExistKode($data['kode_sasaran_e1']);
+				$result = !$this->sasaran_eselon1_model->isExistKode($data['kode_sasaran_e1'],$data['tahun']);
 				if ($result)
 					$result = $this->sasaran_eselon1_model->InsertOnDb($data,$status);
 				else
 				   $data['pesan_error'] = 'Kode sudah ada.';
 					
 			}else { // edit
-				$result=$this->sasaran_eselon1_model->UpdateOnDb($data,$kode);
+				$result=$this->sasaran_eselon1_model->UpdateOnDb($data,$kode,$tahun);
 				
 			}
 			//$data['pesan_error'] .= $status;	
