@@ -129,18 +129,21 @@
 							<?=$result->satuan?>
 						</div>
 						<br>
-						<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Keluar</a>
-						&nbsp;&nbsp;&nbsp;
+						
+						
 						<?php if($editmode==TRUE){
 							if ($result->status=='0'){
 							?>
 							
-							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Simpan</a>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Save</a>&nbsp;&nbsp;
+							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Close</a>
 							<?}
 							else {
 								echo 'Sudah disahkan';
 								}?>
-						<?php }?>
+						<?php } else {?> 
+								<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Close</a>
+						<?}?>
 					</form>
 				</div>
 			</div>	
