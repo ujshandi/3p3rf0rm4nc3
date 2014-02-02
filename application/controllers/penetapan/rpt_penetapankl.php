@@ -178,27 +178,27 @@ class Rpt_penetapankl extends CI_Controller {
 				$this->our_pdf->SetXY($x+100,$y);
 				
 				//	$this->our_pdf->cell(90,$newHeight,$pdfdata[$i][1],((($i==count($pdfdata)-1)||($isNewPage))?1:"LTR"),0,'L',1);
+			}
+			else{
+				//$pdfdata[$i][1]="";
+				//$pdfdata[$i][0]="";
+				$sisa="tes";
+				$x=$this->our_pdf->GetX();
+				$y=$this->our_pdf->GetY();
+				$txt = substr($txt,0,90);
+				$border = 'LR';
+				if ($i==count($pdfdata)-2){
+					$border = "LBR";
+					$this->our_pdf->Line($x,$y+$newHeight,$x+108,$y+$newHeight);
 				}
-				else{
-					//$pdfdata[$i][1]="";
-					//$pdfdata[$i][0]="";
-					$sisa="tes";
-					$x=$this->our_pdf->GetX();
-					$y=$this->our_pdf->GetY();
-					$txt = substr($txt,0,90);
-					$border = 'LR';
-					if ($i==count($pdfdata)-2){
-						$border = "LBR";
-						$this->our_pdf->Line($x,$y+$newHeight,$x+108,$y+$newHeight);
-					}
-					
-					if ($isNewPage) 
-						$this->our_pdf->Line($x,$y,$y+108,$y);
-					$this->our_pdf->cell(8,$newHeight,"",$border,0,'C',1);
-					//$this->our_pdf->cell(90,$newHeight,$sisa,'LR',0,'L',1);
-					$this->our_pdf->SetXY($x+108,$y);
-					$sisa = substr($sisa,90,90); 
-				}
+				
+				if ($isNewPage) 
+					$this->our_pdf->Line($x,$y,$y+108,$y);
+				$this->our_pdf->cell(8,$newHeight,"",$border,0,'C',1);
+				//$this->our_pdf->cell(90,$newHeight,$sisa,'LR',0,'L',1);
+				$this->our_pdf->SetXY($x+108,$y);
+				$sisa = substr($sisa,90,90); 
+			}
 			
 			//$w, $h=0, $txt='', $border=0, $ln=0, $align='LRB', $fill=false, $link='', $actwidth=88, & $newHeight
 			//$this->our_pdf->Wrap(100,$newHeight,$pdfdata[$i][1],1,0,'L',1,'',100,$newHeight);
@@ -241,6 +241,23 @@ class Rpt_penetapankl extends CI_Controller {
 			$this->our_pdf->Ln($newHeight);
 		}
 		
+		//add TTD
+		$this->our_pdf->setFont('arial','B',10);	
+		$this->our_pdf->CheckPageBreakChan($newHeight,108);	
+		$menteri = '';
+		$x=$this->our_pdf->GetX();
+		$y=$this->our_pdf->GetY();
+		$this->our_pdf->SetXY($x+220,$y); 
+		$this->our_pdf->Wrap(550, 5, 'JAKARTA, '.date('Y'), 0, 0, 'RM', false, '', 250, $newHeight2);
+		$this->our_pdf->Ln($newHeight);
+		$x=$this->our_pdf->GetX();
+		$y=$this->our_pdf->GetY();
+		$this->our_pdf->SetXY($x+20,$y); 
+		$this->our_pdf->Wrap(250, 5, 'MENTERI PERHUBUNGAN : '.$menteri, 0, 0, 'LM', false, '', 250, $newHeight2);
+		$this->our_pdf->SetXY($x+220,$y); 
+		$this->our_pdf->Wrap(250, 5, 'PEJABAT : '.$menteri, 0, 0, 'LM', false, '', 250, $newHeight2);
+		$this->our_pdf->Ln($newHeight);
+		//end TTD
 
 		$this->our_pdf->AliasNbPages();
 		$this->our_pdf->Output("LaporanPenetapanKementerian.pdf","I");

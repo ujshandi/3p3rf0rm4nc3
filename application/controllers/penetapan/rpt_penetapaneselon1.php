@@ -205,6 +205,27 @@ class Rpt_penetapaneselon1 extends CI_Controller {
 		$this->our_pdf->Ln($newHeight);
 		$this->our_pdf->CheckPageBreakChan($newHeight,108);		
 		$this->our_pdf->Wrap(250, 5, $pdfdata[$i][1], 0, 0, 'LM', false, '', 250,  $newHeight2);
+		
+		
+			//add TTD
+		$this->our_pdf->setFont('arial','B',10);	
+		$this->our_pdf->CheckPageBreakChan($newHeight,108);	
+		$menteri = '';
+		$x=$this->our_pdf->GetX();
+		$y=$this->our_pdf->GetY();
+		$this->our_pdf->SetXY($x+220,$y); 
+		$this->our_pdf->Wrap(550, 5, 'JAKARTA, '.date('Y'), 0, 0, 'RM', false, '', 250, $newHeight2);
+		$this->our_pdf->Ln($newHeight);
+		$x=$this->our_pdf->GetX();
+		$y=$this->our_pdf->GetY();
+		$this->our_pdf->SetXY($x+20,$y); 
+		$this->our_pdf->Wrap(250, 5, 'MENTERI PERHUBUNGAN '.$menteri, 0, 0, 'LM', false, '', 250, $newHeight2);
+		$this->our_pdf->SetXY($x+220,$y); 
+		$this->our_pdf->Wrap(250, 5, 'PEJABAT '.$menteri, 0, 0, 'LM', false, '', 250, $newHeight2);
+		$this->our_pdf->Ln($newHeight);
+		//end TTD
+		
+		
 		$this->our_pdf->AliasNbPages();
 		$this->our_pdf->Output("LaporanPenetapanEselon1.pdf","I");
 	}

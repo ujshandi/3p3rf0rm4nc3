@@ -2,27 +2,31 @@
 		$(function(){
 			var url;
 			newData<?=$objectId;?> = function (){  
-				addTab("Add PK Eselon I","penetapan/penetapaneselon1/add");
+				//$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add PK Kementerian');  
+				//$('#fm<?=$objectId;?>').form('clear');  
+				//url = base_url+'penetapan/penetapankl/save';  
+				
+				addTab("Add PK Kementerian", "penetapan/penetapankl/add");
 			}
 			//end newData 
 			
-			editData<?=$objectId;?> = function (editmode){ 
+			editData<?=$objectId;?> = function (editmode){
 				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-				//alert(row.dokter_kode);
+				
 				if (row){
-					//alert(row.id_rkt_kl);
-					addTab((editmode?"Edit":"View")+" PK Eselon I", "penetapan/penetapaneselon1/edit/"+row.id_pk_e1+ "/" + editmode);
+					addTab((editmode?"Edit":"View")+" PK Kementerian", "penetapan/penetapankl/edit/"+row.id_pk_kl+ "/" + editmode);
 				}
 			}
+			//end editData
 			
 			deleteData<?=$objectId;?> = function (){
 				<? if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 					if(row){
-						if(confirm("Apakah yakin akan menghapus data '" + row.kode_iku_e1 + "'?")){
+						if(confirm("Apakah yakin akan menghapus data '" + row.kode_iku_kl + "'?")){
 							var response = '';
 							$.ajax({ type: "GET",
-									 url: base_url+'penetapan/penetapaneselon1/delete/' + row.id_pk_e1,
+									 url: base_url+'penetapan/penetapankl/delete/' + row.id_pk_kl,
 									 async: false,
 									 success : function(response)
 									 {
@@ -49,35 +53,28 @@
 					alert("Silahkan Login sebagai Superadmin");
 				<?} ?>
 			}
-			//end deleteData			
+			//end deleteData 
 			
 			clearFilter<?=$objectId;?> = function (){
-				//ambil nilai-nilai filter
 				$("#filter_tahun<?=$objectId;?>").val('');
-				$("#filter_e1<?=$objectId;?>").val('');
 				searchData<?=$objectId;?>();
 			}
 			
 			//tipe 1=grid, 2=pdf, 3=excel
 			getUrl<?=$objectId;?> = function (tipe){
 				var filtahun = $("#filter_tahun<?=$objectId;?>").val();
-				<? if ($this->session->userdata('unit_kerja_e1')==-1){?>
-					var file1 = $("#filter_e1<?=$objectId;?>").val();
-				<?} else {?>
-					var file1 = "<?=$this->session->userdata('unit_kerja_e1');?>";
-				<?}?>
 				
-				if(filtahun==null) filtahun ="-1";
-				if (file1 == null) file1 = "-1";
-			
+				if(filtahun.length==0) filtahun ="-1";
+				
 				if (tipe==1){
-					return "<?=base_url()?>penetapan/penetapaneselon1/grid/"+filtahun+"/"+file1;
+					return "<?=base_url()?>penetapan/penetapankl/grid/"+filtahun;
 				}
 				else if (tipe==2){
-					return "<?=base_url()?>penetapan/penetapaneselon1/pdf/"+filtahun+"/"+file1;
+					return "<?=base_url()?>penetapan/penetapankl/pdf/"+filtahun;
 				}else if (tipe==3){
-					return "<?=base_url()?>penetapan/penetapaneselon1/excel/"+filtahun+"/"+file1;
+					return "<?=base_url()?>penetapan/penetapankl/excel/"+filtahun;
 				}
+				
 			}
 			
 			searchData<?=$objectId;?> = function (){
@@ -90,15 +87,16 @@
 						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
 						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 						if (row==null) return;
+						//alert(row.deskripsi_iku_kl);
 						switch(field){
-							case "kode_e1":
-								showPopup('#popdesc<?=$objectId?>', row.nama_e1);
+							case "kode_kl":
+								showPopup('#popdesc<?=$objectId?>', row.nama_kl);
 								break;
-							case "kode_sasaran_e1":
-								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e1);
+							case "kode_sasaran_kl":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
 								break;
-							case "kode_iku_e1":
-								showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_e1);
+							case "kode_iku_kl":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_kl);
 								break;
 							/* case "kode_kl":
 								showPopup('#popdesc<?=$objectId?>', row.nama_kl);
@@ -113,13 +111,13 @@
 						//prepareMerge<?=$objectId;?>(data);
 				}});
 			}
-			//end searchData 
+			//end searchData 		
 		
 			printData<?=$objectId;?>=function(){			
 				//$.jqURL.loc(getUrl<?=$objectId;?>(2),{w:800,h:600,wintype:"_blank"});
 			//window.open(getUrl<?=$objectId;?>(2));;
 			alert("Sedang dalam pengerjaan");
-			}
+		}
 			toExcel<?=$objectId;?>=function(){
 				alert("Sedang dalam pengerjaan");	
 				//window.open(getUrl<?=$objectId;?>(3));;
@@ -152,29 +150,28 @@
 			}
 			//end saveData
 			
-			formatPrice=function(val,row){
-				return val;
-				/* ($.fn.autoNumeric.Format("txtAmount"+idx,total,{aSep:".",aDec:",",mDec:2}));
-				if (val < 20){
+			formatPrice=function (val,row){
+				return val;//($.fn.autoNumeric.Format("txtAmount"+idx,total,{aSep:".",aDec:",",mDec:2}));
+				/* if (val < 20){
 					return '<span style="color:red;">('+val+')</span>';
-				}else {
+				} else {
 					return val;
 				} */
 			}
+
 			
 			setTimeout(function(){
 				searchData<?=$objectId;?>();
-				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>penetapan/penetapaneselon1/grid"});
-			},50);
+				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>penetapan/penetapankl/grid"});
+			},0);
 			
-			
+						
 			$("#popdesc<?=$objectId?>").click(function(){
 				closePopup('#popdesc<?=$objectId?>');
 			});
 			
 		 });
 	</script>
-
 	<style type="text/css">
 		#fm<?=$objectId;?>{
 			margin:0;
@@ -238,9 +235,11 @@
 			width:84px;
 			margin-bottom:5px;
 		}
+		
 	</style>
+	
 	<div id="tb<?=$objectId;?>" style="height:auto">
-	  <table border="0" cellpadding="1" cellspacing="1" width="100%">
+	   <table border="0" cellpadding="1" cellspacing="1" width="100%">
 		<tr>
 			<td>
 			<div class="fsearch" >
@@ -248,14 +247,12 @@
 				<tr>
 					<td>Tahun :</td>
 					<td>
-					<?=$this->penetapaneselon1_model->getListFilterTahun($objectId)?>
+					<?=$this->penetapankl_model->getListFilterTahun($objectId)?>
 					</td>
 				</tr>
-				<tr>
-					<td>Unit Kerja Eselon I :&nbsp;</td>
-					<td>
-						<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
-					</td>
+				<tr style="height:10px">
+					  <td style="">
+					  </td>
 				</tr>
 				<tr>
 					<td align="right" colspan="2" valign="top">
@@ -269,40 +266,42 @@
 		</tr>
 		</table>
 	  <div style="margin-bottom:5px">
-	    <? if($this->sys_menu_model->cekAkses('ADD;',106,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
-			<a href="#" onclick="newData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-add" plain="true">Add</a>
+		<? if($this->sys_menu_model->cekAkses('ADD;',104,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+			<a href="#" onclick="newData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-add" plain="true">Add</a>  
 		<?}?>
 		<!------------Edit View-->
-		<? if($this->sys_menu_model->cekAkses('EDIT;',106,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+		<? if($this->sys_menu_model->cekAkses('EDIT;',104,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="editData<?=$objectId;?>(true);" class="easyui-linkbutton" iconCls="icon-edit" plain="true">Edit</a>
 		<?}?>
-		<? if($this->sys_menu_model->cekAkses('VIEW;',106,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+		<? if($this->sys_menu_model->cekAkses('VIEW;',104,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="editData<?=$objectId;?>(false);" class="easyui-linkbutton" iconCls="icon-view" plain="true">View</a>
 		<?}?>
-		<? if($this->sys_menu_model->cekAkses('DELETE;',106,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
+		<? if($this->sys_menu_model->cekAkses('DELETE;',104,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 			<a href="#" onclick="deleteData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-remove" plain="true">Delete</a>
 		<?}?>
 		<!--
 		<a href="#" onclick="printData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-print" plain="true">Print</a>
 		<a href="#" onclick="toExcel<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-excel" plain="true">Excel</a>
-	    -->
+		-->
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Penetapan Kinerja (PK) Eselon I" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Penetapan Kinerja (PK) Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
-		<th field="id_pk_e1" sortable="true" hidden="true" width="50px">ID PK Eselon I</th>
-		<th field="tahun" sortable="true" width="30">Tahun</th>		
-		<th field="kode_e1" sortable="true" width="50px"<?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'hidden="true"')?>>Kode Unit Kerja</th>
-		<th field="nama_e1" hidden="true">Kode Unit Kerja</th>
-		<th field="kode_sasaran_e1" sortable="true" width="50px">Kode Sasaran</th>
-		<th field="kode_iku_e1" sortable="true" width="50px">Kode IKU</th>
-		<th field="target" sortable="true" width="50px" align="right" >Target (RKT)</th>
-		<th field="penetapan" sortable="true" width="50px" align="right" >Target (PK)</th>
+		<th field="id_pk_kl" hidden="true" sortable="true" width="50px">Kode</th>
+		<th field="tahun" sortable="true" width="30px">Tahun</th>		
+		<th field="kode_kl" sortable="true" width="50px">Kode Kementerian</th>
+		<th field="nama_kl" hidden="true">nama_kl</th>
+		<th field="kode_sasaran_kl" sortable="true" width="50px">Kode Sasaran</th>
+		<th field="kode_iku_kl" sortable="true" width="50px">Kode IKU</th>
+		<th field="target" sortable="true" width="50px" align="right" formatter="formatPrice">Target (RKT)</th>
+		<th field="penetapan" sortable="true" width="50px" align="right" formatter="formatPrice">Target (PK)</th>
 		<th field="satuan" sortable="true" width="50px">Satuan</th>
+		<th field="deskripsi_iku_kl" hidden="true">deskripsi_iku_kl</th>
+		<th field="deskripsi_sasaran_kl" hidden="true">deskripsi_sasaran_kl</th>
 	  </tr>
-	  </thead> 
+	  </thead>  
 	</table>
 	
 	<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>
