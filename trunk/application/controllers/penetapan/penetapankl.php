@@ -43,7 +43,7 @@ class Penetapankl extends CI_Controller {
 		$data['title'] = ($editmode==TRUE?'Edit':'View').' Penetapan Kinerja Kementerian';	
 		$data['objectId'] = $this->objectId;
 		$data['editMode'] = $editmode;
-		
+		$data['is_perubahan'] = false;
 		$data['result'] = $this->penetapankl_model->getDataEdit($id);
 		
 	  	$this->load->view('penetapan/penetapankl_v_edit',$data);

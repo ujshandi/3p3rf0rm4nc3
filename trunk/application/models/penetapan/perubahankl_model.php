@@ -14,39 +14,41 @@ class Perubahankl_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null){
+	public function easyGrid($filidpk=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount($filtahun);
+		$count = $this->GetRecordCount($filidpk);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
-		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tbl_pk_kl.tahun';  
+		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tbl_historypk_kl.tahun';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'desc';  
 		$offset = ($page-1)*$limit;  
 		
 		if ($count>0){
 			//filter
-			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
-				$this->db->where("tbl_pk_kl.tahun",$filtahun);
+			if($filidpk != '' && $filidpk != '-1' && $filidpk != null) {
+				$this->db->where("tbl_historypk_kl.id_pk_kl",$filidpk);
 			}	
+			//$this->db->where("tbl_historypk_kl.status",1);
 			
 			$this->db->order_by($sort." ".$order );
 			$this->db->limit($limit,$offset);
-			$this->db->select("distinct tbl_pk_kl.*,tbl_iku_kl.deskripsi as deskripsi_iku_kl,tbl_iku_kl.satuan,tbl_sasaran_kl.deskripsi as deskripsi_sasaran_kl, tbl_kl.nama_kl",false);
-			$this->db->from('tbl_pk_kl ');
-			$this->db->join('tbl_iku_kl','tbl_iku_kl.kode_iku_kl = tbl_pk_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_pk_kl.tahun');
-			$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_pk_kl.kode_sasaran_kl and tbl_sasaran_kl.tahun = tbl_pk_kl.tahun');
-			$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_pk_kl.kode_kl');
-			$this->db->order_by("tbl_pk_kl.tahun DESC, kode_sasaran_kl ASC, tbl_pk_kl.kode_iku_kl ASC");
+			$this->db->select("distinct tbl_historypk_kl.*,tbl_iku_kl.deskripsi as deskripsi_iku_kl,tbl_iku_kl.satuan,tbl_sasaran_kl.deskripsi as deskripsi_sasaran_kl, tbl_kl.nama_kl",false);
+			$this->db->from('tbl_historypk_kl ');
+			$this->db->join('tbl_iku_kl','tbl_iku_kl.kode_iku_kl = tbl_historypk_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_historypk_kl.tahun');
+			$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_historypk_kl.kode_sasaran_kl and tbl_sasaran_kl.tahun = tbl_historypk_kl.tahun');
+			$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_historypk_kl.kode_kl');
+			$this->db->order_by("tbl_historypk_kl.tahun DESC, kode_sasaran_kl ASC, tbl_historypk_kl.kode_iku_kl ASC");
 			$query = $this->db->get();
 			
 			$i=0;
 			foreach ($query->result() as $row)
 			{
 				$response->rows[$i]['id_pk_kl']=$row->id_pk_kl;
+				$response->rows[$i]['no_history']=$row->no_history;
 				$response->rows[$i]['tahun']=$row->tahun;
 				$response->rows[$i]['kode_kl']=$row->kode_kl;
 				$response->rows[$i]['nama_kl']=$row->nama_kl;
@@ -84,6 +86,7 @@ class Perubahankl_model extends CI_Model
 			$query->free_result();
 		}else {
 				$response->rows[$count]['id_pk_kl']='';
+				$response->rows[$count]['no_history']='';
 				$response->rows[$count]['tahun']='';
 				$response->rows[$count]['kode_kl']='';
 				$response->rows[$count]['kode_sasaran_kl']='';
@@ -100,16 +103,16 @@ class Perubahankl_model extends CI_Model
 	}
 	
 	
-	public function GetRecordCount($filtahun=null){
-		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
-			$this->db->where("tbl_pk_kl.tahun",$filtahun);
+	public function GetRecordCount($filidpk=null){
+		if($filidpk != '' && $filidpk != '-1' && $filidpk != null) {
+			$this->db->where("tbl_historypk_kl.id_pk_kl",$filidpk);
 		}
-		
-		$this->db->select("distinct tbl_pk_kl.*,tbl_iku_kl.deskripsi as deskripsi_iku_kl,tbl_iku_kl.satuan,tbl_sasaran_kl.deskripsi as deskripsi_sasaran_kl, tbl_kl.nama_kl",false);
-		$this->db->from('tbl_pk_kl ');
-			$this->db->join('tbl_iku_kl','tbl_iku_kl.kode_iku_kl = tbl_pk_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_pk_kl.tahun');
-			$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_pk_kl.kode_sasaran_kl and tbl_sasaran_kl.tahun = tbl_pk_kl.tahun');
-			$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_pk_kl.kode_kl');
+		//$this->db->where("tbl_historypk_kl.status",1);
+		$this->db->select("distinct tbl_historypk_kl.*,tbl_iku_kl.deskripsi as deskripsi_iku_kl,tbl_iku_kl.satuan,tbl_sasaran_kl.deskripsi as deskripsi_sasaran_kl, tbl_kl.nama_kl",false);
+		$this->db->from('tbl_historypk_kl ');
+			$this->db->join('tbl_iku_kl','tbl_iku_kl.kode_iku_kl = tbl_historypk_kl.kode_iku_kl and tbl_iku_kl.tahun = tbl_historypk_kl.tahun');
+			$this->db->join('tbl_sasaran_kl','tbl_sasaran_kl.kode_sasaran_kl = tbl_historypk_kl.kode_sasaran_kl and tbl_sasaran_kl.tahun = tbl_historypk_kl.tahun');
+			$this->db->join('tbl_kl', 'tbl_kl.kode_kl = tbl_historypk_kl.kode_kl');
 		
 		return $this->db->count_all_results();
 		$this->db->free_result();
@@ -289,10 +292,6 @@ class Perubahankl_model extends CI_Model
 	}
 	
 	public function UpdateOnDb($data){
-		$this->db->flush_cache();
-		$this->db->where('id_pk_kl', $data['id_pk_kl']);
-		$this->db->set('penetapan', $data['penetapan']);
-		$result = $this->db->update('tbl_pk_kl', $data);
 		
 		# insert to log
 		$this->db->flush_cache();
@@ -310,6 +309,23 @@ class Perubahankl_model extends CI_Model
 		$this->db->set('penetapan',			$qt->row()->penetapan);
 		$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->insert('tbl_pk_kl_log');
+		
+		$this->db->flush_cache();
+		$this->db->set('id_pk_kl',				$qt->row()->id_pk_kl);
+		$this->db->set('no_history',	$this->getNoHistory($qt->row()->id_pk_kl));
+		$this->db->set('tahun',				$qt->row()->tahun);
+		$this->db->set('kode_kl',			$qt->row()->kode_kl);
+		$this->db->set('kode_sasaran_kl',	$qt->row()->kode_sasaran_kl);
+		$this->db->set('kode_iku_kl',		$qt->row()->kode_iku_kl);
+		$this->db->set('target',			$qt->row()->target);
+		$this->db->set('penetapan',			$qt->row()->penetapan);
+		$this->db->set('log_history',				'INSERT;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
+		$result = $this->db->insert('tbl_historypk_kl');
+		
+		$this->db->flush_cache();
+		$this->db->where('id_pk_kl', $data['id_pk_kl']);
+		$this->db->set('penetapan', $data['penetapan']);
+		$result = $this->db->update('tbl_pk_kl', $data);
 		
 		
 		$errNo   = $this->db->_error_number();
@@ -394,6 +410,19 @@ class Perubahankl_model extends CI_Model
 		
 		echo $out;
 	}
+	
+	
+	public function getNoHistory($id){
+		$this->db->flush_cache();
+		$this->db->select('count(*) as jml',false);
+		$this->db->from('tbl_historypk_kl');
+		$this->db->where('id_pk_kl', $id);
+		$query = $this->db->get();
+		
+		return $query->row()->jml+1;
+		
+	}
+	
 	
 	public function getListTahun($objectId=""){
 		
