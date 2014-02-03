@@ -1,12 +1,14 @@
 	<script  type="text/javascript" >
+		var idPK<?=$objectId;?>;
+		var rowIndexDetail;
 		$(function(){
 			var url;
 			newData<?=$objectId;?> = function (){  
 				//$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Add PK Kementerian');  
 				//$('#fm<?=$objectId;?>').form('clear');  
-				//url = base_url+'penetapan/penetapankl/save';  
+				//url = base_url+'penetapan/perubahankl/save';  
 				
-				addTab("Add PK Kementerian", "penetapan/penetapankl/add");
+				addTab("Add PK Kementerian", "penetapan/perubahankl/add");
 			}
 			//end newData 
 			
@@ -14,7 +16,7 @@
 				var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 				
 				if (row){
-					addTab((editmode?"Edit":"View")+" PK Kementerian", "penetapan/penetapankl/edit/"+row.id_pk_kl+ "/" + editmode);
+					addTab((editmode?"Edit":"View")+" PK Kementerian", "penetapan/perubahankl/edit/"+row.id_pk_kl+ "/" + editmode);
 				}
 			}
 			//end editData
@@ -26,7 +28,7 @@
 						if(confirm("Apakah yakin akan menghapus data '" + row.kode_iku_kl + "'?")){
 							var response = '';
 							$.ajax({ type: "GET",
-									 url: base_url+'penetapan/penetapankl/delete/' + row.id_pk_kl,
+									 url: base_url+'penetapan/perubahankl/delete/' + row.id_pk_kl,
 									 async: false,
 									 success : function(response)
 									 {
@@ -67,12 +69,12 @@
 				if(filtahun.length==0) filtahun ="-1";
 				
 				if (tipe==1){
-					return "<?=base_url()?>penetapan/penetapankl/grid/"+filtahun;
+					return "<?=base_url()?>penetapan/perubahankl/grid/"+filtahun;
 				}
 				else if (tipe==2){
-					return "<?=base_url()?>penetapan/penetapankl/pdf/"+filtahun;
+					return "<?=base_url()?>penetapan/perubahankl/pdf/"+filtahun;
 				}else if (tipe==3){
-					return "<?=base_url()?>penetapan/penetapankl/excel/"+filtahun;
+					return "<?=base_url()?>penetapan/perubahankl/excel/"+filtahun;
 				}
 				
 			}
@@ -162,7 +164,7 @@
 			
 			setTimeout(function(){
 				searchData<?=$objectId;?>();
-				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>penetapan/penetapankl/grid"});
+				//$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>penetapan/perubahankl/grid"});
 			},0);
 			
 						
@@ -247,7 +249,7 @@
 				<tr>
 					<td>Tahun :</td>
 					<td>
-					<?=$this->penetapankl_model->getListFilterTahun($objectId)?>
+					<?=$this->perubahankl_model->getListFilterTahun($objectId)?>
 					</td>
 				</tr>
 				<tr style="height:10px">
@@ -267,7 +269,7 @@
 		</table>
 	  <div style="margin-bottom:5px">
 		<? if($this->sys_menu_model->cekAkses('ADD;',104,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
-			<a href="#" onclick="newData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-add" plain="true">Add</a>  
+	<!--		<a href="#" onclick="newData<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-add" plain="true">Add</a>   -->
 		<?}?>
 		<!------------Edit View-->
 		<? if($this->sys_menu_model->cekAkses('EDIT;',104,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
@@ -286,7 +288,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data Penetapan Kinerja (PK) Kementerian" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>" style="height:auto;width:auto" title="Data (PK) Kementerian Yang Sudah Ditetapkan" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="id_pk_kl" hidden="true" sortable="true" width="50px">Kode</th>
@@ -303,5 +305,96 @@
 	  </tr>
 	  </thead>  
 	</table>
+	
+	
+	<script type="text/javascript">
+        $(function(){
+			var parentId;
+			// chan
+			$('#dg<?=$objectId;?>').datagrid({
+				url:getUrl<?=$objectId;?>(1),	
+				view: detailview,
+				queryParams:{rowIdx:'0'},	
+				 detailFormatter:function(index,row){
+                    return '<div style="padding:2px"><table id="ddv<?=$objectId;?>-' + index + '"></table></div>';
+                //  return "tes";
+                },
+                onExpandRow: function(index,row){
+				//	alert(row.id_pk_kl);
+						
+                    $('#ddv<?=$objectId;?>-'+index).datagrid({
+                        url:'<?=base_url()?>penetapan/perubahankl/gridperubahan/'+row.id_pk_kl+'/?parentIndex='+index,
+                        fitColumns:true,
+                        singleSelect:true,
+                        rownumbers:true,
+                        loadMsg:'',
+                        height:'auto',
+                        columns:[[
+                            {field:'id_pk_kl',title:'id',hidden:true},
+                            {field:'no_history',title:'No.Perubahan',width:40},
+                            {field:'tahun',title:'Tahun',width:30},
+                            {field:'kode_kl',title:'Kode Kementerian',width:50},
+                            {field:'nama_kl',title:'Kriteria Capaian',hidden:true},
+                            {field:'kode_sasaran_kl',title:'Kode Sasaran',width:50},
+                            {field:'kode_iku_kl',title:'Kode IKU',width:50},
+                            {field:'target',title:'Target (RKT)',width:50,align:'right',formatter:formatPrice},
+                            {field:'penetapan',title:'Target (PK)',width:50,align:'right',formatter:formatPrice},
+                            {field:'satuan',title:'Satuan',width:50},
+                            {field:'deskripsi_iku_kl',title:'Ukuran Capaian',hidden:true},
+                            {field:'deskripsi_sasaran_kl',title:'Ukuran Capaian',hidden:true}                       
+                        ]],
+                        onResize:function(){
+                            $('#dg<?=$objectId;?>').datagrid('fixDetailRowHeight',index);
+                        },
+                       onClickCell:function(rowIndex, field, value){
+							 $('#ddv<?=$objectId;?>-'+index).datagrid('selectRow', rowIndex);
+							var row = $('#ddv<?=$objectId;?>-'+index).datagrid('getSelected');
+							if (row==null) return;
+							///alert(row);
+							idPK<?=$objectId;?> = row.id_pk_kl;
+							rowIndexDetail = index;
+							
+					   },
+                        onLoadSuccess:function(){
+                            setTimeout(function(){
+                                $('#dg<?=$objectId;?>').datagrid('fixDetailRowHeight',index);
+                            },0);
+                        }
+                    });
+                    $('#dg<?=$objectId;?>').datagrid('fixDetailRowHeight',index);
+
+	
+                },
+				onClickCell: function(rowIndex, field, value){
+					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
+					
+					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+					idPK<?=$objectId;?> = null;
+					if (row==null) return;
+					//alert(row.deskripsi_iku_kl);
+					switch(field){
+						case "kode_kl":
+							showPopup('#popdesc<?=$objectId?>', row.nama_kl);
+							break;
+						case "kode_sasaran_kl":
+							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_kl);
+							break;
+						case "kode_iku_kl":
+							showPopup('#popdesc<?=$objectId?>', row.deskripsi_iku_kl);
+							break;
+						/* case "kode_kl":
+							showPopup('#popdesc<?=$objectId?>', row.nama_kl);
+							break; */
+						default:
+							closePopup('#popdesc<?=$objectId?>');
+							break;
+					}
+				}
+			});
+			
+			
+            //searchData<?=$objectId;?>();
+        });
+    </script>
 	
 	<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>

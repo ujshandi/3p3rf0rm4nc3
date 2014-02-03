@@ -15,6 +15,7 @@ class Perubahankl extends CI_Controller {
 				
 		//if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
 		$this->load->model('/security/sys_menu_model');
+		$this->load->model('/penetapan/perubahankl_model');
 		$this->load->model('/penetapan/penetapankl_model');
 		$this->load->model('/rujukan/kl_model');
 		$this->load->model('/pengaturan/sasaran_kl_model');
@@ -24,17 +25,17 @@ class Perubahankl extends CI_Controller {
 	}
 	
 	function index(){
-		$data['title'] = 'Penetapan Kinerja Kementerian';	
+		$data['title'] = 'Perubahan PK Kementerian';	
 		$data['objectId'] = $this->objectId;
 		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
-	  	$this->load->view('penetapan/penetapankls_v',$data);
+	  	$this->load->view('penetapan/perubahankls_v',$data);
 	}
 	
 	public function add(){
 		$data['title'] = 'Add Penetapan Kinerja Kementerian';	
 		$data['objectId'] = $this->objectId;
 		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
-	  	$this->load->view('penetapan/penetapankl_v',$data);
+	  	$this->load->view('penetapan/perubahankl_v',$data);
 	}
 	
 	public function edit($id, $editmode='true'){
@@ -43,14 +44,18 @@ class Perubahankl extends CI_Controller {
 		$data['title'] = ($editmode==TRUE?'Edit':'View').' Penetapan Kinerja Kementerian';	
 		$data['objectId'] = $this->objectId;
 		$data['editMode'] = $editmode;
-		
+		$data['is_perubahan'] = true;
 		$data['result'] = $this->penetapankl_model->getDataEdit($id);
 		
 	  	$this->load->view('penetapan/penetapankl_v_edit',$data);
 	}
 	
 	function grid($filtahun=null){
-		echo $this->penetapankl_model->easyGrid($filtahun);
+		echo $this->penetapankl_model->easyGrid($filtahun,0);
+	}
+	
+	function gridperubahan($idpk){
+		echo $this->perubahankl_model->easyGrid($idpk);
 	}
 	
 	
@@ -90,7 +95,7 @@ class Perubahankl extends CI_Controller {
 		}else{
 			// validasi detail
 			if($this->check_detail($data, $pesan)){
-				$result = $this->penetapankl_model->InsertOnDb($data);
+				$result = $this->perubahankl_model->InsertOnDb($data);
 			}else{
 				$data['pesan_error'].= $pesan;
 			}
@@ -126,7 +131,7 @@ class Perubahankl extends CI_Controller {
 		
 		// validation
 		
-		$result = $this->penetapankl_model->UpdateOnDb($data);
+		$result = $this->perubahankl_model->UpdateOnDb($data);
 		
 		if ($result){
 			echo json_encode(array('success'=>true, 'tindakan_rwj_id'=>$return_id));
@@ -137,7 +142,7 @@ class Perubahankl extends CI_Controller {
 	
 	function delete($id=''){
 		if($id != ''){
-			$result = $this->penetapankl_model->DeleteOnDb($id);
+			$result = $this->perubahankl_model->DeleteOnDb($id);
 			if ($result){
 				echo json_encode(array('success'=>true, 'haha'=>''));
 			} else {
@@ -147,7 +152,7 @@ class Perubahankl extends CI_Controller {
 	}
 	
 	public function getDetail($tahun="", $kode_kl="", $kode_sasaran_kl=""){
-		echo $this->penetapankl_model->getDetail($tahun, $kode_kl, $kode_sasaran_kl);
+		echo $this->perubahankl_model->getDetail($tahun, $kode_kl, $kode_sasaran_kl);
 	}
 	
 }
