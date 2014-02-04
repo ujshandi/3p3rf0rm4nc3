@@ -14,12 +14,12 @@ class Subkegiatankl_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($file1=null, $file2=null,$purpose=1){
+	public function easyGrid($file1=null, $file2=null,$filtahun=null,$purpose=1){
 		$lastNo = isset($_POST['lastNo']) ? intval($_POST['lastNo']) : 0;  
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount($file1,$file2);
+		$count = $this->GetRecordCount($file1,$file2,$filtahun);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
@@ -28,17 +28,21 @@ class Subkegiatankl_model extends CI_Model
 		$pdfdata = array();
 		if ($count>0){
 				if($file2 != '' && $file2 != '-1' && $file2 != null) {
-			$this->db->where("kl.kode_e2",$file2);
+			$this->db->where("tbl_kegiatan_kl.kode_e2",$file2);
 		}
-		if($file1 != '' && $file1 != '-1' && $file1 != null) {
+		/* if($file1 != '' && $file1 != '-1' && $file1 != null) {
 			$this->db->where("e2.kode_e1",$file1);
-		}
+		}  */
+		
+		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+				$this->db->where("tbl_subkegiatan_kl.tahun",$filtahun);
+			}
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
 			$this->db->select('tbl_subkegiatan_kl.id_subkegiatan_kl, tbl_subkegiatan_kl.tahun, tbl_subkegiatan_kl.kode_subkegiatan, tbl_subkegiatan_kl.nama_subkegiatan, tbl_subkegiatan_kl.lokasi, tbl_subkegiatan_kl.volume, tbl_subkegiatan_kl.satuan, tbl_subkegiatan_kl.total, tbl_subkegiatan_kl.kode_kegiatan, tbl_subkegiatan_kl.kode_satker ');
-			$this->db->from('tbl_subkegiatan_kl');
+			//$this->db->from('tbl_subkegiatan_kl');
+			$this->db->from('tbl_subkegiatan_kl left join tbl_kegiatan_kl on tbl_subkegiatan_kl.kode_kegiatan =tbl_kegiatan_kl.kode_kegiatan and tbl_subkegiatan_kl.tahun=tbl_kegiatan_kl.tahun',false);
 			$this->db->order_by("tbl_subkegiatan_kl.tahun DESC, tbl_subkegiatan_kl.kode_satker ASC, tbl_subkegiatan_kl.kode_kegiatan ASC, tbl_subkegiatan_kl.kode_subkegiatan ASC");
-			//$this->db->from('tbl_subkegiatan_kl sbkl left join tbl_kegiatan_kl on sbkl.kode_kegiatan = kl.kode_kegiatan',false);
 			//$this->db->join('tbl_kegiatan','tbl_kegiatan.kode_kegiatan = tbl_subkegiatan_kl.kode_kegiatan');
 			
 			
@@ -133,21 +137,47 @@ class Subkegiatankl_model extends CI_Model
 		}
 	}
 	
-	public function GetRecordCount($file1=null,$file2=null){
-		if($file2 != '' && $file2 != '-1' && $file2 != null) {
-			$this->db->where("kl.kode_e2",$file2);
+	public function GetRecordCount($file1=null,$file2=null,$filtahun){
+		 if($file2 != '' && $file2 != '-1' && $file2 != null) {
+			$this->db->where("kkl.kode_e2",$file2);
 		}
-		if($file1 != '' && $file1 != '-1' && $file1 != null) {
+		/* if($file1 != '' && $file1 != '-1' && $file1 != null) {
 			$this->db->where("e2.kode_e1",$file1);
-		}
+		}  */
+		
+		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+				$this->db->where("sbkl.tahun",$filtahun);
+			}
 		$this->db->flush_cache();
 		$this->db->select("*",false);
-		$this->db->from('tbl_subkegiatan_kl');
-		//$this->db->from('tbl_subkegiatan_kl sbkl left join tbl_kegiatan_kl on sbkl.kode_kegiatan = kl.kode_kegiatan',false);
+		//$this->db->from('tbl_subkegiatan_kl');
+		$this->db->from('tbl_subkegiatan_kl sbkl left join tbl_kegiatan_kl kkl on sbkl.kode_kegiatan = kkl.kode_kegiatan  and sbkl.tahun=kkl.tahun',false);
 		//$this->db->join('tbl_kegiatan','tbl_kegiatan.kode_kegiatan = tbl_subkegiatan_kl.kode_kegiatan');
 		
 		return $this->db->count_all_results();
 		$this->db->free_result();
+	}
+	
+	public function getListTahun($objectId,$name="filter_tahun",$required="false",$withAll=true){
+		
+		$this->db->flush_cache();
+		$this->db->select('distinct tahun',false);
+		$this->db->from('tbl_subkegiatan_kl');
+		
+		$this->db->order_by('tahun');
+		
+		$que = $this->db->get();
+		
+		$out = '<select name="'.$name.$objectId.'" id="'.$name.$objectId.'"  class="easyui-validatebox" required="'.$required.'">';
+		if ($withAll)
+		$out .= '<option value="-1">Semua</option>';
+		foreach($que->result() as $r){
+			$out .= '<option value="'.$r->tahun.'">'.$r->tahun.'</option>';
+		}
+		
+		$out .= '</select>';
+		
+		echo $out;
 	}
 	
 	public function GetKodeE1($kode_program){
@@ -191,9 +221,11 @@ class Subkegiatankl_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->select('*');
 		$this->db->from('tbl_subkegiatan_kl a');
-		$this->db->join('tbl_satker b', 'b.kode_satker = a.kode_satker');
-		$this->db->join('tbl_eselon1 c', 'c.kode_e1 = b.kode_e1');
-		$this->db->join('tbl_kegiatan_kl d', 'd.kode_kegiatan = a.kode_kegiatan');
+	//	$this->db->join('tbl_satker b', 'b.kode_satker = a.kode_satker');
+	//	$this->db->join('tbl_eselon1 c', 'c.kode_e1 = b.kode_e1');
+		$this->db->join('tbl_kegiatan_kl d', 'd.kode_kegiatan = a.kode_kegiatan and d.tahun=a.tahun','left');
+		$this->db->join('tbl_eselon2 e', 'e.kode_e2= d.kode_e2','left');
+		$this->db->join('tbl_eselon1 f', 'f.kode_e1= e.kode_e1','left');
 		$this->db->where('a.id_subkegiatan_kl', $id);
 		
 		return $this->db->get()->row();
@@ -205,14 +237,14 @@ class Subkegiatankl_model extends CI_Model
 		foreach($data['detail'] as $dt){
 			$this->db->set('tahun', 			$data['tahun']);
 			$this->db->set('kode_kegiatan',		$data['kode_kegiatan']);
-			$this->db->set('kode_satker',		$data['kode_satker']);
+		//	$this->db->set('kode_satker',		$data['kode_satker']);
 			
 			$this->db->set('kode_subkegiatan',	$dt['kode_subkegiatan']);
 			$this->db->set('nama_subkegiatan',	$dt['nama_subkegiatan']);
-			$this->db->set('lokasi',			$dt['lokasi']);
+			/* $this->db->set('lokasi',			$dt['lokasi']);
 			$this->db->set('volume',			$dt['volume']);
-			$this->db->set('satuan',			$dt['satuan']);
-			$this->db->set('total',				$dt['total']);
+			$this->db->set('satuan',			$dt['satuan']); */
+			$this->db->set('total',$this->utility->ourDeFormatNumber2($dt['total']));
 			
 			$result = $this->db->insert('tbl_subkegiatan_kl');
 			
@@ -235,12 +267,12 @@ class Subkegiatankl_model extends CI_Model
 		$this->db->set('tahun', $data['tahun']);
 		$this->db->set('kode_subkegiatan',$data['kode_subkegiatan']);
 		$this->db->set('nama_subkegiatan',$data['nama_subkegiatan']);
-		$this->db->set('lokasi',$data['lokasi']);
+		/* $this->db->set('lokasi',$data['lokasi']);
 		$this->db->set('volume',$data['volume']);
 		$this->db->set('satuan',$data['satuan']);
-		$this->db->set('total',$data['total']);
+		$this->db->set('kode_satker',$data['kode_satker']); */
+		$this->db->set('total',$this->utility->ourDeFormatNumber2($data['total']));
 		$this->db->set('kode_kegiatan',$data['kode_kegiatan']);
-		$this->db->set('kode_satker',$data['kode_satker']);
 		
 		$this->db->where('id_subkegiatan_kl', $data['id_subkegiatan_kl']);
 		
@@ -260,12 +292,10 @@ class Subkegiatankl_model extends CI_Model
 	}
 	
 	//hapus data
-	public function DeleteOnDb($tindak_id, $unit_id, $klas_id) {
-		$this->db->where('tindak_id',$tindak_id);
-		$this->db->where('unit_id',$unit_id);
-		$this->db->where('klas_id',$klas_id);
+	public function DeleteOnDb($id) {		
+		$this->db->where('id_subkegiatan_kl',$id);
 		
-		$result = $this->db->delete('mst_tindakan_unit');
+		$result = $this->db->delete('tbl_subkegiatan_kl');
 		
 		if($result) {
 			return TRUE;

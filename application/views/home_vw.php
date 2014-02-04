@@ -220,6 +220,15 @@
 		base_url = '<?= base_url();?>';
 		//]]>
 		$(document).ready(function(){
+			
+			$(document).on("keypress", 'form', function (e) {
+			    var code = e.keyCode || e.which;
+			    if (code == 13) {
+			        e.preventDefault();
+			        return false;
+			    }
+			});			
+			
 			jQuery(document).ajaxStart(function(){
 				$.ajax({
 							  url: base_url+"home/getLoginStatus",
@@ -499,6 +508,16 @@
 					$('.dropdown').slideUp("slow");
 				}
 			});
+			
+			$(window).resize(function(){
+		        $('#divLayout').layout('resize');
+		      //  $('#tt').trigger('_resize');
+		    });
+			
+			$('body').resize(function(){
+		        $('#divLayout').layout('resize');
+		      //  $('#tt').trigger('_resize');
+		    });
 		});
 		
 	</script>

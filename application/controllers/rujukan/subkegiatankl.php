@@ -35,25 +35,27 @@ class Subkegiatankl extends CI_Controller {
 	  	$this->load->view('rujukan/subkegiatankl_v_edit',$data);
 	}
 	
-	function grid($file1=null,$file2=null){
+	function grid($file1=null,$file2=null,$tahun=null){
 		if (($file1==null)&&($this->session->userdata('unit_kerja_e1'))!=-1)
 			$file1= $this->session->userdata('unit_kerja_e1');
 		if (($file2==null)&&($this->session->userdata('unit_kerja_e2'))!=-1)
 			$file2= $this->session->userdata('unit_kerja_e2');
-		echo $this->subkegiatankl_model->easyGrid($file1,$file2);
+			
+		echo $this->subkegiatankl_model->easyGrid($file1,$file2,$tahun);
 	}
 	
-	function getListKegiatan($objectId,$e2,$kode=""){
+	function getListKegiatan($objectId,$e2,$kode=null,$tahun=""){
 		//echo $this->sasaran_eselon2_model->getListSasaranE2($objectId,$e2);
 		$data['kode_kegiatan'] = $kode;
-		$data['nama_kegiatan'] = ($kode=='')?'':$this->kegiatankl_model->getNamaKegiatan($kode);
+		$data['tahun'] = $tahun;
+		$data['nama_kegiatan'] = (($kode=='')||($kode=="-1"))?'':$this->kegiatankl_model->getNamaKegiatan($kode);
 		echo $this->kegiatankl_model->getListKegiatan($objectId,$e2,$data);
 	}
 	
 	private function get_form_values() {
 		$dt['tahun'] 			= $this->input->post("tahun", TRUE);
 		$dt['kode_kegiatan'] 	= $this->input->post("kode_kegiatan", TRUE);
-		$dt['kode_satker']		= $this->input->post("kode_satker", TRUE);
+		//$dt['kode_satker']		= $this->input->post("kode_satker", TRUE);
 		$dt['detail'] 			= $this->input->post("detail", TRUE);
 		return $dt;
     }
