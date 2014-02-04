@@ -1,8 +1,9 @@
-	
+
 	<script  type="text/javascript" >
 				
 		$(function(){
-		
+			$('.year').autoNumeric('init',{aSep: '', aDec: ',',vMin:'0',aPad:"false",vMax:"9999"});
+			$('.money').autoNumeric('init',{aSep: '.', aDec: ',',vMin:'0',aPad:"false",vMax:"999999999999999"});
 		 	saveData<?=$objectId;?>=function(){
 				$('#fm<?=$objectId;?>').form('submit',{
 					url: base_url+'rujukan/programkl/save',
@@ -168,10 +169,10 @@
 									</td>
 									<td>
 										<!--<input name="detail[1][nama_program]" size="120"> -->
-										<textarea name="detail[1][nama_program]" cols="80" rows="0"></textarea>
+										<textarea name="detail[1][nama_program]" cols="100" rows="0"></textarea>
 									</td>
 									<td>
-										<input name="detail[1][total]" class="money" size="20">
+										<input name="detail[1][total]" class="money" style="text-align:right" size="25">
 									</td>
 								</tr>
 							</table>

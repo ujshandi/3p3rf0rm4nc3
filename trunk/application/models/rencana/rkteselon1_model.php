@@ -455,7 +455,7 @@ class Rkteselon1_model extends CI_Model
 		echo $out;
 	}
 	
-	public function getListFilterTahun($objectId){
+	public function getListFilterTahun($objectId,$withAll=true){
 		
 		$this->db->flush_cache();
 		$this->db->select('distinct tahun',false);
@@ -470,7 +470,8 @@ class Rkteselon1_model extends CI_Model
 		$que = $this->db->get();
 		
 		$out = '<select name="filter_tahun'.$objectId.'" id="filter_tahun'.$objectId.'">';
-		$out .= '<option value="-1">Semua</option>';
+		if ($withAll)
+			$out .= '<option value="-1">Semua</option>';
 		foreach($que->result() as $r){
 			$out .= '<option value="'.$r->tahun.'">'.$r->tahun.'</option>';
 		}

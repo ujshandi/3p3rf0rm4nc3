@@ -155,9 +155,12 @@
 		}
 			
 		setTimeout(function(){
-			$('#dg<?=$objectId;?>').datagrid({url:"<?=base_url()?>rujukan/programkl/grid"});
+			searchData<?=$objectId;?>();
 		},0);
 
+			
+		
+		
 		$("#popdesc<?=$objectId?>").click(function(){
 			closePopup('#popdesc<?=$objectId?>');
 		});

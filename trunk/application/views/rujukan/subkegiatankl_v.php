@@ -1,5 +1,7 @@
+
 	<script  type="text/javascript" >
-		$('textarea').autosize();   			
+		$('.year').autoNumeric('init',{aSep: '', aDec: ',',vMin:'0',aPad:"false",vMax:"9999"});
+			$('.money').autoNumeric('init',{aSep: '.', aDec: ',',vMin:'0',aPad:"false",vMax:"999999999999999"});		
 		$(function(){
 		//chan=============================================
 			 function setListE2<?=$objectId?>(){
@@ -21,8 +23,10 @@
 			  });
 			  
 			function setKegiatan<?=$objectId;?>(e2){
+				var tahun = $('#tahun<?=$objectId?>').val();
+				if ((tahun==null)||(tahun=='')) tahun = '-1';
 				$("#divKegiatan<?=$objectId?>").load(
-					base_url+"rujukan/subkegiatankl/getListKegiatan/"+"<?=$objectId;?>"+"/"+e2,
+					base_url+"rujukan/subkegiatankl/getListKegiatan/"+"<?=$objectId;?>"+"/"+e2+"/-1/"+tahun,
 					//on complete
 					function(){
 						$('textarea').autosize();   
@@ -291,7 +295,7 @@
 					<form id="fm<?=$objectId;?>" method="post">		
 						<div class="fitem">
 							<label style="width:120px">Tahun :</label>
-							<input name="tahun" size="5" class="easyui-validatebox" required="true">
+							<input name="tahun" size="5" class="easyui-validatebox year" id="tahun<?=$objectId?>" required="true">
 						</div>					
 						<div class="fitem" >
 							<label style="width:120px">Unit Kerja Eselon I :</label>
@@ -310,19 +314,19 @@
 							//CHAN $this->sasaran_eselon2_model->getListSasaranE2($objectId)?>
 							</span>
 						</div>
-						<div class="fitem">							
+					<!--	<div class="fitem">							
 							<label style="width:120px">Satuan Kerja :</label>
 							<? 	$this->satker_model->getListSatker($objectId); ?>
-						</div>
+						</div> -->
 						<div class="fitem">
 							<br>
 							<table id="tbl<?=$objectId;?>" border="1" width="100%" border="1" cellpadding="2" cellspacing="0" bordercolor="#CCCCCC">
 								<tr>
 									<td width="18px" bgcolor="#F4F4F4">Kode Sub Kegiatan</td>
 									<td width="60px" bgcolor="#F4F4F4">Nama Sub Kegiatan</td>
-									<td width="20px" bgcolor="#F4F4F4">Lokasi</td>
+								<!--	<td width="20px" bgcolor="#F4F4F4">Lokasi</td>
 									<td width="20px" bgcolor="#F4F4F4">Volume</td>
-									<td width="20px" bgcolor="#F4F4F4">Satuan</td>
+									<td width="20px" bgcolor="#F4F4F4">Satuan</td> -->
 									<td width="20px" bgcolor="#F4F4F4">Total Anggaran (Rp)</td>
 								</tr>
 								<tr>
@@ -332,15 +336,15 @@
 									<td>
 										<input name="detail[1][nama_subkegiatan]" size="60">
 									</td>
-									<td>
+									<!--<td>
 										<input name="detail[1][lokasi]" size="20">
 									</td><td>
 										<input name="detail[1][volume]" size="20">
 									</td><td>
 										<input name="detail[1][satuan]" size="20">
-									</td>
+									</td> -->
 									<td>
-										<input name="detail[1][total]" size="20">
+										<input name="detail[1][total]" class="money" style="text-align:right" size="20">
 									</td>
 								</tr>
 							</table>

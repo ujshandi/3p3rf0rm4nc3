@@ -51,7 +51,7 @@
 			cancel<?=$objectId;?>=function(){
 				// reload and close tab
 				$('#dg<?=$objectId;?>').datagrid('reload');
-				$('#tt').tabs('close', 'Edit Kegiatan');					
+				$('#tt').tabs('close', '<?=($editMode?'Edit':'Add')?> Kegiatan');					
 			}
 			<?if (!$editMode) {?>
 				onchangeKodeE1<?=$objectId;?>();

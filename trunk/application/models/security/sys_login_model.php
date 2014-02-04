@@ -6,7 +6,6 @@ class Sys_login_model extends CI_Model{
 	var $access_level;
 	function __construct(){
 		parent::__construct();
-		//$this->CI =& get_instance();
 		$this->groupId = 0;
 		$this->userId = 0;
 		$this->access_level= 0;
@@ -36,7 +35,6 @@ class Sys_login_model extends CI_Model{
 			//var_dump($this->groupId);die;
 			$this->create_session($row['user_id'], $row['user_name'], (($row['user_name']=='superadmin')?'':$row['app_type']), $row['full_name'],true,$row['unit_kerja_e1'],$row['unit_kerja_e2'],$row['level'],$row['group_id'],$row['level_id']);
 			$query->free_result();
-			
 			$data['user_id']=$row['user_id'];
 			$data['user_name']=$row['user_name'];
 			$data['unit_kerja_e1']=$row['unit_kerja_e1'];

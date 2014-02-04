@@ -233,14 +233,14 @@
 			<table border="0" cellpadding="1" cellspacing="1">
 			<?// if ($this->session->userdata('unit_kerja_e1')==-1){?>
 			<tr>
-				<td>Unit Kerja Eselon I&nbsp;</td>
+				<td>Unit Kerja Eselon I :&nbsp;</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>				
 				</td>
 			</tr>
 			<?//}?>
 			<tr>
-				<td>Unit Kerja Eselon II&nbsp</td>
+				<td>Unit Kerja Eselon II :&nbsp</td>
 				<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
 					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 					</span>
@@ -277,6 +277,7 @@
 			<? if($this->sys_menu_model->cekAkses('EXCEL;',4,$this->session->userdata('group_id'),$this->session->userdata('level_id'))){?>
 				<a href="#" onclick="toExcel<?=$objectId;?>();" class="easyui-linkbutton" iconCls="icon-excel" plain="true">Excel</a>
 			<?}?>
+				<!--<li><a target="blank" href="http://192.168.0.100/e-performance/api/rujukan_api/eselon2_list/format/json">Rujukan E2</a> - get it in JSON</li>  -->
 	  	</div>
 	</div>
 	

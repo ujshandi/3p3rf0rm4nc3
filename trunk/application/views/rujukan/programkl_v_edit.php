@@ -1,4 +1,4 @@
-<script  type="text/javascript" src="<?=base_url()?>public/js/autoNumeric.js"></script>
+
 	<script  type="text/javascript" >
 		$(function(){
 			$('.year').autoNumeric('init',{aSep: '', aDec: ',',vMin:'0',aPad:"false",vMax:"9999"});
@@ -106,7 +106,7 @@
 						</div>
 						<div class="fitem" >
 							<label style="width:120px">Total Anggaran (Rp) :</label>
-							<input name="total" class="easyui-validatebox money" required="true" value="<?=$result->total?>" >
+							<input name="total" class="easyui-validatebox money" style="text-align:right" required="true" value="<?=$result->total?>" >
 						</div>
 						<br>
 						<div class="fitem" >
