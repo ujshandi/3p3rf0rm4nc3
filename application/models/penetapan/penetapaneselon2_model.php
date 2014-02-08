@@ -14,7 +14,7 @@ class Penetapaneselon2_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null, $file1=null, $file2=null){
+	public function easyGrid($filtahun=null, $file1=null, $file2=null,$filstatus=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
@@ -38,7 +38,10 @@ class Penetapaneselon2_model extends CI_Model
 			if($file2 != '' && $file2 != '-1' && $file2 != null) {
 				$this->db->where("tbl_pk_eselon2.kode_e2",$file2);
 			}
-			
+			if ($filstatus!=null){
+				$this->db->where("tbl_pk_eselon2.status",$filstatus);
+			}
+
 			$this->db->order_by($sort." ".$order );
 			$this->db->limit($limit,$offset);
 			$this->db->select("tbl_pk_eselon2.*, tbl_ikk.deskripsi as deskripsi_iku_e2,tbl_ikk.satuan,tbl_sasaran_eselon2.deskripsi as deskripsi_sasaran_e2,tbl_eselon2.nama_e2",false);
@@ -112,7 +115,7 @@ class Penetapaneselon2_model extends CI_Model
 	}
 	
 	
-	public function GetRecordCount($filtahun=null, $file1, $file2){
+	public function GetRecordCount($filtahun=null, $file1, $file2,$filstatus=null){
 		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 			$this->db->where("tbl_pk_eselon2.tahun",$filtahun);
 		}
@@ -121,6 +124,9 @@ class Penetapaneselon2_model extends CI_Model
 		}
 		if($file2 != '' && $file2 != '-1' && $file2 != null) {
 			$this->db->where("tbl_pk_eselon2.kode_e2",$file2);
+		}
+		if ($filstatus!=null){
+			$this->db->where("tbl_pk_eselon2.status",$filstatus);
 		}
 		$this->db->select("tbl_pk_eselon2.*, tbl_ikk.deskripsi as deskripsi_iku_e2,tbl_ikk.satuan,tbl_sasaran_eselon2.deskripsi as deskripsi_sasaran_e2,tbl_eselon2.nama_e2",false);		$this->db->from('tbl_pk_eselon2');
 		$this->db->join('tbl_ikk', 'tbl_ikk.kode_ikk = tbl_pk_eselon2.kode_ikk and tbl_ikk.tahun = tbl_pk_eselon2.tahun');

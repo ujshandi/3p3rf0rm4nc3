@@ -146,6 +146,7 @@ class Kegiatankl_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->select("distinct *",false);
 		$this->db->from('tbl_kegiatan_kl kl left join tbl_eselon2 e2 on kl.kode_e2 = e2.kode_e2',false);
+			$this->db->join('tbl_program_kl pr','pr.kode_program = kl.kode_program and pr.tahun=kl.tahun');
 		//$this->db->join('tbl_kegiatan','tbl_kegiatan.kode_kegiatan = tbl_kegiatan_kl.kode_kegiatan');
 		
 		return $this->db->count_all_results();

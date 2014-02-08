@@ -226,20 +226,20 @@
 			
 			<table border="0" cellpadding="1" cellspacing="1">
 			<tr>
-				<td>Tahun&nbsp;</td>
+				<td>Tahun :&nbsp;</td>
 				<td>
 					<?=$this->subkegiatankl_model->getListTahun($objectId)?>				
 				</td>
 			</tr>
 			<tr>
-				<td>Unit Kerja Eselon I&nbsp;</td>
+				<td>Unit Kerja Eselon I :&nbsp;</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>				
 				</td>
 			</tr>
 			
 			<tr>
-				<td>Unit Kerja Eselon II&nbsp</td>
+				<td>Unit Kerja Eselon II :&nbsp;</td>
 				<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
 					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 					</span>

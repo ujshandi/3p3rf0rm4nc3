@@ -48,7 +48,7 @@ class Subkegiatankl extends CI_Controller {
 		//echo $this->sasaran_eselon2_model->getListSasaranE2($objectId,$e2);
 		$data['kode_kegiatan'] = $kode;
 		$data['tahun'] = $tahun;
-		$data['nama_kegiatan'] = (($kode=='')||($kode=="-1"))?'':$this->kegiatankl_model->getNamaKegiatan($kode);
+		$data['nama_kegiatan'] = (($kode=='')||($kode=="-1"))?'':$this->kegiatankl_model->getNamaKegiatan($tahun,$kode);
 		echo $this->kegiatankl_model->getListKegiatan($objectId,$e2,$data);
 	}
 	

@@ -36,8 +36,8 @@ class Eselon2 extends CI_Controller {
 		echo $this->eselon2_model->getListFilterEselon2($objectId,$e1);
 	}
 	
-	function loadE2($e1, $objectId){
-		echo $this->eselon2_model->getListEselon2($objectId, array('e1'=>$e1));
+	function loadE2($e1, $objectId,$val=null){
+		echo $this->eselon2_model->getListEselon2($objectId, array('e1'=>$e1,'value'=>$val));
 	}
 	
 	private function get_form_values() {

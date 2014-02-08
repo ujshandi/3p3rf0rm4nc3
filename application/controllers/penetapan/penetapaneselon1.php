@@ -43,7 +43,7 @@ class Penetapaneselon1 extends CI_Controller {
 		$data['title'] = ($editmode==TRUE?'Edit':'View').' Data Penetapan Kinerja Eselon I';	
 		$data['objectId'] = $this->objectId;
 		$data['editMode'] = $editmode;
-		
+		$data['is_perubahan'] = false;
 		$data['result'] = $this->penetapaneselon1_model->getDataEdit($id);
 		
 	  	$this->load->view('penetapan/penetapaneselon1_v_edit',$data);

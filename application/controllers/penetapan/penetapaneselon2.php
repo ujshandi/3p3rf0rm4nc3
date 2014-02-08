@@ -45,7 +45,7 @@ class Penetapaneselon2 extends CI_Controller {
 		$data['title'] = ($editmode==TRUE?'Edit':'View').' PK Eselon II';	
 		$data['objectId'] = $this->objectId;
 		$data['editMode'] = $editmode;
-		
+		$data['is_perubahan'] = false;
 		$data['result'] = $this->penetapaneselon2_model->getDataEdit($id);
 		
 	  	$this->load->view('penetapan/penetapaneselon2_v_edit',$data);

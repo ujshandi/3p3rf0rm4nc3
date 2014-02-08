@@ -4,17 +4,22 @@
 			$('.money').autoNumeric('init',{aSep: '.', aDec: ',',vMin:'0',aPad:"false",vMax:"999999999999999"});		
 		$(function(){
 			$('textarea').autosize();   
+			cancel<?=$objectId;?>=function(){
+				// reload and close tab
+				$('#dg<?=$objectId;?>').datagrid('reload');				
+				$('#tt').tabs('close', 'Edit Sub Kegiatan');					
+			}
 		//chan=============================================
 			 function setListE2<?=$objectId?>(){
 				$("#divEselon2<?=$objectId?>").load(
-					base_url+"rujukan/eselon2/loadE2/"+$("#kode_e1<?=$objectId?>").val()+"/<?=$objectId;?>",
+					base_url+"rujukan/eselon2/loadE2/"+$("#kode_e1<?=$objectId?>").val()+"/<?=$objectId;?>/<?=$result->kode_e2?>",
 					//on complete
 					function (){
-						//setKegiatan<?=$objectId?>($("#kode_e2<?=$objectId?>").val());
+						
 						$("#kode_e2<?=$objectId?>").change(function(){
-							setKegiatan<?=$objectId?>($("#kode_e2<?=$objectId?>").val(), "<?=$result->id_kegiatan_kl;?>");
+							setKegiatan<?=$objectId?>($("#kode_e2<?=$objectId?>").val(), "<?=$result->kode_kegiatan;?>/"+$("#tahun<?=$objectId?>").val());
 						});	
-						setKegiatan<?=$objectId;?>($("#kode_e2<?=$objectId?>").val(), "<?=$result->id_kegiatan_kl;?>");
+						setKegiatan<?=$objectId;?>($("#kode_e2<?=$objectId?>").val(), "<?=$result->kode_kegiatan;?>","<?=$result->tahun?>");
 					}
 				);
 			 }
@@ -23,9 +28,9 @@
 				setListE2<?=$objectId?>();
 			  });
 			  
-			function setKegiatan<?=$objectId;?>(e2,kode){
+			function setKegiatan<?=$objectId;?>(e2,kode,tahun){
 				$("#divKegiatan<?=$objectId?>").load(
-					base_url+"rujukan/subkegiatankl/getListKegiatan/"+"<?=$objectId;?>"+"/"+e2+"/"+kode,
+					base_url+"rujukan/subkegiatankl/getListKegiatan/"+"<?=$objectId;?>"+"/"+e2+"/"+kode+"/"+tahun,
 					//on complete
 					function(){
 						$('textarea').autosize();   
@@ -87,24 +92,7 @@
 	</script>
 	
 	<!-- Dari Stef -->
-	<script type="text/javascript">
-		$(document).ready(function() {
-			/* CHAN
-			if($("#drop<?=$objectId;?>").is(":visible")){
-				$("#drop<?=$objectId;?>").slideToggle("slow");
-			}
-			
-			$("#txtkode_sasaran_e2<?=$objectId;?>").click(function(){
-				$("#drop<?=$objectId;?>").slideToggle("slow");
-			});
-			
-			$("#drop<?=$objectId;?> li").click(function(e){
-				var chose = $(this).text();
-				$("#txtkode_sasaran_e2<?=$objectId;?>").text(chose);
-				$("#drop<?=$objectId;?>").slideToggle("slow");
-			}); */
-
-		});
+	<script type="text/javascript">		
 		
 		function setIKK<?=$objectId;?>(valu){
 			document.getElementById('kode_kegiatan<?=$objectId;?>').value = valu;
@@ -167,27 +155,15 @@
 							<label style="width:120px">Tahun :</label>
 							<input name="tahun" class="easyui-validatebox year" required="true" value="<?=$result->tahun?>" size="5">
 						</div>					
-						<? if ($this->session->userdata('unit_kerja_e1')=='-1'){?>
-							<div class="fitem">							
-								<label style="width:120px">Unit Kerja Eselon I :</label>
-								<? if ($this->session->userdata('unit_kerja_e1')=='-1'){
-									$this->eselon1_model->getListEselon1($objectId);
-								} else { 
-									echo $this->eselon1_model->getNamaE1($this->session->userdata('unit_kerja_e1'));
-								 } ?>
-							</div>
-						<?}?>
+						<div class="fitem" >
+							<label style="width:120px">Unit Kerja Eselon I :</label>
+							<?=$this->eselon1_model->getListEselon1($objectId)?>
+						</div>
 						<div class="fitem">
 							<label style="width:120px">Unit Kerja Eselon II :</label>
-							<span id="divEselon2<?=$objectId?>">
-								<?
-								/* CHAN 
-								if ($this->session->userdata('unit_kerja_e2')=='-1'){
-									$this->eselon2_model->getListEselon2($objectId);
-								} else { 
-									echo $this->eselon2_model->getNamaE2($this->session->userdata('unit_kerja_e2'));
-								 } */?>
-							 </span>
+							<span id="divEselon2<?=$objectId;?>">
+							<?="";//$this->eselon2_model->getListEselon2($objectId,$this->session->userdata('unit_kerja_e2'),$this->session->userdata('unit_kerja_e1'))?>
+							</span>
 						</div>
 						<div class="fitem">
 							<label style="width:120px">Nama Kegiatan :</label>
@@ -198,7 +174,7 @@
 						</div>
 						<!--<div class="fitem">							
 								<label style="width:120px">Satuan Kerja :</label>
-								<? 	$this->satker_model->getListSatker($objectId); ?>
+								<? 	//$this->satker_model->getListSatker($objectId); ?>
 						</div> -->
 						<div class="fitem">
 							<label style="width:120px">Kode Sub Kegiatan :</label>
@@ -227,7 +203,8 @@
 						<br>
 						<div class="fitem">
 							<label style="width:120px"></label>
-							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Simpan</a>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Save</a>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Cancel</a>
 						</div>
 					</form>
 				</div>

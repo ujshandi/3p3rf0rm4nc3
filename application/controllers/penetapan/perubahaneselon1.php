@@ -15,6 +15,7 @@ class Perubahaneselon1 extends CI_Controller {
 		//if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/penetapan/penetapaneselon1_model');
+		$this->load->model('/penetapan/perubahaneselon1_model');
 		$this->load->model('/rencana/rpt_rkteselon1_model');
 		$this->load->model('/rujukan/eselon1_model');
 		$this->load->model('/pengaturan/sasaran_eselon1_model');
@@ -24,10 +25,10 @@ class Perubahaneselon1 extends CI_Controller {
 	}
 	
 	function index(){
-		$data['title'] = 'Penetapan Kinerja Eselon I';	
+		$data['title'] = 'Perubahan PK Eselon I';	
 		$data['objectId'] = $this->objectId;
 		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
-	  	$this->load->view('penetapan/penetapaneselon1s_v',$data);
+	  	$this->load->view('penetapan/perubahaneselon1s_v',$data);
 	}
 	
 	public function add(){
@@ -43,6 +44,7 @@ class Perubahaneselon1 extends CI_Controller {
 		$data['title'] = ($editmode==TRUE?'Edit':'View').' Data Penetapan Kinerja Eselon I';	
 		$data['objectId'] = $this->objectId;
 		$data['editMode'] = $editmode;
+		$data['is_perubahan'] = true;
 		
 		$data['result'] = $this->penetapaneselon1_model->getDataEdit($id);
 		
@@ -52,7 +54,11 @@ class Perubahaneselon1 extends CI_Controller {
 	function grid($filtahun=null,$file1=null){
 		if (($file1==null)&&($this->session->userdata('unit_kerja_e1'))!=-1)
 			$file1= $this->session->userdata('unit_kerja_e1');
-		echo $this->penetapaneselon1_model->easyGrid($filtahun,$file1);
+		echo $this->penetapaneselon1_model->easyGrid($filtahun,$file1,1);
+	}
+	
+	function gridperubahan($idpk){
+		echo $this->perubahaneselon1_model->easyGrid($idpk);
 	}
 	
 	function getListSasaranE1($objectId,$e1){
@@ -138,7 +144,7 @@ class Perubahaneselon1 extends CI_Controller {
 		
 		// validation
 		
-		$result = $this->penetapaneselon1_model->UpdateOnDb($data);
+		$result = $this->perubahaneselon1_model->UpdateOnDb($data);
 		
 		if ($result){
 			echo json_encode(array('success'=>true, 'tindakan_rwj_id'=>$return_id));
