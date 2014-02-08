@@ -14,12 +14,12 @@ class Penetapaneselon1_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null,$file1=null){
+	public function easyGrid($filtahun=null,$file1=null,$filstatus=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount($filtahun,$file1);
+		$count = $this->GetRecordCount($filtahun,$file1,$filstatus);
 	//	var_dump($count);die;	
 		$response = new stdClass();
 		$response->total = $count;
@@ -35,6 +35,9 @@ class Penetapaneselon1_model extends CI_Model
 			}
 			if($file1 != '' && $file1 != '-1' && $file1 != null) {
 				$this->db->where("tbl_pk_eselon1.kode_e1",$file1);
+			}			
+			if ($filstatus!=null){
+				$this->db->where("tbl_pk_eselon1.status",$filstatus);
 			}
 			$this->db->order_by($sort." ".$order );
 			$this->db->limit($limit,$offset);
@@ -106,13 +109,16 @@ class Penetapaneselon1_model extends CI_Model
 		
 	}
 	
-	public function GetRecordCount($filtahun=null,$file1){
+	public function GetRecordCount($filtahun=null,$file1,$filstatus=null){
 		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 			$this->db->where("tbl_pk_eselon1.tahun",$filtahun);
 		}	
 		if($file1 != '' && $file1 != '-1' && $file1 != null) {
 			$this->db->where("tbl_pk_eselon1.kode_e1",$file1);
 		}		
+		if ($filstatus!=null){
+				$this->db->where("tbl_pk_eselon1.status",$filstatus);
+		}
 		//$this->db->select('distinct tbl_pk_eselon1.*, tbl_iku_eselon1.kode_e1 as pk_kode_e1');
 		$this->db->from('tbl_pk_eselon1');
 			$this->db->join('tbl_iku_eselon1', 'tbl_iku_eselon1.kode_iku_e1 = tbl_pk_eselon1.kode_iku_e1 and tbl_iku_eselon1.tahun = tbl_pk_eselon1.tahun','left');
@@ -299,10 +305,6 @@ class Penetapaneselon1_model extends CI_Model
 	}
 	
 	public function UpdateOnDb($data){
-		$this->db->flush_cache();
-		$this->db->where('id_pk_e1', $data['id_pk_e1']);
-		$this->db->set('penetapan', $data['penetapan']);
-		$result = $this->db->update('tbl_pk_eselon1', $data); 
 		
 		# insert to log
 		$this->db->flush_cache();
@@ -320,6 +322,11 @@ class Penetapaneselon1_model extends CI_Model
 		$this->db->set('penetapan',			$qt->row()->penetapan);
 		$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 		$result = $this->db->insert('tbl_pk_eselon1_log');
+		
+		$this->db->flush_cache();
+		$this->db->where('id_pk_e1', $data['id_pk_e1']);
+		$this->db->set('penetapan', $data['penetapan']);
+		$result = $this->db->update('tbl_pk_eselon1', $data); 
 		
 		
 		

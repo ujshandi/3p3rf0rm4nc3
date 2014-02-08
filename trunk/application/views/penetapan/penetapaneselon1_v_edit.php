@@ -8,7 +8,7 @@
 			
 		 	saveDataEdit<?=$objectId;?>=function(){
 				$('#fmedit<?=$objectId;?>').form('submit',{
-					url: base_url+'penetapan/penetapaneselon1/save_edit',
+					url: base_url+'penetapan/<?=($is_perubahan==true?'perubahaneselon1':'penetapaneselon1')?>/save_edit',
 					onSubmit: function(){
 						return $(this).form('validate');
 					},
@@ -93,6 +93,7 @@
 				<div region="center" border="true" title="<?=($editMode=="true")?"Edit":"View"?> Data Penetapan Kinerja (PK) Eselon I">	
 					<form id="fmedit<?=$objectId;?>" method="post" style="margin:10px 5px 5px 10px;">	
 						<input type="hidden" name="id_pk_e1" value="<?=$result->id_pk_e1?>">
+						<input type="hidden" name="is_perubahan" value="<?=$is_perubahan?>">
 						<div class="fitem">
 						  <label style="width:150px">Tahun :</label>
 						  <?=$result->tahun?>
@@ -117,17 +118,17 @@
 						</div>
 						<div class="fitem">
 							<label style="width:150px">Penetapan :</label>
-							<? if ($result->status=='0'){?>
+							<? if ($result->status=='0' || $is_perubahan){?>
 							<input name="penetapan" class="easyui-validatebox" required="true" size="10" maxlength="10" value="<?=$result->penetapan?>">
 							<? } else {echo $this->utility->cekNumericFmt($result->penetapan);}?>
 							&nbsp;&nbsp;
 							<?=$result->satuan?>
 						</div>
 						<br>
-						<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Close</a>
-						&nbsp;&nbsp;&nbsp;
+					
+					
 						<?php if($editmode==TRUE){
-							if ($result->status=='0'){
+							if ($result->status=='0' || $is_perubahan){
 							?>
 							
 							<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveDataEdit<?=$objectId;?>()">Save</a>&nbsp;
@@ -136,7 +137,9 @@
 							else {
 								echo 'Sudah disahkan';
 								}?>
-						<?php }?>
+						<?php } else {?>
+							<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="cancel<?=$objectId;?>()">Close</a>
+						<?php } ?>	
 					</form>
 				</div>
 			</div>	

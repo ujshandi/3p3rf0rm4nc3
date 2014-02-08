@@ -15,6 +15,7 @@ class Perubahaneselon2 extends CI_Controller {
 		//if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/penetapan/penetapaneselon2_model');
+		$this->load->model('/penetapan/perubahaneselon2_model');
 		$this->load->model('/rencana/rpt_rkteselon2_model');
 		$this->load->model('/rujukan/eselon1_model');
 		$this->load->model('/rujukan/eselon2_model');
@@ -26,10 +27,10 @@ class Perubahaneselon2 extends CI_Controller {
 	}
 	
 	function index(){
-		$data['title'] = 'Penetapan Kinerja Eselon II';	
+		$data['title'] = 'Perubahan PK Eselon II';	
 		$data['objectId'] = $this->objectId;
 		//$data['formLookupTarif'] = $this->tarif_model->lookup('#winLookTarif'.$data['objectId'],"#medrek_id".$data['objectId']);
-	  	$this->load->view('penetapan/penetapaneselon2s_v',$data);
+	  	$this->load->view('penetapan/perubahaneselon2s_v',$data);
 	}
 	
 	public function add(){
@@ -45,7 +46,7 @@ class Perubahaneselon2 extends CI_Controller {
 		$data['title'] = ($editmode==TRUE?'Edit':'View').' PK Eselon II';	
 		$data['objectId'] = $this->objectId;
 		$data['editMode'] = $editmode;
-		
+		$data['is_perubahan'] = true;
 		$data['result'] = $this->penetapaneselon2_model->getDataEdit($id);
 		
 	  	$this->load->view('penetapan/penetapaneselon2_v_edit',$data);
@@ -60,8 +61,13 @@ class Perubahaneselon2 extends CI_Controller {
 		$file1 = $file1 == null?'-1':$file1;
 		$file2 = $file2 == null?'-1':$file2;
 			
-		echo $this->penetapaneselon2_model->easyGrid($filtahun, $file1, $file2);
+		echo $this->penetapaneselon2_model->easyGrid($filtahun, $file1, $file2,1);
 	}
+	
+	function gridperubahan($idpk){
+		echo $this->perubahaneselon2_model->easyGrid($idpk);
+	}
+	
 	
 	function getListSasaranE2($objectId,$e2){
 		echo $this->sasaran_eselon2_model->getListSasaranE2($objectId,$e2);
@@ -142,7 +148,7 @@ class Perubahaneselon2 extends CI_Controller {
 		
 		// validation
 		
-		$result = $this->penetapaneselon2_model->UpdateOnDb($data);
+		$result = $this->perubahaneselon2_model->UpdateOnDb($data);
 		
 		if ($result){
 			echo json_encode(array('success'=>true, 'tindakan_rwj_id'=>$return_id));
@@ -153,7 +159,7 @@ class Perubahaneselon2 extends CI_Controller {
 	
 	function delete($id=''){
 		if($id != ''){
-			$result = $this->penetapaneselon2_model->DeleteOnDb($id);
+			$result = $this->perubahaneselon2_model->DeleteOnDb($id);
 			if ($result){
 				echo json_encode(array('success'=>true, 'haha'=>''));
 			} else {

@@ -14,47 +14,42 @@ class Perubahaneselon2_model extends CI_Model
 		//$this->CI =& get_instance();
     }
 	
-	public function easyGrid($filtahun=null, $file1=null, $file2=null){
+	public function easyGrid($filidpk=null){
 		
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
-		$count = $this->GetRecordCount($filtahun, $file1, $file2);
+		$count = $this->GetRecordCount($filidpk);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
-		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tbl_pk_eselon2.tahun';  
+		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tbl_historypk_e2.tahun';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'desc';  
 		$offset = ($page-1)*$limit;  
 		
 		if ($count>0){
 			//filter
-			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
-				$this->db->where("tbl_pk_eselon2.tahun",$filtahun);
+			if($filidpk != '' && $filidpk != '-1' && $filidpk != null) {
+				$this->db->where("tbl_historypk_e2.id_pk_e2",$filidpk);
 			}	
-			if($file1 != '' && $file1 != '-1' && $file1 != null) {
-				$this->db->where("tbl_eselon2.kode_e1",$file1);
-			}
-			if($file2 != '' && $file2 != '-1' && $file2 != null) {
-				$this->db->where("tbl_pk_eselon2.kode_e2",$file2);
-			}
 			
 			$this->db->order_by($sort." ".$order );
 			$this->db->limit($limit,$offset);
-			$this->db->select("tbl_pk_eselon2.*, tbl_ikk.deskripsi as deskripsi_iku_e2,tbl_ikk.satuan,tbl_sasaran_eselon2.deskripsi as deskripsi_sasaran_e2,tbl_eselon2.nama_e2",false);
-			$this->db->from('tbl_pk_eselon2');
-			$this->db->join('tbl_ikk', 'tbl_ikk.kode_ikk = tbl_pk_eselon2.kode_ikk and tbl_ikk.tahun = tbl_pk_eselon2.tahun');
-			$this->db->join('tbl_sasaran_eselon2','tbl_sasaran_eselon2.kode_sasaran_e2 = tbl_pk_eselon2.kode_sasaran_e2 and tbl_sasaran_eselon2.tahun = tbl_pk_eselon2.tahun', 'left');
+			$this->db->select("tbl_historypk_e2.*, tbl_ikk.deskripsi as deskripsi_iku_e2,tbl_ikk.satuan,tbl_sasaran_eselon2.deskripsi as deskripsi_sasaran_e2,tbl_eselon2.nama_e2",false);
+			$this->db->from('tbl_historypk_e2');
+			$this->db->join('tbl_ikk', 'tbl_ikk.kode_ikk = tbl_historypk_e2.kode_ikk and tbl_ikk.tahun = tbl_historypk_e2.tahun');
+			$this->db->join('tbl_sasaran_eselon2','tbl_sasaran_eselon2.kode_sasaran_e2 = tbl_historypk_e2.kode_sasaran_e2 and tbl_sasaran_eselon2.tahun = tbl_historypk_e2.tahun', 'left');
 			$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_sasaran_eselon2.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_sasaran_eselon2.tahun', 'left');
-			$this->db->join('tbl_eselon2', 'tbl_eselon2.kode_e2 = tbl_pk_eselon2.kode_e2', 'left');
+			$this->db->join('tbl_eselon2', 'tbl_eselon2.kode_e2 = tbl_historypk_e2.kode_e2', 'left');
 
-			$this->db->order_by("tbl_pk_eselon2.tahun DESC, tbl_pk_eselon2.kode_sasaran_e2 ASC, tbl_pk_eselon2.kode_ikk ASC");
+			$this->db->order_by("tbl_historypk_e2.tahun DESC, tbl_historypk_e2.kode_sasaran_e2 ASC, tbl_historypk_e2.kode_ikk ASC");
 			$query = $this->db->get();
 			
 			$i=0;
 			foreach ($query->result() as $row)
 			{
 				$response->rows[$i]['id_pk_e2']=$row->id_pk_e2;
+				$response->rows[$i]['no_history']=$row->no_history;
 				$response->rows[$i]['tahun']=$row->tahun;
 				$response->rows[$i]['kode_e2']=$row->kode_e2;
 				$response->rows[$i]['nama_e2']=$row->nama_e2;
@@ -94,6 +89,7 @@ class Perubahaneselon2_model extends CI_Model
 			$query->free_result();
 		}else {
 				$response->rows[$count]['id_pk_e2']='';
+				$response->rows[$count]['no_history']='';
 				$response->rows[$count]['tahun']='';
 				$response->rows[$count]['kode_e2']='';
 				$response->rows[$count]['nama_e2']='';
@@ -112,21 +108,15 @@ class Perubahaneselon2_model extends CI_Model
 	}
 	
 	
-	public function GetRecordCount($filtahun=null, $file1, $file2){
-		if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
-			$this->db->where("tbl_pk_eselon2.tahun",$filtahun);
-		}
-		if($file1 != '' && $file1 != '-1' && $file1 != null) {
-				$this->db->where("tbl_eselon2.kode_e1",$file1);
-		}
-		if($file2 != '' && $file2 != '-1' && $file2 != null) {
-			$this->db->where("tbl_pk_eselon2.kode_e2",$file2);
-		}
-		$this->db->select("tbl_pk_eselon2.*, tbl_ikk.deskripsi as deskripsi_iku_e2,tbl_ikk.satuan,tbl_sasaran_eselon2.deskripsi as deskripsi_sasaran_e2,tbl_eselon2.nama_e2",false);		$this->db->from('tbl_pk_eselon2');
-		$this->db->join('tbl_ikk', 'tbl_ikk.kode_ikk = tbl_pk_eselon2.kode_ikk and tbl_ikk.tahun = tbl_pk_eselon2.tahun');
-		$this->db->join('tbl_sasaran_eselon2','tbl_sasaran_eselon2.kode_sasaran_e2 = tbl_pk_eselon2.kode_sasaran_e2 and tbl_sasaran_eselon2.tahun = tbl_pk_eselon2.tahun');
+	public function GetRecordCount($filidpk=null){
+		if($filidpk != '' && $filidpk != '-1' && $filidpk != null) {
+			$this->db->where("tbl_historypk_e2.id_pk_e2",$filidpk);
+		}	
+		$this->db->select("tbl_historypk_e2.*, tbl_ikk.deskripsi as deskripsi_iku_e2,tbl_ikk.satuan,tbl_sasaran_eselon2.deskripsi as deskripsi_sasaran_e2,tbl_eselon2.nama_e2",false);		$this->db->from('tbl_historypk_e2');
+		$this->db->join('tbl_ikk', 'tbl_ikk.kode_ikk = tbl_historypk_e2.kode_ikk and tbl_ikk.tahun = tbl_historypk_e2.tahun');
+		$this->db->join('tbl_sasaran_eselon2','tbl_sasaran_eselon2.kode_sasaran_e2 = tbl_historypk_e2.kode_sasaran_e2 and tbl_sasaran_eselon2.tahun = tbl_historypk_e2.tahun');
 		$this->db->join('tbl_sasaran_eselon1', 'tbl_sasaran_eselon1.kode_sasaran_e1 = tbl_sasaran_eselon2.kode_sasaran_e1 and tbl_sasaran_eselon1.tahun = tbl_sasaran_eselon2.tahun', 'left');
-		$this->db->join('tbl_eselon2', 'tbl_eselon2.kode_e2 = tbl_pk_eselon2.kode_e2', 'left');
+		$this->db->join('tbl_eselon2', 'tbl_eselon2.kode_e2 = tbl_historypk_e2.kode_e2', 'left');
 		return $this->db->count_all_results();
 		$this->db->free_result();
 	}	
@@ -307,10 +297,7 @@ class Perubahaneselon2_model extends CI_Model
 	}
 	
 	public function UpdateOnDb($data){
-		$this->db->flush_cache();
-		$this->db->where('id_pk_e2', $data['id_pk_e2']);
-		$this->db->set('penetapan', $data['penetapan']);
-		$result = $this->db->update('tbl_pk_eselon2', $data);
+		
 		
 		# insert to log
 		$this->db->flush_cache();
@@ -329,6 +316,22 @@ class Perubahaneselon2_model extends CI_Model
 			$this->db->set('log',				'UPDATE;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
 			$result = $this->db->insert('tbl_pk_eselon2_log');
 		
+		$this->db->flush_cache();
+		$this->db->set('id_pk_e2',				$qt->row()->id_pk_e2);
+		$this->db->set('no_history',	$this->getNoHistory($qt->row()->id_pk_e2));
+		$this->db->set('tahun',				$qt->row()->tahun);
+		$this->db->set('kode_e2',			$qt->row()->kode_e2);
+		$this->db->set('kode_sasaran_e2',	$qt->row()->kode_sasaran_e2);
+		$this->db->set('kode_ikk',		$qt->row()->kode_ikk);
+		$this->db->set('target',			$qt->row()->target);
+		$this->db->set('penetapan',			$qt->row()->penetapan);
+		$this->db->set('log_history',				'INSERT;'.$this->session->userdata('user_id').';'.date('Y-m-d H:i:s'));
+		$result = $this->db->insert('tbl_historypk_e2');
+		
+		$this->db->flush_cache();
+		$this->db->where('id_pk_e2', $data['id_pk_e2']);
+		$this->db->set('penetapan', $data['penetapan']);
+		$result = $this->db->update('tbl_pk_eselon2', $data);
 		
 		$errNo   = $this->db->_error_number();
 	    $errMess = $this->db->_error_message();
@@ -388,6 +391,17 @@ class Perubahaneselon2_model extends CI_Model
 		}else {
 			return FALSE;
 		}
+	}
+	
+	public function getNoHistory($id){
+		$this->db->flush_cache();
+		$this->db->select('count(*) as jml',false);
+		$this->db->from('tbl_historypk_e2');
+		$this->db->where('id_pk_e2', $id);
+		$query = $this->db->get();
+		
+		return $query->row()->jml+1;
+		
 	}
 	
 	public function getListFilterTahun($objectId){

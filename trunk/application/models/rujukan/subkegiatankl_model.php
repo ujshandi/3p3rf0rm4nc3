@@ -219,7 +219,7 @@ class Subkegiatankl_model extends CI_Model
 	
 	public function getDataEdit($id){
 		$this->db->flush_cache();
-		$this->db->select('*');
+		$this->db->select('a.*,d.kode_e2,d.nama_kegiatan,f.kode_e1',false);
 		$this->db->from('tbl_subkegiatan_kl a');
 	//	$this->db->join('tbl_satker b', 'b.kode_satker = a.kode_satker');
 	//	$this->db->join('tbl_eselon1 c', 'c.kode_e1 = b.kode_e1');
