@@ -329,7 +329,7 @@ class Rpt_capaian_kinerjakl_model extends CI_Model
 	
 	public function getTarget($tahun,$kode_iku){
 		$this->db->flush_cache();
-		$this->db->select('target as jumlah',false);
+		$this->db->select('penetapan as jumlah',false);
 		$this->db->from('tbl_pk_kl');
 		$this->db->where('kode_iku_kl', $kode_iku);
 		$this->db->where('tahun', $tahun);

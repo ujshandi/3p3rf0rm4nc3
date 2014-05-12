@@ -358,7 +358,7 @@ class Penetapankl_model extends CI_Model
 				$this->db->where('tahun', $qt->row()->tahun);
 				$this->db->where('kode_kl', $qt->row()->kode_kl);
 				$this->db->where('kode_sasaran_kl', $qt->row()->kode_sasaran_kl);
-				$this->db->where('kode_iku_kl', $dqt->row()->kode_iku_kl);
+				$this->db->where('kode_iku_kl', $qt->row()->kode_iku_kl);
 				$this->db->update('tbl_rkt_kl');
 				
 		// proses

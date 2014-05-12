@@ -45,8 +45,8 @@ class pengukuraneselon2_model extends CI_Model
 			$this->db->select("*, b.satuan, a.tahun as tahun2, b.deskripsi AS deskripsi_ikk, c.deskripsi AS deskripsi_sasaran_e2");
 			$this->db->from('tbl_pengukuran_eselon2 a');
 			$this->db->join('tbl_ikk b', 'b.kode_ikk = a.kode_ikk and b.tahun = a.tahun');
-			$this->db->join('tbl_sasaran_eselon2 c','c.kode_sasaran_e2 = a.kode_sasaran_e2', 'left');
-			$this->db->join('tbl_sasaran_eselon1 d', 'd.kode_sasaran_e1 = c.kode_sasaran_e1', 'left');
+			$this->db->join('tbl_sasaran_eselon2 c','c.kode_sasaran_e2 = a.kode_sasaran_e2 and c.tahun=a.tahun', 'left');
+			$this->db->join('tbl_sasaran_eselon1 d', 'd.kode_sasaran_e1 = c.kode_sasaran_e1 and d.tahun=a.tahun', 'left');
 			$this->db->join('tbl_eselon2 e', 'e.kode_e2 = a.kode_e2', 'left');		
 			$this->db->order_by("a.tahun DESC, a.kode_sasaran_e2 ASC, a.kode_ikk ASC");
 			$query = $this->db->get();
@@ -115,8 +115,8 @@ class pengukuraneselon2_model extends CI_Model
 		$this->db->select("*, b.satuan, a.tahun as tahun2, b.deskripsi AS deskripsi_ikk, c.deskripsi AS deskripsi_sasaran_e2");
 		$this->db->from('tbl_pengukuran_eselon2 a');
 		$this->db->join('tbl_ikk b', 'b.kode_ikk = a.kode_ikk and b.tahun = a.tahun');
-		$this->db->join('tbl_sasaran_eselon2 c','c.kode_sasaran_e2 = a.kode_sasaran_e2', 'left');
-		$this->db->join('tbl_sasaran_eselon1 d', 'd.kode_sasaran_e1 = c.kode_sasaran_e1', 'left');
+		$this->db->join('tbl_sasaran_eselon2 c','c.kode_sasaran_e2 = a.kode_sasaran_e2 and a.tahun=c.tahun', 'left');
+		$this->db->join('tbl_sasaran_eselon1 d', 'd.kode_sasaran_e1 = c.kode_sasaran_e1 and d.tahun=a.tahun', 'left');
 		$this->db->join('tbl_eselon2 e', 'e.kode_e2 = a.kode_e2', 'left');		
 		
 		$this->db->order_by("a.tahun DESC, a.kode_sasaran_e2 ASC, a.kode_ikk ASC");
@@ -294,7 +294,7 @@ class pengukuraneselon2_model extends CI_Model
 		$leng = $query->num_rows();
 		$akhir = $leng - 1;
 		
-		$out .= '<input name="triwulan" type="hidden" value="'.$TA.'" />';
+	//jang naon?????	$out .= '<input name="triwulan" type="hidden" value="'.$TA.'" />';
 		
 		if($leng > 0){
 			for($i=0; $i<$leng; $i++){
@@ -445,12 +445,12 @@ class pengukuraneselon2_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->select('*, b.deskripsi as sasaran, c.deskripsi as ikk, a.realisasi, a.opini, a.persetujuan');
 		$this->db->from('tbl_pengukuran_eselon2 a');
-		$this->db->join('tbl_sasaran_eselon2 b', 'b.kode_sasaran_e2 = a.kode_sasaran_e2');
+		$this->db->join('tbl_sasaran_eselon2 b', 'b.kode_sasaran_e2 = a.kode_sasaran_e2 and a.tahun=b.tahun');
 		$this->db->join('tbl_ikk c', 'c.kode_ikk = a.kode_ikk and c.tahun = a.tahun');
 		$this->db->join('tbl_eselon2 d', 'd.kode_e2 = a.kode_e2');
 		$this->db->join('tbl_eselon1 e', 'e.kode_e1 = d.kode_e1');
 		// TS
-		$this->db->join('tbl_pk_eselon2 f', 'f.kode_ikk = a.kode_ikk and f.tahun = f.tahun');
+		$this->db->join('tbl_pk_eselon2 f', 'f.kode_ikk = a.kode_ikk and f.tahun = a.tahun');
 		//$this->db->join('tbl_kinerja_eselon2 f', 'f.kode_ikk = a.kode_ikk and f.tahun = f.tahun', 'f.kode_ikk = a.kode_ikk and f.target = f.target');
 		$this->db->where('a.id_pengukuran_e2', $id);
 		
@@ -588,6 +588,7 @@ class pengukuraneselon2_model extends CI_Model
 	}
 	
 	public function data_exist($tahun, $triwulan, $kode_e2, $kode_sasaran_e2, $kode_ikk){
+		//var_dump($tahun."=".$triwulan."=".$kode_e2."=".$kode_sasaran_e2."=".$kode_ikk);
 		$this->db->flush_cache();
 		$this->db->select('*');
 		$this->db->from('tbl_pengukuran_eselon2');
@@ -598,7 +599,7 @@ class pengukuraneselon2_model extends CI_Model
 		$this->db->where('kode_ikk', $kode_ikk);
 		
 		$que = $this->db->get();
-		
+		//var_dump($que);die;
 		if ($que->num_rows()>0){
 			return TRUE;
 		}else{

@@ -101,7 +101,7 @@ class pengukurankl_model extends CI_Model
 		$this->db->select("*, b.satuan, a.tahun as tahun2, b.deskripsi AS deskripsi_iku_kl, c.deskripsi AS deskripsi_sasaran_kl");
 		$this->db->from('tbl_pengukuran_kl a');
 		$this->db->join('tbl_iku_kl b', 'b.kode_iku_kl = a.kode_iku_kl and b.tahun = a.tahun');
-		$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl');
+		$this->db->join('tbl_sasaran_kl c', 'c.kode_sasaran_kl = a.kode_sasaran_kl and c.tahun=a.tahun');
 		
 		return $this->db->count_all_results();
 		$this->db->free_result();
@@ -384,7 +384,7 @@ class pengukurankl_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->select('*, b.deskripsi as sasaran, c.deskripsi as iku_kl, a.realisasi');
 		$this->db->from('tbl_pengukuran_kl a');
-		$this->db->join('tbl_sasaran_kl b', 'b.kode_sasaran_kl = a.kode_sasaran_kl');
+		$this->db->join('tbl_sasaran_kl b', 'b.kode_sasaran_kl = a.kode_sasaran_kl and a.tahun=b.tahun');
 		$this->db->join('tbl_iku_kl c', 'c.kode_iku_kl = a.kode_iku_kl and c.tahun = a.tahun');
 		$this->db->join('tbl_kl d', 'd.kode_kl = a.kode_kl');
 		// $this->db->join('tbl_kinerja_kl e', 'e.kode_iku_kl = a.kode_iku_kl and e.tahun = a.tahun');

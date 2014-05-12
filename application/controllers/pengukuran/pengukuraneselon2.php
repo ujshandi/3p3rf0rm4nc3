@@ -124,6 +124,7 @@ class pengukuraneselon2 extends CI_Controller {
 			}
 			
 			// cek ke database
+		//	var_dump($data);die;
 			if($this->pengukuraneselon2_model->data_exist($data['tahun'], $data['triwulan'], $data['kode_e2'], $data['kode_sasaran_e2'], $r['kode_ikk'])){ 
 				$pesan = 'Kode IKK pada no. '.$i.' sudah terdapat di dalam database.';
 				//$pesan = 'Kode IKU '.$r['kode_iku_kl'].' sudah terdapat di database';

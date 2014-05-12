@@ -58,7 +58,7 @@ class Rpt_penetapaneselon1_model extends CI_Model
 			//hanya utk grid saja
 			if ($purpose==1) $this->db->limit($limit,$offset);
 			$this->db->select("distinct rkt.kode_e1, sasaran.deskripsi as sasaran_strategis, iku.deskripsi as indikator_kinerja, rkt.target, iku.satuan, p.nama_program",false);
-			$this->db->from('tbl_pk_eselon1 rkt inner join tbl_iku_eselon1 iku on iku.kode_iku_e1 = rkt.kode_iku_e1 inner join tbl_sasaran_eselon1 sasaran on sasaran.kode_sasaran_e1 = rkt.kode_sasaran_e1 left join tbl_program_kl p on p.kode_e1 = rkt.kode_e1 ', false);
+			$this->db->from('tbl_pk_eselon1 rkt inner join tbl_iku_eselon1 iku on iku.kode_iku_e1 = rkt.kode_iku_e1 and iku.tahun=rkt.tahun inner join tbl_sasaran_eselon1 sasaran on sasaran.kode_sasaran_e1 = rkt.kode_sasaran_e1 and sasaran.tahun=rkt.tahun left join tbl_program_kl p on p.kode_e1 = rkt.kode_e1 and p.tahun=rkt.tahun', false);
 			$query = $this->db->get();
 			
 			$i=0;
@@ -95,7 +95,7 @@ class Rpt_penetapaneselon1_model extends CI_Model
 				
 				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
 				$response->rows[$i]['satuan']=$row->satuan;
-				$jumlah += $this->getTotalProgram($row->kode_e1);
+				$jumlah += $this->getTotalProgram($row->kode_e1,$filtahun);
 				if ($tmpProgram!=$row->nama_program){
 					$program .= $row->nama_program.", ";
 					$tmpProgram = $row->nama_program;
@@ -170,7 +170,7 @@ class Rpt_penetapaneselon1_model extends CI_Model
 			$where = " where ".substr($where,5,strlen($where));
 		//$this->db->from('tbl_kinerja_klx rkt inner join tbl_iku_kl iku on iku.kode_iku_kl = rkt.kode_iku_kl inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_kl',false);
 		
-		$sql = 'select count(*) as num_rows from (select distinct sasaran.deskripsi as sasaran_strategis, iku.deskripsi as indikator_kinerja, rkt.target,rkt.kode_e1,p.nama_program,iku.satuan from tbl_pk_eselon1 rkt inner join tbl_iku_eselon1 iku on iku.kode_iku_e1 = rkt.kode_iku_e1 inner join tbl_sasaran_eselon1 sasaran on sasaran.kode_sasaran_e1 = rkt.kode_sasaran_e1 left join tbl_program_kl p on p.kode_e1 = rkt.kode_e1  '.$where.') as t1';
+		$sql = 'select count(*) as num_rows from (select distinct sasaran.deskripsi as sasaran_strategis, iku.deskripsi as indikator_kinerja, rkt.target,rkt.kode_e1,p.nama_program,iku.satuan from tbl_pk_eselon1 rkt inner join tbl_iku_eselon1 iku on iku.kode_iku_e1 = rkt.kode_iku_e1 and iku.tahun=rkt.tahun inner join tbl_sasaran_eselon1 sasaran on sasaran.kode_sasaran_e1 = rkt.kode_sasaran_e1 and sasaran.tahun=rkt.tahun left join tbl_program_kl p on p.kode_e1 = rkt.kode_e1 and p.tahun=rkt.tahun '.$where.') as t1';
 		$q = $this->db->query($sql);
 		return $q->row()->num_rows; 
 		
@@ -218,11 +218,12 @@ class Rpt_penetapaneselon1_model extends CI_Model
 		
 	}
 	
-	public function getTotalProgram($e1){
+	public function getTotalProgram($e1,$tahun){
 		$this->db->flush_cache();
 		$this->db->select('sum(total) as jumlah',false);
 		$this->db->from('tbl_program_kl');
 		$this->db->where('kode_e1', $e1);
+		$this->db->where('tahun', $tahun);
 		$query = $this->db->get();
 		
 		return $query->row()->jumlah;
