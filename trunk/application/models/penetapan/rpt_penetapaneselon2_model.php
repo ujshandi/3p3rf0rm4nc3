@@ -99,7 +99,7 @@ inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sas
 				
 				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
 				$response->rows[$i]['satuan']=$row->satuan;
-				$jumlah += $this->getTotalKegiatan($row->kode_e2);
+				$jumlah += $this->getTotalKegiatan($row->kode_e2,$filtahun);
 				if ($tmpKegiatan!=$row->nama_kegiatan){
 					$kegiatan .= $row->nama_kegiatan.", ";
 					$tmpKegiatan = $row->nama_kegiatan;
@@ -215,11 +215,12 @@ inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sas
 		echo $out;
 	}
 	
-	public function getTotalKegiatan($e2){
+	public function getTotalKegiatan($e2,$tahun){
 		$this->db->flush_cache();
 		$this->db->select('sum(total) as jumlah',false);
 		$this->db->from('tbl_kegiatan_kl');
 		$this->db->where('kode_e2', $e2);
+		$this->db->where('tahun', $tahun);
 		$query = $this->db->get();
 		
 		return $query->row()->jumlah;

@@ -66,10 +66,10 @@ class Rpt_pengukurane1_model extends CI_Model
 			$limitMode = '';
 			if ($purpose==1) $limitMode = " limit $offset, $limit";
 			$sql = 'select * from (select iku.deskripsi as indikator_kinerja, iku.satuan,iku.kode_iku_e1
-from tbl_iku_eselon1 iku  inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kode_iku_e1  '.$where2.'
+from tbl_iku_eselon1 iku  inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kode_iku_e1 and pk.tahun=iku.tahun '.$where2.'
 			union 
 			select iku.deskripsi as indikator_kinerja,   iku.satuan,iku.kode_iku_e1 
-from tbl_iku_eselon1 iku   inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kode_iku_e1  '.$where1.'
+from tbl_iku_eselon1 iku   inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kode_iku_e1 and pk.tahun=iku.tahun '.$where1.'
 ) as t1  order by kode_iku_e1 '.$limitMode;
 			$query = $this->db->query($sql);
 			
@@ -192,10 +192,10 @@ from tbl_iku_eselon1 iku   inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.ko
 		if ($where2!="") $where2 = " where ".substr($where2,5,strlen($where2));
 	
 		 $sql = 'select count(*) as num_rows from (select iku.deskripsi as indikator_kinerja, iku.satuan,iku.kode_iku_e1
-from tbl_iku_eselon1 iku  inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kode_iku_e1  '.$where2.'
+from tbl_iku_eselon1 iku  inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kode_iku_e1 and pk.tahun=iku.tahun '.$where2.'
 			union 
 			select iku.deskripsi as indikator_kinerja,   iku.satuan,iku.kode_iku_e1 
-from tbl_iku_eselon1 iku   inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kode_iku_e1  '.$where1.'
+from tbl_iku_eselon1 iku   inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.kode_iku_e1 and pk.tahun=iku.tahun '.$where1.'
   ) as t1';
 		$q = $this->db->query($sql);
 		return $q->row()->num_rows; 
@@ -260,7 +260,7 @@ from tbl_iku_eselon1 iku   inner join tbl_pk_eselon1 pk on pk.kode_iku_e1=iku.ko
 	
 	public function getTarget($tahun,$kode_iku){
 		$this->db->flush_cache();
-		$this->db->select('target as jumlah',false);
+		$this->db->select('penetapan as jumlah',false);
 		$this->db->from('tbl_pk_eselon1');
 		$this->db->where('kode_iku_e1', $kode_iku);
 		$this->db->where('tahun', $tahun);

@@ -36,7 +36,7 @@ class pengukuraneselon1 extends CI_Controller {
 		$data['editMode'] = $editmode;
 		
 		$data['result'] = $this->pengukuraneselon1_model->getDataEdit($id);
-		
+		//var_dump($data['result']);
 	  	$this->load->view('pengukuran/pengukuraneselon1_v_edit',$data);
 	}	
 	

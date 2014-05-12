@@ -52,8 +52,8 @@ class Rpt_penetapankl_model extends CI_Model
 			//$this->db->select("*",false);
 			$this->db->select("distinct sasaran.deskripsi as sasaran_strategis, iku.deskripsi as indikator_kinerja, rkt.target, iku.satuan",false);
 			//$this->db->from('tbl_rkt_kl');
-			$this->db->from('tbl_pk_kl rkt inner join tbl_iku_kl iku on iku.kode_iku_kl = rkt.kode_iku_kl
-inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_kl',false);
+			$this->db->from('tbl_pk_kl rkt inner join tbl_iku_kl iku on iku.kode_iku_kl = rkt.kode_iku_kl  and iku.tahun=rkt.tahun
+inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_kl  and sasaran.tahun=rkt.tahun ',false);
 			$query = $this->db->get();
 			
 			$i=0;
@@ -173,7 +173,7 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 		if ($where!="")
 			$where = " where ".substr($where,5,strlen($where));
 			
-		$sql = 'select count(*) as num_rows from (select distinct sasaran.deskripsi as sasaran_strategis, iku.deskripsi as indikator_kinerja, rkt.target ,iku.satuan from tbl_pk_kl rkt inner join tbl_iku_kl iku on iku.kode_iku_kl = rkt.kode_iku_kl inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_kl  '.$where.') as t1';
+		$sql = 'select count(*) as num_rows from (select distinct sasaran.deskripsi as sasaran_strategis, iku.deskripsi as indikator_kinerja, rkt.target ,iku.satuan from tbl_pk_kl rkt inner join tbl_iku_kl iku on iku.kode_iku_kl = rkt.kode_iku_kl  and iku.tahun=rkt.tahun inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_kl  and sasaran.tahun=rkt.tahun '.$where.') as t1';
 		$q = $this->db->query($sql);
 		return $q->row()->num_rows; 	
 	}

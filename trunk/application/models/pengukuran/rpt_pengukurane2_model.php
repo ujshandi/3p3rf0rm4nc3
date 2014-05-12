@@ -69,10 +69,10 @@ class Rpt_pengukurane2_model extends CI_Model
 			$limitMode = '';
 			if ($purpose==1) $limitMode = " limit $offset, $limit";
 			$sql = 'select * from (select iku.deskripsi as indikator_kinerja, iku.satuan,iku.kode_ikk
-from tbl_ikk iku  inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2 '.$where2.'
+from tbl_ikk iku  inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk and pk.tahun=iku.tahun inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2 '.$where2.'
 			union 
 			select iku.deskripsi as indikator_kinerja,   iku.satuan,iku.kode_ikk 
-from tbl_ikk iku   inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk inner join tbl_eselon2 e2 on e2.kode_e2 = iku.kode_e2 '.$where1.'
+from tbl_ikk iku   inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk and pk.tahun=iku.tahun inner join tbl_eselon2 e2 on e2.kode_e2 = iku.kode_e2 '.$where1.'
 ) as t1  order by indikator_kinerja  '.$limitMode;
 			$query = $this->db->query($sql);
 			
@@ -208,10 +208,10 @@ from tbl_ikk iku   inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk inne
 		if ($where2!="") $where2 = " where ".substr($where2,5,strlen($where2));
 	
 		 $sql = 'select count(*) as num_rows from (select iku.deskripsi as indikator_kinerja, iku.satuan,iku.kode_ikk
-from tbl_ikk iku  inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2 '.$where2.'
+from tbl_ikk iku  inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk and pk.tahun=iku.tahun inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2 '.$where2.'
 			union 
 			select iku.deskripsi as indikator_kinerja,   iku.satuan,iku.kode_ikk 
-from tbl_ikk iku   inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk  inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2 '.$where1.'
+from tbl_ikk iku   inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk and pk.tahun=iku.tahun  inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2 '.$where1.'
   ) as t1';
 		$q = $this->db->query($sql);
 		return $q->row()->num_rows; 
@@ -274,7 +274,7 @@ from tbl_ikk iku   inner join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk  inn
 	
 	public function getTarget($tahun,$kode_iku){
 		$this->db->flush_cache();
-		$this->db->select('target as jumlah',false);
+		$this->db->select('penetapan as jumlah',false);
 		$this->db->from('tbl_pk_eselon2');
 		$this->db->where('kode_ikk', $kode_iku);
 		$this->db->where('tahun', $tahun);

@@ -128,11 +128,13 @@ class rseselon2 extends CI_Controller {
 			}
 			
 			// cek capaian bulan lalu
+			/* 
+ditutup lagi 2014.05.09
 			if($r['realisasi'] < $r['capaian']){
 				$pesan = 'Realisasi pada no. '.$i.' nilai tidak boleh lebih kecil dari nilai capaian bulan lalu.';
 				return FALSE;
 			}
-			
+			*/
 			// cek ke database
 			if($this->rseselon2_model->data_exist($data['tahun'], $data['triwulan'], $data['kode_e2'], $data['kode_sasaran_e2'], $r['kode_ikk'])){ 
 				$pesan = 'Kode IKK pada no. '.$i.' sudah terdapat di dalam database.';

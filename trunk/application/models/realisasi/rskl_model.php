@@ -441,7 +441,7 @@ class rskl_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->select('*, b.deskripsi as sasaran, c.deskripsi as iku_kl');
 		$this->db->from('tbl_kinerja_kl a');
-		$this->db->join('tbl_sasaran_kl b', 'b.kode_sasaran_kl = a.kode_sasaran_kl');
+		$this->db->join('tbl_sasaran_kl b', 'b.kode_sasaran_kl = a.kode_sasaran_kl  and b.tahun = a.tahun');
 		$this->db->join('tbl_iku_kl c', 'c.kode_iku_kl = a.kode_iku_kl and c.tahun = a.tahun');
 		$this->db->join('tbl_kl d', 'd.kode_kl = a.kode_kl');
 		$this->db->join('tbl_pk_kl e', 'e.kode_iku_kl = a.kode_iku_kl and e.tahun = a.tahun');

@@ -34,9 +34,9 @@ class Rpt_capaian_kinerjae1_model extends CI_Model
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
-			/* if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
-				$this->db->where("rkt.tahun",$filtahun);
-			}	 */	
+			 if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+				$this->db->where("iku.tahun",$filtahun);
+			}	 
 			if($file1 != '' && $file1 != '-1' && $file1 != null) {
 				$this->db->where("iku.kode_e1",$file1);
 			}
@@ -255,9 +255,9 @@ class Rpt_capaian_kinerjae1_model extends CI_Model
 	
 	public function GetRecordCount($filtahun=null,$filsasaran=null,$filiku=null,$file1=null,$filstart=null,$filend=null){
 		$where = '';
-		/* if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
-			$where.= " and rkt.tahun='$filtahun'";
-		} */		
+		 if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+			$where.= " and iku.tahun='$filtahun'";
+		} 		
 		
 		if($file1 != '' && $file1 != '-1' && $file1 != null) {
 			$where.=" and iku.kode_e1='$file1'";
@@ -325,7 +325,7 @@ class Rpt_capaian_kinerjae1_model extends CI_Model
 	
 	public function getTarget($tahun,$kode_iku){
 		$this->db->flush_cache();
-		$this->db->select('target as jumlah',false);
+		$this->db->select('penetapan as jumlah',false);
 		$this->db->from('tbl_pk_eselon1');
 		$this->db->where('kode_iku_e1', $kode_iku);
 		$this->db->where('tahun', $tahun);

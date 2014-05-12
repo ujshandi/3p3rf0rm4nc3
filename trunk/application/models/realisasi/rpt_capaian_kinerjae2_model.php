@@ -35,9 +35,9 @@ class Rpt_capaian_kinerjae2_model extends CI_Model
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
-			/* if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
-				$this->db->where("rkt.tahun",$filtahun);
-			} */		
+			 if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+				$this->db->where("iku.tahun",$filtahun);
+			} 
 			
 			if($file1 != '' && $file1 != '-1' && $file1 != null) {
 					$this->db->where("e2.kode_e1",$file1);
@@ -64,7 +64,7 @@ class Rpt_capaian_kinerjae2_model extends CI_Model
 		//	$this->db->select("iku.deskripsi as indikator_kinerja,iku.satuan,pk.target, rkt.realisasi,case  when rkt.triwulan  =1 then rkt.realisasi else 0 end  as triwulan1,case  when rkt.triwulan  =2 then rkt.realisasi else 0 end  as triwulan2,case  when rkt.triwulan  =3 then rkt.realisasi else 0 end  as triwulan3,case  when rkt.triwulan  =4 then rkt.realisasi else 0 end  as triwulan4",false);
 			$this->db->select("iku.deskripsi as indikator_kinerja,iku.satuan,iku.kode_ikk",false);
 			
-			$this->db->from('tbl_ikk iku inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2',false);
+			$this->db->from('tbl_ikk iku inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2 ',false);
 			$query = $this->db->get();
 			
 			$i=0;
@@ -261,9 +261,9 @@ class Rpt_capaian_kinerjae2_model extends CI_Model
 	
 	public function GetRecordCount($filtahun=null,$filsasaran=null,$filiku=null,$file1=null,$file2=null,$filstart=null,$filend=null){
 		$where = '';
-	/* 	if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
-			$where.= " and pk.tahun='$filtahun'";
-		}	 */	
+	 	if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
+			$where.= " and iku.tahun='$filtahun'";
+		}	 
 		if($file1 != '' && $file1 != '-1' && $file1 != null) {
 			$where.=" and e2.kode_e1='$file1'";
 		}
@@ -283,7 +283,7 @@ class Rpt_capaian_kinerjae2_model extends CI_Model
 		//$this->db->from('select sasaran.deskripsi from tbl_kinerja_eselon2 rkt inner join tbl_ikk iku on iku.kode_ikk = rkt.kode_ikk inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sasaran_e2 '.$where.' GROUP BY sasaran.deskripsi, sasaran.kode_sasaran_e2 ) as t1',false);
 		//$this->db->group_by('sasaran.deskripsi, sasaran.kode_sasaran_e2');
 		 //$sql = 'select count(*) as num_rows from (SELECT DISTINCT iku.deskripsi as indikator_kinerja,iku.satuan,pk.target, rkt.realisasi FROM tbl_kinerja_eselon2 rkt inner join tbl_ikk iku on iku.kode_ikk = rkt.kode_ikk inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sasaran_e2 inner join tbl_pk_eselon2 pk on pk.kode_sasaran_e2 = rkt.kode_sasaran_e2 and pk.kode_ikk=rkt.kode_ikk  inner join tbl_eselon2 e2 on e2.kode_e2=rkt.kode_e2 '.$where.'  ) as t1';
-		 $sql = 'select count(*) as num_rows from (SELECT DISTINCT iku.deskripsi as indikator_kinerja,iku.satuan,pk.target FROM tbl_ikk iku left join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2 '.$where.'  ) as t1';
+		 $sql = 'select count(*) as num_rows from (SELECT DISTINCT iku.deskripsi as indikator_kinerja,iku.satuan,pk.target FROM tbl_ikk iku left join tbl_pk_eselon2 pk on pk.kode_ikk=iku.kode_ikk and pk.tahun=iku.tahun inner join tbl_eselon2 e2 on e2.kode_e2=iku.kode_e2 '.$where.'  ) as t1';
 		$q = $this->db->query($sql);
 		return $q->row()->num_rows;  
 		//return $this->db->count_all_results();
@@ -338,7 +338,7 @@ class Rpt_capaian_kinerjae2_model extends CI_Model
 	
 	public function getTarget($tahun,$kode_iku){
 		$this->db->flush_cache();
-		$this->db->select('target as jumlah',false);
+		$this->db->select('penetapan as jumlah',false);
 		$this->db->from('tbl_pk_eselon2');
 		$this->db->where('kode_ikk', $kode_iku);
 		$this->db->where('tahun', $tahun);

@@ -119,7 +119,7 @@
 						<div class="fitem">
 							<label style="width:150px">Penetapan :</label>
 							<? if ($result->status=='0' || $is_perubahan){?>
-							<input name="penetapan" class="easyui-validatebox" required="true" size="10" maxlength="10" value="<?=$result->penetapan?>">
+							<input name="penetapan" class="easyui-validatebox" required="true" size="10" maxlength="20" value="<?=$result->penetapan?>">
 							<? } else {echo $this->utility->cekNumericFmt($result->penetapan);}?>
 							&nbsp;&nbsp;
 							<?=$result->satuan?>

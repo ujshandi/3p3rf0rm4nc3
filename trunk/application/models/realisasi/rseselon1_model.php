@@ -459,10 +459,10 @@ class rseselon1_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->select('*, b.deskripsi as sasaran, c.deskripsi as iku_e1');
 		$this->db->from('tbl_kinerja_eselon1 a');
-		$this->db->join('tbl_sasaran_eselon1 b', 'b.kode_sasaran_e1 = a.kode_sasaran_e1');
+		$this->db->join('tbl_sasaran_eselon1 b', 'b.kode_sasaran_e1 = a.kode_sasaran_e1  and b.tahun = a.tahun');
 		$this->db->join('tbl_iku_eselon1 c', 'c.kode_iku_e1 = a.kode_iku_e1 and c.tahun = a.tahun');
 		$this->db->join('tbl_eselon1 d', 'd.kode_e1 = a.kode_e1');
-		$this->db->join('tbl_pk_eselon1 e', 'e.kode_iku_e1 = a.kode_iku_e1 and e.tahun = e.tahun');
+		$this->db->join('tbl_pk_eselon1 e', 'e.kode_iku_e1 = a.kode_iku_e1 and e.tahun = a.tahun');
 		$this->db->where('a.id_kinerja_e1', $id);
 		
 		return $this->db->get()->row();
