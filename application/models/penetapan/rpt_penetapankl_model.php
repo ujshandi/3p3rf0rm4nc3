@@ -33,6 +33,7 @@ class Rpt_penetapankl_model extends CI_Model
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		$totalProgram =0;
+		$kodekl='';
 		if ($count>0){
 			if($filtahun != '' && $filtahun != '-1' && $filtahun != null) {
 				$this->db->where("rkt.tahun",$filtahun);
@@ -130,7 +131,7 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 				$response->lastNo = 0;
 		}
 		
-		$response->footer[0]['sasaran_strategis']='<b>Jumlah Anggaran</b>';
+		$response->footer[0]['sasaran_strategis']='<b>Jumlah Total Anggaran Tahun '.$filtahun.'</b>';
 		$response->footer[0]['indikator_kinerja']='<b>'.$this->utility->cekNumericFmt($totalProgram).'</b>';
 		$response->footer[0]['no']='';
 		$response->footer[0]['program']='';
@@ -138,7 +139,7 @@ inner join tbl_sasaran_kl sasaran on sasaran.kode_sasaran_kl = rkt.kode_sasaran_
 		$response->footer[0]['no_indikator']='';
 		$response->footer[0]['target']='';
 		//utk footer pdf ================
-		$pdfdata[] = array("",'Jumlah Anggaran','',$this->utility->cekNumericFmt($this->getTotalProgram($filtahun)),'','','',1);
+		$pdfdata[] = array("",'Jumlah Total Anggaran Tahun '.$filtahun,'',$this->utility->cekNumericFmt($this->getTotalProgram($filtahun)),'','','',1);
 	//-----------------------------------
 	if ($purpose==1) //grid normal
 			return json_encode($response);

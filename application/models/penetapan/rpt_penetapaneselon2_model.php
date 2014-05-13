@@ -37,7 +37,7 @@ class Rpt_penetapaneselon2_model extends CI_Model
 			$no = $lastNo;
 			$noIndikator =0;
 			$jumlah =0;
-		
+			$kodee2='';
 			$kegiatan = '';
 			$tmpKegiatan='';
 		if ($count>0){
@@ -99,7 +99,10 @@ inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sas
 				
 				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
 				$response->rows[$i]['satuan']=$row->satuan;
-				$jumlah += $this->getTotalKegiatan($row->kode_e2,$filtahun);
+				if ($kodee2!=$row->kode_e2){
+					$jumlah += $this->getTotalKegiatan($row->kode_e2,$filtahun);
+					$kodee2 = $row->kode_e2;
+				}
 				if ($tmpKegiatan!=$row->nama_kegiatan){
 					$kegiatan .= $row->nama_kegiatan.", ";
 					$tmpKegiatan = $row->nama_kegiatan;
@@ -128,7 +131,7 @@ inner join tbl_sasaran_eselon2 sasaran on sasaran.kode_sasaran_e2 = rkt.kode_sas
 				$response->lastNo = 0;
 		}
 		if ($kegiatan!="")
-			$kegiatan = substr($kegiatan,0,strlen($kegiatan)-1);
+			$kegiatan = substr($kegiatan,0,strlen($kegiatan)-2);
 		$response->footer[0]['no']='<b></b>';
 		$response->footer[0]['no_indikator']='<b></b>';
 		$response->footer[0]['sasaran_strategis']='<b>Kegiatan : '.$kegiatan.'</b>';
