@@ -36,6 +36,7 @@ class Rpt_penetapaneselon1_model extends CI_Model
 		$jumlah =0;
 			$program = '';
 			$tmpProgram='';
+			$kodee1='';
 		//	var_dump($count);
 		if ($count>0){
 			//filter
@@ -95,7 +96,10 @@ class Rpt_penetapaneselon1_model extends CI_Model
 				
 				$response->rows[$i]['target']=$this->utility->cekNumericFmt($row->target);
 				$response->rows[$i]['satuan']=$row->satuan;
-				$jumlah += $this->getTotalProgram($row->kode_e1,$filtahun);
+				if ($kodee1!=$row->kode_e1){
+					$jumlah += $this->getTotalProgram($row->kode_e1,$filtahun);
+					$kodee1 = $row->kode_e1;
+				}
 				if ($tmpProgram!=$row->nama_program){
 					$program .= $row->nama_program.", ";
 					$tmpProgram = $row->nama_program;
