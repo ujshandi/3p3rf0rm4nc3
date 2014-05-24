@@ -195,11 +195,17 @@ class Rkteselon2 extends CI_Controller {
 	
 	function delete($id=''){
 		if($id != ''){
-			$result = $this->rkteselon2_model->DeleteOnDb($id);
-			if ($result){
-				echo json_encode(array('success'=>true, 'haha'=>''));
-			} else {
-				echo json_encode(array('msg'=>'Some errors occured uy.', 'data'=> ''));
+			$data=$this->rkteselon2_model->getDataEdit($id);
+			if (!$this->rkteselon2_model->isSaveDelete($data->tahun,$data->kode_e2,$data->kode_sasaran_e2,$data->kode_ikk)){
+				echo json_encode(array('msg'=>'Data tidak bisa dihapus. karena sudah ada di PK', 'data'=> ''));
+			}
+			else {
+				$result = $this->rkteselon2_model->DeleteOnDb($id);
+				if ($result){
+					echo json_encode(array('success'=>true, 'haha'=>''));
+				} else {
+					echo json_encode(array('msg'=>'Some errors occured uy.', 'data'=> ''));
+				}
 			}
 		}
 	}

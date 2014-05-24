@@ -386,6 +386,23 @@ class Rkteselon1_model extends CI_Model
 		}
 	}
 	
+	public function isSaveDelete($tahun,$kode_e1,$kode_sasaran_e1,$kode_iku){	
+		
+		$this->db->where('tahun',$tahun); //buat validasi		
+		$this->db->where('kode_e1',$kode_e1); //buat validasi		
+		$this->db->where('kode_sasaran_e1',$kode_sasaran_e1); //buat validasi		
+		$this->db->where('kode_iku_e1',$kode_iku); //buat validasi		
+		$this->db->select('*');
+		$this->db->from('tbl_pk_eselon1');
+						
+		$query = $this->db->get();
+		$rs = $query->num_rows() ;		
+		$query->free_result();
+		$isSave = ($rs==0);
+		
+		return $isSave;
+	}
+	
 	//hapus data
 	public function DeleteOnDb($id){
 		
