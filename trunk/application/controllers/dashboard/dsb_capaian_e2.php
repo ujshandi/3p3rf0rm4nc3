@@ -1,6 +1,6 @@
 <?php
 
-class Dsb_capaian_e1 extends CI_Controller {
+class Dsb_capaian_e2 extends CI_Controller {
 	var $dataPie = array();
 	function __construct()
 	{
@@ -13,9 +13,10 @@ class Dsb_capaian_e1 extends CI_Controller {
 				
 	//if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');					
 		$this->load->model('/security/sys_menu_model');
-		$this->load->model('/dashboard/dsb_capaian_e1_model');
-		$this->load->model('/pengaturan/sasaran_eselon1_model');
+		$this->load->model('/dashboard/dsb_capaian_e2_model');
+		$this->load->model('/pengaturan/sasaran_eselon2_model');
 		$this->load->model('/rujukan/eselon1_model');
+		$this->load->model('/rujukan/eselon2_model');
 		$this->load->library("utility");
 	}
 	
@@ -25,8 +26,8 @@ class Dsb_capaian_e1 extends CI_Controller {
 		$data = array(
 				
 					'title_page'=>'Biroren Kemenhub',
-					'title'=>'Capaian Akhir IKU Eselon I',
-					'objectId'=>'dashboardCapaianE1',
+					'title'=>'Capaian Akhir IKK',
+					'objectId'=>'dashboardCapaianE2',
 					'sess_fullname'=>$this->session->userdata('full_name'),
 					'sess_apptype'=>$this->session->userdata('app_type'),
 					'js'=>array('js/easyui/jquery-1.6.min.js','js/easyui/jquery.easyui.min.js','js/uri_encode_decode.js','js/json2.js','js/jquery.autogrow.js','js/jquery.formatCurrency-1.4.0.min.js','js/formwizard.js','js/jquery.jqURL.js'),
@@ -36,15 +37,15 @@ class Dsb_capaian_e1 extends CI_Controller {
 	  
 		//$data['menuList'] =  $this->sys_menu_model->prepareMenuManual();//($this->session->userdata('groupId'),'');
 		
-		$this->load->view('dashboard/dsb_capaian_e1_vw',$data);
+		$this->load->view('dashboard/dsb_capaian_e2_vw',$data);
 		//$this->load->view('footer_vw',$data);
 	}
 	
 
 	public function grid($filtahun=null,$filsasaran=null){
 		
-		echo $this->dsb_capaian_e1_model->easyGrid($filtahun,$filsasaran);
-		 $this->dataPie = $this->dsb_capaian_e1_model->dataPie;
+		echo $this->dsb_capaian_e2_model->easyGrid($filtahun,$filsasaran);
+		 $this->dataPie = $this->dsb_capaian_e2_model->dataPie;
 		 // $data = array("Tercapai"=>20,"Tidak Tercapai"=>3);
 			//var_dump($this->dataPie );die;
 	}
