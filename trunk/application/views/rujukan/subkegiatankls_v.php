@@ -38,9 +38,9 @@
 				return "<?=base_url()?>rujukan/subkegiatankl/grid/"+file1+"/"+file2+"/"+tahun;
 			}
 			else if (tipe==2){
-				return "<?=base_url()?>rujukan/subkegiatankl/pdf/"+file1+"/"+file2;
+				return "<?=base_url()?>rujukan/subkegiatankl/pdf/"+file1+"/"+file2+"/"+tahun;
 			}else if (tipe==3){
-				return "<?=base_url()?>rujukan/subkegiatankl/excel/"+file1+"/"+file2;
+				return "<?=base_url()?>rujukan/subkegiatankl/excel/"+file1+"/"+file2+"/"+tahun;
 			}
 		}
 			

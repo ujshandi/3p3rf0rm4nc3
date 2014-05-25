@@ -110,9 +110,9 @@ class Subkegiatankl extends CI_Controller {
 		}
 	}
 	
-	public function pdf($file1=null,$file2){
+	public function pdf($file1=null,$file2,$filtahun=null){
 		$this->load->library('cezpdf');	
-		$pdfdata = $this->subkegiatankl_model->easyGrid($file1,$file2,2);
+		$pdfdata = $this->subkegiatankl_model->easyGrid($file1,$file2,$filtahun,2);
 		if (count($pdfdata)==0){
 				echo "Data Tidak Tersedia";
 				return;
@@ -174,8 +174,8 @@ class Subkegiatankl extends CI_Controller {
 		$pdf->ezStream($opt);
 	}
 	
-	public function excel($file1=null,$file2=null){
-		echo  $this->subkegiatankl_model->easyGrid($file1,$file2,3);
+	public function excel($file1=null,$file2=null,$filtahun=null){
+		echo  $this->subkegiatankl_model->easyGrid($file1,$file2,$filtahun,3);
 	}
 }
 ?>
