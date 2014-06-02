@@ -167,9 +167,11 @@
 					$('#dlg<?=$objectId;?>').dialog('open').dialog('setTitle','Edit IKU Kementerian');
 					$('#fm<?=$objectId;?>').form('load',row);
 					url = base_url+'pengaturan/iku_kl/save/edit/'+row.kode_iku_kl+"/"+row.tahun;//+row.id;//'update_user.php?id='+row.id;
-					$("#kode_kl<?=$objectId?>").val(row.kode_kl);
-					//$("#kode_iku_kl<?=$objectId?>").attr("readonly","readonly");
-					setSasaranKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),row.kode_sasaran_kl,row.deskripsi_sasaran_kl);
+					setTimeout(function(){
+						$("#kode_kl<?=$objectId?>").val(row.kode_kl);
+						//$("#kode_iku_kl<?=$objectId?>").attr("readonly","readonly");
+						setSasaranKL<?=$objectId;?>($("#tahun<?=$objectId?>").val(),row.kode_sasaran_kl,row.deskripsi_sasaran_kl);	
+						},1000);
 				}
 			}
 			//end editData
@@ -275,8 +277,8 @@
 						if (key!=null)
 							$('#kode_sasaran_kl<?=$objectId;?>').val(key);
 						
-						if ((val!=null)&&(val!=""))
-							$('#txtkode_sasaran_kl<?=$objectId;?>').val(val);
+						if ((val!=null) &&  (key!=null))
+							$('#txtkode_sasaran_kl<?=$objectId;?>').val('['+key+'] '+val);
 					}
 				);
 				//alert("here");

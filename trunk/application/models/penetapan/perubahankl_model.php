@@ -325,6 +325,7 @@ class Perubahankl_model extends CI_Model
 		$this->db->flush_cache();
 		$this->db->where('id_pk_kl', $data['id_pk_kl']);
 		$this->db->set('penetapan', $data['penetapan']);
+		$this->db->set('status','0');
 		$result = $this->db->update('tbl_pk_kl', $data);
 		
 		
@@ -367,7 +368,7 @@ class Perubahankl_model extends CI_Model
 				$this->db->where('tahun', $qt->row()->tahun);
 				$this->db->where('kode_kl', $qt->row()->kode_kl);
 				$this->db->where('kode_sasaran_kl', $qt->row()->kode_sasaran_kl);
-				$this->db->where('kode_iku_kl', $dqt->row()->kode_iku_kl);
+				$this->db->where('kode_iku_kl', $qt->row()->kode_iku_kl);
 				$this->db->update('tbl_rkt_kl');
 				
 		// proses

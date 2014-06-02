@@ -359,7 +359,7 @@ class Iku_kl_model extends CI_Model
 		$out .= '<li value="0" onclick="setIku'.$objectId.'(\'\')">-- Pilih --</li>';
 		
 		foreach($que->result() as $r){
-			$out .= '<li onclick="setIku'.$objectId.'(\''.$r->kode_iku_kl.'\')">'.$r->deskripsi.'</li>';
+			$out .= '<li onclick="setIku'.$objectId.'(\''.$r->kode_iku_kl.'\')">['.$r->kode_iku_kl.'] '.$r->deskripsi.'</li>';
 		}
 		$out .= '</ul></div>';
 		

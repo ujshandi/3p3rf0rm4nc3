@@ -267,8 +267,8 @@
 						if (key!=null)
 							$('#kode_sasaran_kl<?=$objectId;?>').val(key);
 						
-						if ((val!=null)&&(val!=""))
-							$('#txtkode_sasaran_kl<?=$objectId;?>').val(val);
+						if ((val!=null) &&  (key!=null))
+							$('#txtkode_sasaran_kl<?=$objectId;?>').val('['+key+'] '+val);
 					}
 				);
 				//alert("here");
@@ -395,11 +395,11 @@
 			<div class="fsearch">
 				<table border="0" cellpadding="1" cellspacing="1">				
 				<tr>
-					<td>Tahun</td>
+					<td>Tahun :&nbsp;</td>
 					<td><?=$this->sasaran_eselon1_model->getListFilterTahun($objectId);?></span></td>
 				</tr>
 				<tr  <?=($this->session->userdata('unit_kerja_e1')=='-1'?'':'style="display:none"')?>>
-					<td>Unit Kerja Eselon I&nbsp</td>
+					<td>Unit Kerja Eselon I :&nbsp;</td>
 					<td>
 						<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>
 					</td>

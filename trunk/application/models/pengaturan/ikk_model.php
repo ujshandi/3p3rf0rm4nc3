@@ -360,7 +360,7 @@ $this->db->set('kode_ikk',$data['kode_ikk']);
 		$out .= '<option value="0">-- Pilih --</option>';
 		
 		foreach($que->result() as $r){
-			$out .= '<option value="'.$r->kode_ikk.'">'.$r->deskripsi.'</option>';
+			$out .= '<option value="'.$r->kode_ikk.'">['.$r->kode_ikk.'] '.$r->deskripsi.'</option>';
 		}
 		
 		$out .= '</select>';

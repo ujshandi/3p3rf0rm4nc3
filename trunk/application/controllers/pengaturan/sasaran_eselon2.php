@@ -160,11 +160,17 @@ class Sasaran_eselon2 extends CI_Controller {
 		if($this->sasaran_eselon2_model->existInRKT($tahun, $kode_sasaran_e2)){
 			echo json_encode(array('msg'=>'Data tidak bisa dihapus. karena sudah ada di RKT', 'data'=> ''));
 		}else{
-			$result = $this->sasaran_eselon2_model->DeleteOnDb($tahun, $kode_sasaran_e2);
-			if ($result){
-				echo json_encode(array('success'=>true, 'haha'=>''));
-			} else {
-				echo json_encode(array('msg'=>'Some errors occured uy.', 'data'=> ''));
+			$data=$this->sasaran_eselon2_model->getDataEdit($tahun, $kode_sasaran_e2);			
+			if (!$this->sasaran_eselon2_model->isSaveDelete($data->kode_e2,$data->kode_sasaran_e2,$data->tahun)){
+				echo json_encode(array('msg'=>'Data tidak bisa dihapus. karena sudah digunakan di IKK/RKT/PK', 'data'=> ''));
+			}
+			else {
+				$result = $this->sasaran_eselon2_model->DeleteOnDb($tahun, $kode_sasaran_e2);
+				if ($result){
+					echo json_encode(array('success'=>true, 'haha'=>''));
+				} else {
+					echo json_encode(array('msg'=>'Some errors occured uy.', 'data'=> ''));
+				}
 			}
 		}
 		

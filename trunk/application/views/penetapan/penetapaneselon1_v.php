@@ -85,6 +85,7 @@
 			
 			
 			$("#tahun<?=$objectId?>").change(function(){
+				setSasaran<?=$objectId;?>($("#kode_e1<?=$objectId?>").val(), $(this).val());
 				getDetail<?=$objectId;?>();
 			});
 			
