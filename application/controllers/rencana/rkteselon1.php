@@ -193,7 +193,7 @@ class Rkteselon1 extends CI_Controller {
 	
 	function delete($id=''){
 		if($id != ''){
-			$data=$this->rkteselon1_model->getDataEdit($id);
+			$data=$this->rkteselon1_model->getDataEdit($id);			
 			if (!$this->rkteselon1_model->isSaveDelete($data->tahun,$data->kode_e1,$data->kode_sasaran_e1,$data->kode_iku_e1)){
 				echo json_encode(array('msg'=>'Data tidak bisa dihapus. karena sudah ada di PK', 'data'=> ''));
 			}

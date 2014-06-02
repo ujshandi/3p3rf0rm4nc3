@@ -67,7 +67,7 @@ class Rpt_pengukurane1 extends CI_Controller {
 			$this->our_pdf->text($posX,$posY,'Sasaran');
 			$posY += 5;
 			$this->our_pdf->setXY($posX,$posY);
-			$this->our_pdf->text($posX,$posY,$this->sasaran_eselon1_model->getDeskripsiSasaranE1($filsasaran));
+			$this->our_pdf->text($posX,$posY,$this->sasaran_eselon1_model->getDeskripsiSasaranE1($filsasaran,$filtahun));
 		}
 		
 					

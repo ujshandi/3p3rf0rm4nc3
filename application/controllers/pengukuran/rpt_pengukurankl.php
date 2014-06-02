@@ -67,7 +67,7 @@ class Rpt_pengukurankl extends CI_Controller {
 			$this->our_pdf->text($posX,$posY,'Sasaran');
 			$posY += 5;
 			$this->our_pdf->setXY($posX,$posY);
-			$this->our_pdf->text($posX,$posY,$this->sasaran_kl_model->getDeskripsiSasaranKL($filsasaran));
+			$this->our_pdf->text($posX,$posY,$this->sasaran_kl_model->getDeskripsiSasaranKL($filsasaran,$filtahun));
 		}			
 		$this->our_pdf->setFont('Arial','B',8);
 		$posY += 6;

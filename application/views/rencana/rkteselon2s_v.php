@@ -51,6 +51,25 @@
 					url:getUrl<?=$objectId;?>(1),
 					queryParams:{lastNo:'0'},	
 					pageNumber : 1,
+					onClickCell: function(rowIndex, field, value){
+						$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
+						var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+						
+						switch(field){
+							case "kode_e2":
+								showPopup('#popdesc<?=$objectId?>', row.nama_e2);
+								break;
+							case "kode_sasaran_e2":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e2);
+								break;
+							case "kode_ikk":
+								showPopup('#popdesc<?=$objectId?>', row.deskripsi_ikk);
+								break;
+							default:
+								closePopup('#popdesc<?=$objectId?>');
+								break;
+						}
+					},
 					onLoadSuccess:function(data){	
 						$('#dg<?=$objectId;?>').datagrid('options').queryParams.lastNo = data.lastNo;
 						//prepareMerge<?=$objectId;?>(data);
@@ -86,9 +105,14 @@
 			//end editData
 			
 			deleteData<?=$objectId;?> = function (){
-				<? if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
+				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
+					
 					if(row){
+						if(row.status != '0'){
+							alert('Maaf data tidak bisa dihapus, karena sudah ditetapkan di PK.');
+							return;
+						}
 						if(confirm("Apakah yakin akan menghapus data '" + row.kode_ikk + "'?")){
 							var response = '';
 							$.ajax({ type: "GET",
@@ -115,9 +139,7 @@
 							});
 						}
 					}
-				<?} else { ?>	
-					alert("Silahkan Login sebagai Superadmin");
-				<?} ?>
+				
 			}
 			//end deleteData 
 			
@@ -169,29 +191,7 @@
 			},50);
 			
 			
-			// yanto
-			$('#dg<?=$objectId;?>').datagrid({
-				onClickCell: function(rowIndex, field, value){
-					$('#dg<?=$objectId;?>').datagrid('selectRow', rowIndex);
-					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
-					
-					switch(field){
-						case "kode_e2":
-							showPopup('#popdesc<?=$objectId?>', row.nama_e2);
-							break;
-						case "kode_sasaran_e2":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_sasaran_e2);
-							break;
-						case "kode_ikk":
-							showPopup('#popdesc<?=$objectId?>', row.deskripsi_ikk);
-							break;
-						default:
-							closePopup('#popdesc<?=$objectId?>');
-							break;
-					}
-				}
-			});
-			
+		
 			$("#popdesc<?=$objectId?>").click(function(){
 				closePopup('#popdesc<?=$objectId?>');
 			});
@@ -276,14 +276,14 @@
 			</tr>
 			<?// if ($this->session->userdata('unit_kerja_e1')==-1){?>
 			<tr>
-				<td>Unit Kerja Eselon I&nbsp</td>
+				<td>Unit Kerja Eselon I :</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>				
 				</td>
 			</tr>
 			<?//}?>
 			<tr>
-				<td>Unit Kerja Eselon II&nbsp</td>
+				<td>Unit Kerja Eselon II :</td>
 				<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
 					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 					</span>
@@ -322,7 +322,7 @@
 	  </div>
 	</div>
 	
-	<table id="dg<?=$objectId;?>" class="easyui-datagrid" style="height:auto;width:auto" title="Data Rencana Kinerja Tahunan (RKT) Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
+	<table id="dg<?=$objectId;?>"  style="height:auto;width:auto" title="Data Rencana Kinerja Tahunan (RKT) Eselon II" toolbar="#tb<?=$objectId;?>" fitColumns="true" singleSelect="true" rownumbers="true" pagination="true">
 	  <thead>
 	  <tr>
 		<th field="id_rkt_e2" hidden="true" sortable="true" width="50px">id_rkt_e2</th>
@@ -340,4 +340,4 @@
 	  </thead>  
 	</table>
 
-	<div class="popdesc" id="popdesc<?=$objectId?>">indriyanto</div>
+	<div class="popdesc" id="popdesc<?=$objectId?>">&nbsp;</div>

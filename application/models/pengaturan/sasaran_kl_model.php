@@ -292,7 +292,7 @@ class Sasaran_kl_model extends CI_Model
 		$out .= '<li value="0" onclick="setSasaran'.$objectId.'(\'\')">-- Pilih --</li>';
 		
 		foreach($que->result() as $r){
-			$out .= '<li onclick="setSasaran'.$objectId.'(\''.$r->kode_sasaran_kl.'\')">'.$r->deskripsi.'</li>';
+			$out .= '<li onclick="setSasaran'.$objectId.'(\''.$r->kode_sasaran_kl.'\')">['.$r->kode_sasaran_kl.'] '.$r->deskripsi.'</li>';
 		}
 		$out .= '</ul></div>';
 		

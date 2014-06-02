@@ -23,10 +23,14 @@
 			}
 			
 			deleteData<?=$objectId;?> = function (){
-				<? if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
+				
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 					if(row){
-						if(confirm("Apakah yakin akan menghapus data '" + row.kode_iku_kl + "'?")){
+						if(row.status != '0'){
+							alert('Maaf data tidak bisa dihapus, karena sudah ditetapkan di PK.');
+							return;
+						}
+						if(confirm("Apakah yakin akan menghapus data '" + row.kode_iku + "'?")){
 							var response = '';
 							$.ajax({ type: "GET",
 									 url: base_url+'rencana/rktkl/delete/' + row.id_rkt_kl,
@@ -52,9 +56,7 @@
 							});
 						}
 					}
-				<?} else { ?>	
-					alert("Silahkan Login sebagai Superadmin");
-				<?} ?>
+				
 			}
 			//end deleteData 
 			

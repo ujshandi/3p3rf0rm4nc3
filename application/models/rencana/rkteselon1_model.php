@@ -147,9 +147,9 @@ class Rkteselon1_model extends CI_Model
 	
 	public function getDataEdit($id){
 		$this->db->flush_cache();
-		$this->db->select('*, b.deskripsi as sasaran, c.deskripsi as iku_e1');
+		$this->db->select('a.*, b.deskripsi as sasaran, c.deskripsi as iku_e1,d.nama_e1,c.satuan');
 		$this->db->from('tbl_rkt_eselon1 a');
-		$this->db->join('tbl_sasaran_eselon1 b', 'b.kode_sasaran_e1 = a.kode_sasaran_e1');
+		$this->db->join('tbl_sasaran_eselon1 b', 'b.kode_sasaran_e1 = a.kode_sasaran_e1  and a.tahun=b.tahun');
 		$this->db->join('tbl_iku_eselon1 c', 'c.kode_iku_e1 = a.kode_iku_e1 and c.tahun = a.tahun');
 		$this->db->join('tbl_eselon1 d', 'd.kode_e1 = a.kode_e1');
 		$this->db->where('a.id_rkt_e1', $id);

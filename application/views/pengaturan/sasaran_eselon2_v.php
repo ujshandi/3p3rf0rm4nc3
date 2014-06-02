@@ -87,8 +87,8 @@
 						
 						if (key!=null)
 							$('#kode_sasaran_e1<?=$objectId;?>').val(key);
-						if (val!=null)
-							$('#txtkode_sasaran_e1<?=$objectId;?>').val(val);
+						if ((val!=null) &&  (key!=null))
+							$('#txtkode_sasaran_e1<?=$objectId;?>').val('['+key+'] '+val);
 					}
 				); 
 				//alert("here");
@@ -460,7 +460,7 @@
 			</tr>
 			<?// if ($this->session->userdata('unit_kerja_e1')==-1){?>
 			<tr>
-				<td>Unit Kerja Eselon I&nbsp;</td>
+				<td>Unit Kerja Eselon I :&nbsp;</td>
 				<td>
 					<?=$this->eselon1_model->getListFilterEselon1($objectId,$this->session->userdata('unit_kerja_e1'))?>				
 				</td>
@@ -469,7 +469,7 @@
 		//	var_dump($this->session->userdata('unit_kerja_e2'));
 			?>
 			<tr>
-				<td>Unit Kerja Eselon II&nbsp;</td>
+				<td>Unit Kerja Eselon II :&nbsp;</td>
 				<td><span class="fitem" id="divUnitKerja<?=$objectId;?>">
 					<?=$this->eselon2_model->getListFilterEselon2($objectId,$this->session->userdata('unit_kerja_e1'),$this->session->userdata('unit_kerja_e2'))?>
 					</span>

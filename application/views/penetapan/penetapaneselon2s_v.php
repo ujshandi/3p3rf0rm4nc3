@@ -88,7 +88,7 @@
 			//end editData
 			
 			deleteData<?=$objectId;?> = function (){
-				<? if ($this->session->userdata('unit_kerja_e1')=='-1'){?>				
+					
 					var row = $('#dg<?=$objectId;?>').datagrid('getSelected');
 					if(row){
 						if(confirm("Apakah yakin akan menghapus data '" + row.kode_ikk + "'?")){
@@ -117,9 +117,7 @@
 							});
 						}
 					}
-				<?} else { ?>	
-					alert("Silahkan Login sebagai Superadmin");
-				<?} ?>
+				
 			}
 			//end deleteData 
 		
