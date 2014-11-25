@@ -33,6 +33,172 @@ class Rpt_penetapaneselon1 extends CI_Controller {
 	public function excel($filtahun=null,$file1=null,$filsasaran=null,$filiku=null,$page=null,$rows=null){
 		echo  $this->rpt_penetapaneselon1_model->easyGrid($filtahun,$file1,$filsasaran,$filiku,3,$page,$rows);
 	}
+	public function tcpdf($filtahun=null,$file1=null,$filsasaran=null,$filiku=null,$page=null,$rows=null){
+		$this->load->library('tcpdf_','pdf');
+		$pdf = new Tcpdf_('P', 'mm', 'A4', true, 'UTF-8', false);
+		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+		$pdf->SetTitle('Penetapan Kinerja Eselon I');
+		$pdf->SetHeaderMargin(15);
+		$pdf->SetTopMargin(15);
+		$pdf->setFooterMargin(5);
+		$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+		$pdf->setPrintHeader(false);
+		$pdf->setPrintFooter(true);	
+		// set auto page breaks
+		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+		$pdf->SetAuthor('Author');
+		$pdf->SetDisplayMode('real', 'default');
+		$pdfdata = $this->rpt_penetapaneselon1_model->easyGrid($filtahun,$file1,$filsasaran,$filiku,2,$page,$rows);
+		define('FPDF_FONTPATH',APPPATH."libraries/fpdf/font/");
+		
+		// add a page
+			$e1='';
+		// set font
+		$pdf->SetFont('helvetica', 'B', 12);
+
+		// add a page
+		$pdf->AddPage();
+		if (($file1 != null)&&($file1 != "-1"))
+			$e1=$this->eselon1_model->getNamaE1($file1);
+		 //$this->our_pdf->text($posX,$posY,'FORMULIR PENETAPAN KINERJA');
+		 $pdf->Write(0, 'FORMULIR PENETAPAN KINERJA', '', 0, 'L', true, 0, false, false, 0);
+		 $pdf->Write(0, 'TINGKAT UNIT ORGANISASI ESELON I KEMENTERIAN/LEMBAGA', '', 0, 'L', true, 0, false, false, 0);
+		 $pdf->SetFont('helvetica', 'B', 10);
+		
+		
+		
+		 $pdf->Write(0, '', '', 0, 'L', true, 0, false, false, 0);
+		 $pdf->Write(0, 'Unit Organisasi Eselon I : '.($e1!=""?$e1:"Semua Unit Kerja"), '', 0, 'L', true, 0, false, false, 0);
+		//$this->fpdf->Line(10, 12, 280, 12);
+		if (($filtahun != null)&&($filtahun != "-1")){
+			
+			
+			$pdf->Write(0,'Tahun Anggaran             : '.$filtahun, '', 0, 'L', true, 0, false, false, 0);
+		}
+		
+		$pdf->Write(0, '', '', 0, 'L', true, 0, false, false, 0);
+		$pdf->SetFont('helvetica', '', 8);
+
+		
+// Table with rowspans and THEAD
+$tbl =<<<EOD
+<table border="1" cellpadding="1" cellspacing="0">
+<thead>
+ <tr >
+  <td width="30" align="center" valign="middle" rowspan="2"><b>No</b></td>
+  <td width="160" align="center" valign="middle"  rowspan="2"><b>Sasaran Strategis</b></td>
+  <td width="180" align="center" colspan="2"><b>Indikator Kinerja Utama</b></td>
+  <td width="80" align="center" valign="middle"  rowspan="2"> <b>Target</b></td>
+  <td width="80" align="center" valign="middle"  rowspan="2"><b>Satuan</b></td>
+ </tr>
+ <tr  >
+	<td width="30" align="center"> <b>No</b></td>
+	<td width="150" align="center"> <b>Deskripsi</b></td>
+ </tr>
+</thead>
+EOD;
+
+//calculate row span
+$no ="";
+$rowspan=1;
+$posisiRow = 0;
+for ($i=0;$i<count($pdfdata)-1;$i++){
+	$pdfdata[$i]['rowspan'] = "";
+	$pdfdata[$i]['rowspancount'] = 0;
+   if ($no!=$pdfdata[$i][0]){
+		$no=$pdfdata[$i][0];
+		$rowspan=1;
+		$posisiRow = $i;
+   }else{	
+		$rowspan++;
+		$pdfdata[$i]['rowspancount'] = $rowspan;
+		$pdfdata[$posisiRow]['rowspan'] = 'rowspan="'.$rowspan.'"'; 
+   }
+}
+
+//var_dump($pdfdata);
+
+for ($i=0;$i<count($pdfdata)-1;$i++){ 
+if ($pdfdata[$i]['rowspancount']==0)
+$tbl .= <<<EOD
+ <tr>
+   <td width="30" align="center" {$pdfdata[$i]['rowspan']}>{$pdfdata[$i][0]}</td>
+  <td width="160" {$pdfdata[$i]['rowspan']} >{$pdfdata[$i][1]}</td>
+  <td width="30">{$pdfdata[$i][2]}</td>
+  <td width="150">{$pdfdata[$i][3]}</td>
+  <td width="80" align="right">{$pdfdata[$i][4]}</td>
+  <td width="80">{$pdfdata[$i][5]}</td>
+  
+ </tr>
+EOD;
+
+else {
+	if ($pdfdata[$i]['rowspan']=="")
+$tbl .= <<<EOD
+ <tr>
+   
+  <td width="30">{$pdfdata[$i][2]}</td>
+  <td width="150">{$pdfdata[$i][3]}</td>
+  <td width="80" align="right">{$pdfdata[$i][4]}</td>
+  <td width="80">{$pdfdata[$i][5]}</td>
+  
+ </tr>
+EOD;
+
+else 
+$tbl .= <<<EOD
+ <tr>
+ <td width="30" align="center" {$pdfdata[$i]['rowspan']}>{$pdfdata[$i][0]}</td>
+  <td width="160" {$pdfdata[$i]['rowspan']} >{$pdfdata[$i][1]}</td>
+  <td width="30">{$pdfdata[$i][2]}</td>
+  <td width="150">{$pdfdata[$i][3]}</td>
+  <td width="80">{$pdfdata[$i][4]}</td>
+  <td width="80">{$pdfdata[$i][5]}</td>
+  
+ </tr>
+EOD;
+ }
+
+}
+
+$tbl .= <<<EOD
+</table>
+EOD;
+
+		$pdf->writeHTML($tbl, true, false, false, false, '');
+	
+	
+		$pdf->SetFont('helvetica', 'B', 10);
+		
+		
+		$menteri = '';
+		 $pdf->Write(0, '', '', 0, 'L', true, 0, false, false, 0);
+		 $pdf->Write(0, $pdfdata[$i][3] , '', 0, 'L', true, 0, false, false, 0);
+		 $pdf->Write(0, $pdfdata[$i][1] , '', 0, 'L', true, 0, false, false, 0);
+	 
+		 $pdf->Write(0, '', '', 0, 'L', true, 0, false, false, 0);
+		 $pdf->Write(0,  'JAKARTA, '.date('Y') , '', 0, 'R', true, 0, false, false, 0);
+		 $pdf->Write(0,  'MENTERI PERHUBUNGAN '.$menteri , '', 0, 'R', true, 0, false, false, 0);
+		
+			//add TTD
+	/*	$this->our_pdf->setFont('arial','B',10);	
+		$this->our_pdf->CheckPageBreakChan($newHeight,108);	
+		
+		$x=$this->our_pdf->GetX();
+		$y=$this->our_pdf->GetY();
+		$this->our_pdf->SetXY($x+220,$y); 
+		$this->our_pdf->Wrap(550, 5, 'JAKARTA, '.date('Y'), 0, 0, 'RM', false, '', 250, $newHeight2);
+		$this->our_pdf->Ln($newHeight);
+		$x=$this->our_pdf->GetX();
+		$y=$this->our_pdf->GetY();
+		$this->our_pdf->SetXY($x+20,$y); 
+		$this->our_pdf->Wrap(250, 5, 'MENTERI PERHUBUNGAN '.$menteri, 0, 0, 'LM', false, '', 250, $newHeight2);
+		$this->our_pdf->SetXY($x+220,$y); 
+		$this->our_pdf->Wrap(250, 5, 'PEJABAT '.$menteri, 0, 0, 'LM', false, '', 250, $newHeight2);
+		$this->our_pdf->Ln($newHeight);*/
+	
+		$pdf->Output('LaporanPenetapanEselon1.pdf', 'I');
+	}
 	
 	public function pdf($filtahun=null,$file1=null,$filsasaran=null,$filiku=null,$page=null,$rows=null){
 		$this->load->library('our_pdf','our_pdf');
@@ -199,6 +365,8 @@ class Rpt_penetapaneselon1 extends CI_Controller {
 			$this->our_pdf->Ln($newHeight);
 			$posY = $posY+$newHeight;
 		}  
+		
+		
 		$this->our_pdf->setFont('arial','B',8);	
 		$this->our_pdf->CheckPageBreakChan($newHeight,108);		
 		$this->our_pdf->Wrap(100, 5, $pdfdata[$i][3], 0, 0, 'LM', false, '', 100,  $newHeight2);

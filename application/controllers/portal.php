@@ -15,13 +15,13 @@ class Portal extends CI_Controller {
 		$this->load->model('/dashboard/dsb_kl_model');
 		$this->load->model('/dashboard/dsb_e1_model');
 		$this->load->model('/rujukan/eselon1_model');
-		$this->load->library("utility");
+		$this->load->library("utility");//easyui/jquery-1.6.min.js
 		$this->data = array(
 				
 			'title_page'=>'Sistem Aplikasi Pengukuran Kinerja Kementerian Perhubungan',
 			'sess_fullname'=>$this->session->userdata('full_name'),
 			'sess_apptype'=>$this->session->userdata('app_type'),
-			'js'=>array('js/easyui/jquery-1.6.min.js','js/jquery-easyui-1.3.3/jquery.easyui.min.js','js/easyui/plugins/datagrid-detailview.js','js/uri_encode_decode.js','js/json2.js','js/jquery.autogrow.js','js/jquery.formatCurrency-1.4.0.min.js','js/formwizard.js','js/jquery.jqURL.js','js/ckeditor/ckeditor.js','js/portal/jquery.flexslider-min.js','js/portal/jquery.vticker.js'),
+			'js'=>array('js/jquery-easyui-1.3.3/jquery.min.js','js/jquery-easyui-1.3.3/jquery.easyui.min.js','js/easyui/plugins/datagrid-detailview.js','js/uri_encode_decode.js','js/json2.js','js/jquery.autogrow.js','js/jquery.formatCurrency-1.4.0.min.js','js/formwizard.js','js/jquery.jqURL.js','js/ckeditor/ckeditor.js','js/portal/jquery.flexslider-min.js','js/portal/jquery.vticker.js'),
 			'css'=>array('css/portal/style.css'),
 			'links'=>$this->portal_model->getMuchContent(8)
 		);

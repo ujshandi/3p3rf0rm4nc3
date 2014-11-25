@@ -80,11 +80,7 @@
 			// }  
 			
 			
-			  // //inisialisasi
-			 // setListE2<?=$objectId?>();
-			// $('#kode_e1<?=$objectId;?>').val('<=$result->kode_e1?>');
-			 // setListE2<?=$objectId?>();
-			// $('#kode_e2<?=$objectId;?>').val('<=$result->kode_e2?>');
+			
 			// //end-------------------------------------
 						
 		});

@@ -11,7 +11,7 @@
  * @version   0.1
 */
 
-class Group_access_model extends CI_Model 
+class Group_access_anev_model extends CI_Model 
 {
 	/**
 	* constructor 
@@ -37,7 +37,7 @@ class Group_access_model extends CI_Model
 		$this->db->where('menu_id',$menu_id);	
 		$this->db->where('group_id',$group_id);				
 		$this->db->where('level_id',$level_id);				
-		$this->db->from('tbl_group_access');
+		$this->db->from('anev_group_access');
 		//var_dump($this->db->where());
 	//	var_dump($this->db->count_all_results());die;
 		return ($this->db->count_all_results()>0);
@@ -77,14 +77,14 @@ class Group_access_model extends CI_Model
 			$this->db->set('menu_id',$data['menu_id'][$i]);		  
 		    $this->db->set('group_id',$data['group_id']);
 		    $this->db->set('level_id',$data['level_id']);
-			$this->db->insert('tbl_group_access');
+			$this->db->insert('anev_group_access');
 			// var_dump("here inert");
 		 }	
 		  else{
 			$this->db->where('menu_id',$data['menu_id'][$i]);	
 			$this->db->where('group_id',$data['group_id']);				
 			$this->db->where('level_id',$data['level_id']);				
-			$this->db->update('tbl_group_access');
+			$this->db->update('anev_group_access');
 			//var_dump("update ");die;
 		  }		  
 		  $i++;
@@ -106,7 +106,7 @@ class Group_access_model extends CI_Model
 		/*is_can(1,$group_id,m.menu_id) as can_add, is_can(2,$group_id,m.menu_id) as can_edit,is_can(3,$group_id,m.menu_id) as can_delete,is_can(4,$group_id,m.menu_id) as can_acc , is_can(5,$group_id,m.menu_id) as can_view, is_can(6,$group_id,m.menu_id) as can_print, is_can(7,$group_id,m.menu_id) as can_not_acc
 		and parent_menu_id is not null and has_child = 0 ".($menugroup!=-1?" and menu_group = '$menugroup'":"").
 		*/		
-		$sql = "select m.menu_group,m.menu_id,m.menu_name, m.policy, m.url, g.policy as group_policy, m.menu_parent from tbl_menu m left join tbl_group_access g on g.menu_id = m.menu_id and g.level_id = '$level_id' and g.group_id = '$group_id'   where (hide=0 or hide is null)  order by m.menu_id ";
+		$sql = "select m.menu_group,m.menu_id,m.menu_name, m.policy, m.url, g.policy as group_policy, m.menu_parent from anev_menu m left join anev_group_access g on g.menu_id = m.menu_id and g.level_id = '$level_id' and g.group_id = '$group_id'   where (hide=0 or hide is null)  order by m.menu_id ";
 		//
 		//left join tbl_group_user gu on gu.group_id = g.group_id
 				
@@ -123,7 +123,7 @@ class Group_access_model extends CI_Model
 					<input type="hidden" name="rowcount" value="'.$query->num_rows().'">
 					<input type="hidden" name="level_id" value="'.$level_id.'">
 					<input type="hidden" name="group_id" value="'.$group_id.'">
-					<input type="hidden" name="jenis_aplikasi" value="eperformance">
+					<input type="hidden" name="jenis_aplikasi" value="anev">
 				  </td>			  
 				  <td bgcolor="#F4F4F4" width="300px">&nbsp;Menu&nbsp;</td>
 				  <td bgcolor="#F4F4F4" >&nbsp;View&nbsp;</td>

@@ -74,7 +74,11 @@
         <hr/>
         <p>Masukkan username dan password Anda untuk masuk aplikasi e-Performance</p>
         <form class="front" id="formLogin" method="post" action="<?=base_url();?>security/login/login_usr/portal">
-        <input name="username" type="text"  id="username_id" style="background-image: url(<?=base_url()?>public/admin/images/login/user_.png);background-repeat:no-repeat;text-align:center;" title="Username"/>
+		<select name="jenis_aplikasi" style="border: 1px solid #999;border-radius: 4px;box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset;color: #ccc;font-size: 12px;margin: 5px 0;padding: 5px 2%;width: 100%;">
+			<option value="eperformance" selected="selected">E-Performance</option>
+			<option value="anev" >E-Anev</option>
+		</select>
+	   <input name="username" type="text"  id="username_id" style="background-image: url(<?=base_url()?>public/admin/images/login/user_.png);background-repeat:no-repeat;text-align:center;" title="Username"/>
         <input name="password" type="password" id="password" class="login" title="Password" style="background-image: url(<?=base_url()?>public/admin/images/login/pass_.png);background-repeat:no-repeat;text-align:center;" onkeypress="runScript(event)"/>
         <span style="color:#ff3333"><?php echo $this->session->flashdata('err_login'); ?></span>
         <hr/>

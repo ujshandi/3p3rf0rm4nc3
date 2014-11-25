@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+ header("Access-Control-Allow-Origin: *");
 /**
  * Example
  *
@@ -22,7 +22,7 @@ class Rujukan_api extends REST_Controller
 	
 		
 	
-	function kl_list_get(){
+	public function kl_list_get(){
 		$this->load->model('/rujukan/kl_model');
 		$this->load->model('/rujukan/eselon1_model');
 		$this->load->library("utility");	
@@ -30,7 +30,7 @@ class Rujukan_api extends REST_Controller
 		 if($rs){
             $this->response($rs, 200); // 200 being the HTTP response code
         }else{
-            $this->response(array('error' => 'Data Eselon 2 tidak ditemukan!'), 404);
+            $this->response(array('error' => 'Data Kementerian tidak ditemukan!'), 404);
         }	
 	}
 	
@@ -54,6 +54,17 @@ class Rujukan_api extends REST_Controller
             $this->response($rs, 200); // 200 being the HTTP response code
         }else{
             $this->response(array('error' => 'Data Eselon 2 tidak ditemukan!'), 404);
+        }	
+	}
+	
+	
+	function program_list_get(){
+		$this->load->model('/rujukan/programkl_model');
+		$rs= $this->programkl_model->easyGrid(null,null,4);//$file1,$file2
+		 if($rs){
+            $this->response($rs, 200); // 200 being the HTTP response code
+        }else{
+            $this->response(array('error' => 'Data Program Eselon 1 tidak ditemukan!'), 404);
         }	
 	}
 	

@@ -1,99 +1,4 @@
-<script type="text/javascript">
-    var jmlAuto = 0;
-	selectModul = function(policy,modulName){
-		var compId = "chk"+policy+modulName;
-		alert($(this).attr("checked"));
-		if ($(this).is(":checked")){
-				alert("check");
-		}
-		
-	}
-	$("input[class='chkAutoTab']").on("click",function(){
-		var b = $('.chkAutoTab');
-						//alert($b.filter(':checked').length);
-						var jmlCheck = b.filter(':checked').length;
-						if (jmlCheck>3){
-							$(this).prop("checked", false);
-							alert("Maaf, jumlah auto Tab tidak boleh melebih 3 menu");
-						//	$(this).removeAttr("checked");
-							
-						//	return false;
-							}
-						//else return true;
-		
-		/*if ($(this).is(":checked")){
-			jmlAuto--;
-		}else if($(this).is(":not(:checked)")){
-			jmlAuto++;
-		}
-		alert(jmlAuto);*/
-	});
-	
-	saveData<?=$objectId;?>=function(){
-				$('#fm<?=$objectId;?>').form('submit',{
-					url: base_url+'admin/group_access/save',
-					
-					onSubmit: function(){
-						
-						//var $b = $('input[type=checkbox]');
-						var b = $('.chkAutoTab');
-						//alert($b.filter(':checked').length);
-						var jmlCheck = b.filter(':checked').length;
-						if (jmlCheck>3){
-							alert("Maaf, jumlah auto Tab tidak boleh melebih 3 menu");
-							return false;
-							}
-						else return true;
-						//return (jmlCheck<3);///$(this).form('validate');
-					},
-					success: function(result){
-						//alert(result);
-						var result = eval('('+result+')');
-						if (result.success){
-							$.messager.show({
-								title: 'Pesan',
-								msg: 'Data berhasil disimpan'
-							});
-							$('#dlg<?=$objectId;?>').dialog('close');		// close the dialog
-							$('#dg<?=$objectId;?>').datagrid('reload');	// reload the user data
-						} else {
-							$.messager.show({
-								title: 'Error',
-								msg: result.msg
-							});
-						}
-					}
-				});
-			}
-			//end saveData
-			
-	
-	
-	searchData<?=$objectId?> = function(){
-		var filapptype = $("#filter_apptype<?=$objectId;?>").val();
-		var fillevel = $("#filter_level_id<?=$objectId;?>").val();
-		if(filapptype==null) filapptype ="-1";				
-		if(fillevel==null) fillevel ="-1";				
-		
-		$.ajax({
-		  type: "POST",
-		  url: "admin/group_access/get_data/"+fillevel+"/"+filapptype+"/<?=$objectId;?>",
-		  beforeSend: function ( xhr ) {		
-		  }
-		}).done(function( msg ) {
-		  
-			$("#content<?=$objectId?>").html(msg);
-		}).fail(function(jq,msg) { 			
-			$("#content<?=$objectId?>").html(msg);
-		}).always(function() { 
-			 
-		});
-	}
-	
-	setTimeout(function(){
-		//searchData<?=$objectId?>();
-		},100);
-</script>
+
 <style type="text/css">
 		#fm<?=$objectId;?>{
 			margin:0;
@@ -201,12 +106,19 @@
 	
 		<div region="west" split="true" title="Filter" style="width:250px;">  
 			<div id="tb<?=$objectId;?>" style="height:auto">
-					  <table border="0" cellpadding="1" cellspacing="1" width="100%">
+					  <table border="0" cellpadding="5" cellspacing="1" width="100%">
 					  <tr>
 						<td>
 						  <div class="fsearch" >
 							
 							<table border="0" cellpadding="1" cellspacing="1">
+							<tr>
+								<td>Jenis Aplikasi</td>
+								<td><select name="filter_jenis" id="filter_jenis<?=$objectId;?>" >
+			<option value="eperformance" selected="selected">E-Performance</option>
+			<option value="anev" >E-Anev</option>
+		</select></td>
+							</tr>
 							<tr>
 							 
 							  <td>Level&nbsp;</td>
@@ -308,3 +220,116 @@
 
 
 </div>
+<script type="text/javascript">
+    var jmlAuto = 0;
+	selectModul = function(policy,modulName){
+		var compId = "chk"+policy+modulName;
+		alert($(this).attr("checked"));
+		if ($(this).is(":checked")){
+				alert("check");
+		}
+		
+	}
+	$("input[class='chkAutoTab']").on("click",function(){
+		var b = $('.chkAutoTab');
+						//alert($b.filter(':checked').length);
+						var jmlCheck = b.filter(':checked').length;
+						if (jmlCheck>3){
+							$(this).prop("checked", false);
+							alert("Maaf, jumlah auto Tab tidak boleh melebih 3 menu");
+						//	$(this).removeAttr("checked");
+							
+						//	return false;
+							}
+						//else return true;
+		
+		/*if ($(this).is(":checked")){
+			jmlAuto--;
+		}else if($(this).is(":not(:checked)")){
+			jmlAuto++;
+		}
+		alert(jmlAuto);*/
+	});
+	
+	saveData<?=$objectId;?>=function(){
+				$('#fm<?=$objectId;?>').form('submit',{
+					url: base_url+'admin/group_access/save',
+					
+					onSubmit: function(){
+						
+						//var $b = $('input[type=checkbox]');
+						var b = $('.chkAutoTab');
+						//alert($b.filter(':checked').length);
+						var jmlCheck = b.filter(':checked').length;
+						if (jmlCheck>3){
+							alert("Maaf, jumlah auto Tab tidak boleh melebih 3 menu");
+							return false;
+							}
+						else return true;
+						//return (jmlCheck<3);///$(this).form('validate');
+					},
+					success: function(result){
+						//alert(result);
+						var result = eval('('+result+')');
+						if (result.success){
+							$.messager.show({
+								title: 'Pesan',
+								msg: 'Data berhasil disimpan'
+							});
+							$('#dlg<?=$objectId;?>').dialog('close');		// close the dialog
+							$('#dg<?=$objectId;?>').datagrid('reload');	// reload the user data
+						} else {
+							$.messager.show({
+								title: 'Error',
+								msg: result.msg
+							});
+						}
+					}
+				});
+			}
+			//end saveData
+			
+	
+	
+	searchData<?=$objectId?> = function(){
+		var filjenis = $("#filter_jenis<?=$objectId;?>").val();
+		var filapptype = $("#filter_apptype<?=$objectId;?>").val();
+		var fillevel = $("#filter_level_id<?=$objectId;?>").val();
+		if(filapptype==null) filapptype ="-1";				
+		if(fillevel==null) fillevel ="-1";				
+		
+		if (filjenis=="eperformance"){
+			$.ajax({
+			  type: "POST",
+			  url: "admin/group_access/get_data/"+fillevel+"/"+filapptype+"/<?=$objectId;?>",
+			  beforeSend: function ( xhr ) {		
+			  }
+			}).done(function( msg ) {
+			  
+				$("#content<?=$objectId?>").html(msg);
+			}).fail(function(jq,msg) { 			
+				$("#content<?=$objectId?>").html(msg);
+			}).always(function() { 
+				 
+			});
+		}else {
+			$.ajax({
+			  type: "POST",
+			  url: "admin/group_access/get_data_anev/"+fillevel+"/"+filapptype+"/<?=$objectId;?>",
+			  beforeSend: function ( xhr ) {		
+			  }
+			}).done(function( msg ) {
+			  
+				$("#content<?=$objectId?>").html(msg);
+			}).fail(function(jq,msg) { 			
+				$("#content<?=$objectId?>").html(msg);
+			}).always(function() { 
+				 
+			});
+		}
+	}
+	
+	setTimeout(function(){
+		//searchData<?=$objectId?>();
+		},100);
+</script>

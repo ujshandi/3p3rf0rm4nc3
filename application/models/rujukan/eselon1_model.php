@@ -36,7 +36,7 @@ class Eselon1_model extends CI_Model
 				//$value = $e1;
 			}
 			if ($purpose==4){
-				$this->db->where('kode_e1',$file1);
+				//teu kudu web service mah all saja $this->db->where('kode_e1',$file1);
 			}
 			
 			$this->db->select("kode_e1 as \"kode_e1\", tbl_eselon1.kode_kl as \"kode_kl\", nama_e1 as \"nama_e1\", tbl_eselon1.singkatan as \"singkatan\", nama_dirjen as \"nama_dirjen\", nip as \"nip\", pangkat as \"pangkat\", gol as \"gol\", tbl_kl.nama_kl",false);

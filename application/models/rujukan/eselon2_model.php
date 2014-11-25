@@ -19,16 +19,29 @@ class Eselon2_model extends CI_Model
 		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;  
 		$limit = isset($_POST['rows']) ? intval($_POST['rows']) : 10;  
 		
+		
 		$count = $this->GetRecordCount($file1, $file2);
 		$response = new stdClass();
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tbl_eselon2.kode_e1';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';  
+		
+		if ($purpose==4){ //request oleh e-anev
+			$page = isset($_GET['iDisplayStart']) ? intval($_GET['iDisplayStart']) : 1;  
+			$limit = isset($_GET['iDisplayLength']) ? intval($_GET['iDisplayLength']) : 10;  			
+			$sortIdx = isset($_GET['iSortCol_0'])?intval($_GET['iSortCol_0']) :0;
+			switch ($sortIdx){
+				case 1 : $sort = 'tbl_eselon2.nama_e2';
+				default : $sort = 'tbl_eselon2.kode_e2';
+			}
+			$order = isset($_GET['sSortDir_0']) ? strval($_GET['sSortDir_0']) : 'asc';  
+		}
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
+			if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("tbl_eselon2.*, tbl_eselon1.nama_e1",false);
 			if(($file2 != '-1')&&($file2 != null)){
 				$this->db->where("tbl_eselon2.kode_e2",$file2);
