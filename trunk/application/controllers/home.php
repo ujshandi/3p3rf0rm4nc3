@@ -11,6 +11,7 @@ class Home extends CI_Controller {
 				//
 		//$this->session->set_userdata($userdata);
 			//var_dump($this->session->userdata('user_id'));	
+			
 		if ($this->session->userdata('user_id') != TRUE) redirect(base_url());					
 		$this->load->model('/security/sys_menu_model');
 		//$this->load->library("utility");

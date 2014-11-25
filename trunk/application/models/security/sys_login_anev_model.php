@@ -1,5 +1,5 @@
 <?
-class Sys_login_model extends CI_Model{
+class Sys_login_anev_model extends CI_Model{
 	var $groupId;
 	var $fullName;
 	var $userId;
@@ -44,14 +44,12 @@ class Sys_login_model extends CI_Model{
 				'level'=>$row['level'],
 				'level_id'=>$row['level_id'],
 				'group_id'=>$row['group_id']);
-			//$this->create_session($row['user_id'], $row['user_name'], (($row['user_name']=='superadmin')?'':$row['app_type']), $row['full_name'],true,$row['unit_kerja_e1'],$row['unit_kerja_e2'],$row['level'],$row['group_id'],$row['level_id']);
+			
+			$rs = $this->insertLoginLog($newData);
+			$newData['policy']=$this->getGroupAccess($row['level_id'],$row['group_id']);
 			$this->create_session($newData);
 			$query->free_result();
-			// $data['user_id']=$row['user_id'];
-			// $data['user_name']=$row['user_name'];
-			// $data['unit_kerja_e2']=$row['unit_kerja_e2'];
-			// $data['unit_kerja_e1']=$row['unit_kerja_e1'];
-			return $this->insertLoginLog($newData);
+			return $rs;
 			}else {
 				$query->free_result();
 			return FALSE;
@@ -59,6 +57,54 @@ class Sys_login_model extends CI_Model{
 	 
 		  
 	}
+	
+	
+	public function getInfoSession($username,$passwd){
+
+		$new_password = md5($passwd);
+		$this->db->select('u.user_name,u.full_name, u.passwd,u.group_id,u.user_id,g.app_type, u.unit_kerja_e1,u.unit_kerja_e2,l.level,l.level_id');
+		$this->db->from('tbl_user u');
+		$this->db->join('tbl_group_user g','g.group_id = u.group_id');
+		$this->db->join('tbl_group_level l','l.level_id = u.level_id',"left");
+		$this->db->where('user_name', $username);
+		$this->db->where('passwd', $new_password);
+		//$this->db->where('disabled_date', null);
+		//var_dump('kadieu');die;
+		$query = $this->db->get();
+
+		if ($query->num_rows() > 0) {
+			 $row = $query->row_array();		   
+			$this->groupId = $row['group_id'];
+			//$this->fullName = $row['full_name'];
+			$this->userId = $row['user_id'];
+			$this->fullName = $row['full_name'];
+			$this->level_id= $row['level_id'];
+			//var_dump($this->groupId);die;
+			$newData = array (
+				'user_id'=>$row['user_id'], 
+				'user_name'=>$row['user_name'], 
+				'app_type'=>(($row['user_name']=='superadmin')?'':$row['app_type']), 
+				'full_name'=>$row['full_name'],
+				'logged_in'=>true,
+				'unit_kerja_e1'=>$row['unit_kerja_e1'],
+				'unit_kerja_e2'=>$row['unit_kerja_e2'],
+				'level'=>$row['level'],
+				'level_id'=>$row['level_id'],
+				'group_id'=>$row['group_id']
+				//'policy'=>$this->getGroupAccess($row['level_id'],$row['group_id'])
+				);
+			//$this->create_session($newData);
+			$query->free_result();
+		return json_encode(array("session"=>$newData));
+		}else {
+			$query->free_result();
+			return FALSE;
+		}	
+	 
+		  
+	}
+	
+	
 	
 	private function create_session($data){
 		$this->session->set_userdata($data);
@@ -95,6 +141,19 @@ class Sys_login_model extends CI_Model{
 		}
 	}
 	
+	
+	public function getGroupAccess($level_id,$group_id){
+		$sql = "select m.menu_group,m.menu_id,m.menu_name, m.policy, m.url, g.policy as group_policy, m.menu_parent from anev_menu m left join anev_group_access g on g.menu_id = m.menu_id and g.level_id = '$level_id' and g.group_id = '$group_id'   where (hide=0 or hide is null)  order by m.menu_id ";
+		//
+		//left join tbl_group_user gu on gu.group_id = g.group_id
+				
+		
+		$query = $this->db->query($sql);
+		if ($query->num_rows()==0)
+		   return array();
+		else
+			return  $query->result();		
+	}
 	
 	private function old_create_session($user_id, $user_name, $app_type,$full_name,$logged_in,$unit_kerja_e1,$unit_kerja_e2,$level,$group_id,$level_id) {
 		$this->session->set_userdata('user_id',$user_id);

@@ -36,7 +36,11 @@ class Login extends CI_Controller {
 		}else if($response == true) {
 			if($form=='portal'){
 				//chan redirect(base_url().'portal');
-				redirect(base_url().'home');
+				if ($this->input->post('jenis_aplikasi')=="eperformance")
+					redirect(base_url().'home');
+				else 
+					redirect("http://".$_SERVER['HTTP_HOST']."/e-anev");
+					//redirect("http://anev.e-performance.net");
 			}
 			else
 				redirect(base_url().'home');

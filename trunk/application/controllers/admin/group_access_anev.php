@@ -1,5 +1,5 @@
 <?
-class Group_access extends CI_Controller{
+class Group_access_anev extends CI_Controller{
 	var $extraHeaderContent;
 	
 	public function __construct()	{
@@ -7,7 +7,6 @@ class Group_access extends CI_Controller{
 		if ($this->session->userdata('logged_in') != TRUE) redirect('security/login');		
 		$this->load->model('/security/sys_menu_model');
 		$this->load->model('/admin/group_access_model');
-		$this->load->model('/admin/group_access_anev_model');
 		$this->load->model('/admin/group_user_model');		
 		$this->load->model('/admin/group_level_model');		
 		$this->load->model('/admin/user_model');		
@@ -62,24 +61,17 @@ class Group_access extends CI_Controller{
 			
 		}else { */
 		//var_dump($data);
-		
-		if ($data['jenis_aplikasi']=='eperformance')
 			$result = $this->group_access_model->saveToDb($data);				
-		else
-			$result = $this->group_access_anev_model->saveToDb($data);				
-		if ($result){
-			echo json_encode(array('success'=>true, 'status'=>"Penyimpanan Berhasil"));
-		} else {
-			echo json_encode(array('msg'=>"Data Tidak bisa disimpan"));
-		}
+			if ($result){
+				echo json_encode(array('success'=>true, 'status'=>"Penyimpanan Berhasil"));
+			} else {
+				echo json_encode(array('msg'=>"Data Tidak bisa disimpan"));
+			}
 		//}
 	}
 	
     public 	function get_data($level_id,$group_id,$objectId){			
 		echo $this->group_access_model->getData($level_id,$group_id,$objectId);		
-	}
-	public 	function get_data_anev($level_id,$group_id,$objectId){			
-		echo $this->group_access_anev_model->getData($level_id,$group_id,$objectId);		
 	}
 	
 	
@@ -87,7 +79,6 @@ class Group_access extends CI_Controller{
 		$data["rowcount"] = $this->input->post('rowcount', TRUE);
 		$data["group_id"] = $this->input->post('group_id', TRUE);
 		$data["level_id"] = $this->input->post('level_id', TRUE);
-		$data["jenis_aplikasi"] = $this->input->post('jenis_aplikasi', TRUE);
 		for ($i=0;$i<$data["rowcount"];$i++){
 			$data["menu_id"][$i] = $this->input->post('menu_id'.($i+1), TRUE);			
 			$data["chkView"][$i] = $this->input->post('chkView'.($i+1), true);	

@@ -25,6 +25,18 @@ class Programkl_model extends CI_Model
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';  
+		
+		if ($purpose==4){ //request oleh e-anev
+			$page = isset($_GET['iDisplayStart']) ? intval($_GET['iDisplayStart']) : 1;  
+			$limit = isset($_GET['iDisplayLength']) ? intval($_GET['iDisplayLength']) : 10;  
+			$sortIdx = isset($_GET['iSortCol_0'])?intval($_GET['iSortCol_0']) :0;
+			switch ($sortIdx){
+				case 1 : $sort = 'tbl_program_kl.kode_program';
+				case 2 : $sort = 'tbl_program_kl.nama_program';
+				default : $sort = 'tbl_program_kl.kode_program';
+			}
+			$order = isset($_GET['sSortDir_0']) ? strval($_GET['sSortDir_0']) : 'asc';  
+		}
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
@@ -36,6 +48,7 @@ class Programkl_model extends CI_Model
 			}
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
+			if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("tbl_program_kl.*, tbl_eselon1.nama_e1",false);
 			$this->db->from('tbl_program_kl');
 			$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_program_kl.kode_e1');
