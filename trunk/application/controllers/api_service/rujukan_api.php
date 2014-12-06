@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
- header("Access-Control-Allow-Origin: *");
+ 
 /**
  * Example
  *
@@ -20,54 +20,161 @@ class Rujukan_api extends REST_Controller
 {
 	
 	
+	function __construct()
+	{	
+		// header('Access-Control-Allow-Origin: *');  
+		// header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method"); 
+		// header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE"); 
+		// $method = $_SERVER['REQUEST_METHOD']; 
+		// if($method == "OPTIONS") { die(); }
 		
+		parent::__construct();
+		 $this->output->set_header( 'Access-Control-Allow-Origin: *' );
+			$this->output->set_header( "Access-Control-Allow-Methods:GET" );
+			$this->output->set_header( 'Access-Control-Allow-Headers: content-type' );
+			$this->output->set_content_type( 'application/json' );
+			$this->output->set_output( "*" );
+		// header("Access-Control-Allow-Methods: GET, OPTIONS");
+		// header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding");
+		
+		// if ( "OPTIONS" === $_SERVER['REQUEST_METHOD'] ) {
+			// die();
+		// }
+	}	
 	
-	public function kl_list_get(){
-		$this->load->model('/rujukan/kl_model');
-		$this->load->model('/rujukan/eselon1_model');
-		$this->load->library("utility");	
-		$rs= $this->kl_model->easyGrid(4);//$file1,$file2
-		 if($rs){
-            $this->response($rs, 200); // 200 being the HTTP response code
-        }else{
-            $this->response(array('error' => 'Data Kementerian tidak ditemukan!'), 404);
-        }	
+	function kl1_list_get(){
+		// header('Access-Control-Allow-Origin: *'); 
+		// header('Access-Control-Allow-Headers: X-Requested-With'); 
+		// header('Content-Type: application/json'); 
+		// $this->load->model('/rujukan/kl_model');
+		// $this->load->model('/rujukan/eselon1_model');
+		// $this->load->library("utility");	
+		// $rs= $this->kl_model->easyGrid(4);//$file1,$file2
+		 // if($rs){
+            // $this->response($rs, 200); // 200 being the HTTP response code
+        // }else{
+            // $this->response(array('error' => 'Data Kementerian tidak ditemukan!'), 404);
+        // }	
 	}
 	
-	function eselon1_list_get(){
-		$this->load->model('/rujukan/eselon2_model');
-		$this->load->model('/rujukan/eselon1_model');
-		$this->load->library("utility");	
-		$rs= $this->eselon1_model->easyGrid(4,$this->get('file1'));//$file1,$file2
-		 if($rs){
-            $this->response($rs, 200); // 200 being the HTTP response code
-        }else{
-            $this->response(array('error' => 'Data Eselon 1 tidak ditemukan!'), 404);
-        }	
+	function eselon1_list_get(){	
+		 // $this->output->set_header( 'Access-Control-Allow-Origin: *' );
+			// $this->output->set_header( "Access-Control-Allow-Methods:GET" );
+			// $this->output->set_header( 'Access-Control-Allow-Headers: content-type' );
+			// $this->output->set_content_type( 'application/json' );
+			// $this->output->set_output( "*" );	
+		 // $this->load->model('/rujukan/eselon2_model');
+		 // $this->load->model('/rujukan/eselon1_model');
+		 // $this->load->library("utility");	
+		// $rs= $this->eselon1_model->easyGrid(4,$this->get('file1'));//$file1,$file2
+		 // if($rs){
+            // $this->response($rs, 200); // 200 being the HTTP response code
+        // }else{
+            // $this->response(array('error' => 'Data Eselon 1 tidak ditemukan!'), 404);
+        // }	
 	}
 	function eselon2_list_get(){
-		$this->load->model('/rujukan/eselon2_model');
-		$this->load->model('/rujukan/eselon1_model');
-		$this->load->library("utility");	
-		$rs= $this->eselon2_model->easyGrid(null,null,4);//$file1,$file2
-		 if($rs){
-            $this->response($rs, 200); // 200 being the HTTP response code
-        }else{
-            $this->response(array('error' => 'Data Eselon 2 tidak ditemukan!'), 404);
-        }	
+		
+		// $this->load->model('/rujukan/eselon2_model');
+		// $this->load->model('/rujukan/eselon1_model');
+		// $this->load->library("utility");	
+		// $rs= $this->eselon2_model->easyGrid(null,null,4);//$file1,$file2
+		 // if($rs){
+            // $this->response($rs, 200); // 200 being the HTTP response code
+        // }else{
+            // $this->response(array('error' => 'Data Eselon 2 tidak ditemukan!'), 404);
+        // }	
 	}
 	
 	
-	function program_list_get(){
-		$this->load->model('/rujukan/programkl_model');
-		$rs= $this->programkl_model->easyGrid(null,null,4);//$file1,$file2
-		 if($rs){
-            $this->response($rs, 200); // 200 being the HTTP response code
-        }else{
-            $this->response(array('error' => 'Data Program Eselon 1 tidak ditemukan!'), 404);
-        }	
+	function program1_list_get(){
+		
 	}
 	
+	public function _remap( $param ) {
+		$request = $_SERVER['REQUEST_METHOD'];
+	 
+		switch( strtoupper( $request ) ) {
+			case 'GET':
+				$method = 'read';
+				break;
+			case 'POST':
+				$method = 'save';
+				break;
+			case 'PUT':
+				$method = 'update';
+				break;
+			case 'DELETE':
+				$method = 'remove';
+				break;
+			case 'OPTIONS':
+				$method = '_options';
+				break;
+		}
+		if ( preg_match( "/^(?=.*[a-zA-Z])(?=.*[0-9])/", $param ) ) {
+			$id = $param;
+		} else {
+			$id = null;
+		}
+		$this->$method($id);
+	}
+	
+	public function read($id)
+	{
+		//var_dump($id);
+		
+		switch ($id){
+			case 'kl1_list':
+				$this->load->model('/rujukan/kl_model');
+				$this->load->model('/rujukan/eselon1_model');
+				$this->load->library("utility");	
+				$rs= $this->kl_model->easyGrid(4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Kementerian tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'eselon1_list' :
+				$this->load->model('/rujukan/eselon2_model');
+				$this->load->model('/rujukan/eselon1_model');
+				$this->load->library("utility");	
+				$rs= $this->eselon1_model->easyGrid(4,$this->get('file1'));//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Eselon 1 tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'eselon2_list':
+				$this->load->model('/rujukan/eselon2_model');
+				$this->load->model('/rujukan/eselon1_model');
+				$this->load->library("utility");	
+				$rs= $this->eselon2_model->easyGrid(null,null,4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Eselon 2 tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'program1_list':
+				$this->load->model('/rujukan/programkl_model');
+				$params = null;
+				$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				 
+				$rs= $this->programkl_model->easyGrid(null,$tahun,4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Program Eselon 1 tidak ditemukan!'), 404);
+				}	
+			break;
+			default :
+			$this->response(array('error' => 'tidak ada data!'), 404);
+		}
+		
+	}
+
 	function user_get()
     {
         if(!$this->get('id'))

@@ -36,7 +36,8 @@ abstract class REST_Controller extends CI_Controller
      *
      * @var array
      */
-    protected $allowed_http_methods = array('get', 'delete', 'post', 'put', 'options', 'patch', 'head');
+    //protected $allowed_http_methods = array('get', 'delete', 'post', 'put', 'options', 'patch', 'head');
+    protected $allowed_http_methods = array('get', 'delete', 'post', 'put');
 
     /**
      * General request data and information.
@@ -194,7 +195,13 @@ abstract class REST_Controller extends CI_Controller
      */
     public function __construct()
     {
-        parent::__construct();
+        // header('Access-Control-Allow-Origin: *'); 
+		// header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method"); 
+		// header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE"); 
+		// $method = $_SERVER['REQUEST_METHOD']; 
+		 // var_dump($_SERVER['REQUEST_METHOD']); 
+		// if($method == "OPTIONS") { die(); }
+		parent::__construct();
 
         // Start the timer for how long the request takes
         $this->_start_rtime = microtime(true);
