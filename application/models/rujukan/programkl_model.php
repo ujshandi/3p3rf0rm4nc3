@@ -71,14 +71,16 @@ class Programkl_model extends CI_Model
 				$response->rows[$i]['total']			= number_format( $row->total, 0, ',', '.');
 
 				//utk kepentingan export excel =============================
-				unset($row->nama_e1);
-				//unset($row->id_program_kl);
-				if($file1 != '' && $file1 != '-1' && $file1 != null){
-					unset($row->kode_e1);
-					//tambahkan header kolom
-					$colHeaders = array("Tahun","Kode Program","Nama Program","Total");
-				}else{
-					$colHeaders = array("Tahun","Kode Program","Nama Program","Total","Kode Sub-sektor");
+				if($purpose==3){//to excel		
+					unset($row->nama_e1);
+					//unset($row->id_program_kl);
+					if($file1 != '' && $file1 != '-1' && $file1 != null){
+						unset($row->kode_e1);
+						//tambahkan header kolom
+						$colHeaders = array("Tahun","Kode Program","Nama Program","Total");
+					}else{
+						$colHeaders = array("Tahun","Kode Program","Nama Program","Total","Kode Sub-sektor");
+					}
 				}
 				//==========================================================
 					
