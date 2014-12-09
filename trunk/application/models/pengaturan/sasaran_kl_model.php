@@ -25,6 +25,18 @@ class Sasaran_kl_model extends CI_Model
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'kode_sasaran_kl';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';  
+		
+		if ($purpose==4){ //request oleh e-anev
+			$page = isset($_GET['iDisplayStart']) ? intval($_GET['iDisplayStart']) : 1;  
+			$limit = isset($_GET['iDisplayLength']) ? intval($_GET['iDisplayLength']) : 10;  			
+			$sortIdx = isset($_GET['iSortCol_0'])?intval($_GET['iSortCol_0']) :0;
+			switch ($sortIdx){
+				case 1 : $sort = 'tbl_sasaran_kl.tahun';
+				default : $sort = 'tbl_sasaran_kl.kode_sasaran_kl';
+			}
+			$order = isset($_GET['sSortDir_0']) ? strval($_GET['sSortDir_0']) : 'asc';  
+		}
+		
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
@@ -36,6 +48,7 @@ class Sasaran_kl_model extends CI_Model
 			}
 			//$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
+			if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("*",false);
 			$this->db->from('tbl_sasaran_kl');
 			$this->db->order_by('tbl_sasaran_kl.tahun ASC, tbl_sasaran_kl.kode_sasaran_kl ASC');
@@ -67,6 +80,7 @@ class Sasaran_kl_model extends CI_Model
 				$response->rows[$count]['no']= '';
 				$response->rows[$count]['tahun']='';
 				$response->rows[$count]['kode_sasaran_kl']='';
+				$response->rows[$count]['kode_kl']='';
 				$response->rows[$count]['deskripsi']='';
 				$response->lastNo = 0;				
 		}
@@ -81,6 +95,8 @@ class Sasaran_kl_model extends CI_Model
 			$colHeaders = array("Tahun","Kode","Deskripsi");		
 			//var_dump($query->result());die;
 			to_excel($query,"SasaranKementerian",$colHeaders);
+		}else if ($purpose==4) { //WEB SERVICE
+			return $response;
 		}
 	
 	}

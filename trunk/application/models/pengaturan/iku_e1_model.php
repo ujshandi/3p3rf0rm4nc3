@@ -24,11 +24,22 @@ class Iku_e1_model extends CI_Model
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'a.kode_e1';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';  
+		if ($purpose==4){ //request oleh e-anev
+			$page = isset($_GET['iDisplayStart']) ? intval($_GET['iDisplayStart']) : 1;  
+			$limit = isset($_GET['iDisplayLength']) ? intval($_GET['iDisplayLength']) : 10;  			
+			$sortIdx = isset($_GET['iSortCol_0'])?intval($_GET['iSortCol_0']) :0;
+			switch ($sortIdx){
+				case 1 : $sort = 'a.tahun';
+				default : $sort = 'a.kode_iku_e1';
+			}
+			$order = isset($_GET['sSortDir_0']) ? strval($_GET['sSortDir_0']) : 'asc';  
+		}
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
+			if($purpose==4){$this->db->limit($limit,$page);}
 			if($file1 != '' && $file1 != '-1' && $file1 != null) {
 				$this->db->where("c.kode_e1",$file1);
 			}
@@ -114,6 +125,8 @@ class Iku_e1_model extends CI_Model
 			$colHeaders = array("Tahun","Kode Eselon I","Kode IKU","Deskripsi IKU","Satuan","Kode IKU Kementerian Terkait");		
 			//var_dump($query->result());die;
 			to_excel($query,"IKUEselon1",$colHeaders);
+		}else if ($purpose==4) { //WEB SERVICE
+			return $response;
 		}
 	
 	}
