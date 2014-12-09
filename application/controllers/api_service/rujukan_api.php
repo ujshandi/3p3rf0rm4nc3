@@ -12,7 +12,7 @@
  * @author		Phil Sturgeon
  * @link		http://philsturgeon.co.uk/code/
 */
-
+header('Access-Control-Allow-Origin: *');  
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 require APPPATH.'/libraries/REST_Controller.php';
 
@@ -91,9 +91,20 @@ class Rujukan_api extends REST_Controller
 		
 	}
 	
+	function sasarankl1_list_get(){
+		
+	}
+	
+	function sasaranke1_list_get(){
+		
+	}
+	function sasaranke2_list_get(){
+		
+	}
+	
 	public function _remap( $param ) {
 		$request = $_SERVER['REQUEST_METHOD'];
-	 
+	//	var_dump($request);die;
 		switch( strtoupper( $request ) ) {
 			case 'GET':
 				$method = 'read';
@@ -167,6 +178,78 @@ class Rujukan_api extends REST_Controller
 					$this->response($rs, 200); // 200 being the HTTP response code
 				}else{
 					$this->response(array('error' => 'Data Program Eselon 1 tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'sasarankl1_list':
+				$this->load->model('/pengaturan/sasaran_kl_model');
+				$params = null;
+				$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				 
+				$rs= $this->sasaran_kl_model->easyGrid($tahun,null,4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Sasaran Strategis tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'sasarane1_list':
+				$this->load->model('/pengaturan/sasaran_eselon1_model');
+				$params = null;
+				$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				 
+				$rs= $this->sasaran_eselon1_model->easyGrid(null,$tahun,null,4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Sasaran Program tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'sasarane2_list':
+				$this->load->model('/pengaturan/sasaran_eselon2_model');
+				$params = null;
+				$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				 
+				$rs= $this->sasaran_eselon2_model->easyGrid(null,null,$tahun,null,4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Sasaran Kegiatan tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'ikukl1_list':
+				$this->load->model('/pengaturan/iku_kl_model');
+				$params = null;
+				$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				 
+				$rs= $this->iku_kl_model->easyGrid(null,$tahun,null,4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data IKU Kementerian tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'ikue1_list':
+				$this->load->model('/pengaturan/iku_e1_model');
+				$params = null;
+				$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				 
+				$rs= $this->iku_e1_model->easyGrid(null,$tahun,null,4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data IKU Eselon I tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'ikue2_list':
+				$this->load->model('/pengaturan/ikk_model');
+				$params = null;
+				$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				 
+				$rs= $this->ikk_model->easyGrid(null,null,$tahun,null,4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data IKK tidak ditemukan!'), 404);
 				}	
 			break;
 			default :

@@ -24,6 +24,16 @@ class Ikk_model extends CI_Model
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'kode_e2';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';  
+		if ($purpose==4){ //request oleh e-anev
+			$page = isset($_GET['iDisplayStart']) ? intval($_GET['iDisplayStart']) : 1;  
+			$limit = isset($_GET['iDisplayLength']) ? intval($_GET['iDisplayLength']) : 10;  			
+			$sortIdx = isset($_GET['iSortCol_0'])?intval($_GET['iSortCol_0']) :0;
+			switch ($sortIdx){
+				case 1 : $sort = 'a.tahun';
+				default : $sort = 'a.kode_ikk';
+			}
+			$order = isset($_GET['sSortDir_0']) ? strval($_GET['sSortDir_0']) : 'asc';  
+		}
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
@@ -42,6 +52,7 @@ class Ikk_model extends CI_Model
 			}
 			//$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
+			if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("a.tahun,a.kode_e2, a.kode_ikk, a.deskripsi, a.satuan, a.kode_iku_e1, c.kode_e1, b.nama_e2, d.deskripsi AS e1_deskripsi,a.kode_sasaran_e2,e.deskripsi as deskripsi_sasaran_e2",false);
 			$this->db->from('tbl_ikk a');
 			$this->db->join('tbl_eselon2 b', 'b.kode_e2 = a.kode_e2');
@@ -140,6 +151,8 @@ class Ikk_model extends CI_Model
 					
 		//	var_dump($query->result());die;
 			to_excel($query,"IKK",$colHeaders);
+		}else if ($purpose==4) { //WEB SERVICE
+			return $response;
 		}
 	
 	}

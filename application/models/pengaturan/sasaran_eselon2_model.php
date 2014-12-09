@@ -24,6 +24,16 @@ class Sasaran_eselon2_model extends CI_Model
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'kode_e1';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';  
+		if ($purpose==4){ //request oleh e-anev
+			$page = isset($_GET['iDisplayStart']) ? intval($_GET['iDisplayStart']) : 1;  
+			$limit = isset($_GET['iDisplayLength']) ? intval($_GET['iDisplayLength']) : 10;  			
+			$sortIdx = isset($_GET['iSortCol_0'])?intval($_GET['iSortCol_0']) :0;
+			switch ($sortIdx){
+				case 1 : $sort = 'tbl_sasaran_eselon2.tahun';
+				default : $sort = 'tbl_sasaran_eselon2.kode_sasaran_e2';
+			}
+			$order = isset($_GET['sSortDir_0']) ? strval($_GET['sSortDir_0']) : 'asc';  
+		}
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
@@ -42,6 +52,7 @@ class Sasaran_eselon2_model extends CI_Model
 			
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
+			if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("tbl_eselon2.kode_e1, tbl_sasaran_eselon2.kode_e2, tbl_eselon2.nama_e2, tbl_sasaran_eselon2.tahun, tbl_sasaran_eselon2.kode_sasaran_e2, tbl_sasaran_eselon2.deskripsi as e2_deskripsi,tbl_sasaran_eselon2.kode_sasaran_e1, tbl_sasaran_eselon1.deskripsi as e1_deskripsi",false);
 			$this->db->from('tbl_sasaran_eselon2');
 			$this->db->join('tbl_eselon2', 'tbl_eselon2.kode_e2 = tbl_sasaran_eselon2.kode_e2');
@@ -112,6 +123,8 @@ class Sasaran_eselon2_model extends CI_Model
 			$colHeaders = array("Kode Eselon I Terkait","Kode Eselon 2","Tahun","Kode Sasaran","Deskripsi Sasaran","Kode Sasaran Eselon I");		
 		//	var_dump($query->result());die;
 			to_excel($query,"SasaranEselon2",$colHeaders);
+		}else if ($purpose==4) { //WEB SERVICE
+			return $response;
 		}
 	
 	}

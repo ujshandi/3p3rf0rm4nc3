@@ -25,6 +25,16 @@ class Sasaran_eselon1_model extends CI_Model
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'a.kode_e1';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';  
+		if ($purpose==4){ //request oleh e-anev
+			$page = isset($_GET['iDisplayStart']) ? intval($_GET['iDisplayStart']) : 1;  
+			$limit = isset($_GET['iDisplayLength']) ? intval($_GET['iDisplayLength']) : 10;  			
+			$sortIdx = isset($_GET['iSortCol_0'])?intval($_GET['iSortCol_0']) :0;
+			switch ($sortIdx){
+				case 1 : $sort = 'a.tahun';
+				default : $sort = 'a.kode_sasaran_e1';
+			}
+			$order = isset($_GET['sSortDir_0']) ? strval($_GET['sSortDir_0']) : 'asc';  
+		}
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
@@ -39,6 +49,7 @@ class Sasaran_eselon1_model extends CI_Model
 			}
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
+			if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("a.tahun, a.kode_e1, b.nama_e1, a.kode_sasaran_e1, a.deskripsi, a.kode_sasaran_kl, c.deskripsi AS deskripsi_sasaran_kl", false);
 			$this->db->from('tbl_sasaran_eselon1 a');
 			$this->db->join('tbl_eselon1 b', 'b.kode_e1 = a.kode_e1');
@@ -105,6 +116,8 @@ class Sasaran_eselon1_model extends CI_Model
 				$colHeaders = array("Tahun", "Kode Eselon I","Kode Sasaran","Deskripsi Sasaran","Kode Sasaran Kementerian");		
 		//	var_dump($query->result());die;
 			to_excel($query,"SasaranEselon1",$colHeaders);
+		}else if ($purpose==4) { //WEB SERVICE
+			return $response;
 		}
 	}
 	
