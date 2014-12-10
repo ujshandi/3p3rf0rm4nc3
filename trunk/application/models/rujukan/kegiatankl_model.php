@@ -24,6 +24,17 @@ class Kegiatankl_model extends CI_Model
 		$response->total = $count;
 		$sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'tahun';  
 		$order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';  
+		if ($purpose==4){ //request oleh e-anev
+			$page = isset($_GET['iDisplayStart']) ? intval($_GET['iDisplayStart']) : 1;  
+			$limit = isset($_GET['iDisplayLength']) ? intval($_GET['iDisplayLength']) : 10;  
+			$sortIdx = isset($_GET['iSortCol_0'])?intval($_GET['iSortCol_0']) :0;
+			switch ($sortIdx){
+				case 1 : $sort = 'kl.kode_kegiatan';
+				case 2 : $sort = 'kl.nama_kegiatan';
+				default : $sort = 'kl.kode_kegiatan';
+			}
+			$order = isset($_GET['sSortDir_0']) ? strval($_GET['sSortDir_0']) : 'asc';  
+		}
 		$offset = ($page-1)*$limit;  
 		$pdfdata = array();
 		if ($count>0){
@@ -42,6 +53,7 @@ class Kegiatankl_model extends CI_Model
 			else
 				$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
+			if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("distinct kl.*, e2.nama_e2, pr.nama_program",false);
 			$this->db->from('tbl_kegiatan_kl kl left join tbl_eselon2 e2 on kl.kode_e2 = e2.kode_e2',false);
 			$this->db->join('tbl_program_kl pr','pr.kode_program = kl.kode_program and pr.tahun=kl.tahun');

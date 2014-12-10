@@ -154,7 +154,7 @@ class Rujukan_api extends REST_Controller
 				 if($rs){
 					$this->response($rs, 200); // 200 being the HTTP response code
 				}else{
-					$this->response(array('error' => 'Data Eselon 1 tidak ditemukan!'), 404);
+					$this->response(array('error' => 'Data Eselon I tidak ditemukan!'), 404);
 				}	
 			break;
 			case 'eselon2_list':
@@ -165,7 +165,7 @@ class Rujukan_api extends REST_Controller
 				 if($rs){
 					$this->response($rs, 200); // 200 being the HTTP response code
 				}else{
-					$this->response(array('error' => 'Data Eselon 2 tidak ditemukan!'), 404);
+					$this->response(array('error' => 'Data Eselon II tidak ditemukan!'), 404);
 				}	
 			break;
 			case 'program1_list':
@@ -177,7 +177,19 @@ class Rujukan_api extends REST_Controller
 				 if($rs){
 					$this->response($rs, 200); // 200 being the HTTP response code
 				}else{
-					$this->response(array('error' => 'Data Program Eselon 1 tidak ditemukan!'), 404);
+					$this->response(array('error' => 'Data Program Eselon I tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'kegiatan1_list':
+				$this->load->model('/rujukan/kegiatankl_model');
+				$params = null;
+				$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				 
+				$rs= $this->kegiatankl_model->easyGrid(null,null,$tahun,4);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Kegiatan Eselon II tidak ditemukan!'), 404);
 				}	
 			break;
 			case 'sasarankl1_list':
