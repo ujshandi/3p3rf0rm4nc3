@@ -48,7 +48,7 @@ class Sasaran_kl_model extends CI_Model
 			}
 			//$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			if($purpose==4){$this->db->limit($limit,$page);}
+		//	if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("*",false);
 			$this->db->from('tbl_sasaran_kl');
 			$this->db->order_by('tbl_sasaran_kl.tahun ASC, tbl_sasaran_kl.kode_sasaran_kl ASC');

@@ -39,7 +39,7 @@ class Iku_e1_model extends CI_Model
 		if ($count>0){
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			if($purpose==4){$this->db->limit($limit,$page);}
+			//if($purpose==4){$this->db->limit($limit,$page);}
 			if($file1 != '' && $file1 != '-1' && $file1 != null) {
 				$this->db->where("c.kode_e1",$file1);
 			}

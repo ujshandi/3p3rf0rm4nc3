@@ -53,7 +53,7 @@ class Kegiatankl_model extends CI_Model
 			else
 				$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			if($purpose==4){$this->db->limit($limit,$page);}
+		//	if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("distinct kl.*, e2.nama_e2, pr.nama_program",false);
 			$this->db->from('tbl_kegiatan_kl kl left join tbl_eselon2 e2 on kl.kode_e2 = e2.kode_e2',false);
 			$this->db->join('tbl_program_kl pr','pr.kode_program = kl.kode_program and pr.tahun=kl.tahun');

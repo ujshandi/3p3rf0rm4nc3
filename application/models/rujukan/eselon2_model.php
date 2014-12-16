@@ -41,7 +41,7 @@ class Eselon2_model extends CI_Model
 		if ($count>0){
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			if($purpose==4){$this->db->limit($limit,$page);}
+			//if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("tbl_eselon2.*, tbl_eselon1.nama_e1",false);
 			if(($file2 != '-1')&&($file2 != null)){
 				$this->db->where("tbl_eselon2.kode_e2",$file2);

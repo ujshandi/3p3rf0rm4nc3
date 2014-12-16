@@ -48,7 +48,7 @@ class Programkl_model extends CI_Model
 			}
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			if($purpose==4){$this->db->limit($limit,$page);}
+			//if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("tbl_program_kl.*, tbl_eselon1.nama_e1",false);
 			$this->db->from('tbl_program_kl');
 			$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_program_kl.kode_e1');
