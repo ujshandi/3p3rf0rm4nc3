@@ -48,7 +48,7 @@ class Iku_kl_model extends CI_Model
 			}
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			if($purpose==4){$this->db->limit($limit,$page);}
+			//if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("tbl_iku_kl.tahun, tbl_iku_kl.kode_kl, tbl_iku_kl.kode_iku_kl, tbl_iku_kl.deskripsi, tbl_iku_kl.satuan, tbl_iku_kl.kode_sasaran_kl,tbl_sasaran_kl.deskripsi as deskripsi_sasaran_kl",false);
 			$this->db->from('tbl_iku_kl');
 			//$this->db->join('tbl_eselon1', 'tbl_eselon1.kode_e1 = tbl_iku_kl.kode_e1','left' );

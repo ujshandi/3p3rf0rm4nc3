@@ -35,9 +35,9 @@ class Emon_kabkot_model extends CI_Model
 		
 		if ($count>0){			
 			$this->dbemon->order_by($sort." ".$order );
-			$this->dbemon->limit($limit,$page);
+			//$this->dbemon->limit($limit,$page);
 			$this->dbemon->select("*",false);
-			$this->dbemon->from('tbl_kabkot');
+			$this->dbemon->from('tbl_kabkot inner join tbl_lokasi on tbl_kabkot.kdlokasi=tbl_lokasi.kdlokasi and tbl_lokasi.status=1');
 			$query = $this->dbemon->get();
 			
 			$i=0;

@@ -49,7 +49,7 @@ class Sasaran_eselon1_model extends CI_Model
 			}
 			$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			if($purpose==4){$this->db->limit($limit,$page);}
+			//if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("a.tahun, a.kode_e1, b.nama_e1, a.kode_sasaran_e1, a.deskripsi, a.kode_sasaran_kl, c.deskripsi AS deskripsi_sasaran_kl", false);
 			$this->db->from('tbl_sasaran_eselon1 a');
 			$this->db->join('tbl_eselon1 b', 'b.kode_e1 = a.kode_e1');

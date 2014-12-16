@@ -52,7 +52,7 @@ class Ikk_model extends CI_Model
 			}
 			//$this->db->order_by($sort." ".$order );
 			if($purpose==1){$this->db->limit($limit,$offset);}
-			if($purpose==4){$this->db->limit($limit,$page);}
+			//if($purpose==4){$this->db->limit($limit,$page);}
 			$this->db->select("a.tahun,a.kode_e2, a.kode_ikk, a.deskripsi, a.satuan, a.kode_iku_e1, c.kode_e1, b.nama_e2, d.deskripsi AS e1_deskripsi,a.kode_sasaran_e2,e.deskripsi as deskripsi_sasaran_e2",false);
 			$this->db->from('tbl_ikk a');
 			$this->db->join('tbl_eselon2 b', 'b.kode_e2 = a.kode_e2');

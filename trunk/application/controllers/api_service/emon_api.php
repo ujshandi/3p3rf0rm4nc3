@@ -19,6 +19,29 @@ require APPPATH.'/libraries/REST_Controller.php';
 class Emon_api extends REST_Controller
 {
 		
+		
+	function __construct()
+	{	
+		// header('Access-Control-Allow-Origin: *');  
+		// header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method"); 
+		// header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE"); 
+		// $method = $_SERVER['REQUEST_METHOD']; 
+		// if($method == "OPTIONS") { die(); }
+		
+		parent::__construct();
+		 $this->output->set_header( 'Access-Control-Allow-Origin: *' );
+			$this->output->set_header( "Access-Control-Allow-Methods:GET" );
+			$this->output->set_header( 'Access-Control-Allow-Headers: content-type' );
+			$this->output->set_content_type( 'application/json' );
+			$this->output->set_output( "*" );
+		// header("Access-Control-Allow-Methods: GET, OPTIONS");
+		// header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding");
+		
+		// if ( "OPTIONS" === $_SERVER['REQUEST_METHOD'] ) {
+			// die();
+		// }
+	}	
+	
 	function program_list_get(){
 		$this->load->model('/emon/emon_program_model');
 		$params = null;
@@ -52,27 +75,89 @@ class Emon_api extends REST_Controller
 	
 	
 	function lokasi_list_get(){
-		$this->load->model('/emon/emon_lokasi_model');
-		$params = null;
+		// $this->load->model('/emon/emon_lokasi_model');
+		// $params = null;
 		
-		$rs= $this->emon_lokasi_model->getdata();//$file1,$file2
-		 if($rs){
-            $this->response($rs, 200); // 200 being the HTTP response code
-        }else{
-            $this->response(array('error' => 'Data Lokasi tidak ditemukan!'), 404);
-        }	
+		// $rs= $this->emon_lokasi_model->getdata();//$file1,$file2
+		 // if($rs){
+            // $this->response($rs, 200); // 200 being the HTTP response code
+        // }else{
+            // $this->response(array('error' => 'Data Lokasi tidak ditemukan!'), 404);
+        // }	
 	}
 	
 	function kabkota_list_get(){
-		$this->load->model('/emon/emon_kabkota_model');
-		$params = null;
+		// $this->load->model('/emon/emon_kabkota_model');
+		// $params = null;
 		
-		$rs= $this->emon_kabkota_model->getdata();//$file1,$file2
-		 if($rs){
-            $this->response($rs, 200); // 200 being the HTTP response code
-        }else{
-            $this->response(array('error' => 'Data Kabupaten/Kota tidak ditemukan!'), 404);
-        }	
+		// $rs= $this->emon_kabkota_model->getdata();//$file1,$file2
+		 // if($rs){
+            // $this->response($rs, 200); // 200 being the HTTP response code
+        // }else{
+            // $this->response(array('error' => 'Data Kabupaten/Kota tidak ditemukan!'), 404);
+        // }	
+	}
+	
+	public function _remap( $param ) {
+		$request = $_SERVER['REQUEST_METHOD'];
+	//	var_dump($request);die;
+		switch( strtoupper( $request ) ) {
+			case 'GET':
+				$method = 'read';
+				break;
+			case 'POST':
+				$method = 'save';
+				break;
+			case 'PUT':
+				$method = 'update';
+				break;
+			case 'DELETE':
+				$method = 'remove';
+				break;
+			case 'OPTIONS':
+				$method = '_options';
+				break;
+		}
+		if ( preg_match( "/^(?=.*[a-zA-Z])(?=.*[0-9])/", $param ) ) {
+			$id = $param;
+		} else {
+			$id = null;
+		}
+		$this->$method($id);
+	}
+	
+	public function read($id)
+	{
+		//var_dump($id);
+		
+		switch ($id){
+			
+			case 'lokasi1_list':
+				$this->load->model('/emon/emon_lokasi_model');
+				$params = null;
+				$rs= $this->emon_lokasi_model->getdata();//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Lokasi tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'kabkota1_list':
+				$this->load->model('/emon/emon_kabkot_model');
+				$params = null;
+				
+				$rs= $this->emon_kabkot_model->getdata();//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Kabupaten/Kota tidak ditemukan!'), 404);
+				}	
+			break;
+			
+			default :
+			$this->response(array('error' => 'tidak ada data!'), 404);
+		}
+		
 	}
 	
 	function user_get()

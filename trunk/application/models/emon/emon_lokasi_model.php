@@ -35,7 +35,7 @@ class Emon_lokasi_model extends CI_Model
 		
 		if ($count>0){			
 			$this->dbemon->order_by($sort." ".$order );
-			$this->dbemon->limit($limit,$page);
+			//$this->dbemon->limit($limit,$page);
 			$this->dbemon->select("*",false);
 			$this->dbemon->from('tbl_lokasi');
 			$this->dbemon->where('status',1);
