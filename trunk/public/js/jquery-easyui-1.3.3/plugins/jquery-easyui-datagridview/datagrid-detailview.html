@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>jQuery EasyUI</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="datagrid-detailview.js"></script>
+	<script>
+		$(function(){
+			$('#tt').datagrid({
+				title:'DataGrid - DetailView',
+				width:500,
+				height:250,
+				remoteSort:false,
+				singleSelect:true,
+				nowrap:false,
+				fitColumns:true,
+				url:'datagrid_data.json',
+				columns:[[
+					{field:'itemid',title:'Item ID',width:80},
+					{field:'productid',title:'Product ID',width:100,sortable:true},
+					{field:'listprice',title:'List Price',width:80,align:'right',sortable:true},
+					{field:'unitcost',title:'Unit Cost',width:80,align:'right',sortable:true},
+					{field:'attr1',title:'Attribute',width:150,sortable:true},
+					{field:'status',title:'Status',width:60,align:'center'}
+				]],
+				view: detailview,
+				detailFormatter: function(rowIndex, rowData){
+					return '<div style="padding:2px"><table id="ddv-' + index + '"></table></div>';
+/*
+					return '<table><tr>' +
+							'<td rowspan=2 style="border:0"><img src="images/' + rowData.itemid + '.png" style="height:50px;"></td>' +
+							'<td style="border:0">' +
+							'<p>Attribute: ' + rowData.attr1 + '</p>' +
+							'<p>Status: ' + rowData.status + '</p>' +
+							'</td>' +
+							'</tr></table>';
+*/
+				},
+				,
+                onExpandRow: function(index,row){
+
+
+                    $('#ddv-'+index).datagrid({
+                        url:'<?=base_url()?>checkpoint/checkpointkl/griddetail/?id_pk_kl='+row.id_pk_kl,
+                        fitColumns:true,
+                        singleSelect:true,
+                        rownumbers:true,
+                        loadMsg:'',
+                        height:'auto',
+                        columns:[[
+                            {field:'id_checkpoint_kl',title:'id',width:200,hidden:true},
+                            {field:'periode',title:'Periode',width:200},
+                            {field:'kriteria',title:'Kriteria Capaian',width:200},
+                            {field:'ukuran',title:'Ukuran Capaian',width:200},
+                            {field:'target',title:'Quantity',width:100,align:'right'}
+                            
+                        ]],
+                        onResize:function(){
+                            $('#dg').datagrid('fixDetailRowHeight',index);
+                        },
+                        onLoadSuccess:function(){
+                            setTimeout(function(){
+                                $('#dg').datagrid('fixDetailRowHeight',index);
+                            },0);
+                        }
+                    });
+                    $('#dg').datagrid('fixDetailRowHeight',index);
+
+	
+                }
+			});
+		});
+	</script>
+</head>
+<body>
+	<h1>DataGrid - DetailView</h1>
+	
+	<table id="tt"></table>
+</body>
+</html>
