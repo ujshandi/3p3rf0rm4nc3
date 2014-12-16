@@ -30,7 +30,7 @@ class Login extends CI_Controller {
 	public function login_usr($form='') {
 		//var_dump($this->input->post('txtUser'));die;
 		$response = $this->login->cek_login($this->input->post('username'),$this->input->post('password'));
-		//var_dump($response);die;
+		//var_dump($this->input->post('jenis_aplikasi'));die;
 		if(is_string($response) && $response == 'REQUIRED') {
 			$this->index('Username and Password required',$this->input->post('username'));
 		}else if($response == true) {
