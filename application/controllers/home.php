@@ -10,7 +10,7 @@ class Home extends CI_Controller {
 		//$userdata = array ('logged_in' => TRUE);
 				//
 		//$this->session->set_userdata($userdata);
-			//var_dump($this->session->userdata('user_id'));	
+		//	var_dump($this->session->all_userdata());	die;
 			
 		if ($this->session->userdata('user_id') != TRUE) redirect(base_url());					
 		$this->load->model('/security/sys_menu_model');

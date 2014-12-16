@@ -33,6 +33,7 @@ class Sys_login_model extends CI_Model{
 			$this->fullName = $row['full_name'];
 			$this->level_id= $row['level_id'];
 			//var_dump($this->groupId);die;
+			
 			$newData = array (
 				'user_id'=>$row['user_id'], 
 				'user_name'=>$row['user_name'], 
@@ -43,15 +44,24 @@ class Sys_login_model extends CI_Model{
 				'unit_kerja_e2'=>$row['unit_kerja_e2'],
 				'level'=>$row['level'],
 				'level_id'=>$row['level_id'],
-				'group_id'=>$row['group_id']);
+				'group_id'=>$row['group_id']
+				//v//$this->getGroupAccessAnev($row['level_id'],$row['group_id'])
+				);
+				//var_dump($newData);die;
 			//$this->create_session($row['user_id'], $row['user_name'], (($row['user_name']=='superadmin')?'':$row['app_type']), $row['full_name'],true,$row['unit_kerja_e1'],$row['unit_kerja_e2'],$row['level'],$row['group_id'],$row['level_id']);
+			//
+			//var_dump($newData);die;
+			$rs = $this->insertLoginLog($newData);			
+			//$newData['policy_anev']=serialize($this->getGroupAccessAnev($row['level_id'],$row['group_id']));
+			$newData['policy_anev']=$this->getGroupAccessAnev($row['level_id'],$row['group_id']);
+		//	var_dump($newData);die;
 			$this->create_session($newData);
 			$query->free_result();
 			// $data['user_id']=$row['user_id'];
 			// $data['user_name']=$row['user_name'];
 			// $data['unit_kerja_e2']=$row['unit_kerja_e2'];
 			// $data['unit_kerja_e1']=$row['unit_kerja_e1'];
-			return $this->insertLoginLog($newData);
+			return $rs;
 			}else {
 				$query->free_result();
 			return FALSE;
@@ -85,6 +95,22 @@ class Sys_login_model extends CI_Model{
 			return FALSE;
 		}
 	}
+	
+	public function getGroupAccessAnev($level_id,$group_id){
+		$sql = "select m.menu_group,m.menu_id,m.menu_name, m.policy, m.url, g.policy as group_policy, m.menu_parent from anev_menu m left join anev_group_access g on g.menu_id = m.menu_id and g.level_id = '$level_id' and g.group_id = '$group_id'   where (hide=0 or hide is null)  order by m.menu_id ";
+		//
+		//left join tbl_group_user gu on gu.group_id = g.group_id
+				
+		//var_dump($sql);die;
+		$query = $this->db->query($sql);
+		if ($query->num_rows()==0)
+		   return array();
+		else
+			return  $query->result();		
+	}
+	
+	
+	
 	
 	public function logout() {
 		try {

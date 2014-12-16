@@ -51,7 +51,7 @@ $active_record = TRUE;
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = 'admin';
-$db['default']['database'] = 'eperformance_bali';//e_performance
+$db['default']['database'] = 'eperformance_2014';//e_performance
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = false;//chan TRUE;
@@ -80,6 +80,24 @@ $db['import']['dbcollat'] = 'utf8_general_ci';
 $db['import']['swap_pre'] = '';
 $db['import']['autoinit'] = TRUE;
 $db['import']['stricton'] = FALSE;
+
+
+
+$db['emon']['hostname'] = 'localhost';
+$db['emon']['username'] = 'root';
+$db['emon']['password'] = 'admin';
+$db['emon']['database'] = 'db_e_monitoring';
+$db['emon']['dbdriver'] = 'mysql';
+$db['emon']['dbprefix'] = '';
+$db['emon']['pconnect'] = false;//TRUE;
+$db['emon']['db_debug'] = true;//chan TRUE;
+$db['emon']['cache_on'] = FALSE;
+$db['emon']['cachedir'] = '';
+$db['emon']['char_set'] = 'utf8';
+$db['emon']['dbcollat'] = 'utf8_general_ci';
+$db['emon']['swap_pre'] = '';
+$db['emon']['autoinit'] = TRUE;
+$db['emon']['stricton'] = FALSE;
 
 
 /* End of file database.php */
