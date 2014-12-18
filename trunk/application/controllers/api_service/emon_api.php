@@ -153,7 +153,30 @@ class Emon_api extends REST_Controller
 					$this->response(array('error' => 'Data Kabupaten/Kota tidak ditemukan!'), 404);
 				}	
 			break;
-			
+			case 'satker1_list':
+				$this->load->model('/emon/emon_satker_model');
+				$params = null;
+				$tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				$params['tahun'] = $tahun;
+				$rs= $this->emon_satker_model->getdata($params);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Satker tidak ditemukan!'), 404);
+				}	
+			break;
+			case 'output1_list':
+				$this->load->model('/emon/emon_output_model');
+				$params = null;
+				// $tahun = isset($_GET['tahun']) ? $_GET['tahun'] : '';
+				// $params['tahun'] = $tahun;
+				$rs= $this->emon_output_model->getdata($params);//$file1,$file2
+				 if($rs){
+					$this->response($rs, 200); // 200 being the HTTP response code
+				}else{
+					$this->response(array('error' => 'Data Output tidak ditemukan!'), 404);
+				}	
+			break;
 			default :
 			$this->response(array('error' => 'tidak ada data!'), 404);
 		}
